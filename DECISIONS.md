@@ -103,3 +103,11 @@ The spec's external facts were checked against primary sources: Hugging Face API
 - Its fixtures are written by Python `numbers-parser` (MIT, writes .numbers without macOS) in `tools/gen/`.
 
 **2026-10-11 · UI tests on macOS** are now possible through WebdriverIO's `tauri-plugin-wdio-webdriver`. The spec only requires Windows and Linux. This may be added in Phase 5 if it's cheap, never as a gate.
+
+## Austin's answers, round 3 (2026-10-11)
+
+**2026-10-11 · Repo owner: Austin's personal GitHub account**, as a public repo named `schedule-spotter`.
+
+**2026-10-11 · Nightly model benchmarks: approved.** `bench.yml` gets its nightly schedule when Phase 4 lands, as the spec's CI-cost step requires.
+
+**2026-10-11 · Apple Developer Program: Austin has an account.** Phase 6 wires Developer ID signing and notarization to it. Azure Artifact Signing is on hold until Austin has read what it's for and decides.
