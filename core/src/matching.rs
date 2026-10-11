@@ -62,13 +62,55 @@ pub enum Verdict {
     Unsure,
 }
 
-/// The model layer, reached only through this. Phase 3 has none.
+/// One record read from a free-text line by the model (task T5).
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct TextEntry {
+    pub person: String,
+    /// mon … sun
+    pub day: String,
+    pub site: String,
+    /// "HH:MM-HH:MM", when the line gives one.
+    #[serde(default)]
+    pub time: Option<String>,
+}
+
+/// The model layer, reached only through this: single closed questions the
+/// rules can't settle (spec tasks T1–T5). Every default answer is "unsure",
+/// which sends the question to the owner.
 pub trait Tiebreaker {
+    /// T1: are these two spellings one person?
     fn same_person(&self, _a: &str, _b: &str, _roster: &[String]) -> Verdict {
         Verdict::Unsure
     }
+    /// T2: are these two sites one place?
     fn same_site(&self, _a: &str, _b: &str, _sites: &[String]) -> Verdict {
         Verdict::Unsure
+    }
+    /// T3: what is this cell (person, site, status, unstaffed, note, time, empty)?
+    fn cell_meaning(
+        &self,
+        _text: &str,
+        _column_role: &str,
+        _neighbors: &[String],
+    ) -> Option<String> {
+        None
+    }
+    /// T4: what role does this column play, when the script's scores tie?
+    fn column_role(&self, _header: &str, _samples: &[String]) -> Option<String> {
+        None
+    }
+    /// T5: the records in one pasted free-text line, or None ("cannot read").
+    fn free_text(
+        &self,
+        _line: &str,
+        _roster: &[String],
+        _sites: &[String],
+    ) -> Option<Vec<TextEntry>> {
+        None
+    }
+    /// Whether a model is loaded at all (free text needs one).
+    fn available(&self) -> bool {
+        false
     }
 }
 

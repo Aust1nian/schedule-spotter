@@ -1,0 +1,51 @@
+{
+  "category": "L",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "José García", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Ana Peña", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Ren�e Dubois", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "José García", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Ana Peña", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Ren�e Dubois", "date": "2026-10-13", "site": "Oak Ridge Apts", "note": "gate code 4471 — use the side door"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "José García", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Ana Peña", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Ren�e Dubois", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "1420 Johnson St", "note": "bring 2� ladders"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "José García", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Ana Peña", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Ren�e Dubois", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "José García", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Ana Peña", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Ren�e Dubois", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St", "note": "blade � for the saw"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "Oak Ridge Apts"}
+  ],
+  "assignments_exact": true,
+  "flags": [],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": true,
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"}
+  ],
+  "notes": ["couldn't be read"]
+}

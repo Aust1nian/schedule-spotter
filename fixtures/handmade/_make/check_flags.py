@@ -15,7 +15,11 @@ Inputs per fixture:
                         ("same_person", "same_site": lists of [a, b] pairs), and,
                         for a fixture whose expected assignments are only a
                         sample, the full truth the flags come from
-                        ("assignments").
+                        ("assignments"). A tier-"model" fixture may add
+                        "model_same_person" / "model_same_site": pairs the model
+                        (T1 / T2) must answer "same". The top-level flags use
+                        them; with the model off each must be asked instead,
+                        so each must appear in `ask`.
 
 Readings chosen where FORMAT.md is silent (fixtures avoid the cases that the
 other plausible reading would decide differently):
@@ -82,7 +86,10 @@ QUESTION_TYPES = {"same_person", "same_site", "pick_sheet", "pick_layout", "week
                   "fill_down", "column_role", "cell_meaning", "paste_as_table"}
 KEYS = {"category", "tier", "input", "paste", "settings", "layout", "arrangement", "assignments",
         "assignments_exact", "flags", "flags_exact", "info", "info_exact", "ask", "must_not_ask",
-        "answers", "after_answers", "error", "notes"}
+        "answers", "after_answers", "error", "notes",
+        # category L, checked by the Phase 5 export / save tests (not FORMAT.md's table yet)
+        "export_check", "save_test"}
+ERRORS = {"empty_file", "not_a_schedule", "unreadable", "save_failed"}
 
 INTERNAL = re.compile(r"\b(shop|yard|office|warehouse)\b|^\s*(drive to|travel)\b", re.I)
 PLACEHOLDER = re.compile(r"^(helper|foreman|laborer|labourer|new guy|temp|apprentice)(\s*#?\d+)?$", re.I)
@@ -492,6 +499,14 @@ def check(folder: Path) -> tuple[list[str], dict]:
         errs.append(f"  unknown layout {exp['layout']}")
     if exp.get("arrangement") and exp["arrangement"] not in ARRANGEMENTS:
         errs.append(f"  unknown arrangement {exp['arrangement']}")
+    if exp.get("error") is not None and exp["error"] not in ERRORS:
+        errs.append(f"  unknown error {exp['error']!r}")
+    if "export_check" in exp and not isinstance(exp["export_check"], bool):
+        errs.append("  export_check must be true or false")
+    if "save_test" in exp:
+        sv = exp["save_test"]
+        if not (isinstance(sv, dict) and set(sv) == {"target", "error"} and sv["error"] in ERRORS):
+            errs.append(f"  save_test must be {{target, error}} with a FORMAT.md error: {sv!r}")
     st = exp.get("settings", {})
     if any(w not in WEEKDAYS for w in st.get("workdays", [])):
         errs.append("  bad workdays")
@@ -503,6 +518,17 @@ def check(folder: Path) -> tuple[list[str], dict]:
     hints_path = HINTS / f"{fid}.json"
     hints = json.loads(hints_path.read_text(encoding="utf-8")) if hints_path.exists() else {}
 
+    model_merges = {t: [list(p) for p in hints.get("model_" + t, [])] for t in MATCH_QS}
+    if any(model_merges.values()):
+        if exp.get("tier") != "model":
+            errs.append("  model_same_person / model_same_site hints need tier model")
+        asked = {pair(q) for q in exp.get("ask", []) if q.get("type") in MATCH_QS}
+        for t, pairs in model_merges.items():
+            for a, b in pairs:
+                if (t, frozenset((norm(a), norm(b)))) not in asked:
+                    errs.append(f"  model_{t} [{a!r}, {b!r}] must be asked when the model is off")
+    top_hints = {**hints, **{t: list(hints.get(t, [])) + model_merges[t] for t in MATCH_QS}}
+
     answers = exp.get("answers", [])
     only_match_answers = all(a.get("question", {}).get("type") in MATCH_QS for a in answers)
     blocks = [("top", exp)]
@@ -510,7 +536,7 @@ def check(folder: Path) -> tuple[list[str], dict]:
         blocks.append(("after_answers", exp["after_answers"]))
     top_truth = None
     for where, blk in blocks:
-        blk_hints = hints if where == "top" else merges_after(hints, answers)
+        blk_hints = top_hints if where == "top" else merges_after(hints, answers)
         if "assignments" not in blk:
             if where == "after_answers" and top_truth is not None and only_match_answers:
                 truth = top_truth  # same_person / same_site answers never change what was read
@@ -543,7 +569,11 @@ def check(folder: Path) -> tuple[list[str], dict]:
             errs.append(f"  {where}: could not compute: {e}")
             continue
         if where == "top":
-            errs += check_questions(exp, hints, {"same_person": persons, "same_site": sites})
+            if top_hints == hints:
+                errs += check_questions(exp, hints, {"same_person": persons, "same_site": sites})
+            else:  # questions are asked with the model off: name them without the model's merges
+                _, _, p0, s0 = compute(truth, st, exp.get("layout"), hints)
+                errs += check_questions(exp, hints, {"same_person": p0, "same_site": s0})
         else:
             for a in answers:
                 q = a.get("question", {})

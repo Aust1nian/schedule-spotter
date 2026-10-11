@@ -231,3 +231,14 @@ Added here:
 - Handmade fixtures: 124/124 on the script tier, plus 3 model-tier free-text pastes left for Phase 4.
 - Generated seeds 0–1,999: 0 false merges in 3,152 merges, and 0 red flags on clean schedules. CI enforces both.
 - Model-off baseline: 1.21 questions per file, and 64% of files ask nothing.
+
+## Phase 4
+
+**2026-10-11 · llama.cpp binding: `llama-cpp-2` 0.1.159, features `common` only.**
+- **No OpenMP.** The shipped app has no libgomp dependency.
+- **Network-free build, checked on the built binary.** The crate builds llama.cpp with `LLAMA_CURL=OFF`, and the server and tools aren't built. The benchmark binary has no curl, HTTP, SSL, DNS or socket imports (`nm`).
+- **Local Linux builds** need `BINDGEN_EXTRA_CLANG_ARGS=-I/usr/lib/gcc/x86_64-linux-gnu/13/include`, because this machine has libclang but no clang headers. CI runners have full toolchains.
+
+**2026-10-11 · Gemma 4's chat template is rendered in-repo.** llama.cpp's built-in template engine doesn't recognize Gemma 4's new `<|turn>role … <turn|>` format. When applying a model's template fails, the engine renders the verified Gemma 4 format itself: system turn, alternating user and model turns, reply opened with `<|turn>model`, thinking off.
+
+**2026-10-11 · Formula text in text files stays as data.** Category L showed the reader was dropping `=SUM(…)`-style text from CSVs, a rule the spec doesn't have. The spec says spreadsheet cells give their stored values. In a CSV, that text is what the owner typed. It's now kept, with a note that it was read as plain text and never calculated, and the export (stage 10) writes it as a string. Error values like `#REF!` still become empty, with a note.

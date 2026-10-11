@@ -336,8 +336,9 @@ fn neutralize_errors(sheet: &mut Sheet, notes: &mut Vec<String>) {
                 errors += 1;
                 *cell = Cell::EMPTY;
             } else if is_formula_text(t) {
+                // Formula text in a text file is what the owner typed: it
+                // stays as data (the export writes it as a string).
                 formulas += 1;
-                *cell = Cell::EMPTY;
             }
         }
     }
@@ -350,9 +351,9 @@ fn neutralize_errors(sheet: &mut Sheet, notes: &mut Vec<String>) {
     }
     if formulas > 0 {
         notes.push(format!(
-            "{formulas} cell{} held formula text instead of a value and {} skipped.",
+            "{formulas} cell{} held formula text; {} read as plain text, never calculated.",
             if formulas == 1 { "" } else { "s" },
-            if formulas == 1 { "was" } else { "were" }
+            if formulas == 1 { "it was" } else { "they were" }
         ));
     }
 }
@@ -603,10 +604,10 @@ mod tests {
     }
 
     #[test]
-    fn errors_and_formulas_become_empty() {
-        let s = sheet_of("Name,Job\nMike,#REF!\nJose,=VLOOKUP(A2,B:B,1)\n");
+    fn errors_become_empty_formula_text_stays() {
+        let s = sheet_of("Name,Job\nMike,#REF!\nJose,\"=VLOOKUP(A2,B:B,1)\"\n");
         assert!(s.cell(1, 1).is_empty());
-        assert!(s.cell(2, 1).is_empty());
+        assert_eq!(s.cell(2, 1).text, "=VLOOKUP(A2,B:B,1)");
     }
 
     #[test]

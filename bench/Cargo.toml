@@ -11,3 +11,6 @@ rust-version.workspace = true
 spotter-core = { path = "../core" }
 spotter-llm = { path = "../llm" }
 serde_json = "1"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"

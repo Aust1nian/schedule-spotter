@@ -39,7 +39,10 @@ def decode(path: Path):
         try:
             t, enc = b.decode("utf-8"), "utf-8"
         except UnicodeDecodeError:
-            t, enc = b.decode("cp1252"), "cp1252"
+            try:
+                t, enc = b.decode("cp1252"), "cp1252"
+            except UnicodeDecodeError:  # not cp1252 either (L06 invalid UTF-8, L04 binary)
+                t, enc = b.decode("utf-8", "replace"), "utf-8+U+FFFD"
     eols = []
     if "\r\n" in t:
         eols.append("CRLF")

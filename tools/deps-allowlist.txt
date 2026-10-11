@@ -9,6 +9,7 @@ atk-sys
 atoi_simd
 base64
 bitflags
+block-buffer
 block2
 brotli
 brotli-decompressor
@@ -28,15 +29,18 @@ core-foundation-sys
 core-graphics
 core-graphics-types
 core_detect
+cpufeatures
 crc32fast
 crossbeam-channel
 crossbeam-utils
+crypto-common
 csv
 csv-core
 ctor
 dbus
 debug_unsafe
 deranged
+digest
 dirs
 dirs-sys
 dispatch2
@@ -45,6 +49,7 @@ dpi
 dunce
 embed_plist
 encoding_rs
+enumflags2
 equivalent
 erased-serde
 fast-float2
@@ -68,6 +73,7 @@ gdk-sys
 gdkwayland-sys
 gdkx11
 gdkx11-sys
+generic-array
 getrandom
 gio
 gio-sys
@@ -100,6 +106,8 @@ keyboard-types
 libc
 libdbus-sys
 litemap
+llama-cpp-2
+llama-cpp-sys-2
 lock_api
 log
 memchr
@@ -149,6 +157,7 @@ serde_json
 serde_spanned
 serde_with
 serialize-to-javascript
+sha2
 simd-adler32
 simdutf8
 siphasher
@@ -180,6 +189,7 @@ tracing
 tracing-core
 typed-path
 typeid
+typenum
 unicode-normalization
 unicode-segmentation
 url

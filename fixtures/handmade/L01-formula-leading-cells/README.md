@@ -1,0 +1,1 @@
+Names, sites and notes starting with =, +, -, @, tab or CR ('=Mike Baker', '+1420 Johnson St', '=SUM(D2:D9)', '\rcall Rob') are plain text: kept exactly (tab/CR trimmed), flags unchanged; export_check: the Phase 5 export must write every such cell as a string, never a formula.

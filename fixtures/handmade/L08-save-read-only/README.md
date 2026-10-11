@@ -1,0 +1,1 @@
+Save-path test, not a reading test: this normal schedule reads cleanly (one double-booking); the Phase 5 save test exports it to a read-only location and expects error save_failed with a clear message, no crash and no partial file.
