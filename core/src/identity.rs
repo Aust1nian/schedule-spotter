@@ -74,9 +74,16 @@ impl Names {
             .display
             .entry(key.to_string())
             .or_insert_with(|| spelling.clone());
-        if spelling.chars().count() > entry.chars().count() {
+        let accents = |s: &str| s.chars().filter(|c| !c.is_ascii()).count();
+        if (spelling.chars().count(), accents(&spelling)) > (entry.chars().count(), accents(entry))
+        {
             *entry = spelling;
         }
+    }
+
+    /// Sets a group's name outright (matching has picked the canonical one).
+    pub fn set(&mut self, key: &str, name: &str) {
+        self.display.insert(key.to_string(), name.to_string());
     }
 
     pub fn display(&self, key: &str) -> String {

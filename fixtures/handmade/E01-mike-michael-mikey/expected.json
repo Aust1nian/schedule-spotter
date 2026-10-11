@@ -40,31 +40,18 @@
   ],
   "assignments_exact": true,
   "flags": [
-    {"type": "not_booked", "person": "Mikey Baker", "date": "2026-10-12"},
-    {"type": "not_booked", "person": "Mikey Baker", "date": "2026-10-13"},
-    {"type": "not_booked", "person": "Mikey Baker", "date": "2026-10-14"},
-    {"type": "not_booked", "person": "Mikey Baker", "date": "2026-10-16"}
+    {"type": "double_booked", "person": "Michael Baker", "date": "2026-10-15", "sites": ["1420 Johnson St", "Smith remodel"]}
   ],
   "flags_exact": true,
   "info": [],
   "info_exact": true,
-  "ask": [
-    {"type": "same_person", "a": "Mikey Baker", "b": "Michael Baker"}
-  ],
   "must_not_ask": [
     {"type": "pick_layout"},
     {"type": "column_role"},
     {"type": "cell_meaning"},
     {"type": "same_person", "a": "Mike Baker", "b": "Michael Baker"},
+    {"type": "same_person", "a": "Mikey Baker", "b": "Michael Baker"},
+    {"type": "same_person"},
     {"type": "same_site"}
-  ],
-  "answers": [
-    {"question": {"type": "same_person", "a": "Mikey Baker", "b": "Michael Baker"}, "answer": "yes"}
-  ],
-  "after_answers": {
-    "flags": [
-      {"type": "double_booked", "person": "Michael Baker", "date": "2026-10-15", "sites": ["1420 Johnson St", "Smith remodel"]}
-    ],
-    "info": []
-  }
+  ]
 }

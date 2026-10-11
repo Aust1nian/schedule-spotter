@@ -4,15 +4,18 @@ Run: uv run --with openpyxl==3.1.5 python3 build_E.py
 Matching readings encoded here (the pipeline's stage 7 rules, model off):
   - SAME, merged without asking: spellings equal after normalizing case,
     spacing, accents and punctuation; nickname-table pairs with the same surname
-    (Mike/Michael, Bob/Robert, Paco/Francisco, Chuy/Jesús, Nacho/Ignacio,
+    (Mike/Mikey/Michael, Bob/Robert, Paco/Francisco, Chuy/Jesús, Nacho/Ignacio,
     Pepe/José ...); a surname initial that fits exactly one roster person
-    ("Mike B", "M. Baker"); a lone first or last name that fits exactly one.
+    ("Mike B", "M. Baker"); a lone last name that fits exactly one.
   - DIFFERENT, never merged and never asked: conflicting initials (Mike B / Mike
     R); Sr vs Jr; same first name with different surnames; different first names
     with one surname; placeholders and subcontractors vs anyone.
-  - UNSURE, asked and kept separate until answered: typos (Micheal), a form the
-    nickname table doesn't list (Mikey), a lone first name that fits two people
-    (Chris), a dropped second surname (José García López / José García).
+  - UNSURE, asked and kept separate until answered: typos (Micheal), a lone
+    first name (Ana / Ana Ruiz: another Ana may exist), a lone first name that
+    fits two people (Chris), a dropped second surname (José García López /
+    José García).
+Changed 2026-10-11 (TEST_REPORT.md "Changed expectations"): E01 Mikey merges
+by the nickname table; E04 lone first name 'Ana' is asked.
 Questions name each side by its canonical spelling (the longest in its group
 after the deterministic merges). Deterministic merges go to the checker as
 `same_person` hints; answers are applied by the checker for `after_answers`.
@@ -50,16 +53,14 @@ def e01():
         (O, ["Dave Kim, Tom Reed"] * 5),
     ]
     assigns, _ = job_cells(rows, WEEK)
-    q = SP(MK, MB)
     exp = exact_info(expected(
         "E", "input.csv", layout="job_by_day", arrangement="single", assignments=assigns,
-        flags=[NB(MK, "10-12"), NB(MK, "10-13"), NB(MK, "10-14"), NB(MK, "10-16")], info=[],
-        ask=[q], must_not_ask=NO_ASK + [SP("Mike Baker", MB), NO_SITE_Q],
-        answers=[ANS(q, "yes")], after_answers={"flags": [DB(MB, "10-15", J, S)], "info": []}))
+        flags=[DB(MB, "10-15", J, S)], info=[],
+        must_not_ask=NO_ASK + [SP("Mike Baker", MB), SP(MK, MB), NO_PERSON_Q, NO_SITE_Q]))
     emit("E01", "mike-michael-mikey",
-         "Mike / Michael / Mikey (job x day): 'Mike Baker' = 'Michael Baker' by the nickname table and the same surname, merged without asking; 'Mikey' is not in the table, so 'Mikey Baker' vs 'Michael Baker' is asked (model off) and kept separate meanwhile (not booked Mon-Wed and Fri); answered yes, Michael Baker is double-booked Thursday at 1420 Johnson St and Smith remodel.",
+         "Mike / Michael / Mikey (job x day): 'Mike Baker' and 'Mikey Baker' = 'Michael Baker' by the nickname table and the same surname, merged without asking (shown as chips); merged, Michael Baker is double-booked Thursday at 1420 Johnson St and Smith remodel.",
          {"input.csv": csv_bytes(grid_lines(rows, "Job"))}, exp,
-         {"window": WEEK, "jobs": [j for j, _ in rows], "same_person": [["Mike Baker", MB]]})
+         {"window": WEEK, "jobs": [j for j, _ in rows], "same_person": [["Mike Baker", MB], [MK, MB]]})
 
 
 def e02():
@@ -110,13 +111,16 @@ def e04():
         (O, ["Luis Ortiz, Ana Ruiz", "Luis Ortiz, Ana", "Luis Ortiz, Ana Ruiz", "Ana Ruiz", "Luis Ortiz, Ana Ruiz"]),
     ]
     assigns, _ = job_cells(rows, WEEK)
-    pairs = [["Kim", "Dave Kim"], ["Ortiz", "Luis Ortiz"], ["Ana", "Ana Ruiz"]]
+    pairs = [["Kim", "Dave Kim"], ["Ortiz", "Luis Ortiz"]]
+    q = SP("Ana", "Ana Ruiz")
     exp = exact_info(expected(
         "E", "input.tsv", layout="job_by_day", arrangement="single", assignments=assigns,
-        flags=[DB("Luis Ortiz", "10-16", O, S)], info=[],
-        must_not_ask=NO_ASK + [SP(a, b) for a, b in pairs] + [NO_PERSON_Q, NO_SITE_Q]))
+        flags=[DB("Luis Ortiz", "10-16", O, S), NB("Ana", "10-12"), NB("Ana Ruiz", "10-13"),
+               NB("Ana", "10-14"), NB("Ana", "10-15"), NB("Ana", "10-16")], info=[],
+        ask=[q], must_not_ask=NO_ASK + [SP(a, b) for a, b in pairs] + [NO_SITE_Q],
+        answers=[ANS(q, "yes")], after_answers={"flags": [DB("Luis Ortiz", "10-16", O, S)], "info": []}))
     emit("E04", "last-name-only",
-         "Single-name spellings (job x day, .tsv): last name only 'Kim' and 'Ortiz', and first name only 'Ana', each fit exactly one roster person and merge without asking: Dave Kim is booked Wednesday, Ana Ruiz Tuesday, and Luis Ortiz is booked Thursday and double-booked Friday (Oak Ridge Apts and Smith remodel).",
+         "Single-name spellings (job x day, .tsv): last name only 'Kim' and 'Ortiz' each fit exactly one roster person and merge without asking (Dave Kim booked Wednesday; Luis Ortiz booked Thursday and double-booked Friday at Oak Ridge Apts and Smith remodel). First name only 'Ana' is asked (another Ana may exist) and kept separate meanwhile; answered yes, Ana Ruiz is booked Tuesday.",
          {"input.tsv": csv_bytes(grid_lines(rows, "Job"), delim="\t")}, exp,
          {"window": WEEK, "jobs": [j for j, _ in rows], "same_person": pairs})
 

@@ -38,6 +38,13 @@ pub fn is_company(text: &str) -> bool {
     if toks.iter().any(|t| is_legal_suffix(t)) && toks.len() >= 2 {
         return true;
     }
+    if toks.len() >= 2
+        && toks
+            .last()
+            .is_some_and(|t| crate::lexicon::is_trade_word(t))
+    {
+        return true;
+    }
     toks.len() >= 2
         && toks.last().is_some_and(|t| is_company_token(t))
         && !is_first_name(&toks[0])

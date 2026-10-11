@@ -409,6 +409,43 @@ pub fn is_company_token(token: &str) -> bool {
     )
 }
 
+/// Trade words that make a name a company on their own: "Ward Plumbing" is
+/// a subcontractor even though Ward is also a first name.
+pub fn is_trade_word(token: &str) -> bool {
+    matches!(
+        token,
+        "electric"
+            | "electrical"
+            | "plumbing"
+            | "hvac"
+            | "mechanical"
+            | "roofing"
+            | "concrete"
+            | "drywall"
+            | "painting"
+            | "construction"
+            | "contractors"
+            | "contracting"
+            | "builders"
+            | "excavation"
+            | "excavating"
+            | "landscaping"
+            | "flooring"
+            | "insulation"
+            | "masonry"
+            | "welding"
+            | "heating"
+            | "cooling"
+            | "solar"
+            | "sprinkler"
+            | "sprinklers"
+            | "paving"
+            | "fabrication"
+            | "glazing"
+            | "framing"
+    )
+}
+
 /// The strong company markers: a name with one of these is a company.
 pub fn is_legal_suffix(token: &str) -> bool {
     matches!(
@@ -512,6 +549,23 @@ pub enum HeaderRole {
 
 pub fn header_role(key: &str) -> Option<HeaderRole> {
     use HeaderRole::*;
+    // "Job #" is a job number, not "Job": check before trimming the '#'.
+    let raw = key.trim_end_matches([':', ' ']).trim();
+    if matches!(
+        raw,
+        "job #"
+            | "job#"
+            | "#"
+            | "no."
+            | "job no."
+            | "job no"
+            | "job number"
+            | "job num"
+            | "wo #"
+            | "po #"
+    ) {
+        return Some(JobNumber);
+    }
     let key = key.trim_end_matches([':', '.', '#', ' ']).trim();
     Some(match key {
         "name" | "names" | "employee" | "employees" | "emp" | "employee name" | "tech"

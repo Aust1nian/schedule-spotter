@@ -206,3 +206,28 @@ Added here:
 **2026-10-11 · Speed.**
 - The 50,000-row file read in 16.9 s because a per-row count was recomputed once per cell on the transposed, 50,000-column view. Now 1.1 s.
 - A typical 60 × 25 × 4-week file takes 38 ms on this machine, against the spec's 200 ms target on the gating runner. CI timing is measured in Phase 4's benchmark.
+
+## Phase 3
+
+**2026-10-11 · Matching rules (stage 7), tuned against the generator's truth.** The full rules are in `fixtures/FORMAT.md` under "Matching". Decisions the data forced:
+- **Lone first names are asked, never merged.** Merging a unique lone first name produced 4 false merges in 2,000 generated schedules, for example "Guadalupe" was another Guadalupe, not Guadalupe Acosta. Unique lone last names produced none, so they merge with a chip.
+- **The nickname table is conservative.** Cross-language guesses (Joe→José, Gary→Gerald, Rick→Eric and the like) caused false merges and were removed. The spec's Spanish pairs stay, as do standard diminutives like Mikey for Michael.
+- **Two bare first names related only by nickname are asked.** "Jeff" / "Jeffrey" may be two people in a first-names-only schedule.
+- **An initial fits a real first name, or any first name followed by a surname.** "S." is not "Swanson", but "R. Singh" may be "Ravi Singh". "R" also fits "Bob", through Robert.
+- **"Less specific" is measured by how much of the name is spelled out**, not by string length. A pair where each side abbreviates what the other spells out is asked.
+- **Trade words make a company even after a first name.** "Ward Plumbing" is a subcontractor.
+- **"Job #" headers are job numbers**, recognized before the '#' is trimmed.
+
+**2026-10-11 · Answers override every rule.** Answering "no" to a chip undoes that merge. Questions name each side by its group's canonical spelling after silent merges. Answers also apply to the reading stage:
+- which sheet;
+- which layout;
+- a weekday that contradicts its date ("no" uses the written weekday);
+- fill-down ("no" leaves the blanks);
+- column roles.
+
+**2026-10-11 · Two fixture expectations changed (spec: "unless the expectation itself was wrong").** E01 and E04 encoded matching rules that this phase replaced on evidence. See TEST_REPORT.md "Changed expectations".
+
+**2026-10-11 · Phase 3 gate: passed.**
+- Handmade fixtures: 124/124 on the script tier, plus 3 model-tier free-text pastes left for Phase 4.
+- Generated seeds 0–1,999: 0 false merges in 3,152 merges, and 0 red flags on clean schedules. CI enforces both.
+- Model-off baseline: 1.21 questions per file, and 64% of files ask nothing.

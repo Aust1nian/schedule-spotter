@@ -302,7 +302,8 @@ fn person_fit(a: &PersonName, b: &PersonName) -> Fit {
     if a.kind != b.kind || a.kind != EntityKind::Employee {
         return Fit::Different;
     }
-    // A lone first or last name may be anyone with that name: ask.
+    // A lone first name may be anyone with that first name: ask. (A lone
+    // last name that fits one person is safer; it merges below.)
     let lone = a.rest.is_empty() || b.rest.is_empty();
     match first_names_fit(a, b) {
         Some(first) => {
@@ -345,11 +346,9 @@ fn person_fit(a: &PersonName, b: &PersonName) -> Fit {
             };
             let typo = jaro_winkler(&a.first, &b.first) >= 0.85
                 && matches!(surnames_fit(&a.rest, &b.rest), Fit::Exact | Fit::Partial);
-            if last_only(a, b)
-                || last_only(b, a)
-                || typo
-                || (lone && jaro_winkler(&a.folded, &b.folded) >= 0.85)
-            {
+            if last_only(a, b) || last_only(b, a) {
+                Fit::Partial // merges only if one person has that surname
+            } else if typo || (lone && jaro_winkler(&a.folded, &b.folded) >= 0.85) {
                 Fit::Unsure
             } else {
                 Fit::Different
@@ -535,6 +534,169 @@ pub fn match_entities(reading: &Reading, answers: &Answers, tiebreak: &dyn Tiebr
     m
 }
 
+/// What the rules decided about the spellings of one kind (people or sites).
+#[derive(Default)]
+struct Decisions {
+    /// Same by rule, with the reason.
+    exact: Vec<(usize, usize, MergeReason)>,
+    /// Less specific spelling → the spellings it could be.
+    partial: BTreeMap<usize, Vec<usize>>,
+    unsure: Vec<(usize, usize)>,
+}
+
+/// Turns rule decisions, answers and the model into groups, merges and
+/// questions. The owner can undo any rule merge (answering "no" to its chip,
+/// `same_person {from, into}`); questions name each side by its group's
+/// canonical spelling.
+struct Resolved {
+    root: Vec<usize>,
+    display: Vec<String>,
+    merges: Vec<Merge>,
+    questions: Vec<Question>,
+}
+
+fn resolve(
+    kind: MergeKind,
+    names: &[String],
+    d: Decisions,
+    answers: &Answers,
+    model: &dyn Fn(&str, &str) -> Verdict,
+) -> Resolved {
+    let n = names.len();
+    let ask = |a: &str, b: &str| match kind {
+        MergeKind::Person => Question::SamePerson {
+            a: a.to_string(),
+            b: b.to_string(),
+        },
+        MergeKind::Site => Question::SameSite {
+            a: a.to_string(),
+            b: b.to_string(),
+        },
+    };
+    let said = |a: &str, b: &str| answered(answers, &ask(a, b));
+    let display_of = |uf: &mut UnionFind| -> Vec<String> {
+        let mut best: HashMap<usize, String> = HashMap::new();
+        for (i, name) in names.iter().enumerate() {
+            let r = uf.find(i);
+            let e = best.entry(r).or_insert_with(|| name.clone());
+            if better_spelling(name, e) {
+                *e = name.clone();
+            }
+        }
+        (0..n).map(|i| best[&uf.find(i)].clone()).collect()
+    };
+
+    // Rule merges, first without and then with the owner's undos.
+    let rule_unions = |uf: &mut UnionFind,
+                       undone: &BTreeSet<(usize, usize)>|
+     -> Vec<(usize, usize, MergeReason)> {
+        let mut done = Vec::new();
+        for &(i, j, reason) in &d.exact {
+            if !undone.contains(&(i, j)) {
+                uf.union(i, j);
+                done.push((i, j, reason));
+            }
+        }
+        for (less, mores) in &d.partial {
+            let mut groups: Vec<usize> = mores.iter().map(|x| uf.find(*x)).collect();
+            groups.sort_unstable();
+            groups.dedup();
+            if groups.len() == 1 && !undone.contains(&(*less, mores[0])) {
+                uf.union(groups[0], *less);
+                done.push((*less, mores[0], MergeReason::OnlyMatch));
+            }
+        }
+        done
+    };
+    let mut first = UnionFind::new(n);
+    let tentative = rule_unions(&mut first, &BTreeSet::new());
+    let shown = display_of(&mut first);
+    let undone: BTreeSet<(usize, usize)> = tentative
+        .iter()
+        .filter(|(i, j, _)| {
+            [(i, j), (j, i)].iter().any(|(x, y)| {
+                said(&names[**x], &shown[**x]) == Some(false)
+                    || said(&names[**x], &names[**y]) == Some(false)
+            })
+        })
+        .map(|(i, j, _)| (*i, *j))
+        .collect();
+    let mut uf = UnionFind::new(n);
+    let mut unions = rule_unions(&mut uf, &undone);
+
+    // Unsure pairs (and partials that fit several groups) between groups.
+    let mut pending: Vec<(usize, usize)> = d.unsure.clone();
+    for (less, mores) in &d.partial {
+        let mut groups: Vec<usize> = mores.iter().map(|x| uf.find(*x)).collect();
+        groups.sort_unstable();
+        groups.dedup();
+        if groups.len() > 1 || undone.contains(&(*less, mores[0])) {
+            pending.extend(mores.iter().map(|m| (*less, *m)));
+        }
+    }
+    let mut questions = Vec::new();
+    let mut seen: BTreeSet<(usize, usize)> = BTreeSet::new();
+    for (i, j) in pending {
+        let shown = display_of(&mut uf);
+        let (gi, gj) = (uf.find(i), uf.find(j));
+        if gi == gj || !seen.insert((gi.min(gj), gi.max(gj))) {
+            continue;
+        }
+        let (a, b) = (&shown[i], &shown[j]);
+        match said(a, b).or_else(|| said(&names[i], &names[j])) {
+            Some(true) => {
+                uf.union(i, j);
+                unions.push((i, j, MergeReason::Answered));
+                continue;
+            }
+            Some(false) => continue,
+            None => {}
+        }
+        match model(a, b) {
+            Verdict::Same => {
+                uf.union(i, j);
+                unions.push((i, j, MergeReason::Model));
+            }
+            Verdict::Different => {}
+            Verdict::Unsure => {
+                let q = ask(a, b);
+                if !questions.contains(&q) {
+                    questions.push(q);
+                }
+            }
+        }
+    }
+
+    let display = display_of(&mut uf);
+    let root: Vec<usize> = (0..n).map(|i| uf.find(i)).collect();
+    let mut merges: Vec<Merge> = Vec::new();
+    for (i, j, reason) in unions {
+        for x in [i, j] {
+            if names[x] != display[x] && !merges.iter().any(|g| g.from == names[x]) {
+                merges.push(Merge {
+                    kind,
+                    from: names[x].clone(),
+                    into: display[x].clone(),
+                    reason,
+                });
+            }
+        }
+    }
+    Resolved {
+        root,
+        display,
+        merges,
+        questions,
+    }
+}
+
+/// The canonical spelling of a group: the longest; on a tie, the one with
+/// accents ("José García" over "Jose Garcia"), then the first seen.
+fn better_spelling(candidate: &str, current: &str) -> bool {
+    let accents = |s: &str| s.chars().filter(|c| !c.is_ascii()).count();
+    (candidate.chars().count(), accents(candidate)) > (current.chars().count(), accents(current))
+}
+
 fn match_people(reading: &Reading, answers: &Answers, tiebreak: &dyn Tiebreaker, m: &mut Matching) {
     // Identities by key, in first-seen order; and which identities share a
     // cell (two names in one cell are two people).
@@ -561,141 +723,67 @@ fn match_people(reading: &Reading, answers: &Answers, tiebreak: &dyn Tiebreaker,
             cells.entry(a.source).or_default().insert(person_key(p));
         }
     }
-    let together: BTreeSet<(String, String)> = cells
+    let together: BTreeSet<(&str, &str)> = cells
         .values()
         .flat_map(|ks| {
             let ks: Vec<&String> = ks.iter().collect();
             let mut pairs = Vec::new();
             for i in 0..ks.len() {
-                for j in i + 1..ks.len() {
-                    pairs.push((ks[i].clone(), ks[j].clone()));
-                    pairs.push((ks[j].clone(), ks[i].clone()));
+                for j in 0..ks.len() {
+                    if i != j {
+                        pairs.push((ks[i].as_str(), ks[j].as_str()));
+                    }
                 }
             }
             pairs
         })
         .collect();
 
-    let parsed: Vec<PersonName> = order
-        .iter()
-        .map(|k| parse_person(&spellings.display(k)))
-        .collect();
-    let n = order.len();
-    let mut uf = UnionFind::new(n);
-    let mut reasons: BTreeMap<(usize, usize), MergeReason> = BTreeMap::new();
-    let mut partial: BTreeMap<usize, Vec<usize>> = BTreeMap::new();
-    let mut unsure: Vec<(usize, usize)> = Vec::new();
     let names: Vec<String> = order.iter().map(|k| spellings.display(k)).collect();
-    let ask = |i: usize, j: usize| Question::SamePerson {
-        a: names[i].clone(),
-        b: names[j].clone(),
-    };
-
+    let parsed: Vec<PersonName> = names.iter().map(|n| parse_person(n)).collect();
+    let n = order.len();
+    let mut d = Decisions::default();
     for i in 0..n {
         for j in i + 1..n {
-            if together.contains(&(order[i].clone(), order[j].clone()))
+            if together.contains(&(order[i].as_str(), order[j].as_str()))
                 || !person_candidates(&parsed[i], &parsed[j])
             {
                 continue;
             }
-            let fit = person_fit(&parsed[i], &parsed[j]);
-            // The owner's answer wins over every rule.
-            if let Some(yes) =
-                answered(answers, &ask(i, j)).or_else(|| answered(answers, &ask(j, i)))
-            {
-                if yes {
-                    uf.union(i, j);
-                    reasons.insert((i, j), MergeReason::Answered);
-                }
-                continue;
-            }
-            match fit {
+            match person_fit(&parsed[i], &parsed[j]) {
                 Fit::Exact => {
-                    uf.union(i, j);
                     let reason = if parsed[i].first == parsed[j].first {
                         MergeReason::Spelling
                     } else {
                         MergeReason::Nickname
                     };
-                    reasons.insert((i, j), reason);
+                    d.exact.push((i, j, reason));
                 }
                 Fit::Partial => {
-                    // Record against the less specific spelling.
                     let less = if specificity(&parsed[i]) < specificity(&parsed[j]) {
                         i
                     } else {
                         j
                     };
                     let more = if less == i { j } else { i };
-                    partial.entry(less).or_default().push(more);
+                    d.partial.entry(less).or_default().push(more);
                 }
-                Fit::Unsure => unsure.push((i, j)),
+                Fit::Unsure => d.unsure.push((i, j)),
                 Fit::Different => {}
             }
         }
     }
-    // A less specific spelling merges only if it fits exactly one person.
-    for (less, mores) in &partial {
-        let mut groups: Vec<usize> = mores.iter().map(|x| uf.find(*x)).collect();
-        groups.sort_unstable();
-        groups.dedup();
-        if groups.len() == 1 {
-            uf.union(groups[0], *less);
-            reasons.insert(
-                (mores[0].min(*less), mores[0].max(*less)),
-                MergeReason::OnlyMatch,
-            );
-        } else {
-            for more in mores {
-                unsure.push((*less, *more));
-            }
-        }
-    }
-    // Unsure pairs: the model, then the owner.
-    let roster: Vec<String> = names.clone();
-    for (i, j) in unsure {
-        if uf.find(i) == uf.find(j) {
-            continue;
-        }
-        match tiebreak.same_person(&names[i], &names[j], &roster) {
-            Verdict::Same => {
-                uf.union(i, j);
-                reasons.insert((i.min(j), i.max(j)), MergeReason::Model);
-            }
-            Verdict::Different => {}
-            Verdict::Unsure => {
-                let q = ask(i, j);
-                if !m.questions.contains(&q) {
-                    m.questions.push(q);
-                }
-            }
-        }
-    }
-
-    // Identity of each spelling: its group's root key; name: the longest.
+    let roster = names.clone();
+    let r = resolve(MergeKind::Person, &names, d, answers, &|a, b| {
+        tiebreak.same_person(a, b, &roster)
+    });
     for i in 0..n {
-        let root = uf.find(i);
-        m.person_of.insert(order[i].clone(), order[root].clone());
-        m.people.add(&order[root], &names[i]);
+        m.person_of
+            .insert(order[i].clone(), order[r.root[i]].clone());
+        m.people.set(&order[r.root[i]], &r.display[i]);
     }
-    for ((i, j), reason) in reasons {
-        let into = m.people.display(&order[uf.find(i)]);
-        for x in [i, j] {
-            if names[x] != into
-                && !m
-                    .merges
-                    .iter()
-                    .any(|g| g.kind == MergeKind::Person && g.from == names[x])
-            {
-                m.merges.push(Merge {
-                    kind: MergeKind::Person,
-                    from: names[x].clone(),
-                    into: into.clone(),
-                    reason,
-                });
-            }
-        }
-    }
+    m.merges.extend(r.merges);
+    m.questions.extend(r.questions);
 }
 
 fn match_sites(reading: &Reading, answers: &Answers, tiebreak: &dyn Tiebreaker, m: &mut Matching) {
@@ -721,63 +809,28 @@ fn match_sites(reading: &Reading, answers: &Answers, tiebreak: &dyn Tiebreaker, 
     let names: Vec<String> = order.iter().map(|k| spellings.display(k)).collect();
     let parsed: Vec<SiteName> = names.iter().map(|n| parse_site(n)).collect();
     let n = order.len();
-    let mut uf = UnionFind::new(n);
-    let mut reasons: BTreeMap<(usize, usize), MergeReason> = BTreeMap::new();
-    let mut unsure = Vec::new();
-    let ask = |i: usize, j: usize| Question::SameSite {
-        a: names[i].clone(),
-        b: names[j].clone(),
-    };
+    let mut d = Decisions::default();
     for i in 0..n {
         for j in i + 1..n {
-            if let Some(yes) =
-                answered(answers, &ask(i, j)).or_else(|| answered(answers, &ask(j, i)))
-            {
-                if yes {
-                    uf.union(i, j);
-                    reasons.insert((i, j), MergeReason::Answered);
-                }
-                continue;
-            }
             match site_fit(&parsed[i], &parsed[j]) {
-                (Fit::Exact, reason) => {
-                    uf.union(i, j);
-                    reasons.insert((i, j), reason);
-                }
-                (Fit::Unsure, _) => unsure.push((i, j)),
+                (Fit::Exact, reason) => d.exact.push((i, j, reason)),
+                (Fit::Unsure, _) => d.unsure.push((i, j)),
                 _ => {}
             }
         }
     }
-    for (i, j) in unsure {
-        if uf.find(i) == uf.find(j) {
-            continue;
-        }
-        match tiebreak.same_site(&names[i], &names[j], &names) {
-            Verdict::Same => {
-                uf.union(i, j);
-                reasons.insert((i.min(j), i.max(j)), MergeReason::Model);
-            }
-            Verdict::Different => {}
-            Verdict::Unsure => {
-                let q = ask(i, j);
-                if !m.questions.contains(&q) {
-                    m.questions.push(q);
-                }
-            }
-        }
-    }
+    let r = resolve(MergeKind::Site, &names, d, answers, &|a, b| {
+        tiebreak.same_site(a, b, &names)
+    });
     for i in 0..n {
-        let root = uf.find(i);
-        m.site_of.insert(order[i].clone(), order[root].clone());
-        m.sites.add(&order[root], &names[i]);
+        m.site_of.insert(order[i].clone(), order[r.root[i]].clone());
+        m.sites.set(&order[r.root[i]], &r.display[i]);
     }
-    // Spellings within one key ("St" / "Street") are merges too: the chip
-    // shows them.
+    // Spellings within one key ("St" / "Street") are merges too: their chip.
     for (k, raws) in &raw_by_key {
-        let into = m.sites.display(&m.site_of[k]);
+        let i = order.iter().position(|o| o == k).expect("key seen");
         for raw in raws {
-            if *raw != into
+            if *raw != r.display[i]
                 && !m
                     .merges
                     .iter()
@@ -786,30 +839,22 @@ fn match_sites(reading: &Reading, answers: &Answers, tiebreak: &dyn Tiebreaker, 
                 m.merges.push(Merge {
                     kind: MergeKind::Site,
                     from: raw.clone(),
-                    into: into.clone(),
+                    into: r.display[i].clone(),
                     reason: MergeReason::Address,
                 });
             }
         }
     }
-    for ((i, j), reason) in reasons {
-        let into = m.sites.display(&order[uf.find(i)]);
-        for x in [i, j] {
-            if names[x] != into
-                && !m
-                    .merges
-                    .iter()
-                    .any(|g| g.kind == MergeKind::Site && g.from == names[x])
-            {
-                m.merges.push(Merge {
-                    kind: MergeKind::Site,
-                    from: names[x].clone(),
-                    into: into.clone(),
-                    reason,
-                });
-            }
+    for g in r.merges {
+        if !m
+            .merges
+            .iter()
+            .any(|x| x.kind == g.kind && x.from == g.from)
+        {
+            m.merges.push(g);
         }
     }
+    m.questions.extend(r.questions);
 }
 
 #[cfg(test)]
@@ -833,7 +878,7 @@ mod tests {
         assert_eq!(fit("Pepe García", "José García"), Fit::Exact);
         assert_eq!(fit("Mike B", "Michael Baker"), Fit::Partial);
         assert_eq!(fit("M. Baker", "Michael Baker"), Fit::Partial);
-        assert_eq!(fit("Baker", "Michael Baker"), Fit::Unsure);
+        assert_eq!(fit("Baker", "Michael Baker"), Fit::Partial);
         assert_eq!(fit("Mike", "Michael Baker"), Fit::Unsure);
         assert_eq!(fit("R Singh", "Robert S"), Fit::Unsure);
         assert_eq!(fit("R Singh", "Ravi Singh"), Fit::Partial);

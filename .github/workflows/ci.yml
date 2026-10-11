@@ -33,7 +33,7 @@ jobs:
       - name: generator seeds 0-1999 (assignment recall >= 99%)
         run: |
           uv run --project tools/gen spotter-gen --seeds 0-1999 --out "$RUNNER_TEMP/gen"
-          cargo run --release -q -p spotter-core --bin spotter-check -- generated "$RUNNER_TEMP/gen" --min-recall 0.99 --require-clean
+          cargo run --release -q -p spotter-core --bin spotter-check -- generated "$RUNNER_TEMP/gen" --min-recall 0.99 --require-clean --require-no-false-merges
       - name: generator self-checks
         run: uv run --project tools/gen pytest -q tools/gen/tests
       - name: holdout stays sealed (verified, never run)

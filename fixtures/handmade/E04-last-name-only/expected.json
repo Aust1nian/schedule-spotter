@@ -45,19 +45,34 @@
   ],
   "assignments_exact": true,
   "flags": [
-    {"type": "double_booked", "person": "Luis Ortiz", "date": "2026-10-16", "sites": ["Oak Ridge Apts", "Smith remodel"]}
+    {"type": "double_booked", "person": "Luis Ortiz", "date": "2026-10-16", "sites": ["Oak Ridge Apts", "Smith remodel"]},
+    {"type": "not_booked", "person": "Ana", "date": "2026-10-12"},
+    {"type": "not_booked", "person": "Ana Ruiz", "date": "2026-10-13"},
+    {"type": "not_booked", "person": "Ana", "date": "2026-10-14"},
+    {"type": "not_booked", "person": "Ana", "date": "2026-10-15"},
+    {"type": "not_booked", "person": "Ana", "date": "2026-10-16"}
   ],
   "flags_exact": true,
   "info": [],
   "info_exact": true,
+  "ask": [
+    {"type": "same_person", "a": "Ana", "b": "Ana Ruiz"}
+  ],
   "must_not_ask": [
     {"type": "pick_layout"},
     {"type": "column_role"},
     {"type": "cell_meaning"},
     {"type": "same_person", "a": "Kim", "b": "Dave Kim"},
     {"type": "same_person", "a": "Ortiz", "b": "Luis Ortiz"},
-    {"type": "same_person", "a": "Ana", "b": "Ana Ruiz"},
-    {"type": "same_person"},
     {"type": "same_site"}
-  ]
+  ],
+  "answers": [
+    {"question": {"type": "same_person", "a": "Ana", "b": "Ana Ruiz"}, "answer": "yes"}
+  ],
+  "after_answers": {
+    "flags": [
+      {"type": "double_booked", "person": "Luis Ortiz", "date": "2026-10-16", "sites": ["Oak Ridge Apts", "Smith remodel"]}
+    ],
+    "info": []
+  }
 }

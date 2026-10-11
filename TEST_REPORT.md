@@ -85,9 +85,42 @@ Slowest: J05, 50,000 rows capped to the first four weeks, in 1.1 s. J04, 2,000 r
 - **Flag precision and recall** before stage 7, all types together: assigned_while_off 86/91%, double_booked 89/91%, unstaffed 100/64%.
 - **not_booked precision is 7%.** Of its 40,700 extra flags, 40,300 are in the 1,151 cases whose names are spelled two ways (nicknames, initials). Each spelling is still a separate person who is idle on the other spelling's days. Stage 7 matching (Phase 3) is what fixes this.
 
+## Phase 3 — matching and the ask-the-user path (gate passed 2026-10-11)
+
+### Handmade fixtures
+
+124/124 script tier, A–M. E (14) and F (10) are new, from an independent author. The three model-tier free-text pastes are left for Phase 4.
+
+### Generated seeds 0–1,999, model off
+
+| Measure | Value |
+|---|---|
+| False merges | **0** of 3,152 merges (gate: zero) |
+| Clean schedules with a red flag | 0 of 392 |
+| Questions per file (baseline) | 1.21 mean; 1,275 of 2,000 files ask nothing |
+
+Flags, before any answers and after an owner answers every same-person/same-site question correctly:
+
+| Flag | Recall before | Precision before | Recall after | Precision after |
+|---|---|---|---|---|
+| assigned_while_off | 92.5% | 94.5% | 95.9% | 96.7% |
+| double_booked | 94.2% | 94.4% | 98.3% | 96.7% |
+| not_booked | 84.1% | 15.2% | 84.5% | 67.6% |
+| unstaffed | 100% | 78.8% | 100% | 87.3% |
+
+Before answers, not_booked stays low because each spelling of a person who is asked about counts as idle on the other spelling's days. The gaps that remain after answers come from reading, not matching:
+- crew lists in unusual shapes;
+- calendar entries without separators;
+- a few layouts misread.
+
+Phase 4's model tier and the holdout will show whether those need more work.
+
 ## Changed expectations
 
-None.
+| Fixture | Was | Now | Reason |
+|---|---|---|---|
+| E01-mike-michael-mikey | "Mikey Baker" asked as not in the nickname table | merged with a chip, like "Mike Baker" | The table includes standard diminutives (Mikey, Bobby, Jimmy …), and the spec's own row E groups "Mike / Michael / Mikey". The expectation came from reading the spec's parenthetical list as the whole table. |
+| E04-last-name-only | lone first name "Ana" merged into Ana Ruiz | asked; "yes" gives the old result | On 2,000 generated schedules, merging unique lone first names caused 4 false merges (a different person with the same first name), which breaks the Phase 3 gate. Unique lone last names caused none and still merge. |
 
 ## Known failures
 

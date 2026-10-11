@@ -118,7 +118,7 @@ One record per person per date, as written in the file:
 {"type": "unstaffed", "site": "Smith remodel", "date": "2026-10-14"}
 ```
 
-- **`person`** is the canonical display name after merges: the longest name among the merged spellings.
+- **`person`** is the canonical display name after merges: the longest name among the merged spellings. On a tie, the spelling with accents wins ("José García" over "Jose Garcia"), then the one seen first.
 - **`sites`** are canonical site names, compared as a set. A merged site's canonical name is likewise its longest spelling.
 
 ### Info item
@@ -145,6 +145,36 @@ Matched by `type` plus every field given. Text comparison is case-insensitive. `
 | `column_role` | `header` (optional) | Column-role scores tie (model task T4; asked when the model is off) |
 | `cell_meaning` | `text` | A cell can't be classified (T3) |
 | `paste_as_table` | | Free-form pasted text with the model off: the app asks for a table instead |
+
+## Matching (stage 7)
+
+**Merged without asking, each shown as a "treating A as B" chip:**
+- Spellings that differ only in case, spacing, accents or punctuation.
+- Nickname-table equivalents with the same surname (Mike / Mikey / Michael Baker).
+- A spelling with initials that fits exactly one person ("Mike B", "M. Baker").
+- A lone last name that fits exactly one person ("Kim" → Dave Kim).
+- Sites: street-suffix and direction spellings, and a job number in front of the same name.
+
+**Asked, kept separate until answered:**
+- A lone first name ("Ana" / "Ana Ruiz"). Another Ana may exist.
+- A name or initials that fit two or more people.
+- A typo ("Micheal").
+- A dropped second surname.
+- Two spellings where each abbreviates what the other spells out ("R Singh" / "Robert S").
+- Sites: look-alike addresses with different house numbers, a street without a number vs a full address, and site names sharing a distinctive word.
+
+**Never merged, never asked:**
+- Conflicting initials or surnames.
+- Sr vs Jr.
+- Two names in one cell.
+- Placeholders or subcontractors vs anyone.
+- Different store or job numbers on the same name ("Walgreens #3299" / "#1087").
+
+**How questions name things.** A question names each side by its group's canonical spelling after the silent merges: "Mikey Baker" vs "Michael Baker", not a shorter spelling of either.
+
+**Answers.**
+- "Yes" merges and "no" keeps the two apart. Either one overrides the rules.
+- Answering "no" to a chip (`same_person {from, into}`) undoes that merge.
 
 ## Flag semantics (Phase 2 rules)
 

@@ -25,7 +25,7 @@ other plausible reading would decide differently):
     not compared with the next date's records (fixtures keep the next morning's
     work after the shift ends, so the other reading agrees).
   - An AM or PM part is the half day 00:00-12:00 / 12:00-24:00. "half" (which
-    half unknown) behaves like no part: it conflicts with anything that day.
+    half unknown) clashes with nothing that has its own part or time (FORMAT.md).
   - duplicate_entry: two records at one site whose times or parts overlap
     (no time and no part counts as overlapping). AM + PM at one site is a full
     day, not a duplicate.
@@ -130,9 +130,12 @@ def interval(rec):
 
 
 def overlaps(a, b) -> bool:
+    untimed = lambda r: not r.get("start") and not r.get("part")
+    if untimed(a) or untimed(b):
+        return True  # an entry with no time and no part conflicts with anything that day
     ia, ib = interval(a), interval(b)
     if ia is None or ib is None:
-        return True  # an entry with no time and no part conflicts with anything that day
+        return False  # "half": which half is unknown, so it clashes with no timed or parted entry
     return ia[0] < ib[1] and ib[0] < ia[1]
 
 
