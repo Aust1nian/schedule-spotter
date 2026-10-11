@@ -5,7 +5,7 @@
 set -euo pipefail
 deb="$1"
 out="${2:-$PWD/selftest.json}"
-sudo dpkg -i "$deb" >/dev/null
+sudo apt-get install -y --no-install-recommends "$(realpath "$deb")" >/dev/null
 bin="$(dpkg -L schedule-spotter | grep -E '^/usr/bin/' | head -1)"
 sockets="$(mktemp)"
 export WEBKIT_DISABLE_DMABUF_RENDERER=1

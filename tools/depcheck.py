@@ -47,7 +47,7 @@ DENY_JS = ["new WebSocket", "EventSource(", "sendBeacon", "XMLHttpRequest"]
 
 def shipped_crates(target: str) -> set[str]:
     out = subprocess.run(
-        ["cargo", "tree", "-p", "schedule-spotter", "--target", target, "-e", "normal",
+        ["cargo", "tree", "-p", "schedule-spotter", "--target", target, "-e", "normal,no-proc-macro",
          "--prefix", "none", "--format", "{p}"],
         cwd=ROOT, check=True, capture_output=True, text=True,
     ).stdout
