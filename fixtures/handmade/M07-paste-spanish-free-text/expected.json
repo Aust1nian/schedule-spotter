@@ -1,0 +1,32 @@
+{
+  "category": "M",
+  "tier": "model",
+  "input": "paste.txt",
+  "paste": true,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "assignments": [
+    {"person": "José", "date": "2026-10-12", "site": "Johnson"},
+    {"person": "Luis", "date": "2026-10-12", "site": "Johnson"},
+    {"person": "Pedro", "date": "2026-10-12", "site": "Smith"},
+    {"person": "José", "date": "2026-10-13", "site": "Smith"},
+    {"person": "Luis", "date": "2026-10-13", "site": "Oak Ridge"},
+    {"person": "Pedro", "date": "2026-10-13", "site": "Oak Ridge"},
+    {"person": "Luis", "date": "2026-10-14", "site": "Oak Ridge"},
+    {"person": "Pedro", "date": "2026-10-14", "site": "Oak Ridge"},
+    {"person": "José", "date": "2026-10-14", "site": "Smith"},
+    {"person": "Luis", "date": "2026-10-14", "site": "Smith"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Luis", "date": "2026-10-14", "sites": ["Oak Ridge", "Smith"]}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "ask": [
+    {"type": "paste_as_table"}
+  ]
+}

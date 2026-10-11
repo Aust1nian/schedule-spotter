@@ -1,0 +1,3 @@
+Lunes: José y Luis en Johnson, Pedro en Smith
+Martes: José en Smith, Luis y Pedro en Oak Ridge
+Miércoles: Luis y Pedro en Oak Ridge, José y Luis en Smith

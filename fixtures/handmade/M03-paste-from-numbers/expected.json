@@ -1,0 +1,47 @@
+{
+  "category": "M",
+  "tier": "script",
+  "input": "paste.txt",
+  "paste": true,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Tom Reed", "date": "2026-10-12", "site": "Parker kitchen"},
+    {"person": "Tom Reed", "date": "2026-10-13", "site": "Parker kitchen"},
+    {"person": "Tom Reed", "date": "2026-10-14", "site": "Parker kitchen"},
+    {"person": "Tom Reed", "date": "2026-10-15", "site": "Parker kitchen"},
+    {"person": "Tom Reed", "date": "2026-10-16", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-12", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-13", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-14", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-15", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-16", "site": "Parker kitchen"},
+    {"person": "Carlos Mendez", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-13", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-14", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-15", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-16", "site": "88 Elm Ave"},
+    {"person": "Ray Jones", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Ray Jones", "date": "2026-10-13", "site": "88 Elm Ave"},
+    {"person": "Ray Jones", "date": "2026-10-14", "site": "88 Elm Ave"},
+    {"person": "Ray Jones", "date": "2026-10-15", "site": "88 Elm Ave"},
+    {"person": "Ray Jones", "date": "2026-10-15", "status": "vacation"},
+    {"person": "Ray Jones", "date": "2026-10-16", "site": "88 Elm Ave"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "assigned_while_off", "person": "Ray Jones", "date": "2026-10-15", "sites": ["88 Elm Ave"], "status": "vacation"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "paste_as_table"},
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

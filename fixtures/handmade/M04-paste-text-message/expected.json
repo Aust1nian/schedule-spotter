@@ -1,0 +1,25 @@
+{
+  "category": "M",
+  "tier": "model",
+  "input": "paste.txt",
+  "paste": true,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "assignments": [
+    {"person": "Mike", "date": "2026-10-12", "site": "Johnson"},
+    {"person": "Jose", "date": "2026-10-12", "site": "Johnson"},
+    {"person": "Mike", "date": "2026-10-13", "site": "Smith job"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "not_booked", "person": "Jose", "date": "2026-10-13"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "ask": [
+    {"type": "paste_as_table"}
+  ]
+}

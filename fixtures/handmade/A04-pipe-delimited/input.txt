@@ -1,0 +1,20 @@
+Date|Name|Job
+10/12/2026|Sam Patel|Riverside duplex
+10/12/2026|Kevin Walsh|Riverside duplex
+10/12/2026|Miguel Torres|88 Elm Ave
+10/12/2026|Eddie Flores|88 Elm Ave
+10/13/2026|Sam Patel|Riverside duplex
+10/13/2026|Kevin Walsh|Riverside duplex
+10/13/2026|Miguel Torres|88 Elm Ave
+10/13/2026|Eddie Flores|88 Elm Ave
+10/14/2026|Kevin Walsh|Riverside duplex
+10/14/2026|Miguel Torres|88 Elm Ave
+10/14/2026|Eddie Flores|88 Elm Ave
+10/15/2026|Sam Patel|Riverside duplex
+10/15/2026|Kevin Walsh|Riverside duplex
+10/15/2026|Miguel Torres|88 Elm Ave
+10/15/2026|Eddie Flores|Shop
+10/16/2026|Sam Patel|Riverside duplex
+10/16/2026|Kevin Walsh|Riverside duplex
+10/16/2026|Miguel Torres|88 Elm Ave
+10/16/2026|Eddie Flores|Shop

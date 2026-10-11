@@ -1,0 +1,46 @@
+{
+  "category": "D",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Ray Jones", "date": "2026-10-12", "site": "Riverside duplex"},
+    {"person": "Ray Jones", "date": "2026-10-13", "site": "Riverside duplex"},
+    {"person": "Ray Jones", "date": "2026-10-14", "site": "Riverside duplex"},
+    {"person": "Ray Jones", "date": "2026-10-15", "site": "Riverside duplex"},
+    {"person": "Ray Jones", "date": "2026-10-16", "site": "Riverside duplex"},
+    {"person": "Sam Patel", "date": "2026-10-12", "site": "Riverside duplex"},
+    {"person": "Sam Patel", "date": "2026-10-13", "site": "Riverside duplex"},
+    {"person": "Sam Patel", "date": "2026-10-14", "site": "Riverside duplex"},
+    {"person": "Sam Patel", "date": "2026-10-15", "site": "Riverside duplex"},
+    {"person": "Sam Patel", "date": "2026-10-15", "site": "88 Elm Ave"},
+    {"person": "Sam Patel", "date": "2026-10-16", "site": "Riverside duplex"},
+    {"person": "Kevin Walsh", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Kevin Walsh", "date": "2026-10-13", "site": "88 Elm Ave"},
+    {"person": "Kevin Walsh", "date": "2026-10-14", "site": "88 Elm Ave"},
+    {"person": "Kevin Walsh", "date": "2026-10-15", "site": "88 Elm Ave"},
+    {"person": "Kevin Walsh", "date": "2026-10-16", "site": "88 Elm Ave"},
+    {"person": "Chris Hall", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Chris Hall", "date": "2026-10-13", "site": "88 Elm Ave"},
+    {"person": "Chris Hall", "date": "2026-10-14", "site": "88 Elm Ave"},
+    {"person": "Chris Hall", "date": "2026-10-15", "site": "88 Elm Ave"},
+    {"person": "Chris Hall", "date": "2026-10-16", "site": "88 Elm Ave"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Sam Patel", "date": "2026-10-15", "sites": ["Riverside duplex", "88 Elm Ave"]}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

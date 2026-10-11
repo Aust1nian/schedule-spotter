@@ -1,0 +1,46 @@
+{
+  "category": "D",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "Lincoln School"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "Lincoln School"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "Lincoln School"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "Lincoln School"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "Lincoln School"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "305 Main St"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "305 Main St"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "305 Main St"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "305 Main St"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "305 Main St"},
+    {"person": "Chris Hall", "date": "2026-10-12", "site": "Lincoln School"},
+    {"person": "Chris Hall", "date": "2026-10-13", "site": "Lincoln School"},
+    {"person": "Chris Hall", "date": "2026-10-13", "status": "pto"},
+    {"person": "Chris Hall", "date": "2026-10-14", "site": "Lincoln School"},
+    {"person": "Chris Hall", "date": "2026-10-15", "site": "Lincoln School"},
+    {"person": "Chris Hall", "date": "2026-10-16", "site": "Lincoln School"},
+    {"person": "Brian Young", "date": "2026-10-12", "site": "305 Main St"},
+    {"person": "Brian Young", "date": "2026-10-13", "site": "305 Main St"},
+    {"person": "Brian Young", "date": "2026-10-14", "site": "305 Main St"},
+    {"person": "Brian Young", "date": "2026-10-15", "site": "305 Main St"},
+    {"person": "Brian Young", "date": "2026-10-16", "site": "305 Main St"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "assigned_while_off", "person": "Chris Hall", "date": "2026-10-13", "sites": ["Lincoln School"], "status": "pto"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

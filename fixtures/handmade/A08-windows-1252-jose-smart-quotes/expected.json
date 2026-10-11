@@ -1,0 +1,46 @@
+{
+  "category": "A",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "José Garcia", "date": "2026-10-12", "site": "O’Brien deck"},
+    {"person": "José Garcia", "date": "2026-10-13", "site": "O’Brien deck"},
+    {"person": "José Garcia", "date": "2026-10-14", "site": "O’Brien deck"},
+    {"person": "José Garcia", "date": "2026-10-15", "site": "O’Brien deck"},
+    {"person": "José Garcia", "date": "2026-10-16", "site": "O’Brien deck"},
+    {"person": "Raúl Peña", "date": "2026-10-12", "site": "Lot 7 “the barn”"},
+    {"person": "Raúl Peña", "date": "2026-10-13", "site": "Lot 7 “the barn”"},
+    {"person": "Raúl Peña", "date": "2026-10-14", "site": "Lot 7 “the barn”"},
+    {"person": "Raúl Peña", "date": "2026-10-15", "site": "Lot 7 “the barn”"},
+    {"person": "Raúl Peña", "date": "2026-10-16", "site": "Lot 7 “the barn”"},
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-14", "status": "vacation"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "1420 Johnson St"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "assigned_while_off", "person": "Mike Baker", "date": "2026-10-14", "sites": ["1420 Johnson St"], "status": "vacation"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "category": "I",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Oak Ridge Apts", "note": "Gate code is 4471. Park along the curb past the second hydrant so the pump truck can reach the slab. Sign in at the trailer every morning before work begins. Hard hats vests glasses gloves are required everywhere on site. The east stair has no handrail yet so use the west stair until the inspector signs it. Keep the porta john door facing the street because the neighbor complained last week. Do not block the driveway of the blue house at the corner. The homeowner works nights so keep the radio low near the bedroom wall. Bring the long ladder from the trailer for the soffit work on the north side. The window order is short two units so frame the openings but leave them covered with plastic. Check every joist hanger on the second floor deck before the inspector comes back. Nails for the hangers are in the gray bucket under the stairs. If it rains cover the subfloor with the tarps stacked by the dumpster. The dumpster swap is booked through the rental company so leave the gate unlocked for the driver. Sweep the deck at the end of each day because the framing inspector failed us last time for debris. The electrician will be roughing in the kitchen so stay clear of that room while he pulls wire. Measure twice for the stair stringers because the landing height changed on the revised plans. The revised plans are in the red folder in the trailer. Do not cut any engineered beam without calling Rob first. Rob is the super for this job. His cell is 555 0199. Lunch trucks come by around noon on the main road. Water is in the cooler by the trailer steps. Refill it before you leave. Lock the trailer every night. The lockbox code is 2218. Return the generator to the truck when the power company finishes the meter. Take photos of every wall before insulation goes in. Upload the photos to the job folder the same day. The garage slab gets poured next week so keep the forms clear of tools. Ask Rob before moving any of the shoring posts in the basement. Shut every window at night to keep rain from the new subfloor. Questions go to Rob first. Then call the main number."},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Dave Kim", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Dave Kim", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Dave Kim", "date": "2026-10-16", "site": "Smith remodel"}
+  ],
+  "assignments_exact": true,
+  "flags": [],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

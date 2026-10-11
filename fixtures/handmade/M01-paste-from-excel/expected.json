@@ -1,0 +1,47 @@
+{
+  "category": "M",
+  "tier": "script",
+  "input": "paste.txt",
+  "paste": true,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-16", "site": "1420 Johnson St"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Jose Garcia", "date": "2026-10-16", "sites": ["Smith remodel", "1420 Johnson St"]}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "paste_as_table"},
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

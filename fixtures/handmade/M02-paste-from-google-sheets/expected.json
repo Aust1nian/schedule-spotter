@@ -1,0 +1,49 @@
+{
+  "category": "M",
+  "tier": "script",
+  "input": "paste.txt",
+  "paste": true,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "job_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Dave", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Mike", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Dave", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Mike", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Dave", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Mike", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Dave", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Mike", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Dave", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Jose", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Jose", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Jose", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Jose", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Jose", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Luis", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Ana", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Luis", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Ana", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Luis", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Ana", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Luis", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Ana", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Luis", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Ana", "date": "2026-10-16", "status": "pto"}
+  ],
+  "assignments_exact": true,
+  "flags": [],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "paste_as_table"},
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

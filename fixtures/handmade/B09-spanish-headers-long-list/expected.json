@@ -1,0 +1,46 @@
+{
+  "category": "B",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "José García", "date": "2026-10-12", "site": "Casa Johnson"},
+    {"person": "José García", "date": "2026-10-13", "site": "Casa Johnson"},
+    {"person": "José García", "date": "2026-10-14", "site": "Casa Johnson"},
+    {"person": "José García", "date": "2026-10-15", "site": "Casa Johnson"},
+    {"person": "José García", "date": "2026-10-16", "site": "Casa Johnson"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Remodelación Smith"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Remodelación Smith"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Remodelación Smith"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "Remodelación Smith"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "status": "off"},
+    {"person": "Pedro Sánchez", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Pedro Sánchez", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Pedro Sánchez", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Pedro Sánchez", "date": "2026-10-15", "status": "vacation"},
+    {"person": "Pedro Sánchez", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Pedro Sánchez", "date": "2026-10-16", "status": "vacation"},
+    {"person": "Juan López", "date": "2026-10-12", "site": "Remodelación Smith"},
+    {"person": "Juan López", "date": "2026-10-13", "site": "Remodelación Smith"},
+    {"person": "Juan López", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Juan López", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Juan López", "date": "2026-10-16", "site": "Oak Ridge Apts"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "assigned_while_off", "person": "Pedro Sánchez", "date": "2026-10-15", "sites": ["Oak Ridge Apts"], "status": "vacation"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

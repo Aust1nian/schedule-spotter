@@ -1,0 +1,5 @@
+Name	Mon 10/12	Tue 10/13	Wed 10/14	Thu 10/15	Fri 10/16
+Mike Baker	1420 Johnson St	1420 Johnson St	1420 Johnson St	1420 Johnson St	1420 Johnson St
+Jose Garcia	Smith remodel	Smith remodel	Smith remodel	Smith remodel	Smith remodel / 1420 Johnson St
+Luis Ortiz	Oak Ridge Apts	Oak Ridge Apts	Oak Ridge Apts	Oak Ridge Apts	Oak Ridge Apts
+Dave Kim	1420 Johnson St	1420 Johnson St	1420 Johnson St	1420 Johnson St	1420 Johnson St

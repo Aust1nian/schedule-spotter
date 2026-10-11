@@ -1,0 +1,41 @@
+{
+  "category": "D",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-12-20",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2027-01-04", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2027-01-05", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2027-01-06", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2027-01-07", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2027-01-08", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2027-01-04", "site": "Shop"},
+    {"person": "Dave Kim", "date": "2027-01-05", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2027-01-06", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2027-01-07", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2027-01-08", "site": "1420 Johnson St"},
+    {"person": "Tom Reed", "date": "2027-01-04", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2027-01-05", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2027-01-06", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2027-01-06", "site": "1420 Johnson St"},
+    {"person": "Tom Reed", "date": "2027-01-07", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2027-01-08", "site": "Smith remodel"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Tom Reed", "date": "2027-01-06", "sites": ["Smith remodel", "1420 Johnson St"]}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

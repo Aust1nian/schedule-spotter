@@ -1,0 +1,46 @@
+{
+  "category": "D",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Ana Ruiz", "date": "2026-10-05", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-06", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-07", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-08", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-09", "site": "Parker kitchen"},
+    {"person": "Tom Reed", "date": "2026-10-05", "site": "Parker kitchen"},
+    {"person": "Tom Reed", "date": "2026-10-06", "site": "Parker kitchen"},
+    {"person": "Tom Reed", "date": "2026-10-07", "site": "Parker kitchen"},
+    {"person": "Tom Reed", "date": "2026-10-08", "site": "88 Elm Ave"},
+    {"person": "Tom Reed", "date": "2026-10-09", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-05", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-06", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-07", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-08", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-09", "site": "88 Elm Ave"},
+    {"person": "Ray Jones", "date": "2026-10-05", "site": "88 Elm Ave"},
+    {"person": "Ray Jones", "date": "2026-10-06", "site": "88 Elm Ave"},
+    {"person": "Ray Jones", "date": "2026-10-07", "site": "88 Elm Ave"},
+    {"person": "Ray Jones", "date": "2026-10-07", "site": "Parker kitchen"},
+    {"person": "Ray Jones", "date": "2026-10-08", "site": "88 Elm Ave"},
+    {"person": "Ray Jones", "date": "2026-10-09", "site": "88 Elm Ave"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Ray Jones", "date": "2026-10-07", "sites": ["88 Elm Ave", "Parker kitchen"]}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

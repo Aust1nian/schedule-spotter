@@ -1,0 +1,38 @@
+{
+  "category": "B",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Ray Jones", "date": "2026-10-12", "site": "Henderson"},
+    {"person": "Ray Jones", "date": "2026-10-13", "site": "Henderson"},
+    {"person": "Ray Jones", "date": "2026-10-14", "site": "Henderson"},
+    {"person": "Ray Jones", "date": "2026-10-15", "site": "Henderson"},
+    {"person": "Ray Jones", "date": "2026-10-16", "site": "Henderson"},
+    {"person": "Sam Patel", "date": "2026-10-12", "site": "Lakeview HOA"},
+    {"person": "Sam Patel", "date": "2026-10-13", "site": "Lakeview HOA"},
+    {"person": "Sam Patel", "date": "2026-10-14", "site": "Lakeview HOA"},
+    {"person": "Sam Patel", "date": "2026-10-15", "site": "Murphy"},
+    {"person": "Sam Patel", "date": "2026-10-16", "site": "Murphy"},
+    {"person": "Eddie Flores", "date": "2026-10-12", "site": "Murphy"},
+    {"person": "Eddie Flores", "date": "2026-10-13", "site": "Murphy"},
+    {"person": "Eddie Flores", "date": "2026-10-14", "site": "Murphy"},
+    {"person": "Eddie Flores", "date": "2026-10-15", "site": "Murphy"},
+    {"person": "Eddie Flores", "date": "2026-10-16", "site": "Murphy"}
+  ],
+  "assignments_exact": true,
+  "flags": [],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

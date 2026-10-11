@@ -1,0 +1,44 @@
+{
+  "category": "B",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-12", "site": "305 Main St"},
+    {"person": "Dave Kim", "date": "2026-10-13", "site": "305 Main St"},
+    {"person": "Dave Kim", "date": "2026-10-14", "site": "305 Main St"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "305 Main St"},
+    {"person": "Dave Kim", "date": "2026-10-16", "site": "305 Main St"},
+    {"person": "Tom Reed", "date": "2026-10-12", "site": "305 Main St"},
+    {"person": "Tom Reed", "date": "2026-10-13", "site": "305 Main St"},
+    {"person": "Tom Reed", "date": "2026-10-14", "site": "88 Elm Ave"},
+    {"person": "Tom Reed", "date": "2026-10-15", "site": "88 Elm Ave"},
+    {"person": "Tom Reed", "date": "2026-10-16", "site": "88 Elm Ave"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "88 Elm Ave"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "88 Elm Ave"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "88 Elm Ave"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "not_booked", "person": "Luis Ortiz", "date": "2026-10-16"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

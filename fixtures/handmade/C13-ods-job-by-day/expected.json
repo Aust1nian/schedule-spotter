@@ -1,0 +1,51 @@
+{
+  "category": "C",
+  "tier": "script",
+  "input": "input.ods",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "job_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Juan Lopez", "date": "2026-10-12", "site": "Lincoln School"},
+    {"person": "Miguel Torres", "date": "2026-10-12", "site": "Lincoln School"},
+    {"person": "Juan Lopez", "date": "2026-10-13", "site": "Lincoln School"},
+    {"person": "Miguel Torres", "date": "2026-10-13", "site": "Lincoln School"},
+    {"person": "Juan Lopez", "date": "2026-10-14", "site": "Lincoln School"},
+    {"person": "Miguel Torres", "date": "2026-10-14", "site": "Lincoln School"},
+    {"person": "Juan Lopez", "date": "2026-10-15", "site": "Lincoln School"},
+    {"person": "Juan Lopez", "date": "2026-10-16", "site": "Lincoln School"},
+    {"person": "Miguel Torres", "date": "2026-10-16", "site": "Lincoln School"},
+    {"person": "Chris Hall", "date": "2026-10-12", "site": "Riverside duplex"},
+    {"person": "Chris Hall", "date": "2026-10-13", "site": "Riverside duplex"},
+    {"person": "Chris Hall", "date": "2026-10-14", "site": "Riverside duplex"},
+    {"person": "Brian Young", "date": "2026-10-14", "site": "Riverside duplex"},
+    {"person": "Chris Hall", "date": "2026-10-15", "site": "Riverside duplex"},
+    {"person": "Miguel Torres", "date": "2026-10-15", "site": "Riverside duplex"},
+    {"person": "Brian Young", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Brian Young", "date": "2026-10-13", "site": "88 Elm Ave"},
+    {"person": "Eddie Flores", "date": "2026-10-14", "site": "88 Elm Ave"},
+    {"person": "Brian Young", "date": "2026-10-15", "site": "88 Elm Ave"},
+    {"person": "Brian Young", "date": "2026-10-16", "site": "88 Elm Ave"},
+    {"person": "Chris Hall", "date": "2026-10-16", "site": "88 Elm Ave"},
+    {"person": "Eddie Flores", "date": "2026-10-12", "site": "Shop"},
+    {"person": "Eddie Flores", "date": "2026-10-13", "site": "Shop"},
+    {"person": "Eddie Flores", "date": "2026-10-15", "site": "Shop"},
+    {"person": "Eddie Flores", "date": "2026-10-16", "site": "Shop"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "unstaffed", "site": "Riverside duplex", "date": "2026-10-16"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "pick_sheet"}
+  ]
+}

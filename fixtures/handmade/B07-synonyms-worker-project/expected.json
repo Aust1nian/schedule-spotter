@@ -1,0 +1,46 @@
+{
+  "category": "B",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Juan Lopez", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Juan Lopez", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Juan Lopez", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Juan Lopez", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Juan Lopez", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Miguel Torres", "date": "2026-10-12", "site": "Riverside duplex"},
+    {"person": "Miguel Torres", "date": "2026-10-13", "site": "Riverside duplex"},
+    {"person": "Miguel Torres", "date": "2026-10-14", "site": "Riverside duplex"},
+    {"person": "Miguel Torres", "date": "2026-10-15", "site": "Riverside duplex"},
+    {"person": "Miguel Torres", "date": "2026-10-15", "site": "Lincoln School"},
+    {"person": "Miguel Torres", "date": "2026-10-16", "site": "Riverside duplex"},
+    {"person": "Chris Hall", "date": "2026-10-12", "site": "Lincoln School"},
+    {"person": "Chris Hall", "date": "2026-10-13", "site": "Lincoln School"},
+    {"person": "Chris Hall", "date": "2026-10-14", "site": "Lincoln School"},
+    {"person": "Chris Hall", "date": "2026-10-15", "site": "Lincoln School"},
+    {"person": "Chris Hall", "date": "2026-10-16", "site": "Lincoln School"},
+    {"person": "Brian Young", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Brian Young", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Brian Young", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Brian Young", "date": "2026-10-15", "site": "Riverside duplex"},
+    {"person": "Brian Young", "date": "2026-10-16", "site": "Riverside duplex"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Miguel Torres", "date": "2026-10-15", "sites": ["Riverside duplex", "Lincoln School"]}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

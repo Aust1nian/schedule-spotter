@@ -1,0 +1,46 @@
+{
+  "category": "B",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Ana Ruiz", "date": "2026-10-12", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-13", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-13", "status": "sick"},
+    {"person": "Ana Ruiz", "date": "2026-10-14", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-15", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-16", "site": "Parker kitchen"},
+    {"person": "Carlos Mendez", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-13", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-14", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-15", "site": "88 Elm Ave"},
+    {"person": "Carlos Mendez", "date": "2026-10-16", "site": "88 Elm Ave"},
+    {"person": "Pedro Sanchez", "date": "2026-10-12", "site": "Lincoln School"},
+    {"person": "Pedro Sanchez", "date": "2026-10-13", "site": "Lincoln School"},
+    {"person": "Pedro Sanchez", "date": "2026-10-14", "site": "Lincoln School"},
+    {"person": "Pedro Sanchez", "date": "2026-10-15", "site": "Lincoln School"},
+    {"person": "Pedro Sanchez", "date": "2026-10-16", "site": "Lincoln School"},
+    {"person": "Kevin Walsh", "date": "2026-10-12", "site": "Parker kitchen"},
+    {"person": "Kevin Walsh", "date": "2026-10-13", "site": "Parker kitchen"},
+    {"person": "Kevin Walsh", "date": "2026-10-14", "site": "Parker kitchen"},
+    {"person": "Kevin Walsh", "date": "2026-10-15", "site": "88 Elm Ave"},
+    {"person": "Kevin Walsh", "date": "2026-10-16", "site": "88 Elm Ave"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "assigned_while_off", "person": "Ana Ruiz", "date": "2026-10-13", "sites": ["Parker kitchen"], "status": "sick"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ]
+}

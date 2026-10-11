@@ -1,0 +1,19 @@
+{
+  "category": "M",
+  "tier": "script",
+  "input": "paste.txt",
+  "paste": true,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "assignments": [],
+  "assignments_exact": true,
+  "flags": [],
+  "flags_exact": true,
+  "info": [],
+  "ask": [
+    {"type": "paste_as_table"}
+  ]
+}
