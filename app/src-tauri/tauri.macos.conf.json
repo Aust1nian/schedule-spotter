@@ -1,0 +1,12 @@
+{
+  "build": {
+    "beforeBundleCommand": "python3 ../tools/ci/collect-metallib.py"
+  },
+  "bundle": {
+    "macOS": {
+      "files": {
+        "Resources/default.metallib": "./macos/default.metallib"
+      }
+    }
+  }
+}

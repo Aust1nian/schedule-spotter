@@ -322,3 +322,9 @@ Latency rose about 10%. Without this change, A and B-E2B both break the 4.0 GB c
 - **What happened.** llama.cpp turns Metal on for every Apple build, whatever the binding's features say. On `macos-15-intel` the benchmark spent 62 s compiling Metal shaders, then aborted in the Metal backend (`GGML_ASSERT(buf_dst)`) on the runner's paravirtual GPU.
 - **The fix.** The spec says "CPU on Intel Macs". A universal build compiles both architectures in one run, so a plain environment variable can't separate them. Instead, `CMAKE_TOOLCHAIN_FILE_x86_64_apple_darwin` (in `.cargo/config.toml`) points the cmake crate at `tools/cmake/intel-mac-cpu.cmake` for the Intel slice only, and that file forces `GGML_METAL=OFF`. Apple Silicon keeps Metal.
 - **CI caches.** The cmake crate doesn't declare that variable as a rebuild trigger, so the macOS CI caches got new keys.
+
+**2026-10-11 · Metal shaders compiled at build time (`GGML_METAL_EMBED_LIBRARY=OFF`).**
+- **What happened.** By default llama.cpp embeds its Metal shader sources and compiles all 20 libraries at every start. The first nightly measured model loads of 40–65 s on the Apple Silicon runners (32 s of shader compiling) against the spec's 20 s.
+- **The fix.** The build now produces `default.metallib` with `xcrun metal`. The app bundle carries it in `Contents/Resources` (`tauri.macos.conf.json`, `bundle.macOS.files`), which is the first place llama.cpp looks. The benchmark puts it beside its binary.
+- **CI.** CI installs Apple's Metal compiler where Xcode 26 ships it separately, and checks that the file is in the `.app`.
+- **Caveat for MODEL_REPORT.md.** The CI Macs are virtual machines whose GPU ("Apple Paravirtual device") lacks the SIMD-group operations llama.cpp's fast Metal kernels use. Metal latency there overstates what a real M-series Mac does.

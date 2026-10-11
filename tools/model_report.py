@@ -163,6 +163,16 @@ def main():
                 best = max(ok, key=lambda v: score(gating[v]))
                 out.append(f"No variant passes every threshold. Best scorer with false merges ≤ 1% and RSS ≤ 4.0 GB: "
                            f"**{best}** ({pct(score(gating[best]))} of questions answered correctly).")
+                # What that pick is worth, so the rule's answer can be judged.
+                o = gating[best]["overall"]
+                notes = [f"it answers {pct(1 - o['unsure_rate'])} of questions (the rest go to the owner)"]
+                t, off = tiers.get(best), tiers.get("off")
+                if t and off:
+                    notes.append(f"end to end it asks {t['questions_per_file']:.2f} questions per file against "
+                                 f"{off['questions_per_file']:.2f} with the model off, with {t['false_merges']} false "
+                                 f"merges against {off['false_merges']}")
+                out.append("")
+                out.append(f"For context on {best}: " + "; ".join(notes) + ".")
             else:
                 out.append("No variant passes every threshold, and none keeps false merges ≤ 1% within 4.0 GB: "
                            "**model off**.")

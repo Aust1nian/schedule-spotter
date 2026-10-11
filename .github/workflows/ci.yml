@@ -60,8 +60,12 @@ jobs:
         with: { node-version: 22, cache: npm, cache-dependency-path: app/package-lock.json }
       - run: npm ci
         working-directory: app
+      - name: Metal compiler (Xcode 26 ships it as a separate component)
+        run: xcrun -f metal >/dev/null 2>&1 || xcodebuild -downloadComponent MetalToolchain
       - run: npx tauri build --target universal-apple-darwin --bundles app,dmg
         working-directory: app
+      - name: precompiled Metal shaders are in the bundle
+        run: test -s "target/universal-apple-darwin/release/bundle/macos/Schedule Spotter.app/Contents/Resources/default.metallib"
       - run: python3 tools/depcheck.py
       - run: lipo -archs "target/universal-apple-darwin/release/bundle/macos/Schedule Spotter.app/Contents/MacOS/"*
       - uses: actions/upload-artifact@v7

@@ -10,3 +10,4 @@ __pycache__/
 *.pyc
 .DS_Store
 app/src-tauri/windows/llama-libs/
+app/src-tauri/macos/default.metallib

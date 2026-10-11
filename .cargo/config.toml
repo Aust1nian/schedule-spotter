@@ -3,6 +3,10 @@
 # instead of repacking them into extra anonymous memory at load. Measured on
 # Phi-4-mini: 4.10 GB -> 2.88 GB peak, ~10% slower. DECISIONS.md, Phase 4.
 GGML_CPU_REPACK = "OFF"
+# Apple Silicon: compile llama.cpp's Metal shaders at build time into
+# default.metallib (shipped in the app's Resources) instead of compiling the
+# embedded sources at every start, which took 32-62 s on the CI Macs.
+GGML_METAL_EMBED_LIBRARY = "OFF"
 # Intel Macs: CPU only, no Metal (tools/cmake/intel-mac-cpu.cmake). The cmake
 # crate reads this only when building for x86_64-apple-darwin.
 CMAKE_TOOLCHAIN_FILE_x86_64_apple_darwin = { value = "tools/cmake/intel-mac-cpu.cmake", relative = true }

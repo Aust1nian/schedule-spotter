@@ -49,6 +49,9 @@ jobs:
         run: |
           "$(command -v python3 || command -v python)" models/fetch.py ${{ matrix.variant }}
         shell: bash
+      - name: Metal compiler (Xcode 26 ships it as a separate component)
+        if: runner.os == 'macOS'
+        run: xcrun -f metal >/dev/null 2>&1 || xcodebuild -downloadComponent MetalToolchain
       - name: build
         shell: bash
         run: |
@@ -71,7 +74,12 @@ jobs:
       - name: benchmark (unix)
         if: runner.os != 'Windows'
         shell: bash
+        env:
+          # Engine diagnostics (per-call timing, decode errors) in the job log.
+          SPOTTER_LLM_DEBUG: "1"
         run: |
+          # Apple Silicon: llama.cpp's precompiled Metal shaders beside the binary, as in the app bundle.
+          if [ "${{ matrix.runner }}" != macos-15-intel ]; then python3 tools/ci/collect-metallib.py --to target/release; fi
           extra=(); [ "$FULL" = "1" ] || extra=(--max-per-task 6)
           target/release/spotter-bench --model "${{ steps.model.outputs.file }}" --sha "${{ steps.model.outputs.sha }}" \
             --variant ${{ matrix.variant }} --threads 2 --limit 5 "${extra[@]}" --out "bench-${{ matrix.variant }}-${{ matrix.runner }}.json"
