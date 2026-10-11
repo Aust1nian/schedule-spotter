@@ -10,7 +10,7 @@ use std::time::{Duration, Instant};
 
 use serde_json::{Value, json};
 use spotter_core::matching::{Tiebreaker, Verdict};
-use spotter_llm::Engine;
+use spotter_llm::{Engine, Task};
 
 fn flag(args: &[String], name: &str) -> Option<String> {
     args.iter()
@@ -136,6 +136,9 @@ fn main() {
             .unwrap_or(5.0),
     );
     let only: Option<usize> = flag(&args, "--max-per-task").and_then(|n| n.parse().ok());
+    let same_min: f32 = flag(&args, "--same-min")
+        .and_then(|n| n.parse().ok())
+        .unwrap_or(spotter_llm::SAME_MIN);
 
     let rss_before = peak_rss_mb();
     let engine = match Engine::load(&model, flag(&args, "--sha").as_deref(), &variant, threads) {
@@ -171,10 +174,13 @@ fn main() {
                 strings(&q["sites"])
             };
             let start = Instant::now();
-            let v = if name.starts_with("t1") {
-                engine.same_person(a, b, &others)
-            } else {
-                engine.same_site(a, b, &others)
+            let task = if name.starts_with("t1") { Task::SamePerson } else { Task::SameSite };
+            let raw = engine.same_answer(task, a, b, &others);
+            let confidence = raw.as_ref().map_or(0.0, |r| r.1);
+            let v = match raw.as_ref().map(|r| r.0.as_str()) {
+                Some("same") if confidence >= same_min => Verdict::Same,
+                Some("different") => Verdict::Different,
+                _ => Verdict::Unsure,
             };
             t.latencies.push(start.elapsed().as_secs_f64());
             t.items += 1;
@@ -207,6 +213,12 @@ fn main() {
                         }
                     }
                 }
+            }
+            // The model's own answer and confidence, before the confidence
+            // rule, so MODEL_REPORT.md can show the trade-off.
+            if let Some(r) = t.records.last_mut() {
+                r["raw"] = json!(raw.as_ref().map(|r| r.0.clone()));
+                r["confidence"] = json!(confidence);
             }
         }
         tallies.push((name, t));
@@ -338,6 +350,7 @@ fn main() {
         "threads": threads,
         "os": std::env::consts::OS,
         "arch": std::env::consts::ARCH,
+        "same_min": same_min,
         "load_s": load_s,
         "warm_s": warm_s,
         "peak_rss_mb": peak_rss_mb(),

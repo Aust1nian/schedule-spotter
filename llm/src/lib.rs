@@ -46,6 +46,9 @@ pub fn status_line(loaded: bool) -> &'static str {
 const N_CTX: u32 = 2048;
 /// A call that takes longer counts as unsure (spec).
 pub const CALL_LIMIT: Duration = Duration::from_secs(5);
+/// The confidence a model "same" needs before it merges anything; chosen on
+/// half the benchmark set and checked on the other half (DECISIONS.md).
+pub const SAME_MIN: f32 = 0.0;
 
 #[derive(Debug)]
 pub enum LoadError {
@@ -72,16 +75,19 @@ impl std::fmt::Display for LoadError {
 /// allows. Checks the 40 likeliest tokens first and the whole vocabulary
 /// only when none of them fits; the result is the same either way, and
 /// skipping the full check saves about a third of generation time.
-fn pick(grammar: &mut LlamaSampler, logits: &[f32]) -> Option<LlamaToken> {
+///
+/// Also returns the chosen token's probability among the tokens the grammar
+/// allows: 1.0 when the grammar forces it, lower when the model hesitated.
+fn pick(grammar: &mut LlamaSampler, logits: &[f32]) -> Option<(LlamaToken, f32)> {
     const TOP: usize = 40;
     let best = |data: Vec<LlamaTokenData>, grammar: &mut LlamaSampler| {
         let mut arr = LlamaTokenDataArray::new(data, false);
         grammar.apply(&mut arr);
-        arr.data
-            .iter()
-            .filter(|d| d.logit().is_finite())
-            .max_by(|a, b| a.logit().total_cmp(&b.logit()))
-            .map(LlamaTokenData::id)
+        let allowed: Vec<&LlamaTokenData> =
+            arr.data.iter().filter(|d| d.logit().is_finite()).collect();
+        let top = allowed.iter().max_by(|a, b| a.logit().total_cmp(&b.logit()))?;
+        let total: f32 = allowed.iter().map(|d| (d.logit() - top.logit()).exp()).sum();
+        Some((top.id(), 1.0 / total))
     };
     let mut ids: Vec<usize> = (0..logits.len()).collect();
     let top = TOP.min(ids.len());
@@ -100,7 +106,7 @@ fn pick(grammar: &mut LlamaSampler, logits: &[f32]) -> Option<LlamaToken> {
             .collect();
         best(all, grammar)
     })?;
-    grammar.accept(token);
+    grammar.accept(token.0);
     Some(token)
 }
 
@@ -205,6 +211,8 @@ pub struct Engine {
     grammars: HashMap<Task, String>,
     inner: Mutex<Inner>,
     limit: Duration,
+    /// The confidence a "same" needs to merge (T1 / T2).
+    same_min: f32,
     /// Seconds from start of load (hash + weights + context).
     pub load_secs: f64,
 }
@@ -275,8 +283,15 @@ impl Engine {
                 prefixes: HashMap::new(),
             }),
             limit: CALL_LIMIT,
+            same_min: SAME_MIN,
             load_secs: started.elapsed().as_secs_f64(),
         })
+    }
+
+    /// Changes the confidence a "same" needs (benchmarks sweep it).
+    pub fn with_same_min(mut self, same_min: f32) -> Engine {
+        self.same_min = same_min;
+        self
     }
 
     /// Changes the per-call time limit (benchmarks measure without it).
@@ -431,22 +446,26 @@ impl Engine {
         let mut out: Vec<u8> = Vec::new();
         let mut batch = LlamaBatch::new(1, 1);
         let mut sample_time = Duration::ZERO;
+        // The lowest probability among the model's real choices.
+        let mut confidence = 1.0f32;
         for pos in (tokens.len() as i32..).take(task.max_tokens()) {
             if started.elapsed() > self.limit {
                 debug(&format!("{task:?} over the time limit: {question}"));
                 return None;
             }
             let t0 = Instant::now();
-            let token = pick(&mut grammar, inner.ctx.get_logits_ith(idx))?;
+            let (token, p) = pick(&mut grammar, inner.ctx.get_logits_ith(idx))?;
+            confidence = confidence.min(p);
             sample_time += t0.elapsed();
             if vocab.is_eog(token) {
                 break;
             }
             out.extend(vocab.token_to_piece(token, false, None));
             if let Ok(text) = std::str::from_utf8(&out)
-                && let Ok(v) = serde_json::from_str::<Value>(text.trim())
+                && let Ok(mut v) = serde_json::from_str::<Value>(text.trim())
                 && v.is_object()
             {
+                v["confidence"] = json!((confidence * 1000.0).round() / 1000.0);
                 debug(&format!(
                     "{task:?} prompt {fresh_n} tok {:.2}s, output {} tok {:.2}s (sampling {:.2}s): {question} -> {v}",
                     prompt_done.as_secs_f64(),
@@ -471,14 +490,24 @@ impl Engine {
             .filter(Value::is_object)
     }
 
-    fn verdict(&self, task: Task, question: Value) -> Verdict {
-        match self
-            .ask(task, &question)
-            .as_ref()
-            .and_then(|v| v["answer"].as_str())
-        {
-            Some("same") => Verdict::Same,
-            Some("different") => Verdict::Different,
+    /// T1 / T2 as the model answered: ("same" | "different" | "unsure",
+    /// confidence), before the confidence rule.
+    pub fn same_answer(&self, task: Task, a: &str, b: &str, others: &[String]) -> Option<(String, f32)> {
+        let others: Vec<&String> = others.iter().filter(|n| *n != a && *n != b).take(10).collect();
+        let question = match task {
+            Task::SamePerson => json!({"a": a, "b": b, "others_on_roster": others}),
+            _ => json!({"a": a, "b": b, "other_sites": others}),
+        };
+        let v = self.ask(task, &question)?;
+        Some((v["answer"].as_str()?.to_string(), v["confidence"].as_f64().unwrap_or(0.0) as f32))
+    }
+
+    /// A merge needs a confident "same": below `same_min` it goes to the
+    /// owner as a question instead (DECISIONS.md, Phase 4).
+    fn verdict(&self, task: Task, a: &str, b: &str, others: &[String]) -> Verdict {
+        match self.same_answer(task, a, b, others) {
+            Some((answer, confidence)) if answer == "same" && confidence >= self.same_min => Verdict::Same,
+            Some((answer, _)) if answer == "different" => Verdict::Different,
             _ => Verdict::Unsure,
         }
     }
@@ -520,27 +549,11 @@ fn norm(s: &str) -> String {
 
 impl Tiebreaker for Engine {
     fn same_person(&self, a: &str, b: &str, roster: &[String]) -> Verdict {
-        let others: Vec<&String> = roster
-            .iter()
-            .filter(|n| *n != a && *n != b)
-            .take(10)
-            .collect();
-        self.verdict(
-            Task::SamePerson,
-            json!({"a": a, "b": b, "others_on_roster": others}),
-        )
+        self.verdict(Task::SamePerson, a, b, roster)
     }
 
     fn same_site(&self, a: &str, b: &str, sites: &[String]) -> Verdict {
-        let others: Vec<&String> = sites
-            .iter()
-            .filter(|n| *n != a && *n != b)
-            .take(10)
-            .collect();
-        self.verdict(
-            Task::SameSite,
-            json!({"a": a, "b": b, "other_sites": others}),
-        )
+        self.verdict(Task::SameSite, a, b, sites)
     }
 
     fn cell_meaning(&self, text: &str, column_role: &str, neighbors: &[String]) -> Option<String> {

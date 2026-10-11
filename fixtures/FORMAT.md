@@ -64,6 +64,9 @@ Every key except `category` and `tier` is optional. A missing key means "not che
 | `after_answers` | Expectations after `answers` are applied |
 | `error` | `"empty_file"`, `"not_a_schedule"`, `"unreadable"` or `"save_failed"`. When set, nothing else is checked except `notes`. |
 | `notes` | Substrings that must appear in the pipeline's notes to the user, case-insensitive |
+| `model_same_person`, `model_same_site` | Model tier only: `[a, b]` pairs the model (T1 / T2) must answer "same". The top-level flags assume those merges. With the model off, each pair must be asked, so each must also appear in `ask`. |
+| `export_check` | `true`: the stage-10 export must write every cell that starts with `=`, `+`, `-` or `@` as a string, never a formula. Checked from Phase 5, when export exists. |
+| `save_test` | `{"target": "read-only", "error": "save_failed"}`: saving the workbook to that target must fail with that error and lose nothing. Checked from Phase 5, when save exists. |
 
 ### Assignment
 

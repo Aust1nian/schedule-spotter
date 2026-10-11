@@ -13,15 +13,23 @@ OUT = ROOT / "app" / "src-tauri" / "windows" / "llama-libs"
 
 def main():
     profile = ROOT / "target" / "release"
-    libs = [p for p in profile.glob("*.dll") if p.name.startswith(("llama", "ggml"))]
-    # The CPU variants install to the sys crate's own backends folder; take
-    # the most recently built one.
-    backends = sorted(profile.glob("build/llama-cpp-sys-2-*/out/backends"), key=lambda p: p.stat().st_mtime)
-    if backends:
-        libs += list(backends[-1].glob("ggml-cpu-*.dll"))
-    names = sorted({p.name for p in libs})
+    # The sys crate's newest build output: shared libraries in out/bin, the
+    # CPU variants in out/backends. Anything copied beside the target
+    # folder's binaries counts too.
+    outs = sorted(profile.glob("build/llama-cpp-sys-2-*/out"), key=lambda p: p.stat().st_mtime)
+    found = {}
+    for p in profile.glob("*.dll"):
+        if p.name.startswith(("llama", "ggml")):
+            found[p.name] = p
+    if outs:
+        for sub in ("bin", "lib", "backends"):
+            for p in (outs[-1] / sub).glob("*.dll"):
+                found[p.name] = p
+    libs = list(found.values())
+    names = sorted(found)
     if not any(n.startswith("ggml-cpu-") for n in names) or "llama.dll" not in names:
-        sys.exit(f"collect-llama-libs: missing DLLs in {profile} (found: {names})")
+        listing = [str(p.relative_to(outs[-1])) for p in outs[-1].rglob("*.dll")] if outs else []
+        sys.exit(f"collect-llama-libs: missing DLLs (found: {names}; every DLL in the build output: {listing})")
     shutil.rmtree(OUT, ignore_errors=True)
     OUT.mkdir(parents=True)
     for p in libs:
