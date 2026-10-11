@@ -9,7 +9,7 @@ sudo apt-get install -y --no-install-recommends "$(realpath "$deb")" >/dev/null
 bin="$(dpkg -L schedule-spotter | grep -E '^/usr/bin/' | head -1)"
 sockets="$(mktemp)"
 export WEBKIT_DISABLE_DMABUF_RENDERER=1
-xvfb-run -a "$bin" --self-test --json-out "$out" &
+xvfb-run -a "$bin" --self-test --linger 60 --json-out "$out" &
 runner=$!
 pid=""
 for _ in $(seq 1 50); do

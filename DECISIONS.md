@@ -174,3 +174,12 @@ This page serves this gift only. Because of the no-co-mingling rule, any website
 **2026-10-11 · Phase 1 gate: passed.**
 - Fixture categories A–D, I and M pass 67/67 on the script tier. The three model-tier free-text pastes are left to Phase 4, as the gate's "non-model parts" allows.
 - Generator seeds 0–1,999 with the model off: 99.55% assignment recall (gate ≥ 99%) and 99.47% precision.
+
+**2026-10-11 · WebView2 reached the network; now locked down.** The CI no-socket test caught the Windows WebView2 runtime connecting to a Microsoft server (150.171.22.17:443) during `--self-test`. The first runs missed it only because of timing. Since the app never loads remote content, this was Edge's background services.
+
+Fixes:
+- The window is created in code with WebView2 arguments that switch off component updates, SmartScreen, phishing detection, sync, pings and crash upload. `--host-resolver-rules` makes every host except localhost unresolvable.
+- The window runs in private (incognito) mode, and its data directory is the session temp folder.
+- `--self-test --linger 60` keeps the app open a minute on every CI runner while sockets are polled, so delayed background calls get caught too.
+
+**2026-10-11 · Session scratch folder.** WebView data (Windows, Linux) goes to `<OS temp>/schedule-spotter-session-<pid>/`. It is deleted on exit, and any leftover from an earlier session (a crash, or files still locked at exit) is swept at the next launch. This is the spec's "session scratch in the OS temp folder, deleted on exit and again on next launch". On macOS, private mode gives WKWebView a non-persistent data store.

@@ -22,18 +22,22 @@ const MAX_PAGE_READY_MS: u128 = 15_000;
 pub struct Args {
     pub self_test: bool,
     pub json_out: Option<PathBuf>,
+    /// Seconds to stay open after reporting, so CI can watch for late
+    /// network activity.
+    pub linger: Duration,
 }
 
 impl Args {
     pub fn parse(mut args: impl Iterator<Item = String>) -> Args {
-        let mut parsed = Args {
-            self_test: false,
-            json_out: None,
-        };
+        let mut parsed = Args { self_test: false, json_out: None, linger: Duration::ZERO };
         while let Some(arg) = args.next() {
             match arg.as_str() {
                 "--self-test" => parsed.self_test = true,
                 "--json-out" => parsed.json_out = args.next().map(PathBuf::from),
+                "--linger" => {
+                    let secs = args.next().and_then(|s| s.parse().ok()).unwrap_or(0);
+                    parsed.linger = Duration::from_secs(secs);
+                }
                 _ => {}
             }
         }
@@ -43,12 +47,13 @@ impl Args {
 
 pub struct SelfTest {
     json_out: Option<PathBuf>,
+    linger: Duration,
     page_ready_ms: OnceLock<u128>,
     done: Arc<AtomicBool>,
 }
 
 impl SelfTest {
-    pub fn start(json_out: Option<PathBuf>) -> SelfTest {
+    pub fn start(json_out: Option<PathBuf>, linger: Duration) -> SelfTest {
         let done = Arc::new(AtomicBool::new(false));
         let watchdog_done = Arc::clone(&done);
         let watchdog_out = json_out.clone();
@@ -63,11 +68,11 @@ impl SelfTest {
                 std::process::exit(3);
             }
         });
-        SelfTest {
-            json_out,
-            page_ready_ms: OnceLock::new(),
-            done,
-        }
+        SelfTest { json_out, linger, page_ready_ms: OnceLock::new(), done }
+    }
+
+    pub fn linger(&self) -> Duration {
+        self.linger
     }
 
     pub fn mark_page_ready(&self, started: Instant) {

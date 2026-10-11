@@ -29,7 +29,7 @@ jobs:
       - run: cargo test -p spotter-core -p spotter-llm
       - name: handmade fixtures (script tier)
         run: cargo run --release -q -p spotter-core --bin spotter-check -- fixtures fixtures/handmade
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.0
       - name: generator seeds 0-1999 (assignment recall >= 99%)
         run: |
           uv run --project tools/gen spotter-gen --seeds 0-1999 --out "$RUNNER_TEMP/gen"

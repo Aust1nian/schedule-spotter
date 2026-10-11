@@ -25,7 +25,7 @@ function Get-Descendants([int]$ParentId) {
   }
 }
 
-$proc = Start-Process -FilePath $exe.FullName -ArgumentList "--self-test", "--json-out", "`"$Out`"" -PassThru
+$proc = Start-Process -FilePath $exe.FullName -ArgumentList "--self-test", "--linger", "60", "--json-out", "`"$Out`"" -PassThru
 $null = $proc.Handle  # keeps ExitCode readable after exit
 $sockets = @()
 while (-not $proc.HasExited) {

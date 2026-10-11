@@ -17,7 +17,7 @@ hdiutil detach "$mnt" >/dev/null
 
 bin="$(find "$apps/Schedule Spotter.app/Contents/MacOS" -type f -perm -u+x | head -1)"
 sockets="$(mktemp)"
-"$bin" --self-test --json-out "$out" &
+"$bin" --self-test --linger 60 --json-out "$out" &
 pid=$!
 while kill -0 "$pid" 2>/dev/null; do
   lsof -nP -a -p "$pid" -i >>"$sockets" 2>/dev/null || true
