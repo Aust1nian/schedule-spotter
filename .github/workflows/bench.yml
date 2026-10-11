@@ -1,0 +1,20 @@
+name: bench
+
+# Model benchmarks on the weak-hardware profile. Phase 4 fills this in; the
+# nightly schedule stays off until Austin approves it (spec: CI cost).
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: "Model variant (A, B-E4B, B-E2B, B-E2B-QAT, B-E4B-QAT, C)"
+        required: true
+        default: "C"
+
+permissions:
+  contents: read
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "Benchmarks arrive in Phase 4 (variant ${{ inputs.variant }})."

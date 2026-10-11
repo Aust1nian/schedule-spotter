@@ -1,0 +1,13 @@
+[package]
+name = "spotter-bench"
+description = "Model benchmark harness (dev only)."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+spotter-core = { path = "../core" }
+spotter-llm = { path = "../llm" }
+serde_json = "1"

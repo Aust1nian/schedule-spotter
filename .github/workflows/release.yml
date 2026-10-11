@@ -1,0 +1,17 @@
+name: release
+
+# Signed builds on version tags. Phase 6 fills this in. Signing secrets live
+# only here: Apple certificate and password, App Store Connect API key, Azure
+# Artifact Signing credentials. Without them, builds are marked UNSIGNED.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "Release packaging arrives in Phase 6."
