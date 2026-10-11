@@ -155,8 +155,10 @@ fn row_cells(
     rich: &HashMap<u32, String>,
 ) -> Vec<Cell> {
     let offs: Vec<i32> = offsets
-        .chunks_exact(2)
-        .map(|b| i16::from_le_bytes([b[0], b[1]]) as i32)
+        .as_chunks::<2>()
+        .0
+        .iter()
+        .map(|b| i16::from_le_bytes(*b) as i32)
         .map(|o| if o >= 0 && wide { o * 4 } else { o })
         .collect();
     let mut cells = Vec::with_capacity(n_cols);
