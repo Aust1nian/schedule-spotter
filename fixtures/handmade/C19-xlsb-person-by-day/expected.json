@@ -1,0 +1,144 @@
+{
+  "category": "C",
+  "tier": "script",
+  "input": "input.xlsb",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-12",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-13",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-14",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-14",
+      "site": "Smith remodel"
+    },
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-15",
+      "site": "Smith remodel"
+    },
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-16",
+      "site": "Smith remodel"
+    },
+    {
+      "person": "José García",
+      "date": "2026-10-12",
+      "site": "Smith remodel"
+    },
+    {
+      "person": "José García",
+      "date": "2026-10-13",
+      "site": "Smith remodel"
+    },
+    {
+      "person": "José García",
+      "date": "2026-10-14",
+      "status": "off"
+    },
+    {
+      "person": "José García",
+      "date": "2026-10-15",
+      "site": "Smith remodel"
+    },
+    {
+      "person": "José García",
+      "date": "2026-10-16",
+      "site": "Smith remodel"
+    },
+    {
+      "person": "Luis Ortiz",
+      "date": "2026-10-12",
+      "site": "Oak Ridge Apts"
+    },
+    {
+      "person": "Luis Ortiz",
+      "date": "2026-10-13",
+      "site": "Oak Ridge Apts"
+    },
+    {
+      "person": "Luis Ortiz",
+      "date": "2026-10-14",
+      "site": "Oak Ridge Apts"
+    },
+    {
+      "person": "Luis Ortiz",
+      "date": "2026-10-15",
+      "status": "pto"
+    },
+    {
+      "person": "Luis Ortiz",
+      "date": "2026-10-16",
+      "site": "Oak Ridge Apts"
+    },
+    {
+      "person": "Dave Kim",
+      "date": "2026-10-12",
+      "site": "Shop"
+    },
+    {
+      "person": "Dave Kim",
+      "date": "2026-10-13",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Dave Kim",
+      "date": "2026-10-14",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Dave Kim",
+      "date": "2026-10-15",
+      "site": "1420 Johnson St"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Mike Baker",
+      "date": "2026-10-14",
+      "sites": [
+        "1420 Johnson St",
+        "Smith remodel"
+      ]
+    },
+    {
+      "type": "not_booked",
+      "person": "Dave Kim",
+      "date": "2026-10-16"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Oak Ridge Apts",
+      "date": "2026-10-15"
+    }
+  ],
+  "flags_exact": true
+}

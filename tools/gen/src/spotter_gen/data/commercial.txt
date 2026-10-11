@@ -1,0 +1,17 @@
+# Commercial job templates. {P} = place name, {N} = number.
+{P} Plaza TI
+Lowe's Plaza TI
+{P} Elementary
+Fire Station {N}
+{P} Medical Ph 2
+{P} Apts Bldg C
+{P} Library
+{P} Dental TI
+{P} Self Storage
+{P} Middle School
+{P} Community Church
+{P} Fitness TI
+{P} Credit Union
+Walgreens #{N}
+{P} Senior Center
+{P} Car Wash

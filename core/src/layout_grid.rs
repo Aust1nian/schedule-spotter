@@ -656,8 +656,8 @@ fn read_day_cell(
                             &ctx.crews,
                             &item.text,
                             day.date,
-                            status,
-                            item.part.or(cell_extras.part),
+                            (status, item.part.or(cell_extras.part)),
+                            item.note.as_deref(),
                             src,
                         );
                     }

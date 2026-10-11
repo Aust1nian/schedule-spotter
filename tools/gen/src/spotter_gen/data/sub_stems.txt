@@ -1,0 +1,29 @@
+# Subcontractor company stems. Disjoint from employee surnames.
+Delta
+Summit
+Apex
+Pacific
+Golden State
+Central
+Precision
+Allied
+Premier
+Reliable
+Superior
+Bayside
+Northstar
+Ironwood
+Redline
+Bluewater
+Pioneer
+Keystone
+Liberty
+Patriot
+Coastal
+Frontier
+Titan
+Atlas
+Vanguard
+Cornerstone
+Sequoia
+Tri-County

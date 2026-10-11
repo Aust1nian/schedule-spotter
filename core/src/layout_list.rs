@@ -408,6 +408,10 @@ fn assign_roles(
 
     // Dates.
     let date_col = (0..w)
+        // One stray date isn't a date column, unless the header says so.
+        .filter(|&c| {
+            stats[c].date >= 2 || (stats[c].date >= 1 && hroles[c] == Some(HeaderRole::Date))
+        })
         .filter(|&c| {
             rate(stats[c].date, &stats[c]) >= 0.5
                 || (hroles[c] == Some(HeaderRole::Date) && rate(stats[c].date, &stats[c]) >= 0.3)
@@ -609,8 +613,8 @@ fn read_row(
                     &ctx.crews,
                     &item.text,
                     date,
-                    status,
-                    part.or(item.part),
+                    (status, part.or(item.part)),
+                    cell_extras.note.as_deref(),
                     src_of(*c),
                 );
                 produced = true;
@@ -647,7 +651,14 @@ fn read_row(
     }
     if let Some((status, part)) = status_from_col.or(person_status) {
         for (item, c) in &people {
-            sink.status(&ctx.crews, &item.text, date, status, part, src_of(*c));
+            sink.status(
+                &ctx.crews,
+                &item.text,
+                date,
+                (status, part),
+                extras.note.as_deref(),
+                src_of(*c),
+            );
             produced = true;
         }
     }

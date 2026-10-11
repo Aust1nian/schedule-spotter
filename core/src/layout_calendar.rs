@@ -245,7 +245,7 @@ fn read_entry(
         if let Some((name, last)) = line.rsplit_once(' ')
             && let Some(status) = status_word(&key(last))
         {
-            sink.status(&ctx.crews, name, date, status, None, src);
+            sink.status(&ctx.crews, name, date, (status, None), None, src);
             sink.understood += 1;
             return;
         }
@@ -255,14 +255,28 @@ fn read_entry(
     let (lk, rk) = (key(&left), key(&right));
     if let Some(status) = status_word(&rk) {
         for item in cells::parse_cell(&left, Expect::People).items {
-            sink.status(&ctx.crews, &item.text, date, status, item.part, src);
+            sink.status(
+                &ctx.crews,
+                &item.text,
+                date,
+                (status, item.part),
+                item.note.as_deref(),
+                src,
+            );
         }
         sink.understood += 1;
         return;
     }
     if let Some(status) = status_word(&lk) {
         for item in cells::parse_cell(&right, Expect::People).items {
-            sink.status(&ctx.crews, &item.text, date, status, item.part, src);
+            sink.status(
+                &ctx.crews,
+                &item.text,
+                date,
+                (status, item.part),
+                item.note.as_deref(),
+                src,
+            );
         }
         sink.understood += 1;
         return;

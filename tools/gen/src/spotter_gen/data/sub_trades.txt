@@ -1,0 +1,16 @@
+# Subcontractor suffixes. Each contains a FORMAT.md subcontractor token.
+Electric LLC
+Electric
+Plumbing
+Plumbing Inc
+HVAC Inc
+HVAC
+Roofing
+Concrete
+Drywall
+Painting Co.
+Construction
+Services
+Contractors
+Electric Inc
+Roofing LLC

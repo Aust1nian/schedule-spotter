@@ -1,0 +1,31 @@
+# Place names for job-number jobs ("J-1042 Oak Ridge") and commercial jobs.
+Oak Ridge
+Hillcrest
+Willow Creek
+Cedar Point
+Stone Canyon
+Riverbend
+Fox Hollow
+Eagle Crest
+Pine Valley
+Sunset Ridge
+Quail Run
+Deer Park
+Copper Creek
+Mill Pond
+Shadow Hills
+Granite Bay
+Northgate
+Riverside
+Lakeview
+Brookside
+Westfield
+Fairmont
+Harbor Point
+Clearwater
+Silver Lake
+Elk Grove
+Bear Creek
+Spring Valley
+Rolling Hills
+Mesa Verde

@@ -154,6 +154,7 @@ simdutf8
 siphasher
 slab
 smallvec
+snap
 softbuffer
 soup3
 soup3-sys

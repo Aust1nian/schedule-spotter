@@ -97,7 +97,8 @@ One record per person per date, as written in the file:
   | `holiday` | holiday |
   | `out` | out |
 
-  Spanish equivalents map the same way: descanso → off, vacaciones → vacation, enfermo → sick, libre → off. A status record has no site.
+  Spanish equivalents map the same way: descanso → off, vacaciones → vacation, enfermo → sick, libre → off. A status record has no site. It keeps a cell note ("PTO (dentist)" → `note: "dentist"`).
+- **"x"** is `off` in a person's row and an inactive marker in a job-grid cell, where it produces no record.
 - **`unstaffed: true`** marks a job-day explicitly written as TBD, open, ?, need guy or need 1. It has no person.
 - **`part`** is `am`, `pm` or `half`, for "AM", "PM", "AM only" and "half day". AM and PM sub-columns under one day give one record per cell, even when both name the same site.
 - **`start` and `end`** are 24-hour `HH:MM`. If `end` < `start`, the shift ends the next day.
@@ -118,7 +119,7 @@ One record per person per date, as written in the file:
 ```
 
 - **`person`** is the canonical display name after merges: the longest name among the merged spellings.
-- **`sites`** are canonical site names, compared as a set.
+- **`sites`** are canonical site names, compared as a set. A merged site's canonical name is likewise its longest spelling.
 
 ### Info item
 
@@ -161,7 +162,7 @@ These definitions are normative for fixtures and the generator.
 - **Employees:** everyone named in the schedule or in a roster block.
 - **Placeholders:** role names such as "Helper 1", "Foreman", "Laborer", "New guy", "Temp".
 - **Subcontractors:** company names, marked by tokens like LLC, Inc, Co., Electric, Plumbing, HVAC, Roofing, Concrete, Drywall, Painting, Construction, Services, Contractors.
-- **Roster:** the roster block if one exists, otherwise every employee seen in the file. Placeholders and subcontractors are never on the roster.
+- **Roster:** the employee roster block (titled Roster, Employees, Staff and the like) if one exists, otherwise every employee seen in the file. A crew list ("Crew A: …") defines crews and is not a roster. Placeholders and subcontractors are never on the roster.
 
 **Sites.**
 - **Internal:** shop, yard, office, warehouse, and travel rows ("drive to …", "travel").
@@ -180,7 +181,7 @@ These cases are information items, not flags:
 | A shop-only combination, e.g. Shop + Yard | `internal_plus_site` |
 | The same person at the same site twice on one date (an AM record plus a PM record at one site is a full day, not a duplicate) | `duplicate_entry` |
 
-A shop plus two job sites is still `double_booked` for the two jobs. The flag's `sites` lists the conflicting job sites only.
+A shop plus two job sites is still `double_booked` for the two jobs. The flag's `sites` lists the conflicting job sites only, and no `internal_plus_site` item is added.
 
 Placeholders and subcontractors never get `double_booked`, `assigned_while_off` or `not_booked`. A subcontractor at two or more job sites on one date is `subcontractor_multi_site` info.
 
@@ -192,7 +193,7 @@ Placeholders and subcontractors never get `double_booked`, `assigned_while_off` 
 - **Explicit:** a job-day marked TBD, open, ?, need guy or need 1 is always flagged, working day or not.
 - **Inferred:** a job active on a working date with nobody assigned.
   - **Active dates, job grids** (`job_by_day`, `day_by_job`): every working date in the window, except cells marked inactive (x, —, n/a, "no work", "closed", "done").
-  - **Active dates, other layouts:** from the job's first to its last assigned working date within each Monday–Sunday week.
+  - **Active dates, other layouts:** from the job's first to its last assigned working date within each Monday–Sunday week. Explicitly unstaffed days (TBD) count as assigned for this range.
 - **Never unstaffed:** internal locations and status pseudo-rows (an "OFF" or "PTO" row in a job grid). A job with only placeholders or subcontractors on it is staffed.
 
 **Red vs amber.** `double_booked` and `assigned_while_off` are red. `not_booked` is amber. `unstaffed` is shown under the grid, striped. Info items are never red.

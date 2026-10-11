@@ -157,6 +157,13 @@ impl Sink {
             }
             None => vec![clean(person)],
         };
+        // A date or a bare number is never a person or a site.
+        let not_a_name =
+            |t: &str| crate::dates::parse(t).is_some() || t.trim().parse::<f64>().is_ok();
+        if not_a_name(person) || not_a_name(site) {
+            self.junk += 1;
+            return;
+        }
         for name in names {
             let mut a = self.record(date, src);
             a.person = Some(name);
@@ -175,8 +182,8 @@ impl Sink {
         crews: &Crews,
         person: &str,
         date: NaiveDate,
-        status: Status,
-        part: Option<Part>,
+        (status, part): (Status, Option<Part>),
+        note: Option<&str>,
         src: CellRef,
     ) {
         let names: Vec<String> = match crews.members(person) {
@@ -188,6 +195,7 @@ impl Sink {
             a.person = Some(name);
             a.status = Some(status);
             a.part = part;
+            a.note = note.map(str::to_string);
             self.assignments.push(a);
         }
     }
@@ -262,7 +270,13 @@ impl Candidate {
         if n == 0.0 {
             return 0.0;
         }
-        self.sink.quality() * (n / (n + 2.0))
+        let people_count = self.sink.assignments.iter().any(|a| a.person.is_some());
+        let likeness = if people_count {
+            self.person_likeness()
+        } else {
+            1.0
+        };
+        self.sink.quality() * (n / (n + 2.0)) * (0.5 + 0.5 * likeness)
     }
 }
 
@@ -574,8 +588,8 @@ pub fn person_cell(
             crews,
             person,
             date,
-            status,
-            part.or(if any { None } else { extras.part }),
+            (status, part.or(if any { None } else { extras.part })),
+            if any { None } else { extras.note.as_deref() },
             src,
         );
         any = true;
@@ -606,7 +620,14 @@ pub fn job_cell(
     if let Some((status, part)) = parsed.status.filter(|_| !parsed.items.is_empty()) {
         // "Luis - off" inside a job's cell: Luis is off, not at the job.
         for item in &parsed.items {
-            sink.status(crews, &item.text, date, status, part, src);
+            sink.status(
+                crews,
+                &item.text,
+                date,
+                (status, part),
+                item.note.as_deref(),
+                src,
+            );
         }
         sink.understood += 1;
         return;
