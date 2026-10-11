@@ -28,6 +28,8 @@ jobs:
       - run: cargo clippy -p spotter-core -p spotter-llm -p spotter-bench --all-targets -- -D warnings
       - run: cargo test -p spotter-core -p spotter-llm
       - run: python3 tools/depcheck.py
+      - name: lint workflows
+        run: docker run --rm -v "$PWD":/repo -w /repo rhysd/actionlint:1.7.12 -no-color
 
   build-macos:
     name: build macOS universal disk image
@@ -107,7 +109,10 @@ jobs:
       - run: tools/ci/selftest-macos.sh dist/*.dmg "$PWD/selftest-${{ matrix.runner }}.json"
       - uses: actions/upload-artifact@v7
         if: always()
-        with: { name: selftest-${{ matrix.runner }}, path: "selftest-*.json", if-no-files-found: warn }
+        with:
+          name: "selftest-${{ matrix.runner }}"
+          path: "selftest-*.json"
+          if-no-files-found: warn
 
   selftest-windows:
     name: self-test ${{ matrix.runner }}
@@ -131,7 +136,10 @@ jobs:
           tools/ci/selftest-windows.ps1 -Installer $setup -Out (Join-Path $PWD "selftest-${{ matrix.runner }}.json")
       - uses: actions/upload-artifact@v7
         if: always()
-        with: { name: selftest-${{ matrix.runner }}, path: "selftest-*.json", if-no-files-found: warn }
+        with:
+          name: "selftest-${{ matrix.runner }}"
+          path: "selftest-*.json"
+          if-no-files-found: warn
 
   selftest-linux:
     name: self-test ubuntu-24.04
@@ -145,4 +153,7 @@ jobs:
       - run: tools/ci/selftest-linux.sh dist/*.deb "$PWD/selftest-ubuntu-24.04.json"
       - uses: actions/upload-artifact@v7
         if: always()
-        with: { name: selftest-ubuntu-24.04, path: "selftest-*.json", if-no-files-found: warn }
+        with:
+          name: "selftest-ubuntu-24.04"
+          path: "selftest-*.json"
+          if-no-files-found: warn
