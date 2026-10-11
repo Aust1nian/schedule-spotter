@@ -75,6 +75,9 @@ fn status_clashes(part: Option<Part>, work: &Work) -> bool {
     }
 }
 
+/// A status and the part of the day it covers.
+type StatusMark = (Status, Option<Part>);
+
 fn day(d: NaiveDate) -> String {
     d.format("%a %-m/%-d").to_string()
 }
@@ -111,7 +114,7 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
     let mut people = Names::default();
     let mut sites = Names::default();
     let mut work: BTreeMap<(String, NaiveDate), Vec<Work>> = BTreeMap::new();
-    let mut statuses: BTreeMap<(String, NaiveDate), Vec<(Status, Option<Part>)>> = BTreeMap::new();
+    let mut statuses: BTreeMap<(String, NaiveDate), Vec<StatusMark>> = BTreeMap::new();
     let mut staffed: HashSet<(String, NaiveDate)> = HashSet::new();
     let mut explicit: BTreeSet<(String, NaiveDate)> = BTreeSet::new();
     let mut job_dates: BTreeMap<String, BTreeSet<NaiveDate>> = BTreeMap::new();

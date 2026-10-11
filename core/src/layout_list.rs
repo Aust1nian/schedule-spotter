@@ -112,7 +112,7 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
     let mut rows: Vec<Row> = Vec::new();
     let mut section_date: Option<NaiveDate> = None;
     let mut section_anchor: Option<NaiveDate> = None;
-    for r in start..g.height() {
+    for (r, &data_row) in is_data.iter().enumerate().skip(start) {
         if g.row_nonempty(r) == 1 {
             // Section rows: "Week of 10/12" or "MONDAY 10/12".
             let c = g.first_nonempty(r).expect("one cell");
@@ -131,7 +131,7 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
                 continue;
             }
         }
-        if !is_data[r] {
+        if !data_row {
             continue;
         }
         let anchor = section_anchor

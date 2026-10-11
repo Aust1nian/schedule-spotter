@@ -342,9 +342,12 @@ pub fn read_workbook(wb: &Workbook, settings: &Settings) -> Reading {
     reading
 }
 
-/// The readers, for the timing example: (name, reader(ctx, transposed)).
+/// A reader: (sheet context, transposed?) → candidate readings.
+pub type Reader = fn(&SheetCtx, bool) -> Vec<Candidate>;
+
+/// The readers, for the timing example: (name, reader).
 #[doc(hidden)]
-pub fn readers() -> Vec<(&'static str, fn(&SheetCtx, bool) -> Vec<Candidate>)> {
+pub fn readers() -> Vec<(&'static str, Reader)> {
     vec![
         ("calendar", |c, _| crate::layout_calendar::read(c)),
         ("grid", crate::layout_grid::read),
