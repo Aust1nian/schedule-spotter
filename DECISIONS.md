@@ -111,3 +111,11 @@ The spec's external facts were checked against primary sources: Hugging Face API
 **2026-10-11 · Nightly model benchmarks: approved.** `bench.yml` gets its nightly schedule when Phase 4 lands, as the spec's CI-cost step requires.
 
 **2026-10-11 · Apple Developer Program: Austin has an account.** Phase 6 wires Developer ID signing and notarization to it. Azure Artifact Signing is on hold until Austin has read what it's for and decides.
+
+**2026-10-11 · Windows code signing: none for now (deviation from the hard constraint "Signed on both platforms").** Austin: "We won't need an azure signing because for now we won't need to run it on the microsoft store, we simply have the download link on the website page." Consequences, as told to Austin:
+- Windows builds ship unsigned.
+- SmartScreen shows "Unknown publisher" rather than "Austin Burnes", and each new release starts with no reputation.
+- The recovery card describes the "Unknown publisher" prompt: More info, then Run anyway.
+- `release.yml` keeps an optional Azure Artifact Signing step that runs only if its secrets exist, so turning signing on later is just a matter of adding the secrets.
+- macOS signing and notarization go ahead with Austin's Apple Developer account.
+- Phase 6 install tests run against the unsigned Windows installer, and the `signtool verify` check is reported as "skipped: unsigned by decision" rather than as a failure.
