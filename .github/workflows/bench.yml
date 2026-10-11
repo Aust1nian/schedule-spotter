@@ -28,6 +28,9 @@ jobs:
     runs-on: ${{ matrix.runner }}
     continue-on-error: ${{ matrix.runner == 'windows-11-arm' }}
     env:
+      # Windows on Arm runs the shipped x64 build under emulation, as the
+      # app's self-test does (llama.cpp's Arm build also refuses MSVC).
+      TARGET_DIR: ${{ matrix.runner == 'windows-11-arm' && 'target/x86_64-pc-windows-msvc/release' || 'target/release' }}
       FULL: ${{ (matrix.runner == 'macos-15' || matrix.runner == 'macos-15-intel' || matrix.runner == 'windows-2025') && '1' || '0' }}
     steps:
       - uses: actions/checkout@v7
@@ -45,8 +48,15 @@ jobs:
         run: |
           "$(command -v python3 || command -v python)" models/fetch.py ${{ matrix.variant }}
         shell: bash
-      - run: cargo build --release -p spotter-bench
+      - name: build
         shell: bash
+        run: |
+          if [ "${{ matrix.runner }}" = windows-11-arm ]; then
+            rustup target add x86_64-pc-windows-msvc
+            cargo build --release -p spotter-bench --target x86_64-pc-windows-msvc
+          else
+            cargo build --release -p spotter-bench
+          fi
       - name: model file and checksum
         id: model
         shell: bash
@@ -69,7 +79,7 @@ jobs:
         shell: pwsh
         run: |
           $extra = if ($env:FULL -eq "1") { "" } else { "--max-per-task 6" }
-          tools/ci/run-limited.ps1 -Exe "target/release/spotter-bench.exe" -LimitMB 4096 `
+          tools/ci/run-limited.ps1 -Exe "$env:TARGET_DIR/spotter-bench.exe" -LimitMB 4096 `
             -Arguments "--model ${{ steps.model.outputs.file }} --sha ${{ steps.model.outputs.sha }} --variant ${{ matrix.variant }} --threads 2 --limit 5 $extra" `
             -Out "bench-${{ matrix.variant }}-${{ matrix.runner }}.json"
       - uses: astral-sh/setup-uv@v10.3.0

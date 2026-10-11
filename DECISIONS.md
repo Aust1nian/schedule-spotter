@@ -315,3 +315,5 @@ Latency rose about 10%. Without this change, A and B-E2B both break the 4.0 GB c
 
 - **Why 0.9.** No threshold brings either model within both limits (false merges ≤ 1%, unsure ≤ 15%). Gemma E2B is often confidently wrong on real look-alike names (Marla/Marta, Shawn/Shane at 0.998–1.0). 0.9 is kept because a wrong merge can hide or invent a red flag, while an extra question only costs the owner a click.
 - **Reporting.** MODEL_REPORT.md reports both the raw answers and the gated ones.
+
+**2026-10-11 · Windows on Arm runs the x64 build.** llama.cpp's own Arm build refuses MSVC ("MSVC is not supported for ARM, use clang"). The spec ships Windows x64 only, and the app's self-test on `windows-11-arm` already runs the x64 installer under emulation. So the benchmark on that runner builds `x86_64-pc-windows-msvc` and runs it emulated: it measures what an Arm laptop would actually run. The runner stays non-blocking.
