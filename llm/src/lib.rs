@@ -218,6 +218,8 @@ pub struct Engine {
     limit: Duration,
     /// The confidence a "same" needs to merge (T1 / T2).
     same_min: f32,
+    /// llama.cpp decode failures (e.g. the GPU couldn't hold the model).
+    failures: std::sync::atomic::AtomicUsize,
     /// Seconds from start of load (hash + weights + context).
     pub load_secs: f64,
 }
@@ -289,8 +291,14 @@ impl Engine {
             }),
             limit: CALL_LIMIT,
             same_min: SAME_MIN,
+            failures: std::sync::atomic::AtomicUsize::new(0),
             load_secs: started.elapsed().as_secs_f64(),
         })
+    }
+
+    /// How many llama.cpp decodes have failed since loading.
+    pub fn failures(&self) -> usize {
+        self.failures.load(std::sync::atomic::Ordering::Relaxed)
     }
 
     /// Changes the confidence a "same" needs (benchmarks sweep it).
@@ -393,6 +401,8 @@ impl Engine {
             }
             if let Err(e) = inner.ctx.decode(&mut batch) {
                 debug(&format!("decode failed: {e}"));
+                self.failures
+                    .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
                 inner.cached.clear();
                 return None;
             }
@@ -482,7 +492,13 @@ impl Engine {
             }
             batch.clear();
             batch.add(token, pos, &[0], true).ok()?;
-            inner.ctx.decode(&mut batch).ok()?;
+            if let Err(e) = inner.ctx.decode(&mut batch) {
+                debug(&format!("decode failed: {e}"));
+                self.failures
+                    .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+                inner.cached.clear();
+                return None;
+            }
             inner.cached.push(token);
             idx = 0;
         }

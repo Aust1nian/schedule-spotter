@@ -355,6 +355,7 @@ fn main() {
         "os": std::env::consts::OS,
         "arch": std::env::consts::ARCH,
         "same_min": same_min,
+        "decode_failures": engine.failures(),
         "load_s": load_s,
         "warm_s": warm_s,
         "peak_rss_mb": peak_rss_mb(),

@@ -94,6 +94,11 @@ def main():
             if "error" in r:
                 out.append(f"| {v} | — | failed: {r['error']} | | | | | | | | | no |")
                 continue
+            if r.get("decode_failures", 0) > r["overall"]["items"] // 2:
+                out.append(f"| {v} | {r.get('model', '')} | {r['load_s']:.1f} s | — | {r['peak_rss_mb'] / 1024:.2f} GB "
+                           f"| — | — | — | — | — | — | no: model failed to run ({r['decode_failures']} llama.cpp decode "
+                           f"errors; the model doesn't fit this machine) |")
+                continue
             o = r["overall"]
             right, total = injection(r)
             failed = [label for label, test in THRESHOLDS if not test(r)]
@@ -110,7 +115,7 @@ def main():
         out.append("| Variant | " + " | ".join(t.split("_", 1)[0].upper() for t in tasks) + " |")
         out.append("| --- |" + " --- |" * len(tasks))
         for v, r in rows:
-            if "error" in r:
+            if "error" in r or r.get("decode_failures", 0) > r["overall"]["items"] // 2:
                 continue
             cells = []
             for t in tasks:
@@ -145,7 +150,8 @@ def main():
 
     out.append("## Recommendation (selection rule, gating runner)")
     out.append("")
-    gating = {v: bench[(v, GATING)] for v in VARIANTS if (v, GATING) in bench and "error" not in bench[(v, GATING)]}
+    gating = {v: bench[(v, GATING)] for v in VARIANTS if (v, GATING) in bench and "error" not in bench[(v, GATING)]
+              and bench[(v, GATING)].get("decode_failures", 0) <= bench[(v, GATING)]["overall"]["items"] // 2}
     if not gating:
         out.append(f"No results from the gating runner ({GATING}) yet.")
     else:
