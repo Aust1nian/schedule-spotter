@@ -119,3 +119,21 @@ The spec's external facts were checked against primary sources: Hugging Face API
 - `release.yml` keeps an optional Azure Artifact Signing step that runs only if its secrets exist, so turning signing on later is just a matter of adding the secrets.
 - macOS signing and notarization go ahead with Austin's Apple Developer account.
 - Phase 6 install tests run against the unsigned Windows installer, and the `signtool verify` check is reported as "skipped: unsigned by decision" rather than as a failure.
+
+**2026-10-11 · Download delivery: a Pi-hosted site with an email-gated link (deviation from the spec's static page with "no tracking, cookies or forms" and its Cloudflare R2 hosting).** Austin: "Pi is the website host, and the method of delivery is via qr code, where they scan, it asks for their business email, and sends them a link from the company email to download what would ordinarily be viewed as a paid tool." The flow:
+1. The owner scans the QR code on the business card with a phone.
+2. The page explains the tool and asks for a business email.
+3. Tight Line's company email sends a download link.
+4. The owner opens that email on the laptop and downloads the Mac or Windows build.
+
+The email replaces the spec's phone "Share" button as the bridge from phone to laptop. `site/` becomes a small page plus a form handler that sends the email with a link that expires, all running on Austin's Raspberry Pi. The files are served from the Pi unless Phase 6 measurements say otherwise.
+
+The privacy promise about the app is unchanged, since the app still never touches the network. The site now collects one email address, so the page must say plainly what it's used for.
+
+Open items for Phase 6, to ask Austin then:
+- Which mail provider sends from the company address (SMTP or API credentials, plus SPF/DKIM on the domain).
+- Whether emails may be used for sales follow-up, which sets the consent wording.
+- How long a link stays valid.
+- Whether the Pi's upload bandwidth suits 1–3.7 GB downloads.
+
+This page serves this gift only. Because of the no-co-mingling rule, any website-wide pieces shared across gifts belong outside this repo.
