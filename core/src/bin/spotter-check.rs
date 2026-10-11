@@ -161,7 +161,12 @@ fn tuple(v: &Value) -> String {
 
 /// The comparable form of a flag or info item: type, date, who, where.
 fn finding_tuple(v: &Value) -> String {
-    let s = |k: &str| v.get(k).and_then(Value::as_str).map(norm).unwrap_or_default();
+    let s = |k: &str| {
+        v.get(k)
+            .and_then(Value::as_str)
+            .map(norm)
+            .unwrap_or_default()
+    };
     let mut sites: Vec<String> = v
         .get("sites")
         .and_then(Value::as_array)
@@ -194,7 +199,13 @@ fn info_json(i: &spotter_core::model::Info) -> Value {
 }
 
 /// Compares expected findings with actual ones; `exact` also reports extras.
-fn compare_findings(label: &str, expected: &[Value], actual: &[Value], exact: bool, problem: &mut dyn FnMut(String)) {
+fn compare_findings(
+    label: &str,
+    expected: &[Value],
+    actual: &[Value],
+    exact: bool,
+    problem: &mut dyn FnMut(String),
+) {
     let e: Vec<String> = expected.iter().map(finding_tuple).collect();
     let a: Vec<String> = actual.iter().map(finding_tuple).collect();
     let (missing, extra) = diff(&e, &a);
@@ -408,12 +419,18 @@ fn check_fixture(dir: &Path) -> Option<Outcome> {
         }
     }
     if let Some(exp) = expected.get("flags").and_then(Value::as_array) {
-        let exact = expected.get("flags_exact").and_then(Value::as_bool).unwrap_or(true);
+        let exact = expected
+            .get("flags_exact")
+            .and_then(Value::as_bool)
+            .unwrap_or(true);
         let actual: Vec<Value> = report.flags.iter().map(flag_json).collect();
         compare_findings("flag", exp, &actual, exact, &mut problem);
     }
     if let Some(exp) = expected.get("info").and_then(Value::as_array) {
-        let exact = expected.get("info_exact").and_then(Value::as_bool).unwrap_or(false);
+        let exact = expected
+            .get("info_exact")
+            .and_then(Value::as_bool)
+            .unwrap_or(false);
         let actual: Vec<Value> = report.info.iter().map(info_json).collect();
         compare_findings("info", exp, &actual, exact, &mut problem);
     }
@@ -479,6 +496,17 @@ fn cmd_fixtures(args: &[String]) -> i32 {
         .cloned()
         .collect();
     let only = flag(args, "--only");
+    // Known-failing fixtures still run and are reported, but don't fail the
+    // run; one that starts passing is called out so it leaves the list.
+    let known: Vec<String> = flag(args, "--known-failing")
+        .and_then(|p| std::fs::read_to_string(p).ok())
+        .map(|t| {
+            t.lines()
+                .map(|l| l.split('#').next().unwrap_or("").trim().to_string())
+                .filter(|l| !l.is_empty())
+                .collect()
+        })
+        .unwrap_or_default();
     let verbose = args.iter().any(|a| a == "--verbose");
     let mut outcomes = Vec::new();
     for dir in fixture_dirs(&roots) {
@@ -528,6 +556,19 @@ fn cmd_fixtures(args: &[String]) -> i32 {
         total += t;
     }
     println!("  all     {pass:>3}/{total:<3}");
+    let mut unexpected = 0;
+    for o in outcomes.iter().filter(|o| !o.skipped) {
+        let is_known = known.iter().any(|k| o.id.starts_with(k.as_str()));
+        match (o.passed, is_known) {
+            (false, true) => println!("  known failing (TEST_REPORT.md): {}", o.id),
+            (true, true) => println!(
+                "  NOW PASSING, remove from the known-failing list: {}",
+                o.id
+            ),
+            (false, false) => unexpected += 1,
+            (true, false) => {}
+        }
+    }
     if let Some(path) = flag(args, "--json") {
         let rows: Vec<Value> = outcomes
             .iter()
@@ -536,7 +577,7 @@ fn cmd_fixtures(args: &[String]) -> i32 {
         std::fs::write(path, serde_json::to_string_pretty(&rows).expect("json"))
             .expect("write --json");
     }
-    if pass == total { 0 } else { 1 }
+    if unexpected == 0 { 0 } else { 1 }
 }
 
 fn cmd_generated(args: &[String]) -> i32 {
@@ -572,9 +613,15 @@ fn cmd_generated(args: &[String]) -> i32 {
         let report = analyze(&input, &settings);
         times.push(started.elapsed().as_secs_f64() * 1000.0);
 
-        let exp_flags: Vec<String> =
-            expected["flags"].as_array().map(|v| v.iter().map(finding_tuple).collect()).unwrap_or_default();
-        let act_flags: Vec<String> = report.flags.iter().map(|f| finding_tuple(&flag_json(f))).collect();
+        let exp_flags: Vec<String> = expected["flags"]
+            .as_array()
+            .map(|v| v.iter().map(finding_tuple).collect())
+            .unwrap_or_default();
+        let act_flags: Vec<String> = report
+            .flags
+            .iter()
+            .map(|f| finding_tuple(&flag_json(f)))
+            .collect();
         let (flags_missing, flags_extra) = diff(&exp_flags, &act_flags);
         for (list, slot) in [(&exp_flags, 0), (&act_flags, 2)] {
             for f in list {
@@ -606,7 +653,9 @@ fn cmd_generated(args: &[String]) -> i32 {
             if !red.is_empty() {
                 clean_with_red.push(format!(
                     "{} ({}): {}",
-                    dir.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default(),
+                    dir.file_name()
+                        .map(|n| n.to_string_lossy().into_owned())
+                        .unwrap_or_default(),
                     expected["layout"].as_str().unwrap_or("?"),
                     red[0]
                 ));
@@ -692,10 +741,23 @@ fn cmd_generated(args: &[String]) -> i32 {
     }
     println!("\nflags            expected  matched   actual   recall  precision");
     for (kind, (e, m, a)) in &flag_stats {
-        let pct = |x: usize, y: usize| if y == 0 { 100.0 } else { 100.0 * x as f64 / y as f64 };
-        println!("  {kind:<18} {e:>7}  {m:>7}  {a:>7}  {:>6.2}%  {:>6.2}%", pct(*m, *e), pct(*m, *a));
+        let pct = |x: usize, y: usize| {
+            if y == 0 {
+                100.0
+            } else {
+                100.0 * x as f64 / y as f64
+            }
+        };
+        println!(
+            "  {kind:<18} {e:>7}  {m:>7}  {a:>7}  {:>6.2}%  {:>6.2}%",
+            pct(*m, *e),
+            pct(*m, *a)
+        );
     }
-    println!("clean schedules {clean_cases}, with a red flag: {}", clean_with_red.len());
+    println!(
+        "clean schedules {clean_cases}, with a red flag: {}",
+        clean_with_red.len()
+    );
     for c in clean_with_red.iter().take(if verbose { 40 } else { 8 }) {
         println!("    {c}");
     }
@@ -714,5 +776,9 @@ fn cmd_generated(args: &[String]) -> i32 {
         recall * 100.0,
         precision * 100.0
     );
-    if recall >= min_recall && !(flag_gate && !clean_with_red.is_empty()) { 0 } else { 1 }
+    if recall >= min_recall && !(flag_gate && !clean_with_red.is_empty()) {
+        0
+    } else {
+        1
+    }
 }

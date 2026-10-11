@@ -108,7 +108,11 @@ impl Grid {
     }
 
     fn counted(mut self) -> Grid {
-        self.nonempty = self.cells.iter().map(|row| row.iter().filter(|c| !c.is_empty()).count()).collect();
+        self.nonempty = self
+            .cells
+            .iter()
+            .map(|row| row.iter().filter(|c| !c.is_empty()).count())
+            .collect();
         self
     }
 

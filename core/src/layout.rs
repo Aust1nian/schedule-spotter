@@ -583,11 +583,17 @@ fn find_roster(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Option<Vec<S
             let rows: Vec<usize> = (r + 1..g.height())
                 .take_while(|&rr| {
                     let t = g.text(rr, c);
-                    !t.is_empty() && person_score(t) >= 0.4 && !crew_name(&key(t)) && status_word(&key(t)).is_none()
+                    !t.is_empty()
+                        && person_score(t) >= 0.4
+                        && !crew_name(&key(t))
+                        && status_word(&key(t)).is_none()
                 })
                 .collect();
             if rows.len() >= 2 {
-                let header_row = (0..g.width()).filter(|&cc| crate::lexicon::header_role(&key(g.text(r, cc))).is_some()).count() >= 2;
+                let header_row = (0..g.width())
+                    .filter(|&cc| crate::lexicon::header_role(&key(g.text(r, cc))).is_some())
+                    .count()
+                    >= 2;
                 if !header_row {
                     consumed.insert((r, c));
                     for &rr in &rows {

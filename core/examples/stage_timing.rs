@@ -9,11 +9,20 @@ fn main() {
     let path = std::env::args().nth(1).expect("file");
     let bytes = std::fs::read(&path).unwrap();
     let t = Instant::now();
-    let wb = read::read(&Input::File { name: path.clone(), bytes }).unwrap();
+    let wb = read::read(&Input::File {
+        name: path.clone(),
+        bytes,
+    })
+    .unwrap();
     println!("read         {:>8.1} ms", t.elapsed().as_secs_f64() * 1e3);
     let t = Instant::now();
     let g = Grid::new(&wb.sheets[0], 0);
-    println!("grid         {:>8.1} ms ({}x{})", t.elapsed().as_secs_f64() * 1e3, g.height(), g.width());
+    println!(
+        "grid         {:>8.1} ms ({}x{})",
+        t.elapsed().as_secs_f64() * 1e3,
+        g.height(),
+        g.width()
+    );
     let settings = Settings::default();
     let t = Instant::now();
     let ctx = SheetCtx::new(&g, settings.today);
@@ -28,6 +37,9 @@ fn main() {
         let a = t.elapsed().as_secs_f64() * 1e3;
         let t = Instant::now();
         let m = f(&tctx, true).len();
-        println!("{name:<12} {a:>8.1} ms / transposed {:>8.1} ms ({n}, {m} candidates)", t.elapsed().as_secs_f64() * 1e3);
+        println!(
+            "{name:<12} {a:>8.1} ms / transposed {:>8.1} ms ({n}, {m} candidates)",
+            t.elapsed().as_secs_f64() * 1e3
+        );
     }
 }

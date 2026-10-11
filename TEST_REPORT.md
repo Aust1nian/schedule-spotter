@@ -91,4 +91,8 @@ None.
 
 ## Known failures
 
-None.
+Listed in `fixtures/KNOWN_FAILING.txt`. They still run on every push.
+
+| Fixture | Why | Fixed by |
+|---|---|---|
+| K07-double-booked-after-name-merge | The double-booking appears only once "Mike B" and "Michael Baker" are one person, which needs stage 7 matching (nickname + initial). | Phase 3 |

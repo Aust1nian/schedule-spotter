@@ -52,7 +52,12 @@ fn suffix(token: &str) -> &str {
 /// directions abbreviated, "the" dropped. "1420 Johnson Street." and
 /// "1420 johnson st" share a key; "1240 Johnson St" does not.
 pub fn site_key(site: &str) -> String {
-    tokens(site).iter().filter(|t| t.as_str() != "the").map(|t| suffix(t)).collect::<Vec<_>>().join(" ")
+    tokens(site)
+        .iter()
+        .filter(|t| t.as_str() != "the")
+        .map(|t| suffix(t))
+        .collect::<Vec<_>>()
+        .join(" ")
 }
 
 /// Groups spellings by key and names each group by its longest spelling
@@ -65,14 +70,20 @@ pub struct Names {
 impl Names {
     pub fn add(&mut self, key: &str, spelling: &str) {
         let spelling = clean(spelling);
-        let entry = self.display.entry(key.to_string()).or_insert_with(|| spelling.clone());
+        let entry = self
+            .display
+            .entry(key.to_string())
+            .or_insert_with(|| spelling.clone());
         if spelling.chars().count() > entry.chars().count() {
             *entry = spelling;
         }
     }
 
     pub fn display(&self, key: &str) -> String {
-        self.display.get(key).cloned().unwrap_or_else(|| key.to_string())
+        self.display
+            .get(key)
+            .cloned()
+            .unwrap_or_else(|| key.to_string())
     }
 }
 
@@ -90,7 +101,10 @@ mod tests {
     fn keys() {
         assert_eq!(person_key(" MIKE  Baker. "), "mike baker");
         assert_ne!(person_key("José"), person_key("Jose"));
-        assert_eq!(site_key("1420 Johnson Street."), site_key("1420 johnson st"));
+        assert_eq!(
+            site_key("1420 Johnson Street."),
+            site_key("1420 johnson st")
+        );
         assert_ne!(site_key("1420 Johnson St"), site_key("1240 Johnson St"));
         assert_eq!(site_key("The Shop"), site_key("shop"));
         let mut names = Names::default();

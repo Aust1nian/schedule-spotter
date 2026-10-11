@@ -22,7 +22,12 @@ struct Work {
 
 impl Work {
     fn of(a: &Assignment) -> Work {
-        Work { site: site_key(a.site.as_deref().unwrap_or("")), start: a.start, end: a.end, part: a.part }
+        Work {
+            site: site_key(a.site.as_deref().unwrap_or("")),
+            start: a.start,
+            end: a.end,
+            part: a.part,
+        }
     }
 
     /// Minutes [from, to) after midnight; past midnight runs into tomorrow.
@@ -79,7 +84,11 @@ fn list(names: &[String]) -> String {
         [] => String::new(),
         [one] => one.clone(),
         [a, b] => format!("{a} and {b}"),
-        _ => format!("{} and {}", names[..names.len() - 1].join(", "), names[names.len() - 1]),
+        _ => format!(
+            "{} and {}",
+            names[..names.len() - 1].join(", "),
+            names[names.len() - 1]
+        ),
     }
 }
 
@@ -121,7 +130,10 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
                 explicit.insert((sk.clone(), a.date));
                 job_dates.entry(sk).or_default().insert(a.date);
             }
-            (Some(pk), _, Some(status), _) => statuses.entry((pk, a.date)).or_default().push((status, a.part)),
+            (Some(pk), _, Some(status), _) => statuses
+                .entry((pk, a.date))
+                .or_default()
+                .push((status, a.part)),
             (Some(pk), Some(sk), None, false) => {
                 staffed.insert((sk.clone(), a.date));
                 job_dates.entry(sk).or_default().insert(a.date);
@@ -139,14 +151,23 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
             }
             names.iter().map(|n| person_key(n)).collect()
         }
-        None => work.keys().chain(statuses.keys()).map(|(pk, _)| pk.clone()).collect(),
+        None => work
+            .keys()
+            .chain(statuses.keys())
+            .map(|(pk, _)| pk.clone())
+            .collect(),
     };
     for job in &reading.grid_jobs {
         sites.add(&site_key(job), job);
     }
 
     let kind = |pk: &str| entity_kind(&people.display(pk));
-    let working: Vec<NaiveDate> = reading.window.iter().copied().filter(|d| settings.is_working_date(*d)).collect();
+    let working: Vec<NaiveDate> = reading
+        .window
+        .iter()
+        .copied()
+        .filter(|d| settings.is_working_date(*d))
+        .collect();
     let mut flags = Vec::new();
     let mut info = Vec::new();
 
@@ -163,8 +184,16 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
                 distinct.push(&e.site);
             }
         }
-        let jobs: Vec<&str> = distinct.iter().copied().filter(|s| !is_internal(&sites.display(s))).collect();
-        let internal: Vec<&str> = distinct.iter().copied().filter(|s| is_internal(&sites.display(s))).collect();
+        let jobs: Vec<&str> = distinct
+            .iter()
+            .copied()
+            .filter(|s| !is_internal(&sites.display(s)))
+            .collect();
+        let internal: Vec<&str> = distinct
+            .iter()
+            .copied()
+            .filter(|s| is_internal(&sites.display(s)))
+            .collect();
         let shown = |keys: &[&str]| keys.iter().map(|s| sites.display(s)).collect::<Vec<_>>();
 
         if k == EntityKind::Subcontractor {
@@ -174,7 +203,11 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
                     kind: InfoKind::SubcontractorMultiSite,
                     date: *date,
                     person: who.clone(),
-                    message: format!("{who} is at {} on {}. That's normal for a subcontractor.", list(&names), day(*date)),
+                    message: format!(
+                        "{who} is at {} on {}. That's normal for a subcontractor.",
+                        list(&names),
+                        day(*date)
+                    ),
                     sites: names,
                 });
             }
@@ -183,7 +216,10 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
 
         for site in &distinct {
             let here: Vec<&Work> = entries.iter().filter(|e| e.site == *site).collect();
-            let dup = here.iter().enumerate().any(|(i, a)| here[i + 1..].iter().any(|b| clash(a, b)));
+            let dup = here
+                .iter()
+                .enumerate()
+                .any(|(i, a)| here[i + 1..].iter().any(|b| clash(a, b)));
             if dup {
                 let name = sites.display(site);
                 info.push(Info {
@@ -200,7 +236,11 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
             let mut clashing: Vec<&str> = Vec::new();
             for (i, a) in entries.iter().enumerate() {
                 for b in &entries[i + 1..] {
-                    if a.site != b.site && jobs.contains(&a.site.as_str()) && jobs.contains(&b.site.as_str()) && clash(a, b) {
+                    if a.site != b.site
+                        && jobs.contains(&a.site.as_str())
+                        && jobs.contains(&b.site.as_str())
+                        && clash(a, b)
+                    {
                         for s in [a.site.as_str(), b.site.as_str()] {
                             if !clashing.contains(&s) {
                                 clashing.push(s);
@@ -210,7 +250,11 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
                 }
             }
             if !clashing.is_empty() {
-                let order: Vec<&str> = jobs.iter().copied().filter(|s| clashing.contains(s)).collect();
+                let order: Vec<&str> = jobs
+                    .iter()
+                    .copied()
+                    .filter(|s| clashing.contains(s))
+                    .collect();
                 let names = shown(&order);
                 flags.push(Flag {
                     kind: FlagKind::DoubleBooked,
@@ -228,11 +272,17 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
                     kind: InfoKind::SplitDay,
                     date: *date,
                     person: who.clone(),
-                    message: format!("{who} splits {} between {} at different times.", day(*date), list(&names)),
+                    message: format!(
+                        "{who} splits {} between {} at different times.",
+                        day(*date),
+                        list(&names)
+                    ),
                     sites: names,
                 });
             }
-        } else if (jobs.len() == 1 && !internal.is_empty()) || (jobs.is_empty() && internal.len() >= 2) {
+        } else if (jobs.len() == 1 && !internal.is_empty())
+            || (jobs.is_empty() && internal.len() >= 2)
+        {
             let names = shown(&distinct);
             info.push(Info {
                 kind: InfoKind::InternalPlusSite,
@@ -249,9 +299,14 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
         if kind(pk) != EntityKind::Employee {
             continue;
         }
-        let Some(entries) = work.get(&(pk.clone(), *date)) else { continue };
+        let Some(entries) = work.get(&(pk.clone(), *date)) else {
+            continue;
+        };
         for (status, part) in marks {
-            let clashing: Vec<&Work> = entries.iter().filter(|w| status_clashes(*part, w)).collect();
+            let clashing: Vec<&Work> = entries
+                .iter()
+                .filter(|w| status_clashes(*part, w))
+                .collect();
             if clashing.is_empty() {
                 continue;
             }
@@ -268,7 +323,12 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
                 date: *date,
                 person: Some(who.clone()),
                 site: None,
-                message: format!("{who} is {} on {} but is also on {}.", status_word(*status), day(*date), list(&names)),
+                message: format!(
+                    "{who} is {} on {} but is also on {}.",
+                    status_word(*status),
+                    day(*date),
+                    list(&names)
+                ),
                 sites: names,
                 status: Some(*status),
                 explicit: false,
@@ -305,7 +365,11 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
     for (sk, d) in &explicit {
         unstaffed.insert((*d, sk.clone()));
     }
-    let inactive: HashSet<(String, NaiveDate)> = reading.inactive.iter().map(|(s, d)| (site_key(s), *d)).collect();
+    let inactive: HashSet<(String, NaiveDate)> = reading
+        .inactive
+        .iter()
+        .map(|(s, d)| (site_key(s), *d))
+        .collect();
     let mut inferred: BTreeSet<(NaiveDate, String)> = BTreeSet::new();
     if !reading.grid_jobs.is_empty() {
         for job in &reading.grid_jobs {

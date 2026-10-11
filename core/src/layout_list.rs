@@ -595,7 +595,9 @@ fn assign_roles(
     if person_cols.is_empty() {
         person_cols = roster_cols
             .into_iter()
-            .filter(|&c| stats[c].entity_n > 0 && stats[c].person / stats[c].entity_n as f32 >= 0.45)
+            .filter(|&c| {
+                stats[c].entity_n > 0 && stats[c].person / stats[c].entity_n as f32 >= 0.45
+            })
             .collect();
     }
     if person_cols.is_empty() {

@@ -45,9 +45,19 @@ pub fn analyze(input: &Input, settings: &Settings) -> Report {
     match read_schedule(input, settings) {
         Ok(reading) => {
             let (flags, info) = analyze::analyze(&reading, settings);
-            Report { reading, error: None, flags, info }
+            Report {
+                reading,
+                error: None,
+                flags,
+                info,
+            }
         }
-        Err(error) => Report { reading: Reading::default(), error: Some(error), flags: Vec::new(), info: Vec::new() },
+        Err(error) => Report {
+            reading: Reading::default(),
+            error: Some(error),
+            flags: Vec::new(),
+            info: Vec::new(),
+        },
     }
 }
 
