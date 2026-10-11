@@ -330,3 +330,8 @@ Latency rose about 10%. Without this change, A and B-E2B both break the 4.0 GB c
 - **Caveat for MODEL_REPORT.md.** The CI Macs are virtual machines whose GPU ("Apple Paravirtual device") lacks the SIMD-group operations llama.cpp's fast Metal kernels use. Metal latency there overstates what a real M-series Mac does.
 
 **2026-10-11 · Known limit: the model is impractical on Windows on Arm.** The shipped x64 build runs under emulation on `windows-11-arm`. The app itself is fine there and passes its self-test. Model calls are another matter: in the first nightly they took 7–35 s at p95, so nearly every one ran past the 5 s limit and became an owner question. On those laptops the app effectively runs with the model off. A native Arm64 Windows build would need llama.cpp built with clang instead of MSVC, and the spec ships Windows x64 only. This goes into Known limits.
+
+**2026-10-11 · The model runs on the CPU when the only GPU is a VM's paravirtual device.**
+- **What we measured.** On the CI Macs, Metal on "Apple Paravirtual device" generated about 4 tokens/s, against about 20 on two CPU threads. That GPU lacks the SIMD-group operations llama.cpp's fast kernels need.
+- **The rule.** `use_gpu()` keeps Metal on real Apple Silicon and uses the CPU when every GPU llama.cpp sees is paravirtual: no GPU layers, and no KV or op offload. That matches the spec's weak-hardware intent and helps anyone running macOS in a VM. `SPOTTER_LLM_BACKEND=cpu|gpu` overrides the choice.
+- **Reporting.** The benchmark records which backend ran. On Apple Silicon runners it adds a short forced-Metal run, so MODEL_REPORT.md shows what the choice is worth. Load time is reported with the SHA-256 check's share.

@@ -356,6 +356,8 @@ fn main() {
         "arch": std::env::consts::ARCH,
         "same_min": same_min,
         "decode_failures": engine.failures(),
+        "backend": engine.backend,
+        "hash_s": engine.hash_secs,
         "load_s": load_s,
         "warm_s": warm_s,
         "peak_rss_mb": peak_rss_mb(),

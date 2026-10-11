@@ -140,6 +140,23 @@ fn expand_groups(v: &Value) -> Vec<TextEntry> {
     out
 }
 
+/// Whether the model runs on the GPU (Metal on Apple Silicon). Not when the
+/// only GPU is a virtual machine's paravirtual device, which lacks the SIMD
+/// group operations llama.cpp's fast Metal kernels need. `SPOTTER_LLM_BACKEND`
+/// = `cpu` | `gpu` overrides it (benchmarks compare both).
+fn use_gpu() -> bool {
+    match std::env::var("SPOTTER_LLM_BACKEND").as_deref() {
+        Ok("cpu") => return false,
+        Ok("gpu") => return true,
+        _ => {}
+    }
+    let gpus: Vec<_> = llama_cpp_2::list_llama_ggml_backend_devices()
+        .into_iter()
+        .filter(|d| d.backend != "CPU")
+        .collect();
+    !gpus.is_empty() && !gpus.iter().all(|d| d.description.contains("Paravirtual"))
+}
+
 /// Where the CPU modules (`ggml-cpu-*`) live: beside the program when
 /// installed, else the build's own directory (development).
 #[cfg(all(target_arch = "x86_64", target_os = "windows"))]
@@ -220,6 +237,10 @@ pub struct Engine {
     same_min: f32,
     /// llama.cpp decode failures (e.g. the GPU couldn't hold the model).
     failures: std::sync::atomic::AtomicUsize,
+    /// "gpu" or "cpu": where the model runs (see `use_gpu`).
+    pub backend: &'static str,
+    /// Seconds of `load_secs` spent checking the file's SHA-256.
+    pub hash_secs: f64,
     /// Seconds from start of load (hash + weights + context).
     pub load_secs: f64,
 }
@@ -254,7 +275,14 @@ impl Engine {
                 return Err(LoadError::HashMismatch);
             }
         }
-        let params = LlamaModelParams::default();
+        let hash_secs = started.elapsed().as_secs_f64();
+        let _ = backend(); // registers the devices use_gpu looks at
+        let gpu = use_gpu();
+        let params = if gpu {
+            LlamaModelParams::default()
+        } else {
+            LlamaModelParams::default().with_n_gpu_layers(0)
+        };
         let model = LlamaModel::load_from_file(backend(), path, &params)
             .map_err(|e| LoadError::Llama(e.to_string()))?;
         let model: &'static LlamaModel = Box::leak(Box::new(model));
@@ -266,7 +294,9 @@ impl Engine {
             .with_n_ctx(NonZeroU32::new(N_CTX))
             .with_n_batch(512)
             .with_n_threads(threads)
-            .with_n_threads_batch(threads);
+            .with_n_threads_batch(threads)
+            .with_offload_kqv(gpu)
+            .with_op_offload(gpu);
         let ctx = model
             .new_context(backend(), ctx_params)
             .map_err(|e| LoadError::Llama(e.to_string()))?;
@@ -292,6 +322,8 @@ impl Engine {
             limit: CALL_LIMIT,
             same_min: SAME_MIN,
             failures: std::sync::atomic::AtomicUsize::new(0),
+            backend: if gpu { "gpu" } else { "cpu" },
+            hash_secs,
             load_secs: started.elapsed().as_secs_f64(),
         })
     }

@@ -82,6 +82,12 @@ jobs:
           extra=(); [ "$FULL" = "1" ] || extra=(--max-per-task 6)
           target/release/spotter-bench --model "${{ steps.model.outputs.file }}" --sha "${{ steps.model.outputs.sha }}" \
             --variant ${{ matrix.variant }} --threads 2 --limit 5 "${extra[@]}" --out "bench-${{ matrix.variant }}-${{ matrix.runner }}.json"
+          # Apple Silicon: the engine picks the CPU on these VMs (paravirtual GPU);
+          # a short forced-Metal run shows what that choice is worth.
+          if [ "${{ matrix.runner }}" != macos-15-intel ]; then
+            SPOTTER_LLM_BACKEND=gpu target/release/spotter-bench --model "${{ steps.model.outputs.file }}" --sha "${{ steps.model.outputs.sha }}" \
+              --variant ${{ matrix.variant }} --threads 2 --limit 5 --max-per-task 6 --out "bench-${{ matrix.variant }}-${{ matrix.runner }}-gpu.json" || true
+          fi
       - name: benchmark (windows, 4 GB job limit)
         if: runner.os == 'Windows'
         shell: pwsh

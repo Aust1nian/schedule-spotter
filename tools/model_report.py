@@ -18,7 +18,7 @@ import sys
 
 GATING = "macos-15"
 VARIANTS = ["C", "A", "B-E2B", "B-E2B-QAT", "B-E4B", "B-E4B-QAT"]
-RUNNER_ORDER = ["macos-15", "macos-15-intel", "windows-2025", "macos-26", "windows-11-arm"]
+RUNNER_ORDER = ["macos-15", "macos-15-gpu", "macos-15-intel", "windows-2025", "macos-26", "macos-26-gpu", "windows-11-arm"]
 
 # (label, key, test, shown)
 THRESHOLDS = [
@@ -86,16 +86,19 @@ def main():
         rows = [(v, bench[(v, runner)]) for v in VARIANTS if (v, runner) in bench]
         if not rows:
             continue
-        out.append(f"## {runner}" + (" (gating)" if runner == GATING else ""))
+        title = f"## {runner}" + (" (gating)" if runner == GATING else "")
+        if runner.endswith("-gpu"):
+            title = f"## {runner[:-4]}, Metal forced (short set, for comparison)"
+        out.append(title)
         out.append("")
-        out.append("| Variant | Model file | Load | Warm-up | Peak RSS | p50 | p95 | Accuracy | False merges | Unsure | Injection | Passes |")
-        out.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
+        out.append("| Variant | Model file | Backend | Load (hash) | Warm-up | Peak RSS | p50 | p95 | Accuracy | False merges | Unsure | Injection | Passes |")
+        out.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
         for v, r in rows:
             if "error" in r:
-                out.append(f"| {v} | — | failed: {r['error']} | | | | | | | | | no |")
+                out.append(f"| {v} | — | — | failed: {r['error']} | | | | | | | | | no |")
                 continue
             if r.get("decode_failures", 0) > r["overall"]["items"] // 2:
-                out.append(f"| {v} | {r.get('model', '')} | {r['load_s']:.1f} s | — | {r['peak_rss_mb'] / 1024:.2f} GB "
+                out.append(f"| {v} | {r.get('model', '')} | {r.get('backend', '?')} | {r['load_s']:.1f} s | — | {r['peak_rss_mb'] / 1024:.2f} GB "
                            f"| — | — | — | — | — | — | no: model failed to run ({r['decode_failures']} llama.cpp decode "
                            f"errors; the model doesn't fit this machine) |")
                 continue
@@ -103,7 +106,7 @@ def main():
             right, total = injection(r)
             failed = [label for label, test in THRESHOLDS if not test(r)]
             out.append(
-                f"| {v} | {r.get('model', '')} | {r['load_s']:.1f} s | {r.get('warm_s', 0):.1f} s | "
+                f"| {v} | {r.get('model', '')} | {r.get('backend', '?')} | {r['load_s']:.1f} s ({r.get('hash_s', 0):.1f} s) | {r.get('warm_s', 0):.1f} s | "
                 f"{r['peak_rss_mb'] / 1024:.2f} GB | {o['latency_p50_s']:.2f} s | {o['latency_p95_s']:.2f} s | "
                 f"{pct(o['accuracy_on_answered'])} | {pct(o['false_merge_rate'])} | {pct(o['unsure_rate'])} | "
                 f"{right}/{total} | {'yes' if not failed else 'no: ' + ', '.join(failed)} |"
