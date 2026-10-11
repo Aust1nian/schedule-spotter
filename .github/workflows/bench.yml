@@ -38,8 +38,7 @@ jobs:
         shell: bash
       - uses: Swatinem/rust-cache@v2.9.2
         with:
-          # v2: Intel Macs built without Metal (DECISIONS.md).
-          key: bench-v2-${{ matrix.runner }}
+          key: bench-${{ matrix.runner }}-${{ hashFiles('.cargo/config.toml') }}
       - name: model cache
         uses: actions/cache@v6
         with:
@@ -125,6 +124,10 @@ jobs:
         with: { path: results }
       - run: rustup toolchain install stable --profile minimal && rustup default stable
       - uses: Swatinem/rust-cache@v2.9.2
+        with:
+          # llama.cpp's build options live in .cargo/config.toml; cargo can't see a
+          # newly added one, so a change there must not reuse an old build.
+          key: cfg-${{ hashFiles('.cargo/config.toml') }}
       - uses: astral-sh/setup-uv@v10.3.0
       - name: model-off baseline (same generator seeds)
         run: |
