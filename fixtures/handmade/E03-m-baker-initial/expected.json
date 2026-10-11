@@ -1,0 +1,59 @@
+{
+  "category": "E",
+  "tier": "script",
+  "input": "input.xlsx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "day_by_job",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Michael Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Maria Lopez", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Michael Baker", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Maria Lopez", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Maria Lopez", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Michael Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Maria Lopez", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Michael Baker", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Maria Lopez", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Dan Baker", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Dan Baker", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Dan Baker", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "M. Baker", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Dan Baker", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Dan Baker", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "M. Baker", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Parker kitchen"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Parker kitchen"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Parker kitchen"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "Parker kitchen"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "Parker kitchen"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Michael Baker", "date": "2026-10-15", "sites": ["1420 Johnson St", "Oak Ridge Apts"]}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": true,
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "pick_sheet"},
+    {"type": "same_person", "a": "M. Baker", "b": "Michael Baker"},
+    {"type": "same_person", "a": "M. Baker", "b": "Dan Baker"},
+    {"type": "same_person", "a": "Michael Baker", "b": "Dan Baker"},
+    {"type": "same_person"},
+    {"type": "same_site"}
+  ]
+}

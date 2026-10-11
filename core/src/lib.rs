@@ -14,6 +14,7 @@ mod layout_calendar;
 mod layout_grid;
 mod layout_list;
 pub mod lexicon;
+pub mod matching;
 pub mod model;
 pub mod read;
 mod read_docx;
@@ -22,13 +23,24 @@ pub mod settings;
 pub mod text;
 pub mod times;
 
-pub use model::{Flag, FlagKind, Input, Question, ReadError, Reading, Report};
+pub use matching::{NoModel, Tiebreaker};
+pub use model::{Answer, Answers, Flag, FlagKind, Input, Question, ReadError, Reading, Report};
 pub use settings::{Settings, Workdays};
 
 /// Stages 1–6: reads `input` into assignments, or says why it can't.
 pub fn read_schedule(input: &Input, settings: &Settings) -> Result<Reading, ReadError> {
+    read_schedule_with(input, settings, &Answers::default())
+}
+
+/// Stages 1–6 with the owner's answers about sheets, layouts, dates,
+/// fill-downs and column roles applied.
+pub fn read_schedule_with(
+    input: &Input,
+    settings: &Settings,
+    answers: &Answers,
+) -> Result<Reading, ReadError> {
     let workbook = read::read(input)?;
-    let mut reading = layout::read_workbook(&workbook, settings);
+    let mut reading = layout::read_workbook(&workbook, settings, answers);
     if reading.assignments.is_empty() && reading.grid_jobs.is_empty() {
         if matches!(input, Input::Paste { .. }) {
             // Free-form text needs the model (task T5); without it, ask for a table.
@@ -40,23 +52,39 @@ pub fn read_schedule(input: &Input, settings: &Settings) -> Result<Reading, Read
     Ok(reading)
 }
 
-/// Reads `input` and computes the findings under `settings`.
+/// Reads `input` and computes the findings under `settings`, with no
+/// answers yet and the model off.
 pub fn analyze(input: &Input, settings: &Settings) -> Report {
-    match read_schedule(input, settings) {
+    analyze_with(input, settings, &Answers::default(), &NoModel)
+}
+
+/// The whole pipeline: read (stages 1–6), match (7), classify and flag
+/// (8–9), honoring the owner's answers and asking the model about
+/// anything the rules can't settle.
+pub fn analyze_with(
+    input: &Input,
+    settings: &Settings,
+    answers: &Answers,
+    tiebreak: &dyn Tiebreaker,
+) -> Report {
+    match read_schedule_with(input, settings, answers) {
         Ok(reading) => {
-            let (flags, info) = analyze::analyze(&reading, settings);
+            let matching = matching::match_entities(&reading, answers, tiebreak);
+            let (flags, info) = analyze::analyze(&reading, settings, &matching);
+            let mut questions = reading.questions.clone();
+            questions.extend(matching.questions.iter().cloned());
             Report {
                 reading,
                 error: None,
                 flags,
                 info,
+                merges: matching.merges,
+                questions,
             }
         }
         Err(error) => Report {
-            reading: Reading::default(),
             error: Some(error),
-            flags: Vec::new(),
-            info: Vec::new(),
+            ..Report::default()
         },
     }
 }

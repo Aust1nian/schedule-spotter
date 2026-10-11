@@ -1,0 +1,23 @@
+{
+  "window": [
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16"
+  ],
+  "same_site": [
+    [
+      "350 N Main St",
+      "350 North Main Street"
+    ],
+    [
+      "350 N Main St",
+      "350 N. Main St."
+    ],
+    [
+      "88 Oak Ridge Ave",
+      "88 Oak Ridge Avenue"
+    ]
+  ]
+}

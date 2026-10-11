@@ -1,0 +1,1 @@
+Direction and suffix spellings (day x person): '350 N Main St' = '350 North Main Street' = '350 N. Main St.' and '88 Oak Ridge Ave' = '88 Oak Ridge Avenue' (same house numbers), plus 'smith remodel' / 'Smith Remodel', merge without asking (unmerged, 88 Oak Ridge Ave would look unstaffed Tue-Thu); the one real flag is Tom Reed not booked Friday.

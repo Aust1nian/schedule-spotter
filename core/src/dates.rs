@@ -464,6 +464,12 @@ pub fn weekday_sequence(toks: &[DayTok]) -> Option<Vec<Weekday>> {
     None
 }
 
+/// The date of weekday `w` in the Monday–Sunday week containing `date`.
+pub fn weekday_in_week(date: NaiveDate, w: Weekday) -> NaiveDate {
+    date - Duration::days(date.weekday().num_days_from_monday() as i64)
+        + Duration::days(w.num_days_from_monday() as i64)
+}
+
 /// Places weekdays in the week that starts on `anchor` ("Week of 10/12").
 pub fn weekdays_in_week(weekdays: &[Weekday], anchor: NaiveDate) -> Vec<NaiveDate> {
     weekdays

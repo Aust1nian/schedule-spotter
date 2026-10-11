@@ -1,0 +1,61 @@
+{
+  "category": "F",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "day_by_person",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "350 N Main St"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "350 N Main St"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "350 N Main St"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "350 N Main St"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "350 N Main St"},
+    {"person": "Dave Kim", "date": "2026-10-12", "site": "350 North Main Street"},
+    {"person": "Dave Kim", "date": "2026-10-13", "site": "350 North Main Street"},
+    {"person": "Dave Kim", "date": "2026-10-14", "site": "88 Oak Ridge Avenue"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "350 North Main Street"},
+    {"person": "Dave Kim", "date": "2026-10-16", "site": "350 North Main Street"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "88 Oak Ridge Ave"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "88 Oak Ridge Ave"},
+    {"person": "Ana Ruiz", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Ana Ruiz", "date": "2026-10-13", "site": "88 Oak Ridge Avenue"},
+    {"person": "Ana Ruiz", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Ana Ruiz", "date": "2026-10-15", "site": "88 Oak Ridge Avenue"},
+    {"person": "Ana Ruiz", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "Smith Remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "Smith Remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "Smith Remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "Smith Remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "Smith Remodel"},
+    {"person": "Tom Reed", "date": "2026-10-12", "site": "350 N. Main St."},
+    {"person": "Tom Reed", "date": "2026-10-13", "site": "350 N. Main St."},
+    {"person": "Tom Reed", "date": "2026-10-14", "site": "350 N. Main St."},
+    {"person": "Tom Reed", "date": "2026-10-15", "site": "350 N. Main St."}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "not_booked", "person": "Tom Reed", "date": "2026-10-16"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": true,
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "same_site", "a": "350 N Main St", "b": "350 North Main Street"},
+    {"type": "same_site", "a": "350 N Main St", "b": "350 N. Main St."},
+    {"type": "same_site", "a": "88 Oak Ridge Ave", "b": "88 Oak Ridge Avenue"},
+    {"type": "same_site"},
+    {"type": "same_person"}
+  ]
+}

@@ -1,0 +1,1 @@
+Job numbers beside names (long list): a 'Job #' column (J-1042, J-1043, J-1051) sits next to a 'Job Name' column; the site is the job name and the number never becomes a site, a note or a question. Ana Ruiz is double-booked Tuesday (Parker kitchen, Smith remodel).

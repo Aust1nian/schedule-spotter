@@ -1,0 +1,1 @@
+Typo 'Micheal Baker' vs 'Michael Baker' (long list): a misspelling is neither a nickname nor an initial, so with the model off it is asked and the two stay separate meanwhile (each not booked on the other's days); answered yes, all five amber flags clear.

@@ -1,0 +1,1 @@
+Case, spacing and punctuation (long list, .tsv): 'MIKE BAKER', 'mike baker' and 'Mike   Baker' are one person, as are padded '  Dave Kim ' / 'Dave   Kim' and 'Tom OReilly' / 'Tom O'Reilly'; merged without asking, Mike Baker is double-booked Wednesday (1420 Johnson St, Smith remodel) and nobody is falsely not booked.

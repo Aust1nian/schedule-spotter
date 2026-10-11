@@ -144,10 +144,14 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
                 if let (Some(w), Some(d)) = (tok.written_weekday().filter(|_| tok.has_date()), date)
                     && d.weekday() != w
                 {
-                    sink.ask(Question::WeekdayMismatch {
+                    let q = Question::WeekdayMismatch {
                         text: clean(g.text(r, c)),
                         used: d,
-                    });
+                    };
+                    if ctx.answers.get(&q) == Some(&crate::model::Answer::No) {
+                        date = Some(dates::weekday_in_week(d, w));
+                    }
+                    sink.ask(q);
                 }
             }
         } else if let Some(c) = day_col {
@@ -184,7 +188,13 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
             .map(|h| clean(g.text(h, c)))
             .unwrap_or_else(|| "Date".into());
         let block_row = g.source(rows[0].r, c).row;
-        crate::layout::fill_down_labels(&mut labels, &header_text, &mut sink, block_row);
+        crate::layout::fill_down_labels(
+            &mut labels,
+            &header_text,
+            &mut sink,
+            block_row,
+            ctx.answers,
+        );
         for (row, (_, filled, _)) in rows.iter_mut().zip(labels) {
             if row.date.is_none() {
                 row.date = NaiveDate::parse_from_str(&filled, "%Y-%m-%d").ok();
@@ -213,7 +223,13 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
             .map(|h| clean(g.text(h, c)))
             .unwrap_or_else(|| "Job".into());
         let block_row = g.source(rows[0].r, c).row;
-        crate::layout::fill_down_labels(&mut labels, &header_text, &mut sink, block_row);
+        crate::layout::fill_down_labels(
+            &mut labels,
+            &header_text,
+            &mut sink,
+            block_row,
+            ctx.answers,
+        );
         site_fill = labels.into_iter().map(|(_, l, _)| l).collect();
     }
 
@@ -572,6 +588,24 @@ fn assign_roles(
             Some(HeaderRole::Site) => st += 0.5,
             _ => {}
         }
+        // The owner said what this column is.
+        let header_text = header
+            .map(|h| clean(g.text(h, c)))
+            .filter(|t| !t.is_empty())
+            .unwrap_or_else(|| format!("Column {}", g.source(0, c).col + 1));
+        if let Some(crate::model::Answer::Pick(role)) = ctx
+            .answers
+            .get_subject(&format!("column_role:{}", key(&header_text)))
+        {
+            if role.eq_ignore_ascii_case(Role::Person.label()) {
+                p = 9.0;
+            } else if role.eq_ignore_ascii_case(Role::Site.label()) {
+                st = 9.0;
+                p = 0.0;
+            } else {
+                continue;
+            }
+        }
         if p > st && p >= 0.45 {
             person_cols.push(c);
         } else if st >= 0.35 {
@@ -592,12 +626,15 @@ fn assign_roles(
             });
         }
     }
+    // Every name column has a roster-like title ("Workers" | "Crew list"):
+    // the leftmost is the list's names, the rest are a roster beside it.
     if person_cols.is_empty() {
         person_cols = roster_cols
             .into_iter()
             .filter(|&c| {
                 stats[c].entity_n > 0 && stats[c].person / stats[c].entity_n as f32 >= 0.45
             })
+            .take(1)
             .collect();
     }
     if person_cols.is_empty() {

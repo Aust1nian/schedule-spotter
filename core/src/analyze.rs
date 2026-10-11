@@ -7,7 +7,8 @@ use std::collections::{BTreeMap, BTreeSet, HashSet};
 use chrono::{Datelike, Duration, NaiveDate};
 
 use crate::classify::{EntityKind, entity_kind};
-use crate::identity::{Names, is_internal, person_key, site_key};
+use crate::identity::is_internal;
+use crate::matching::{Matching, MergeKind};
 use crate::model::{Assignment, Flag, FlagKind, Info, InfoKind, Part, Reading, Status};
 use crate::settings::Settings;
 
@@ -21,9 +22,9 @@ struct Work {
 }
 
 impl Work {
-    fn of(a: &Assignment) -> Work {
+    fn of(a: &Assignment, matching: &Matching) -> Work {
         Work {
-            site: site_key(a.site.as_deref().unwrap_or("")),
+            site: matching.site(a.site.as_deref().unwrap_or("")),
             start: a.start,
             end: a.end,
             part: a.part,
@@ -110,9 +111,13 @@ fn week_of(d: NaiveDate) -> NaiveDate {
     d - Duration::days(d.weekday().num_days_from_monday() as i64)
 }
 
-pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>) {
-    let mut people = Names::default();
-    let mut sites = Names::default();
+pub fn analyze(
+    reading: &Reading,
+    settings: &Settings,
+    matching: &Matching,
+) -> (Vec<Flag>, Vec<Info>) {
+    let people = &matching.people;
+    let sites = &matching.sites;
     let mut work: BTreeMap<(String, NaiveDate), Vec<Work>> = BTreeMap::new();
     let mut statuses: BTreeMap<(String, NaiveDate), Vec<StatusMark>> = BTreeMap::new();
     let mut staffed: HashSet<(String, NaiveDate)> = HashSet::new();
@@ -120,14 +125,8 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
     let mut job_dates: BTreeMap<String, BTreeSet<NaiveDate>> = BTreeMap::new();
 
     for a in &reading.assignments {
-        let pk = a.person.as_deref().map(person_key);
-        if let (Some(pk), Some(raw)) = (&pk, &a.person) {
-            people.add(pk, raw);
-        }
-        let sk = a.site.as_deref().map(site_key);
-        if let (Some(sk), Some(raw)) = (&sk, &a.site) {
-            sites.add(sk, raw);
-        }
+        let pk = a.person.as_deref().map(|p| matching.person(p));
+        let sk = a.site.as_deref().map(|s| matching.site(s));
         match (pk, sk, a.status, a.unstaffed) {
             (_, Some(sk), _, true) => {
                 explicit.insert((sk.clone(), a.date));
@@ -140,7 +139,9 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
             (Some(pk), Some(sk), None, false) => {
                 staffed.insert((sk.clone(), a.date));
                 job_dates.entry(sk).or_default().insert(a.date);
-                work.entry((pk, a.date)).or_default().push(Work::of(a));
+                work.entry((pk, a.date))
+                    .or_default()
+                    .push(Work::of(a, matching));
             }
             _ => {}
         }
@@ -148,22 +149,13 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
 
     // The roster block if there is one, otherwise everyone seen.
     let roster: BTreeSet<String> = match &reading.roster {
-        Some(names) => {
-            for n in names {
-                people.add(&person_key(n), n);
-            }
-            names.iter().map(|n| person_key(n)).collect()
-        }
+        Some(names) => names.iter().map(|n| matching.person(n)).collect(),
         None => work
             .keys()
             .chain(statuses.keys())
             .map(|(pk, _)| pk.clone())
             .collect(),
     };
-    for job in &reading.grid_jobs {
-        sites.add(&site_key(job), job);
-    }
-
     let kind = |pk: &str| entity_kind(&people.display(pk));
     let working: Vec<NaiveDate> = reading
         .window
@@ -268,6 +260,7 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
                     sites: names,
                     status: None,
                     explicit: false,
+                    merges: Vec::new(),
                 });
             } else {
                 let names = shown(&distinct);
@@ -335,6 +328,7 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
                 sites: names,
                 status: Some(*status),
                 explicit: false,
+                merges: Vec::new(),
             });
             break;
         }
@@ -357,6 +351,7 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
                     sites: Vec::new(),
                     status: None,
                     explicit: false,
+                    merges: Vec::new(),
                     message: format!("{who} has nothing on {}.", day(*d)),
                 });
             }
@@ -371,12 +366,12 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
     let inactive: HashSet<(String, NaiveDate)> = reading
         .inactive
         .iter()
-        .map(|(s, d)| (site_key(s), *d))
+        .map(|(s, d)| (matching.site(s), *d))
         .collect();
     let mut inferred: BTreeSet<(NaiveDate, String)> = BTreeSet::new();
     if !reading.grid_jobs.is_empty() {
         for job in &reading.grid_jobs {
-            let sk = site_key(job);
+            let sk = matching.site(job);
             if is_internal(job) {
                 continue;
             }
@@ -423,9 +418,25 @@ pub fn analyze(reading: &Reading, settings: &Settings) -> (Vec<Flag>, Vec<Info>)
             sites: Vec::new(),
             status: None,
             explicit: was_marked,
+            merges: Vec::new(),
         });
     }
 
+    // Chips: the merges behind each finding's person and sites.
+    for f in &mut flags {
+        f.merges = matching
+            .merges
+            .iter()
+            .enumerate()
+            .filter(|(_, m)| match m.kind {
+                MergeKind::Person => f.person.as_deref() == Some(m.into.as_str()),
+                MergeKind::Site => {
+                    f.sites.contains(&m.into) || f.site.as_deref() == Some(m.into.as_str())
+                }
+            })
+            .map(|(i, _)| i)
+            .collect();
+    }
     flags.sort_by(|a, b| {
         (a.date, a.kind, &a.person, &a.site).cmp(&(b.date, b.kind, &b.person, &b.site))
     });

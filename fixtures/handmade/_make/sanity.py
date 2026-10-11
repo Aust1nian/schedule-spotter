@@ -62,7 +62,8 @@ def main():
         hay = " ".join(text.replace('""', '"').split())  # undo CSV quote doubling, collapse whitespace
         blocks = [exp] + ([exp["after_answers"]] if "after_answers" in exp else [])
         for blk in blocks:
-            assigns = blk.get("assignments", [])
+            # an after_answers block for same_person / same_site answers keeps the read assignments
+            assigns = blk.get("assignments", exp.get("assignments", []))
             people = {a["person"] for a in assigns if "person" in a}
             sites = {a["site"] for a in assigns if "site" in a}
             for a in assigns:

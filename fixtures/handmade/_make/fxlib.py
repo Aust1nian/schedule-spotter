@@ -465,3 +465,57 @@ def xlsx_workbook(creator="Office"):
     wb.properties.creator = creator
     wb.properties.created = wb.properties.modified = dt.datetime(*FIXED_TIME)
     return wb
+
+
+# ---------------------------------------------------------------- E, F helpers
+# Added for the name and site matching fixtures. Append-only, like the block above.
+
+def ANS(question, answer):
+    """One entry of `answers`."""
+    return {"question": question, "answer": answer}
+
+
+def plan_rows(plan, dates):
+    """plan: [(person, [cell per date])]; a cell is '', a site, or a list of sites.
+    -> [(iso date, person, site)] in file order: by date, then plan order."""
+    out = []
+    for i, x in enumerate(dates):
+        for person, cells in plan:
+            assert len(cells) == len(dates), (person, cells)
+            c = cells[i]
+            for s in ([c] if isinstance(c, str) else c):
+                if s:
+                    out.append((x, person, s))
+    return out
+
+
+def list_file(rows, header=("Date", "Name", "Job")):
+    """rows: [(iso date, person as typed, site as typed)] -> (lines, assignments).
+    Assignments carry the trimmed, whitespace-collapsed text (FORMAT.md)."""
+    lines = [list(header)] + [[mdyyyy(x), p, s] for x, p, s in rows]
+    return lines, [W(" ".join(p.split()), x, " ".join(s.split())) for x, p, s in rows]
+
+
+def day_lines(cols, dates, first="Date"):
+    """Transposed grid: dates down the side, column labels (jobs or people) across."""
+    return [[first] + [label for label, _ in cols]] + [[mdyyyy(x)] + [cells[i] for _, cells in cols]
+                                                       for i, x in enumerate(dates)]
+
+
+def write_lines_xlsx(path, lines, date_axis):
+    """Write csv-style lines to a one-sheet workbook. date_axis 'row': the header
+    row's cells after the first are real dates; 'col': the first column's cells
+    below the header are real dates. Blank strings stay empty cells."""
+    wb = xlsx_workbook()
+    ws = wb.active
+    ws.title = "Schedule"
+    for r, line in enumerate(lines, start=1):
+        for c, v in enumerate(line, start=1):
+            if v in ("", None):
+                continue
+            if (date_axis == "row" and r == 1 and c > 1) or (date_axis == "col" and r > 1 and c == 1):
+                m, dd, y = (int(t) for t in v.split("/"))
+                ws.cell(row=r, column=c, value=pydate(f"{y:04d}-{m:02d}-{dd:02d}")).number_format = "m/d/yyyy"
+            else:
+                ws.cell(row=r, column=c, value=v)
+    wb.save(path)

@@ -1,0 +1,67 @@
+{
+  "category": "E",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Chris Lee", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Chris Ortiz", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Ana Ruiz", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Chris Lee", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Chris Ortiz", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Ana Ruiz", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Chris Lee", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Chris Ortiz", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Ana Ruiz", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Chris Lee", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Chris Ortiz", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Ana Ruiz", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Chris Lee", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Chris Ortiz", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Ana Ruiz", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Chris", "date": "2026-10-16", "site": "Oak Ridge Apts"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "not_booked", "person": "Chris", "date": "2026-10-12"},
+    {"type": "not_booked", "person": "Chris", "date": "2026-10-13"},
+    {"type": "not_booked", "person": "Chris", "date": "2026-10-14"},
+    {"type": "not_booked", "person": "Chris", "date": "2026-10-15"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": true,
+  "ask": [
+    {"type": "same_person", "a": "Chris", "b": "Chris Lee"},
+    {"type": "same_person", "a": "Chris", "b": "Chris Ortiz"}
+  ],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "same_person", "a": "Chris Lee", "b": "Chris Ortiz"},
+    {"type": "same_site"}
+  ],
+  "answers": [
+    {"question": {"type": "same_person", "a": "Chris", "b": "Chris Lee"}, "answer": "no"},
+    {"question": {"type": "same_person", "a": "Chris", "b": "Chris Ortiz"}, "answer": "yes"}
+  ],
+  "after_answers": {
+    "flags": [
+      {"type": "double_booked", "person": "Chris Ortiz", "date": "2026-10-16", "sites": ["Smith remodel", "Oak Ridge Apts"]}
+    ],
+    "info": []
+  }
+}

@@ -26,6 +26,8 @@ struct Run {
     cols: Vec<usize>,
     toks: Vec<DayTok>,
     dates: Vec<NaiveDate>,
+    /// The dates as written, before any answer moved one to its weekday.
+    resolved: Vec<NaiveDate>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -143,9 +145,10 @@ fn find_runs(ctx: &SheetCtx) -> Vec<Run> {
             let cols: Vec<usize> = group.iter().map(|(c, _)| *c).collect();
             let span = cols[0]..cols[cols.len() - 1] + 1;
             let anchor = ctx.anchor_for(r, span).or(Some(ctx.default_anchor()));
-            let Some(dates) = dates::resolve_run(&toks, anchor, ctx.today, ctx.day_first) else {
+            let Some(resolved) = dates::resolve_run(&toks, anchor, ctx.today, ctx.day_first) else {
                 continue;
             };
+            let dates = weekday_answers(ctx, r, &cols, &toks, &resolved);
             if dates.windows(2).any(|w| w[1] <= w[0])
                 || (dates[dates.len() - 1] - dates[0]).num_days() > 62
             {
@@ -158,6 +161,7 @@ fn find_runs(ctx: &SheetCtx) -> Vec<Run> {
                     cols,
                     toks,
                     dates,
+                    resolved,
                 },
             ));
         }
@@ -184,6 +188,40 @@ fn find_runs(ctx: &SheetCtx) -> Vec<Run> {
         }
     }
     runs
+}
+
+/// "Mon 10/13/2026" is a Tuesday. The date is used until the owner says
+/// "no", then the written weekday in that week.
+fn weekday_answers(
+    ctx: &SheetCtx,
+    r: usize,
+    cols: &[usize],
+    toks: &[DayTok],
+    resolved: &[NaiveDate],
+) -> Vec<NaiveDate> {
+    use chrono::Datelike;
+    let mut out = resolved.to_vec();
+    for (k, tok) in toks.iter().enumerate() {
+        let Some(w) = tok.written_weekday().filter(|_| tok.has_date()) else {
+            continue;
+        };
+        if resolved[k].weekday() == w {
+            continue;
+        }
+        let q = Question::WeekdayMismatch {
+            text: clean(ctx.g.text(r, cols[k])),
+            used: resolved[k],
+        };
+        if ctx.answers.get(&q) == Some(&crate::model::Answer::No) {
+            out[k] = dates::weekday_in_week(resolved[k], w);
+        }
+    }
+    // An answer that would put days out of order is not applied.
+    if out.windows(2).all(|p| p[1] > p[0]) {
+        out
+    } else {
+        resolved.to_vec()
+    }
 }
 
 /// Side-by-side weeks that each repeat the name column: an untitled column
@@ -218,6 +256,7 @@ fn split_at_inner_labels(ctx: &SheetCtx, run: Run) -> Vec<Run> {
                 cols: run.cols[start..k].to_vec(),
                 toks: run.toks[start..k].to_vec(),
                 dates: run.dates[start..k].to_vec(),
+                resolved: run.resolved[start..k].to_vec(),
             });
             start = k;
         }
@@ -227,6 +266,7 @@ fn split_at_inner_labels(ctx: &SheetCtx, run: Run) -> Vec<Run> {
         cols: run.cols[start..].to_vec(),
         toks: run.toks[start..].to_vec(),
         dates: run.dates[start..].to_vec(),
+        resolved: run.resolved[start..].to_vec(),
     });
     out.retain(|r| !r.cols.is_empty());
     out
@@ -570,11 +610,11 @@ fn extract(
         for (k, tok) in run.toks.iter().enumerate() {
             if let Some(w) = tok.written_weekday().filter(|_| tok.has_date()) {
                 use chrono::Datelike;
-                if run.dates[k].weekday() != w {
+                if run.resolved[k].weekday() != w {
                     let c = run.cols[k];
                     sink.ask(Question::WeekdayMismatch {
                         text: clean(g.text(run.row, c)),
-                        used: run.dates[k],
+                        used: run.resolved[k],
                     });
                 }
             }
@@ -614,13 +654,28 @@ fn extract(
             if label.trim().is_empty() && !has_data {
                 continue;
             }
+            // A label with nothing across the week that doesn't read as a job
+            // (or a person) is a note: "Questions? Call the office."
+            let plausible = match kind {
+                Kind::Jobs => site_score(&label) >= 0.45 || label_status(&label).is_some(),
+                Kind::People => person_score(&label) >= 0.45,
+            };
+            if !has_data && !plausible {
+                continue;
+            }
             if is_repeated_header(ctx, s, r, &label) || is_title_row(ctx, s, r) {
                 continue;
             }
             labels.push((r, clean(&label), has_data));
         }
         let block_row = g.source(s.header_row, 0).row;
-        fill_down_labels(&mut labels, &label_header, &mut sink, block_row);
+        fill_down_labels(
+            &mut labels,
+            &label_header,
+            &mut sink,
+            block_row,
+            ctx.answers,
+        );
 
         for (r, label, _) in labels {
             if label.is_empty() {

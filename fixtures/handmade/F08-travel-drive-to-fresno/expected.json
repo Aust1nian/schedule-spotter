@@ -1,0 +1,62 @@
+{
+  "category": "F",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "drive to Fresno"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "Fresno school"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "Fresno school"},
+    {"person": "Dave Kim", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Dave Kim", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Dave Kim", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "drive to Fresno"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "Fresno school"},
+    {"person": "Dave Kim", "date": "2026-10-16", "site": "Fresno school"},
+    {"person": "Tom Reed", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-15", "site": "drive to Fresno"},
+    {"person": "Tom Reed", "date": "2026-10-15", "site": "Fresno school"},
+    {"person": "Tom Reed", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "Travel"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Tom Reed", "date": "2026-10-15", "sites": ["Fresno school", "Smith remodel"]}
+  ],
+  "flags_exact": true,
+  "info": [
+    {"type": "internal_plus_site", "person": "Mike Baker", "date": "2026-10-15", "sites": ["drive to Fresno", "Fresno school"]},
+    {"type": "internal_plus_site", "person": "Dave Kim", "date": "2026-10-15", "sites": ["drive to Fresno", "Fresno school"]}
+  ],
+  "info_exact": true,
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "same_site", "a": "drive to Fresno", "b": "Fresno school"},
+    {"type": "same_site"},
+    {"type": "same_person"}
+  ]
+}

@@ -1,0 +1,1 @@
+Subcontractors (long list): 'ABC Electric LLC' and 'Ward Plumbing' at two jobs on one day are info only, never not booked, and ABC alone staffs Parker kitchen Friday; 'Ward Plumbing' shares a word with employee Bill Ward but is never merged with him or asked about (merged, Bill would be double-booked Wednesday).

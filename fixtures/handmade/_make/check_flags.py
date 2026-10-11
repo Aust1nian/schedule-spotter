@@ -32,6 +32,24 @@ other plausible reading would decide differently):
   - Unstaffed, non-job-grid layouts: explicit unstaffed days on working dates
     count as assigned when finding a job's first and last day in a week.
 
+Matching (spec stage 7, categories E and F):
+  - Before any answers, names and sites are joined only where they normalize
+    alike (case, whitespace) or a hint pair joins them: the deterministic
+    merges. A pair the matcher is unsure of stays separate and is asked.
+  - `after_answers` applies the hint merges plus every same_person / same_site
+    answered "yes"; a "no" keeps the pair apart. Those answers never change
+    what was read, so an `after_answers` block without `assignments` uses the
+    top-level ones.
+  - The canonical display name is the longest spelling in a group. FORMAT.md
+    names no tie-break, so a flag or info item may not name a group whose
+    longest spellings tie and differ beyond case ("Jose Garcia" / "José García",
+    "Micheal Baker" / "Michael Baker"); fixtures keep flags off such names.
+  - Question bookkeeping: an asked same_person / same_site pair names each side
+    by its canonical spelling before answers, the two sides are not already
+    merged, and no hint merges it; must_not_ask and ask never overlap; each
+    answered same_person / same_site question is one of the asked ones; a "no"
+    is never undone by other merges.
+
 Also validates every expected.json against FORMAT.md's shape.
 
 Usage: python3 check_flags.py [FIXTURE_ID ...]
@@ -150,6 +168,7 @@ class Canon:
             return k
 
         spellings = [" ".join(n.split()) for n in names] + [" ".join(n.split()) for pair in merges for n in pair]
+        self.seen = {norm(n) for n in names}  # spellings in the data (not only in merge pairs)
         for n in spellings:
             find(norm(n))
         for pair in merges:
@@ -162,9 +181,17 @@ class Canon:
             if r not in best or len(n) > len(best[r]):
                 best[r] = n
         self.best = {k: best[find(k)] for k in parent}
+        self.group = {k: find(k) for k in parent}
+        # canonical names whose group has another spelling of the same length
+        # that differs beyond case and spacing: "longest" picks neither
+        self.tied = {norm(best[find(norm(n))]) for n in spellings
+                     if len(n) == len(best[find(norm(n))]) and norm(n) != norm(best[find(norm(n))])}
 
     def __call__(self, n):
         return self.best.get(norm(n), " ".join(n.split()))
+
+    def same(self, a, b) -> bool:
+        return self.group.get(norm(a), norm(a)) == self.group.get(norm(b), norm(b))
 
 
 def compute(assigns, settings, layout, hints):
@@ -296,7 +323,7 @@ def compute(assigns, settings, layout, hints):
                         un.append((j, date))
     for site, date in un:
         flags.append({"type": "unstaffed", "site": site, "date": date})
-    return flags, info
+    return flags, info, persons, sites
 
 
 def key(item):
@@ -364,11 +391,73 @@ def validate_assignments(assigns, where):
     return errs
 
 
+MATCH_QS = ("same_person", "same_site")
+
+
 def validate_questions(qs, where):
     errs = []
     for q in qs:
         if q.get("type") not in QUESTION_TYPES:
             errs.append(f"  {where}: unknown question type {q!r}")
+        if q.get("type") in MATCH_QS and ("a" in q or "b" in q):
+            if not (isinstance(q.get("a"), str) and isinstance(q.get("b"), str)) or norm(q["a"]) == norm(q["b"]):
+                errs.append(f"  {where}: {q['type']} needs two different names a and b: {q!r}")
+    return errs
+
+
+def pair(q):
+    """Unordered, case-insensitive key of a same_person / same_site question (None: type only)."""
+    if "a" not in q:
+        return (q["type"], None)
+    return (q["type"], frozenset((norm(q["a"]), norm(q["b"]))))
+
+
+def merges_after(hints, answers):
+    """Hint merges plus same_person / same_site pairs answered "yes"."""
+    m = {t: [list(p) for p in hints.get(t, [])] for t in MATCH_QS}
+    for a in answers:
+        q = a.get("question", {})
+        if q.get("type") in MATCH_QS and str(a.get("answer", "")).lower() == "yes":
+            m[q["type"]].append([q["a"], q["b"]])
+    return {**hints, **m}
+
+
+def check_questions(exp, hints, canon):
+    """Bookkeeping between hint merges, ask, must_not_ask and answers (see docstring)."""
+    errs = []
+    ask = [q for q in exp.get("ask", []) if q.get("type") in MATCH_QS]
+    nots = [q for q in exp.get("must_not_ask", []) if q.get("type") in MATCH_QS]
+    ask_keys = {pair(q) for q in ask}
+    for q in ask:
+        if "a" not in q:
+            errs.append(f"  ask: {q['type']} without a and b can't be checked")
+            continue
+        c = canon[q["type"]]
+        for n in (q["a"], q["b"]):
+            if norm(n) not in c.seen:
+                errs.append(f"  ask: {n!r} is not a spelling in the data ({q['type']})")
+            elif norm(c(n)) != norm(n):
+                errs.append(f"  ask: {n!r} should be named by its canonical spelling {c(n)!r}")
+        if c.same(q["a"], q["b"]):
+            errs.append(f"  ask: {q!r} is already merged by the hints (deterministic), so it can't be asked")
+    for q in nots:
+        if pair(q) in ask_keys or ("a" not in q and any(t == q["type"] for t, _ in ask_keys)):
+            errs.append(f"  must_not_ask {q!r} contradicts ask")
+    for t in MATCH_QS:
+        for a, b in hints.get(t, []):
+            for n in (a, b):
+                if norm(n) not in canon[t].seen:
+                    errs.append(f"  hint {t}: {n!r} is not a spelling in the data")
+            if (t, frozenset((norm(a), norm(b)))) in ask_keys:
+                errs.append(f"  hint {t} [{a!r}, {b!r}] is a deterministic merge but is also asked")
+    for a in exp.get("answers", []):
+        q = a.get("question", {})
+        if q.get("type") not in MATCH_QS:
+            continue
+        if "a" not in q or pair(q) not in ask_keys:
+            errs.append(f"  answers: {q!r} is not one of the asked questions")
+        if str(a.get("answer", "")).lower() not in ("yes", "no"):
+            errs.append(f"  answers: {q.get('type')} takes yes or no, got {a.get('answer')!r}")
     return errs
 
 
@@ -411,17 +500,25 @@ def check(folder: Path) -> tuple[list[str], dict]:
     hints_path = HINTS / f"{fid}.json"
     hints = json.loads(hints_path.read_text(encoding="utf-8")) if hints_path.exists() else {}
 
+    answers = exp.get("answers", [])
+    only_match_answers = all(a.get("question", {}).get("type") in MATCH_QS for a in answers)
     blocks = [("top", exp)]
     if "after_answers" in exp:
         blocks.append(("after_answers", exp["after_answers"]))
+    top_truth = None
     for where, blk in blocks:
+        blk_hints = hints if where == "top" else merges_after(hints, answers)
         if "assignments" not in blk:
-            if "flags" in blk:
-                errs.append(f"  {where}: flags without assignments can't be checked")
-            continue
-        errs += validate_assignments(blk["assignments"], where)
+            if where == "after_answers" and top_truth is not None and only_match_answers:
+                truth = top_truth  # same_person / same_site answers never change what was read
+            else:
+                if "flags" in blk:
+                    errs.append(f"  {where}: flags without assignments can't be checked")
+                continue
+        else:
+            errs += validate_assignments(blk["assignments"], where)
+            truth = blk["assignments"]
         partial = where == "top" and exp.get("assignments_exact") is False
-        truth = blk["assignments"]
         if partial:
             if "assignments" not in hints:
                 if "flags" in blk:
@@ -435,11 +532,29 @@ def check(folder: Path) -> tuple[list[str], dict]:
                 if have[k] <= 0:
                     errs.append(f"  {where}: sample assignment not in the truth hint: {show(a)}")
                 have[k] -= 1
+        if where == "top":
+            top_truth = truth
         try:
-            flags, info = compute(truth, st, exp.get("layout"), hints)
+            flags, info, persons, sites = compute(truth, st, exp.get("layout"), blk_hints)
         except Exception as e:  # noqa: BLE001
             errs.append(f"  {where}: could not compute: {e}")
             continue
+        if where == "top":
+            errs += check_questions(exp, hints, {"same_person": persons, "same_site": sites})
+        else:
+            for a in answers:
+                q = a.get("question", {})
+                if (q.get("type") in MATCH_QS and "a" in q and str(a.get("answer", "")).lower() == "no"
+                        and {"same_person": persons, "same_site": sites}[q["type"]].same(q["a"], q["b"])):
+                    errs.append(f"  after_answers: {q!r} was answered no but other merges join it")
+        for item in flags + info:
+            if "person" in item and norm(item["person"]) in persons.tied:
+                errs.append(f"  {where}: {item['type']} names {item['person']!r}, whose merged spellings tie "
+                            f"for longest (no defined canonical name)")
+            for s in item.get("sites", []) + ([item["site"]] if "site" in item else []):
+                if norm(s) in sites.tied:
+                    errs.append(f"  {where}: {item['type']} names site {s!r}, whose merged spellings tie "
+                                f"for longest (no defined canonical name)")
         if "flags" in blk:
             for f in blk["flags"]:
                 if f.get("type") not in FLAG_TYPES:

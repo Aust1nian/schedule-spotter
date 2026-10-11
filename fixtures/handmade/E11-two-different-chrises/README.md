@@ -1,0 +1,1 @@
+Two different Chrises (long list): Chris Lee and Chris Ortiz share only a first name and are never merged or asked about; a bare 'Chris' fits both, so each pair is asked (model off) and 'Chris' stays separate meanwhile (not booked Mon-Thu); answered no (Lee) and yes (Ortiz), Chris Ortiz is double-booked Friday (Smith remodel, Oak Ridge Apts).

@@ -1,0 +1,62 @@
+{
+  "category": "F",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "4410 Henderson Rd"},
+    {"person": "Ana Ruiz", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "4410 Henderson Rd"},
+    {"person": "Ana Ruiz", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "4410 Henderson Rd"},
+    {"person": "Ana Ruiz", "date": "2026-10-14", "site": "4410 Henderson Rd"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Ana Ruiz", "date": "2026-10-15", "site": "Henderson"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "4410 Henderson Rd"},
+    {"person": "Ana Ruiz", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Ana Ruiz", "date": "2026-10-14", "site": "Henderson"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Ana Ruiz", "date": "2026-10-14", "sites": ["4410 Henderson Rd", "Henderson"]},
+    {"type": "unstaffed", "site": "4410 Henderson Rd", "date": "2026-10-15"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": true,
+  "ask": [
+    {"type": "same_site", "a": "Henderson", "b": "4410 Henderson Rd"}
+  ],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "same_person"}
+  ],
+  "answers": [
+    {"question": {"type": "same_site", "a": "Henderson", "b": "4410 Henderson Rd"}, "answer": "yes"}
+  ],
+  "after_answers": {
+    "flags": [],
+    "info": [
+      {"type": "duplicate_entry", "person": "Ana Ruiz", "date": "2026-10-14", "sites": ["4410 Henderson Rd"]}
+    ]
+  }
+}

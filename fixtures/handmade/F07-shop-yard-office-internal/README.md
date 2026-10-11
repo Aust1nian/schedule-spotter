@@ -1,0 +1,1 @@
+Shop, yard, office (job x day, .xlsx): internal rows are never unstaffed (Yard and Office have blank days); Shop + one job (Mike, Tue) and Shop + Yard (Luis, Wed) are internal_plus_site info; Shop + two jobs (Dave, Thu) is double-booked on the two jobs only; Luis at the shop all week is booked.

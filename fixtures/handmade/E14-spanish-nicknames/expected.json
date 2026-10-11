@@ -1,0 +1,58 @@
+{
+  "category": "E",
+  "tier": "script",
+  "input": "input.xlsx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Francisco Reyes", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Jesús Mendoza", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Ignacio Torres", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "José García", "date": "2026-10-12", "site": "Parker kitchen"},
+    {"person": "Francisco Reyes", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Jesús Mendoza", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Ignacio Torres", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "José García", "date": "2026-10-13", "site": "Parker kitchen"},
+    {"person": "Francisco Reyes", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Paco Reyes", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Chuy Mendoza", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Ignacio Torres", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "José García", "date": "2026-10-14", "site": "Parker kitchen"},
+    {"person": "Paco Reyes", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Jesús Mendoza", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Ignacio Torres", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "José García", "date": "2026-10-15", "site": "Parker kitchen"},
+    {"person": "Paco Reyes", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Jesús Mendoza", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Ignacio Torres", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Nacho Torres", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Pepe García", "date": "2026-10-16", "site": "Parker kitchen"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Francisco Reyes", "date": "2026-10-14", "sites": ["1420 Johnson St", "Smith remodel"]}
+  ],
+  "flags_exact": true,
+  "info": [
+    {"type": "duplicate_entry", "person": "Ignacio Torres", "date": "2026-10-16", "sites": ["Smith remodel"]}
+  ],
+  "info_exact": true,
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "pick_sheet"},
+    {"type": "same_person", "a": "Paco Reyes", "b": "Francisco Reyes"},
+    {"type": "same_person", "a": "Chuy Mendoza", "b": "Jesús Mendoza"},
+    {"type": "same_person", "a": "Nacho Torres", "b": "Ignacio Torres"},
+    {"type": "same_person", "a": "Pepe García", "b": "José García"},
+    {"type": "same_person"},
+    {"type": "same_site"}
+  ]
+}

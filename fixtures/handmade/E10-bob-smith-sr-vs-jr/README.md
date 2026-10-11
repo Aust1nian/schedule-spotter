@@ -1,0 +1,1 @@
+Bob Smith Sr vs Bob Smith Jr (job x day): Sr and Jr are two people, never merged or asked about (merged, they would be double-booked all week); 'Robert Smith Jr' is Bob Smith Jr by the nickname table and the same suffix (never Sr), merged without asking, so Robert Smith Jr is double-booked Thursday (1420 Johnson St, Parker kitchen).

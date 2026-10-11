@@ -1,0 +1,1 @@
+M. Baker (day x job, .xlsx): 'M. Baker' fits only Michael Baker (Dan Baker's first initial conflicts, Maria Lopez's surname differs), so it merges without asking: Michael is booked Wednesday at Smith remodel and double-booked Thursday at 1420 Johnson St and Oak Ridge Apts; Dan Baker is never merged or asked about.

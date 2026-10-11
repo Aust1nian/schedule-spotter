@@ -1,0 +1,1 @@
+Customer name vs address for one job (long list): 'Henderson' and '4410 Henderson Rd' may be one job, so it is asked; kept separate, Ana Ruiz looks double-booked Wednesday and 4410 Henderson Rd unstaffed Thursday; answered yes, both flags clear and Ana's Wednesday becomes a duplicate entry.

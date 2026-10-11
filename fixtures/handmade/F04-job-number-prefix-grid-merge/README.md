@@ -1,0 +1,1 @@
+Job-number prefix in a grid (job x day): 'J-1042 Smith remodel' and a later row 'Smith remodel' are one job (the same name once the job number is set aside) and merge without asking, so Smith remodel is staffed all week (unmerged, each row would look unstaffed on the other's days); the one real flag is Oak Ridge Apts unstaffed Friday.

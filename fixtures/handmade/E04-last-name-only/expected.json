@@ -1,0 +1,63 @@
+{
+  "category": "E",
+  "tier": "script",
+  "input": "input.tsv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "job_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Kim", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Ortiz", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Ortiz", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Ana Ruiz", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Ana", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Ana Ruiz", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Ana Ruiz", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Ana Ruiz", "date": "2026-10-16", "site": "Oak Ridge Apts"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Luis Ortiz", "date": "2026-10-16", "sites": ["Oak Ridge Apts", "Smith remodel"]}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": true,
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "same_person", "a": "Kim", "b": "Dave Kim"},
+    {"type": "same_person", "a": "Ortiz", "b": "Luis Ortiz"},
+    {"type": "same_person", "a": "Ana", "b": "Ana Ruiz"},
+    {"type": "same_person"},
+    {"type": "same_site"}
+  ]
+}

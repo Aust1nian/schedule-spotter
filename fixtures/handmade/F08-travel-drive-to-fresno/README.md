@@ -1,0 +1,1 @@
+Travel rows (person x day): 'drive to Fresno' and 'Travel' are internal, never a job, never unstaffed and never matched with the 'Fresno school' job; the drive plus the Fresno job on one day is internal_plus_site info (Mike, Dave), and Tom Reed, also at Smith remodel Thursday, is double-booked on the two jobs only.

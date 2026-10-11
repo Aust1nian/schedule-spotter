@@ -14,7 +14,9 @@ use serde_json::{Value, json};
 use spotter_core::model::{Assignment, Status};
 use spotter_core::settings::Workdays;
 use spotter_core::times::fmt;
-use spotter_core::{Input, Report, Settings, analyze};
+use spotter_core::{
+    Answer, Answers, Input, NoModel, Question, Report, Settings, analyze, analyze_with,
+};
 
 fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
@@ -85,7 +87,10 @@ fn report_json(report: &Report) -> Value {
         "window": report.reading.window,
         "grid_jobs": report.reading.grid_jobs,
         "assignments": assignments,
-        "questions": report.reading.questions,
+        "questions": report.questions,
+        "merges": report.merges,
+        "flags": report.flags.iter().map(flag_json).collect::<Vec<_>>(),
+        "info": report.info.iter().map(info_json).collect::<Vec<_>>(),
         "notes": report.reading.notes,
     })
 }
@@ -349,7 +354,6 @@ fn check_fixture(dir: &Path) -> Option<Outcome> {
     let report = analyze(&input, &settings);
     out.millis = started.elapsed().as_secs_f64() * 1000.0;
     let questions: Vec<Value> = report
-        .reading
         .questions
         .iter()
         .map(|q| serde_json::to_value(q).expect("json"))
@@ -469,7 +473,84 @@ fn check_fixture(dir: &Path) -> Option<Outcome> {
             ));
         }
     }
+
+    // The owner answers; results update.
+    if let Some(given) = expected.get("answers").and_then(Value::as_array) {
+        let answers = answers_from(given, &report.questions);
+        let after = analyze_with(&input, &settings, &answers, &NoModel);
+        let target = &expected["after_answers"];
+        if let Some(exp) = target.get("assignments").and_then(Value::as_array) {
+            let e: Vec<String> = exp.iter().map(tuple).collect();
+            let a: Vec<String> = after
+                .reading
+                .assignments
+                .iter()
+                .map(|x| tuple(&assignment_json(x)))
+                .collect();
+            let (missing, extra) = diff(&e, &a);
+            for m in &missing {
+                problem(format!("after answers, missing: {m}"));
+            }
+            if target
+                .get("assignments_exact")
+                .and_then(Value::as_bool)
+                .unwrap_or(true)
+            {
+                for x in &extra {
+                    problem(format!("after answers, extra:   {x}"));
+                }
+            }
+        }
+        if let Some(exp) = target.get("flags").and_then(Value::as_array) {
+            let actual: Vec<Value> = after.flags.iter().map(flag_json).collect();
+            compare_findings("after answers, flag", exp, &actual, true, &mut problem);
+        }
+        if let Some(exp) = target.get("info").and_then(Value::as_array) {
+            let exact = target
+                .get("info_exact")
+                .and_then(Value::as_bool)
+                .unwrap_or(false);
+            let actual: Vec<Value> = after.info.iter().map(info_json).collect();
+            compare_findings("after answers, info", exp, &actual, exact, &mut problem);
+        }
+    }
     Some(out)
+}
+
+/// Turns expected.json answers into the app's answers. Each spec is matched
+/// to a question actually asked, as the owner would tap it; a same-person or
+/// same-site answer with no question (undoing a merge chip) is built from
+/// its spec.
+fn answers_from(given: &[Value], asked: &[Question]) -> Answers {
+    let mut answers = Answers::default();
+    for item in given {
+        let spec = &item["question"];
+        let answer = match item["answer"].as_str().unwrap_or("") {
+            "yes" => Answer::Yes,
+            "no" => Answer::No,
+            other => Answer::Pick(other.to_string()),
+        };
+        let found = asked
+            .iter()
+            .find(|q| question_matches(spec, &serde_json::to_value(q).expect("json")))
+            .cloned();
+        let question = found.or_else(|| {
+            let (a, b) = (
+                spec["a"].as_str()?.to_string(),
+                spec["b"].as_str()?.to_string(),
+            );
+            match spec["type"].as_str()? {
+                "same_person" => Some(Question::SamePerson { a, b }),
+                "same_site" => Some(Question::SameSite { a, b }),
+                _ => None,
+            }
+        });
+        match question {
+            Some(q) => answers.items.push((q, answer)),
+            None => eprintln!("answer for a question that wasn't asked: {spec}"),
+        }
+    }
+    answers
 }
 
 fn fixture_dirs(roots: &[String]) -> Vec<PathBuf> {
@@ -596,6 +677,13 @@ fn cmd_generated(args: &[String]) -> i32 {
     let mut flag_stats: BTreeMap<String, (usize, usize, usize)> = BTreeMap::new();
     let mut clean_cases = 0usize;
     let mut clean_with_red: Vec<String> = Vec::new();
+    let mut false_merges: Vec<String> = Vec::new();
+    let mut merges_total = 0usize;
+    let mut question_counts: Vec<usize> = Vec::new();
+    let mut match_questions = 0usize;
+    // Flags after an oracle owner answers every same-person/same-site
+    // question from the truth: (expected, matched, actual) per type.
+    let mut answered_stats: BTreeMap<String, (usize, usize, usize)> = BTreeMap::new();
     for dir in fixture_dirs(std::slice::from_ref(root)) {
         let Ok(text) = std::fs::read_to_string(dir.join("expected.json")) else {
             continue;
@@ -644,6 +732,91 @@ fn cmd_generated(args: &[String]) -> i32 {
             .ok()
             .and_then(|t| serde_json::from_str(&t).ok())
             .unwrap_or(Value::Null);
+        // Which spellings are which truth identity.
+        let alias_ids = |list: &Value| -> HashMap<String, String> {
+            let mut m = HashMap::new();
+            for item in list.as_array().into_iter().flatten() {
+                let id = item["id"].as_str().unwrap_or("").to_string();
+                for name in item["aliases"]
+                    .as_array()
+                    .into_iter()
+                    .flatten()
+                    .filter_map(Value::as_str)
+                    .chain(item["name"].as_str())
+                {
+                    m.insert(norm(name), id.clone());
+                }
+            }
+            m
+        };
+        let people = alias_ids(&truth["people"]);
+        let sites = alias_ids(&truth["sites"]);
+        for merge in &report.merges {
+            merges_total += 1;
+            let ids = match merge.kind {
+                spotter_core::matching::MergeKind::Person => &people,
+                spotter_core::matching::MergeKind::Site => &sites,
+            };
+            if let (Some(a), Some(b)) = (ids.get(&norm(&merge.from)), ids.get(&norm(&merge.into)))
+                && a != b
+            {
+                false_merges.push(format!(
+                    "{}: {:?} {:?} -> {:?}",
+                    dir.file_name()
+                        .map(|n| n.to_string_lossy().into_owned())
+                        .unwrap_or_default(),
+                    merge.kind,
+                    merge.from,
+                    merge.into
+                ));
+            }
+        }
+        question_counts.push(report.questions.len());
+        let mut oracle = Answers::default();
+        for q in &report.questions {
+            let (ids, a, b) = match q {
+                Question::SamePerson { a, b } => (&people, a, b),
+                Question::SameSite { a, b } => (&sites, a, b),
+                _ => continue,
+            };
+            match_questions += 1;
+            let same =
+                matches!((ids.get(&norm(a)), ids.get(&norm(b))), (Some(x), Some(y)) if x == y);
+            oracle
+                .items
+                .push((q.clone(), if same { Answer::Yes } else { Answer::No }));
+        }
+        let after = if oracle.is_empty() {
+            report.clone()
+        } else {
+            analyze_with(&input, &settings, &oracle, &NoModel)
+        };
+        let after_flags: Vec<String> = after
+            .flags
+            .iter()
+            .map(|f| finding_tuple(&flag_json(f)))
+            .collect();
+        let (after_missing, after_extra) = diff(&exp_flags, &after_flags);
+        for (list, slot) in [(&exp_flags, 0), (&after_flags, 2)] {
+            for f in list {
+                let kind = f.split(' ').next().unwrap_or("").to_string();
+                let e = answered_stats.entry(kind).or_default();
+                if slot == 0 { e.0 += 1 } else { e.2 += 1 }
+            }
+        }
+        let mut matched_after = exp_flags.clone();
+        for m in &after_missing {
+            if let Some(i) = matched_after.iter().position(|x| x == m) {
+                matched_after.remove(i);
+            }
+        }
+        for f in &matched_after {
+            answered_stats
+                .entry(f.split(' ').next().unwrap_or("").to_string())
+                .or_default()
+                .1 += 1;
+        }
+
         if truth["clean"].as_bool() == Some(true) {
             clean_cases += 1;
             let red: Vec<&String> = act_flags
@@ -697,6 +870,8 @@ fn cmd_generated(args: &[String]) -> i32 {
             "got_layout": report.reading.layout,
             "flags_missing": flags_missing,
             "flags_extra": flags_extra,
+            "after_missing": after_missing,
+            "after_extra": after_extra,
             "clean": truth["clean"],
             "tier": expected["tier"],
         }));
@@ -761,6 +936,34 @@ fn cmd_generated(args: &[String]) -> i32 {
     for c in clean_with_red.iter().take(if verbose { 40 } else { 8 }) {
         println!("    {c}");
     }
+    println!("\nafter the owner answers every same-person/same-site question correctly:");
+    for (kind, (e, m, a)) in &answered_stats {
+        let pct = |x: usize, y: usize| {
+            if y == 0 {
+                100.0
+            } else {
+                100.0 * x as f64 / y as f64
+            }
+        };
+        println!(
+            "  {kind:<18} {e:>7}  {m:>7}  {a:>7}  {:>6.2}%  {:>6.2}%",
+            pct(*m, *e),
+            pct(*m, *a)
+        );
+    }
+    let files = question_counts.len().max(1) as f64;
+    println!(
+        "questions per file (model off): mean {:.2}, files with none {}/{}, same-person/site questions {match_questions}",
+        question_counts.iter().sum::<usize>() as f64 / files,
+        question_counts.iter().filter(|n| **n == 0).count(),
+        question_counts.len()
+    );
+    println!("merges {merges_total}, false merges {}", false_merges.len());
+    for f in false_merges.iter().take(if verbose { 40 } else { 10 }) {
+        println!("    {f}");
+    }
+    let merge_gate =
+        args.iter().any(|a| a == "--require-no-false-merges") && !false_merges.is_empty();
     let flag_gate = args.iter().any(|a| a == "--require-clean");
     if let Some(path) = flag(args, "--report") {
         std::fs::write(path, serde_json::to_string(&report_rows).expect("json"))
@@ -776,7 +979,7 @@ fn cmd_generated(args: &[String]) -> i32 {
         recall * 100.0,
         precision * 100.0
     );
-    if recall >= min_recall && !(flag_gate && !clean_with_red.is_empty()) {
+    if recall >= min_recall && !(flag_gate && !clean_with_red.is_empty()) && !merge_gate {
         0
     } else {
         1

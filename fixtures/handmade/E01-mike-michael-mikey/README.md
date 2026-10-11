@@ -1,0 +1,1 @@
+Mike / Michael / Mikey (job x day): 'Mike Baker' = 'Michael Baker' by the nickname table and the same surname, merged without asking; 'Mikey' is not in the table, so 'Mikey Baker' vs 'Michael Baker' is asked (model off) and kept separate meanwhile (not booked Mon-Wed and Fri); answered yes, Michael Baker is double-booked Thursday at 1420 Johnson St and Smith remodel.

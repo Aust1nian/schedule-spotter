@@ -24,12 +24,13 @@ fn main() {
         g.width()
     );
     let settings = Settings::default();
+    let answers = spotter_core::Answers::default();
     let t = Instant::now();
-    let ctx = SheetCtx::new(&g, settings.today);
+    let ctx = SheetCtx::new(&g, settings.today, &answers);
     println!("ctx          {:>8.1} ms", t.elapsed().as_secs_f64() * 1e3);
     let t = Instant::now();
     let tg = g.transposed();
-    let tctx = SheetCtx::new(&tg, settings.today);
+    let tctx = SheetCtx::new(&tg, settings.today, &answers);
     println!("transposed   {:>8.1} ms", t.elapsed().as_secs_f64() * 1e3);
     for (name, f) in spotter_core::layout::readers() {
         let t = Instant::now();

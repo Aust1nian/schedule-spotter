@@ -1,0 +1,56 @@
+{
+  "category": "F",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Ana Ruiz", "date": "2026-10-12", "site": "Parker kitchen"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Ana Ruiz", "date": "2026-10-13", "site": "Parker kitchen"},
+    {"person": "Ana Ruiz", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Ana Ruiz", "date": "2026-10-14", "site": "Parker kitchen"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Ana Ruiz", "date": "2026-10-15", "site": "Parker kitchen"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Ana Ruiz", "date": "2026-10-16", "site": "Parker kitchen"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-16", "site": "Parker kitchen"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Ana Ruiz", "date": "2026-10-13", "sites": ["Parker kitchen", "Smith remodel"]}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": true,
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "same_site", "a": "J-1042", "b": "Smith remodel"},
+    {"type": "same_site"},
+    {"type": "same_person"}
+  ]
+}

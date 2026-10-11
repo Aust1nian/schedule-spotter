@@ -1,0 +1,1 @@
+Jose vs José (day x job): 'José García' (Mon-Wed) and 'Jose Garcia' (Thu-Fri) differ only by accents and merge without asking, so neither spelling is falsely not booked; the one real flag is Luis Ortiz not booked Friday.

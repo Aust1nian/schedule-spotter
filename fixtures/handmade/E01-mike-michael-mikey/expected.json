@@ -1,0 +1,70 @@
+{
+  "category": "E",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "job_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Michael Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Michael Baker", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Michael Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Mikey Baker", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Dave Kim", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Tom Reed", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Tom Reed", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Tom Reed", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Tom Reed", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Dave Kim", "date": "2026-10-16", "site": "Oak Ridge Apts"},
+    {"person": "Tom Reed", "date": "2026-10-16", "site": "Oak Ridge Apts"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "not_booked", "person": "Mikey Baker", "date": "2026-10-12"},
+    {"type": "not_booked", "person": "Mikey Baker", "date": "2026-10-13"},
+    {"type": "not_booked", "person": "Mikey Baker", "date": "2026-10-14"},
+    {"type": "not_booked", "person": "Mikey Baker", "date": "2026-10-16"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": true,
+  "ask": [
+    {"type": "same_person", "a": "Mikey Baker", "b": "Michael Baker"}
+  ],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "same_person", "a": "Mike Baker", "b": "Michael Baker"},
+    {"type": "same_site"}
+  ],
+  "answers": [
+    {"question": {"type": "same_person", "a": "Mikey Baker", "b": "Michael Baker"}, "answer": "yes"}
+  ],
+  "after_answers": {
+    "flags": [
+      {"type": "double_booked", "person": "Michael Baker", "date": "2026-10-15", "sites": ["1420 Johnson St", "Smith remodel"]}
+    ],
+    "info": []
+  }
+}

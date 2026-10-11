@@ -1,0 +1,1 @@
+Must NOT merge Mike B and Mike R (person x day): one first name, conflicting surname initials, so two people, never merged and never asked about (merged, they would be double-booked all week); the only flag is Dave Kim not booked Friday.

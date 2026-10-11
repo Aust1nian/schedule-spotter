@@ -1,0 +1,1 @@
+Look-alike Johnson addresses together (long list, .tsv): '1420 Johnson St' = '1420 Johnson Street' merges silently, while '1240 Johnson St' and 'Johnson job' are asked against it and each other; answered 1240 vs 1420 no and 'Johnson job' = 1240 yes, Mike's and Dave's double-bookings stay (Dave's now names 1240 Johnson St) and 1240's unstaffed Wednesday clears.

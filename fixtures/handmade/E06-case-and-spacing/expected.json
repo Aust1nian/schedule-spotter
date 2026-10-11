@@ -1,0 +1,51 @@
+{
+  "category": "E",
+  "tier": "script",
+  "input": "input.tsv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Tom O'Reilly", "date": "2026-10-12", "site": "Oak Ridge Apts"},
+    {"person": "MIKE BAKER", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "JOSE GARCIA", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Tom O'Reilly", "date": "2026-10-13", "site": "Oak Ridge Apts"},
+    {"person": "mike baker", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Tom OReilly", "date": "2026-10-14", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "jose garcia", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Tom OReilly", "date": "2026-10-15", "site": "Oak Ridge Apts"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Tom O'Reilly", "date": "2026-10-16", "site": "Oak Ridge Apts"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Mike Baker", "date": "2026-10-14", "sites": ["1420 Johnson St", "Smith remodel"]}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": true,
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "same_person", "a": "Tom OReilly", "b": "Tom O'Reilly"},
+    {"type": "same_person"},
+    {"type": "same_site"}
+  ]
+}

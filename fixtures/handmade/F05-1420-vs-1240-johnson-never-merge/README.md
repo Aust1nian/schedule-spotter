@@ -1,0 +1,1 @@
+Must NOT merge 1420 vs 1240 Johnson St (person x day): look-alike addresses with different house numbers are asked, never merged; kept separate, Mike Baker is double-booked Wednesday, and answered no, the flag stays.

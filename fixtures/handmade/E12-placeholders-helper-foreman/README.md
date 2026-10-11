@@ -1,0 +1,1 @@
+Placeholders (person x day): 'Helper 1', 'Helper 2', 'Foreman' and 'New guy' are never not booked, never double-booked (Helper 1 at two jobs Tuesday) and never merged with each other or with employee Tom Foreman; Parker kitchen, staffed only by placeholders, is not unstaffed. The one flag is Tom Foreman not booked Friday.

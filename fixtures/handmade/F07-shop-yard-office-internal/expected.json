@@ -1,0 +1,67 @@
+{
+  "category": "F",
+  "tier": "script",
+  "input": "input.xlsx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "job_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-13", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-14", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "1420 Johnson St"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Dave Kim", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Ana Ruiz", "date": "2026-10-16", "site": "1420 Johnson St"},
+    {"person": "Jose Garcia", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-12", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-13", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-14", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "Smith remodel"},
+    {"person": "Jose Garcia", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Tom Reed", "date": "2026-10-16", "site": "Smith remodel"},
+    {"person": "Luis Ortiz", "date": "2026-10-12", "site": "Shop"},
+    {"person": "Luis Ortiz", "date": "2026-10-13", "site": "Shop"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "Shop"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Shop"},
+    {"person": "Luis Ortiz", "date": "2026-10-15", "site": "Shop"},
+    {"person": "Dave Kim", "date": "2026-10-15", "site": "Shop"},
+    {"person": "Luis Ortiz", "date": "2026-10-16", "site": "Shop"},
+    {"person": "Luis Ortiz", "date": "2026-10-14", "site": "Yard"},
+    {"person": "Ana Ruiz", "date": "2026-10-12", "site": "Office"},
+    {"person": "Ana Ruiz", "date": "2026-10-13", "site": "Office"},
+    {"person": "Ana Ruiz", "date": "2026-10-14", "site": "Office"},
+    {"person": "Ana Ruiz", "date": "2026-10-15", "site": "Office"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Dave Kim", "date": "2026-10-15", "sites": ["1420 Johnson St", "Smith remodel"]}
+  ],
+  "flags_exact": true,
+  "info": [
+    {"type": "internal_plus_site", "person": "Mike Baker", "date": "2026-10-13", "sites": ["Shop", "1420 Johnson St"]},
+    {"type": "internal_plus_site", "person": "Luis Ortiz", "date": "2026-10-14", "sites": ["Shop", "Yard"]}
+  ],
+  "info_exact": true,
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"},
+    {"type": "pick_sheet"},
+    {"type": "same_site"},
+    {"type": "same_person"}
+  ]
+}

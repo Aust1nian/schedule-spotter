@@ -1,0 +1,1 @@
+Dropped second surname (job x day, .xlsx): 'José García' may be 'José García López' or someone else, so it is asked (model off) and kept separate meanwhile (not booked four days); answered yes, José García López is double-booked Wednesday (Smith remodel, Oak Ridge Apts). Ana García shares only the surname and is never asked about.

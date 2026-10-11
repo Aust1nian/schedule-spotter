@@ -1,0 +1,1 @@
+St vs Street (person x day, .xlsx): '1420 Johnson St', '1420 Johnson Street' and '1420 JOHNSON ST.' share the house number and differ only in suffix spelling, case and punctuation, so they merge without asking (unmerged, 1420 Johnson St would look unstaffed Wednesday and Thursday); the one real flag is Oak Ridge Apts unstaffed Wednesday.

@@ -1,0 +1,1 @@
+Mike B vs Michael Baker (long list): 'Mike B' fits exactly one roster person by nickname (Mike/Michael) plus surname initial ('Tom Brown' shares the B, not the first name), so it merges without asking; merged, Michael Baker is booked Thursday and double-booked Wednesday at 1420 Johnson St and Smith remodel.

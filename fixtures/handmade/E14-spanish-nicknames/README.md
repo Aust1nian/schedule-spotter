@@ -1,0 +1,1 @@
+Spanish nicknames (long list, .xlsx): Paco = Francisco, Chuy = Jesús, Nacho = Ignacio and Pepe = José, each with the same surname, merge without asking: Francisco Reyes is double-booked Wednesday (1420 Johnson St, Smith remodel), Ignacio Torres's second Friday row is a duplicate entry, and nobody is falsely not booked.

@@ -141,6 +141,76 @@ pub enum Question {
     PasteAsTable,
 }
 
+impl Question {
+    /// What the question is about, independent of the reading it came from:
+    /// answers are matched to questions by this. Case and spacing don't
+    /// matter, and the two sides of a same-person or same-site pair are
+    /// unordered.
+    pub fn subject(&self) -> String {
+        let n = |s: &str| crate::text::clean(s).to_lowercase();
+        let pair = |a: &str, b: &str| {
+            let (a, b) = (n(a), n(b));
+            if a <= b {
+                format!("{a}|{b}")
+            } else {
+                format!("{b}|{a}")
+            }
+        };
+        match self {
+            Question::SamePerson { a, b } => format!("same_person:{}", pair(a, b)),
+            Question::SameSite { a, b } => format!("same_site:{}", pair(a, b)),
+            Question::PickSheet { .. } => "pick_sheet".into(),
+            Question::PickLayout { .. } => "pick_layout".into(),
+            Question::WeekdayMismatch { text, .. } => format!("weekday_mismatch:{}", n(text)),
+            Question::FillDown { column, block_row } => {
+                format!("fill_down:{}:{block_row}", n(column))
+            }
+            Question::ColumnRole { header, .. } => format!("column_role:{}", n(header)),
+            Question::CellMeaning { text } => format!("cell_meaning:{}", n(text)),
+            Question::PasteAsTable => "paste_as_table".into(),
+        }
+    }
+}
+
+/// The owner's answer to a question.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum Answer {
+    Yes,
+    No,
+    /// One of the question's options (a sheet, a layout, a column role).
+    Pick(String),
+}
+
+/// Every answer given so far. The newest answer to a subject wins.
+#[derive(Clone, Debug, Default, Serialize, Deserialize)]
+pub struct Answers {
+    pub items: Vec<(Question, Answer)>,
+}
+
+impl Answers {
+    pub fn get(&self, q: &Question) -> Option<&Answer> {
+        let subject = q.subject();
+        self.items
+            .iter()
+            .rev()
+            .find(|(x, _)| x.subject() == subject)
+            .map(|(_, a)| a)
+    }
+
+    pub fn get_subject(&self, subject: &str) -> Option<&Answer> {
+        self.items
+            .iter()
+            .rev()
+            .find(|(x, _)| x.subject() == subject)
+            .map(|(_, a)| a)
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.items.is_empty()
+    }
+}
+
 /// One column (or axis) the reader assigned a role to, for "What I read".
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ColumnReading {
@@ -197,6 +267,9 @@ pub struct Flag {
     #[serde(skip_serializing_if = "std::ops::Not::not", default)]
     pub explicit: bool,
     pub message: String,
+    /// Indexes into `Report::merges` behind this finding: its chips.
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub merges: Vec<usize>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
@@ -233,4 +306,8 @@ pub struct Report {
     pub error: Option<ReadError>,
     pub flags: Vec<Flag>,
     pub info: Vec<Info>,
+    /// Every merge of two spellings ("treating A as B").
+    pub merges: Vec<crate::matching::Merge>,
+    /// Every open question: the reader's and matching's.
+    pub questions: Vec<Question>,
 }

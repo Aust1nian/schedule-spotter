@@ -1,0 +1,1 @@
+Single-name spellings (job x day, .tsv): last name only 'Kim' and 'Ortiz', and first name only 'Ana', each fit exactly one roster person and merge without asking: Dave Kim is booked Wednesday, Ana Ruiz Tuesday, and Luis Ortiz is booked Thursday and double-booked Friday (Oak Ridge Apts and Smith remodel).

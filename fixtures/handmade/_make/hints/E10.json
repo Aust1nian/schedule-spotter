@@ -1,0 +1,20 @@
+{
+  "window": [
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16"
+  ],
+  "jobs": [
+    "1420 Johnson St",
+    "Parker kitchen",
+    "Oak Ridge Apts"
+  ],
+  "same_person": [
+    [
+      "Robert Smith Jr",
+      "Bob Smith Jr"
+    ]
+  ]
+}

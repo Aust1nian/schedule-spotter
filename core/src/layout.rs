@@ -16,7 +16,8 @@ use crate::dates;
 use crate::grid::Grid;
 use crate::lexicon::{crew_name, is_crew_roster_title, is_roster_title, status_word};
 use crate::model::{
-    Arrangement, Assignment, CellRef, ColumnReading, Layout, Part, Question, Reading, Status,
+    Answer, Answers, Arrangement, Assignment, CellRef, ColumnReading, Layout, Part, Question,
+    Reading, Status,
 };
 use crate::read::Workbook;
 use crate::settings::Settings;
@@ -51,10 +52,12 @@ pub struct SheetCtx<'a> {
     /// Some numeric date in the sheet has a first part over 12 (and none a
     /// second part over 12): the author writes day-first.
     pub day_first: bool,
+    /// The owner's answers so far.
+    pub answers: &'a Answers,
 }
 
 impl<'a> SheetCtx<'a> {
-    pub fn new(g: &'a Grid, today: NaiveDate) -> SheetCtx<'a> {
+    pub fn new(g: &'a Grid, today: NaiveDate, answers: &'a Answers) -> SheetCtx<'a> {
         let mut anchors = Vec::new();
         for r in 0..g.height() {
             for c in 0..g.width() {
@@ -83,6 +86,7 @@ impl<'a> SheetCtx<'a> {
             consumed,
             roster,
             day_first,
+            answers,
         }
     }
 
@@ -293,14 +297,14 @@ impl Candidate {
 
 /// Reads the workbook: picks the sheet and the reading, and asks when that
 /// choice is a coin flip.
-pub fn read_workbook(wb: &Workbook, settings: &Settings) -> Reading {
+pub fn read_workbook(wb: &Workbook, settings: &Settings, answers: &Answers) -> Reading {
     let mut per_sheet: Vec<(usize, Candidate)> = Vec::new();
     for (i, sheet) in wb.sheets.iter().enumerate() {
         let g = Grid::new(sheet, i as u16);
         if g.height() == 0 {
             continue;
         }
-        if let Some(best) = read_sheet(&g, settings) {
+        if let Some(best) = read_sheet(&g, settings, answers) {
             per_sheet.push((i, best));
         }
     }
@@ -318,7 +322,14 @@ pub fn read_workbook(wb: &Workbook, settings: &Settings) -> Reading {
             c.score() >= 0.5 && c.sink.assignments.len() >= 3 && c.person_likeness() >= 0.6
         })
         .count();
-    let (chosen_index, chosen) = per_sheet.remove(0);
+    // The owner picked a sheet.
+    let picked = match answers.get_subject("pick_sheet") {
+        Some(Answer::Pick(name)) => per_sheet
+            .iter()
+            .position(|(i, _)| crate::text::key(&wb.sheets[*i].name) == crate::text::key(name)),
+        _ => None,
+    };
+    let (chosen_index, chosen) = per_sheet.remove(picked.unwrap_or(0));
     let chosen_name = wb.sheets[chosen_index].name.clone();
     if schedule_like >= 2 {
         let options = wb.sheets.iter().map(|s| s.name.clone()).collect();
@@ -357,11 +368,11 @@ pub fn readers() -> Vec<(&'static str, Reader)> {
 
 /// The best reading of one sheet, or `None` if nothing in it reads as a
 /// schedule.
-pub fn read_sheet(g: &Grid, settings: &Settings) -> Option<Candidate> {
+pub fn read_sheet(g: &Grid, settings: &Settings, answers: &Answers) -> Option<Candidate> {
     let today = settings.today;
-    let ctx = SheetCtx::new(g, today);
+    let ctx = SheetCtx::new(g, today, answers);
     let transposed = g.transposed();
-    let tctx = SheetCtx::new(&transposed, today);
+    let tctx = SheetCtx::new(&transposed, today, answers);
 
     let mut candidates: Vec<Candidate> = Vec::new();
     candidates.extend(crate::layout_calendar::read(&ctx));
@@ -373,8 +384,14 @@ pub fn read_sheet(g: &Grid, settings: &Settings) -> Option<Candidate> {
         return None;
     }
     candidates.sort_by(|a, b| b.score().total_cmp(&a.score()));
-    let mut best = candidates.remove(0);
-    if let Some(second) = candidates.first() {
+    let picked = match answers.get_subject("pick_layout") {
+        Some(Answer::Pick(name)) => candidates
+            .iter()
+            .position(|c| layout_name(c.layout) == name.as_str()),
+        _ => None,
+    };
+    let mut best = candidates.remove(picked.unwrap_or(0));
+    if let Some(second) = candidates.first().filter(|_| picked.is_none()) {
         let close = best.score() - second.score() < 0.03 && second.score() > 0.5;
         if close && family(best.layout) != family(second.layout) {
             best.sink.ask(Question::PickLayout {
@@ -743,7 +760,16 @@ pub fn fill_down_labels(
     header: &str,
     sink: &mut Sink,
     block_row: u32,
+    answers: &Answers,
 ) {
+    let question = Question::FillDown {
+        column: header.to_string(),
+        block_row,
+    };
+    if answers.get(&question) == Some(&Answer::No) {
+        sink.ask(question);
+        return;
+    }
     // (row, label, row_has_data)
     let mut groups = 0;
     let mut in_group = false;
@@ -770,9 +796,6 @@ pub fn fill_down_labels(
         }
     }
     if groups == 1 {
-        sink.ask(Question::FillDown {
-            column: header.to_string(),
-            block_row,
-        });
+        sink.ask(question);
     }
 }

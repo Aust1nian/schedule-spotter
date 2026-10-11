@@ -1,4 +1,3 @@
 # Fixtures that currently fail, by ID prefix. They still run on every push and
 # are reported; see TEST_REPORT.md "Known failures" for why. Remove a line as
 # soon as its fixture passes (spotter-check says so).
-K07   # needs stage 7 nickname + initial matching (Phase 3)
