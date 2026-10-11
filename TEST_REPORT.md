@@ -115,6 +115,59 @@ Before answers, not_booked stays low because each spelling of a person who is as
 
 Phase 4's model tier and the holdout will show whether those need more work.
 
+## Phase 4: model layer and benchmark (in progress)
+
+### Handmade fixtures
+
+There are 136 fixtures across categories A–M. The spec's minimum is 135.
+
+**New: L01–L09**, from an independent author:
+- prompt injection in cells (script and model tier);
+- a binary file renamed `.csv`;
+- a 0-byte file;
+- a file of only blank lines (L09, added for the spec's "empty and 0-byte files");
+- invalid UTF-8;
+- a 5 MB line;
+- formula-looking cells;
+- saving to a read-only target.
+
+**Model off:** 132 of 132 script-tier fixtures pass; the 4 model-tier ones are skipped.
+
+**Model on, model-tier fixtures (local, 2 threads):**
+
+| Variant | Passing | Failing |
+| --- | --- | --- |
+| B-E2B | 4 / 4 | — |
+| B-E2B-QAT | 3 / 4 | L03: answered "unsure" on a typo surrounded by injected instructions |
+| A | 0 / 4 | L03: answered "different", following the injected instruction; the three free-text pastes were misread, or two of their lines timed out |
+
+L01's formula cell exposed a reader rule the spec doesn't have: formula text in text files was dropped. It's now kept as data. `export_check` and `save_test` are checked from Phase 5, when export and save exist.
+
+### Generator, model off (no regressions)
+
+Seeds 0–1,999:
+- 0 false merges in 3,152 merges;
+- 0 clean schedules with a red flag;
+- assignment recall 99.55%, precision 99.67%.
+
+### Benchmark
+
+There are 468 labeled questions in `bench/questions`, written by an independent author:
+
+| Task | Questions |
+| --- | --- |
+| T1 | 151 |
+| T2 | 100 |
+| T3 | 101 |
+| T4 | 54 |
+| T5 | 62 |
+
+- **Look-alikes:** 44% of the T1/T2 pairs are look-alike "different" pairs.
+- **Prompt injection:** 21 questions.
+- **No leaks:** `tools/check_prompt_leak.py` keeps prompt examples out of the set.
+
+Results are in MODEL_REPORT.md. On the local machine no variant passes. Accuracy on answered questions is 53–77% against the 95% threshold, and false merges are 17–100% against the 1% limit.
+
 ## Changed expectations
 
 | Fixture | Was | Now | Reason |

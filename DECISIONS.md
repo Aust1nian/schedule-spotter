@@ -299,3 +299,19 @@ Latency rose about 10%. Without this change, A and B-E2B both break the 4.0 GB c
 - **Controls stay in.** The 14 questions the rules settle on their own in the app (Mike B/Mike R, Sr/Jr, store numbers) are scored, because the spec names them as part of the set.
 - **T5 is scored strictly.** Every entry's person, day, site and time must match, and so must "cannot read".
 - **Injection items get their own score.** Per-question records go in the output so MODEL_REPORT.md can report the 21 prompt-injection questions separately.
+
+**2026-10-11 · A model "same" needs confidence ≥ 0.9 to merge (`SAME_MIN`).**
+- **What.** The engine records the probability of each chosen token among the tokens the grammar allows. A T1/T2 "same" below 0.9 is treated as "unsure", which becomes the owner's Yes/No question.
+- **How the value was chosen.** Swept on the odd-numbered T1/T2 questions and checked on the even ones, for both E2B builds.
+- **Results:**
+
+  | Model | Threshold | False merges | Unsure |
+  | --- | --- | --- | --- |
+  | E2B | 0 | 21–24% | 4–5% |
+  | E2B | 0.9 | 13–16% | 10% |
+  | E2B-QAT | 0 | 15–16% | — |
+  | E2B-QAT | 0.9 | 5–7% | 25–31% |
+  | E2B-QAT | 0.999 | 0% | 58% |
+
+- **Why 0.9.** No threshold brings either model within both limits (false merges ≤ 1%, unsure ≤ 15%). Gemma E2B is often confidently wrong on real look-alike names (Marla/Marta, Shawn/Shane at 0.998–1.0). 0.9 is kept because a wrong merge can hide or invent a red flag, while an extra question only costs the owner a click.
+- **Reporting.** MODEL_REPORT.md reports both the raw answers and the gated ones.

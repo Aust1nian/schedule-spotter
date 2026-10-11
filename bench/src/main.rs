@@ -174,7 +174,11 @@ fn main() {
                 strings(&q["sites"])
             };
             let start = Instant::now();
-            let task = if name.starts_with("t1") { Task::SamePerson } else { Task::SameSite };
+            let task = if name.starts_with("t1") {
+                Task::SamePerson
+            } else {
+                Task::SameSite
+            };
             let raw = engine.same_answer(task, a, b, &others);
             let confidence = raw.as_ref().map_or(0.0, |r| r.1);
             let v = match raw.as_ref().map(|r| r.0.as_str()) {

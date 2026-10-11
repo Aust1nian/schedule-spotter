@@ -48,7 +48,7 @@ const N_CTX: u32 = 2048;
 pub const CALL_LIMIT: Duration = Duration::from_secs(5);
 /// The confidence a model "same" needs before it merges anything; chosen on
 /// half the benchmark set and checked on the other half (DECISIONS.md).
-pub const SAME_MIN: f32 = 0.0;
+pub const SAME_MIN: f32 = 0.9;
 
 #[derive(Debug)]
 pub enum LoadError {
@@ -85,8 +85,13 @@ fn pick(grammar: &mut LlamaSampler, logits: &[f32]) -> Option<(LlamaToken, f32)>
         grammar.apply(&mut arr);
         let allowed: Vec<&LlamaTokenData> =
             arr.data.iter().filter(|d| d.logit().is_finite()).collect();
-        let top = allowed.iter().max_by(|a, b| a.logit().total_cmp(&b.logit()))?;
-        let total: f32 = allowed.iter().map(|d| (d.logit() - top.logit()).exp()).sum();
+        let top = allowed
+            .iter()
+            .max_by(|a, b| a.logit().total_cmp(&b.logit()))?;
+        let total: f32 = allowed
+            .iter()
+            .map(|d| (d.logit() - top.logit()).exp())
+            .sum();
         Some((top.id(), 1.0 / total))
     };
     let mut ids: Vec<usize> = (0..logits.len()).collect();
@@ -492,21 +497,36 @@ impl Engine {
 
     /// T1 / T2 as the model answered: ("same" | "different" | "unsure",
     /// confidence), before the confidence rule.
-    pub fn same_answer(&self, task: Task, a: &str, b: &str, others: &[String]) -> Option<(String, f32)> {
-        let others: Vec<&String> = others.iter().filter(|n| *n != a && *n != b).take(10).collect();
+    pub fn same_answer(
+        &self,
+        task: Task,
+        a: &str,
+        b: &str,
+        others: &[String],
+    ) -> Option<(String, f32)> {
+        let others: Vec<&String> = others
+            .iter()
+            .filter(|n| *n != a && *n != b)
+            .take(10)
+            .collect();
         let question = match task {
             Task::SamePerson => json!({"a": a, "b": b, "others_on_roster": others}),
             _ => json!({"a": a, "b": b, "other_sites": others}),
         };
         let v = self.ask(task, &question)?;
-        Some((v["answer"].as_str()?.to_string(), v["confidence"].as_f64().unwrap_or(0.0) as f32))
+        Some((
+            v["answer"].as_str()?.to_string(),
+            v["confidence"].as_f64().unwrap_or(0.0) as f32,
+        ))
     }
 
     /// A merge needs a confident "same": below `same_min` it goes to the
     /// owner as a question instead (DECISIONS.md, Phase 4).
     fn verdict(&self, task: Task, a: &str, b: &str, others: &[String]) -> Verdict {
         match self.same_answer(task, a, b, others) {
-            Some((answer, confidence)) if answer == "same" && confidence >= self.same_min => Verdict::Same,
+            Some((answer, confidence)) if answer == "same" && confidence >= self.same_min => {
+                Verdict::Same
+            }
             Some((answer, _)) if answer == "different" => Verdict::Different,
             _ => Verdict::Unsure,
         }
