@@ -37,12 +37,13 @@ jobs:
         with:
           key: bench-${{ matrix.runner }}
       - name: model cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: models/*.gguf
           key: model-${{ matrix.variant }}-${{ hashFiles('models/manifest.json') }}
       - name: fetch model (pinned revision and SHA-256)
-        run: python3 models/fetch.py ${{ matrix.variant }}
+        run: |
+          "$(command -v python3 || command -v python)" models/fetch.py ${{ matrix.variant }}
         shell: bash
       - run: cargo build --release -p spotter-bench
         shell: bash
@@ -50,7 +51,7 @@ jobs:
         id: model
         shell: bash
         run: |
-          python3 - <<'EOF' >> "$GITHUB_OUTPUT"
+          "$(command -v python3 || command -v python)" - <<'EOF' >> "$GITHUB_OUTPUT"
           import json
           m = json.load(open("models/manifest.json"))["models"]["${{ matrix.variant }}"]
           print(f"file=models/{m['file']}")
