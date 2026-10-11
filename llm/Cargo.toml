@@ -9,7 +9,21 @@ rust-version.workspace = true
 
 [dependencies]
 spotter-core = { path = "../core" }
-llama-cpp-2 = { version = "=0.1.159", default-features = false, features = ["common"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10"
+
+# x86_64 Windows: every CPU variant (SSE4.2 … AVX-512) is built as
+# its own module and the best one for the machine is picked at load, so old
+# laptops work and new ones are fast. macOS links one variant statically
+# (Apple Silicon: Metal + NEON; Intel: AVX2, .cargo/config.toml); Linux is
+# development only. DECISIONS.md, Phase 4.
+[target.'cfg(all(target_arch = "x86_64", target_os = "windows"))'.dependencies]
+llama-cpp-2 = { version = "=0.1.159", default-features = false, features = ["common", "dynamic-backends"] }
+
+[target.'cfg(all(target_arch = "aarch64", target_os = "macos"))'.dependencies]
+llama-cpp-2 = { version = "=0.1.159", default-features = false, features = ["common", "metal"] }
+
+[target.'cfg(not(any(all(target_arch = "x86_64", target_os = "windows"), all(target_arch = "aarch64", target_os = "macos"))))'.dependencies]
+llama-cpp-2 = { version = "=0.1.159", default-features = false, features = ["common"] }
+

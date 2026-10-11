@@ -3191,10 +3191,13 @@ dependencies = [
 name = "spotter-bench"
 version = "0.1.0"
 dependencies = [
+ "chrono",
  "libc",
+ "serde",
  "serde_json",
  "spotter-core",
  "spotter-llm",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]

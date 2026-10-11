@@ -242,3 +242,60 @@ Added here:
 **2026-10-11 · Gemma 4's chat template is rendered in-repo.** llama.cpp's built-in template engine doesn't recognize Gemma 4's new `<|turn>role … <turn|>` format. When applying a model's template fails, the engine renders the verified Gemma 4 format itself: system turn, alternating user and model turns, reply opened with `<|turn>model`, thinking off.
 
 **2026-10-11 · Formula text in text files stays as data.** Category L showed the reader was dropping `=SUM(…)`-style text from CSVs, a rule the spec doesn't have. The spec says spreadsheet cells give their stored values. In a CSV, that text is what the owner typed. It's now kept, with a note that it was read as plain text and never calculated, and the export (stage 10) writes it as a string. Error values like `#REF!` still become empty, with a note.
+
+**2026-10-11 · Weight repacking off (`GGML_CPU_REPACK=OFF`, `.cargo/config.toml`).** llama.cpp's CPU backend copies quantized weights into a repacked layout in anonymous memory. The memory-mapped originals stay resident too, which roughly doubles weight memory. Measured peak RSS at load, 2 threads:
+
+| Model | Repack on | Repack off |
+| --- | --- | --- |
+| Phi-4-mini | 4.10 GB | 2.88 GB |
+| Gemma E2B | 4.55 GB | 3.68 GB |
+
+Latency rose about 10%. Without this change, A and B-E2B both break the 4.0 GB ceiling. It sits in the cargo config so the app, the benchmark and CI all build the same way.
+
+**2026-10-11 · CPU builds, carrying out the Phase 4 plan above.**
+- **Windows x64:** `dynamic-backends`. Every `ggml-cpu-*` variant is built, from SSE4.2 to AVX-512, and the best one for the machine is loaded at start from the exe's folder. Phase 6 installs and signs those DLLs.
+- **macOS Apple Silicon:** static, with Metal.
+- **macOS Intel:** static AVX2/FMA/F16C. A runtime check before loading keeps the model off on CPUs without AVX2/FMA (the 2013 Mac Pro).
+- **Windows on Arm:** static NEON.
+- **Linux (development and CI only, not a ship target):** static AVX2. The binding's dynamic-link copy step breaks on Linux's versioned `.so` symlinks.
+
+**2026-10-11 · Each task's fixed prompt prefix is evaluated once and restored.**
+- **What.** The system text and examples (about 400–630 tokens) are evaluated once per task. Their KV state is saved with `state_seq_get` and restored with `state_seq_set` when that task comes up again.
+- **Why.** On 2 CPU threads, prompt evaluation runs at about 50 tokens/s. A cold prefix alone took 8 s, over the 5 s call limit. Restored, the first T1 call takes 1.3 s.
+- **Warm-up.** `Engine::warm` runs on the loading thread after `load`. The app warms tasks in the order questions come: T4, T3 (reading), then T1, T2 (matching), and T5 only for pastes. Warm-up time is reported separately from load time. The spec's "model load ≤ 20 s" is applied to load alone, and MODEL_REPORT.md shows both numbers so Austin can judge.
+- **Cost.** No measurable change in peak RSS for E2B (3.68 → 3.70 GB).
+
+**2026-10-11 · Grammar sampling checks the 40 likeliest tokens first.** Greedy decoding under a grammar picks the highest-logit token the grammar allows. Checking only the top 40 gives the identical token whenever one of them fits, and the code falls back to the full vocabulary when none does. On Gemma's 262k-token vocabulary, the full check cost about 22 ms per token, roughly 30% of generation time. Outputs are unchanged.
+
+**2026-10-11 · Deviation: T5's raw output is grouped.**
+- **What changed.** The model returns `{"groups": [{days, people, site, time}]}`, and the engine expands that to the spec's list of {person, day, site, time?}. For example, "Mon–Fri: Mike, Jose @ Smith" is one short group, not ten entries.
+- **Why.** Per-entry output took 50–90 tokens, about 14 s on 2 threads, and longer lines never finished.
+- **Unchanged.** An empty list still means "cannot read". The T5 guard runs on the expanded entries.
+
+**2026-10-11 · Pasted lines are split before T5.** "Mon: Mike & Jose @ Johnson. Tue: Mike - Smith job" is split where a sentence after ". " or "; " starts with a weekday, so the model reads one day's line at a time. Other periods ("1420 Johnson St. Unit B") are untouched.
+
+**2026-10-11 · Where the model is asked inside reading.**
+- **T4:** asked when a list column's person and site scores tie and there's no header, before the owner is asked. "person" or "site" settles it. Anything else falls through to the owner's question.
+- **T3:** asked for a lone value in a person-grid day cell that reads as neither a site nor a person, with column role `day`.
+  - "status" makes it an absence.
+  - "note" or "empty" drops it to a note.
+  - Anything else leaves it as a site.
+- **T5:** asked for pastes the table reader can't read.
+- **Script-tier fixtures** always run with the model off: they define the rules' behavior. Model-tier fixtures run with the model under test (`spotter-check fixtures --model`).
+
+**2026-10-11 · Prompt examples never repeat benchmark questions.**
+- **What happened.** The first prompts reused the spec's own sample pairs: Micheal/Michael, Mike B/Mike R, 1420/1240 Johnson, Walgreens #3299/#1087, "lunes: Chuy y Memo…". The benchmark set uses the same pairs, so 13 benchmark items were answered inside their own prompts.
+- **The fix.** The examples were rewritten with fresh names and places. `tools/check_prompt_leak.py`, run in CI, fails if any example's names, cell, header + samples, or line matches a benchmark question.
+- **Prompt policy.** The prompts now state the labeling conventions written in `bench/questions/README.md`:
+  - nicknames and Spanish/English forms are the same person;
+  - real names a letter apart are different people;
+  - a lone first name is the same person when no one else has it;
+  - a surname alone in a site column is a customer;
+  - Jr/Sr marks people;
+  - reasons a person is off are status.
+- **Earlier contradictions removed.** T1 said "different initials mean different people", which the model applied to Ted/Edward. T4 called daily hours "ignore" while its own system text said hours are "time".
+
+**2026-10-11 · Benchmark scoring.**
+- **Controls stay in.** The 14 questions the rules settle on their own in the app (Mike B/Mike R, Sr/Jr, store numbers) are scored, because the spec names them as part of the set.
+- **T5 is scored strictly.** Every entry's person, day, site and time must match, and so must "cannot read".
+- **Injection items get their own score.** Per-question records go in the output so MODEL_REPORT.md can report the 21 prompt-injection questions separately.

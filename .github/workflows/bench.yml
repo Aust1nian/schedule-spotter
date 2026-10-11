@@ -1,20 +1,116 @@
 name: bench
 
-# Model benchmarks on the weak-hardware profile. Phase 4 fills this in; the
-# nightly schedule stays off until Austin approves it (spec: CI cost).
+# Model benchmarks on the weak-hardware profile (spec: llama threads capped
+# at 2; Windows under a 4 GB job-object limit). Every variant runs on every
+# runner: the full question set on the benchmark runners, a smoke set on
+# the self-test-only ones. Weight repacking is off for every build
+# (.cargo/config.toml). Nightly, approved by Austin 2026-10-11; also on
+# demand. Results feed MODEL_REPORT.md.
 on:
+  schedule:
+    - cron: "17 7 * * *"
   workflow_dispatch:
-    inputs:
-      variant:
-        description: "Model variant (A, B-E4B, B-E2B, B-E2B-QAT, B-E4B-QAT, C)"
-        required: true
-        default: "C"
 
 permissions:
   contents: read
 
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
-  placeholder:
+  bench:
+    name: ${{ matrix.variant }} on ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, macos-15-intel, windows-2025, macos-26, windows-11-arm]
+        variant: [C, A, B-E2B, B-E2B-QAT, B-E4B, B-E4B-QAT]
+    runs-on: ${{ matrix.runner }}
+    continue-on-error: ${{ matrix.runner == 'windows-11-arm' }}
+    env:
+      FULL: ${{ (matrix.runner == 'macos-15' || matrix.runner == 'macos-15-intel' || matrix.runner == 'windows-2025') && '1' || '0' }}
+    steps:
+      - uses: actions/checkout@v7
+      - run: rustup toolchain install stable --profile minimal && rustup default stable
+        shell: bash
+      - uses: Swatinem/rust-cache@v2.9.2
+        with:
+          key: bench-${{ matrix.runner }}
+      - name: model cache
+        uses: actions/cache@v4
+        with:
+          path: models/*.gguf
+          key: model-${{ matrix.variant }}-${{ hashFiles('models/manifest.json') }}
+      - name: fetch model (pinned revision and SHA-256)
+        run: python3 models/fetch.py ${{ matrix.variant }}
+        shell: bash
+      - run: cargo build --release -p spotter-bench
+        shell: bash
+      - name: model file and checksum
+        id: model
+        shell: bash
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_OUTPUT"
+          import json
+          m = json.load(open("models/manifest.json"))["models"]["${{ matrix.variant }}"]
+          print(f"file=models/{m['file']}")
+          print(f"sha={m['sha256']}")
+          EOF
+      - name: benchmark (unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          extra=(); [ "$FULL" = "1" ] || extra=(--max-per-task 6)
+          target/release/spotter-bench --model "${{ steps.model.outputs.file }}" --sha "${{ steps.model.outputs.sha }}" \
+            --variant ${{ matrix.variant }} --threads 2 --limit 5 "${extra[@]}" --out "bench-${{ matrix.variant }}-${{ matrix.runner }}.json"
+      - name: benchmark (windows, 4 GB job limit)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $extra = if ($env:FULL -eq "1") { "" } else { "--max-per-task 6" }
+          tools/ci/run-limited.ps1 -Exe "target/release/spotter-bench.exe" -LimitMB 4096 `
+            -Arguments "--model ${{ steps.model.outputs.file }} --sha ${{ steps.model.outputs.sha }} --variant ${{ matrix.variant }} --threads 2 --limit 5 $extra" `
+            -Out "bench-${{ matrix.variant }}-${{ matrix.runner }}.json"
+      - uses: astral-sh/setup-uv@v10.3.0
+        if: matrix.runner == 'macos-15'
+      - name: model tier end to end (generator seeds and model-tier fixtures)
+        if: matrix.runner == 'macos-15'
+        shell: bash
+        run: |
+          uv run --project tools/gen spotter-gen --seeds 0-299 --out "$RUNNER_TEMP/gen"
+          target/release/spotter-check generated "$RUNNER_TEMP/gen" --model "${{ steps.model.outputs.file }}" --variant ${{ matrix.variant }} --threads 2 --min-recall 0 \
+            --summary "tier-${{ matrix.variant }}.summary.json" | tail -25 | tee "tier-${{ matrix.variant }}.txt"
+          target/release/spotter-check fixtures fixtures/handmade --model "${{ steps.model.outputs.file }}" --variant ${{ matrix.variant }} --threads 2 \
+            --json "fixtures-${{ matrix.variant }}.json" | tail -20 | tee -a "tier-${{ matrix.variant }}.txt" || true
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: bench-${{ matrix.variant }}-${{ matrix.runner }}
+          path: |
+            bench-*.json
+            tier-*.summary.json
+            tier-*.txt
+            fixtures-*.json
+          if-no-files-found: warn
+
+  report:
+    needs: bench
+    if: always()
     runs-on: ubuntu-24.04
     steps:
-      - run: echo "Benchmarks arrive in Phase 4 (variant ${{ inputs.variant }})."
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with: { path: results }
+      - run: rustup toolchain install stable --profile minimal && rustup default stable
+      - uses: Swatinem/rust-cache@v2.9.2
+      - uses: astral-sh/setup-uv@v10.3.0
+      - name: model-off baseline (same generator seeds)
+        run: |
+          cargo build --release -p spotter-bench --bin spotter-check
+          uv run --project tools/gen spotter-gen --seeds 0-299 --out "$RUNNER_TEMP/gen"
+          target/release/spotter-check generated "$RUNNER_TEMP/gen" --min-recall 0 --summary results/tier-off.summary.json | tail -5
+      - run: python3 tools/model_report.py results > MODEL_REPORT.md && cat MODEL_REPORT.md
+      - uses: actions/upload-artifact@v7
+        with:
+          name: model-report
+          path: MODEL_REPORT.md

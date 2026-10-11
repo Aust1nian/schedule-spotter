@@ -54,10 +54,17 @@ pub struct SheetCtx<'a> {
     pub day_first: bool,
     /// The owner's answers so far.
     pub answers: &'a Answers,
+    /// The model, for cells and columns the rules can't settle (T3, T4).
+    pub tiebreak: &'a dyn crate::matching::Tiebreaker,
 }
 
 impl<'a> SheetCtx<'a> {
-    pub fn new(g: &'a Grid, today: NaiveDate, answers: &'a Answers) -> SheetCtx<'a> {
+    pub fn new(
+        g: &'a Grid,
+        today: NaiveDate,
+        answers: &'a Answers,
+        tiebreak: &'a dyn crate::matching::Tiebreaker,
+    ) -> SheetCtx<'a> {
         let mut anchors = Vec::new();
         for r in 0..g.height() {
             for c in 0..g.width() {
@@ -87,6 +94,7 @@ impl<'a> SheetCtx<'a> {
             roster,
             day_first,
             answers,
+            tiebreak,
         }
     }
 
@@ -297,14 +305,19 @@ impl Candidate {
 
 /// Reads the workbook: picks the sheet and the reading, and asks when that
 /// choice is a coin flip.
-pub fn read_workbook(wb: &Workbook, settings: &Settings, answers: &Answers) -> Reading {
+pub fn read_workbook(
+    wb: &Workbook,
+    settings: &Settings,
+    answers: &Answers,
+    tiebreak: &dyn crate::matching::Tiebreaker,
+) -> Reading {
     let mut per_sheet: Vec<(usize, Candidate)> = Vec::new();
     for (i, sheet) in wb.sheets.iter().enumerate() {
         let g = Grid::new(sheet, i as u16);
         if g.height() == 0 {
             continue;
         }
-        if let Some(best) = read_sheet(&g, settings, answers) {
+        if let Some(best) = read_sheet(&g, settings, answers, tiebreak) {
             per_sheet.push((i, best));
         }
     }
@@ -368,11 +381,16 @@ pub fn readers() -> Vec<(&'static str, Reader)> {
 
 /// The best reading of one sheet, or `None` if nothing in it reads as a
 /// schedule.
-pub fn read_sheet(g: &Grid, settings: &Settings, answers: &Answers) -> Option<Candidate> {
+pub fn read_sheet(
+    g: &Grid,
+    settings: &Settings,
+    answers: &Answers,
+    tiebreak: &dyn crate::matching::Tiebreaker,
+) -> Option<Candidate> {
     let today = settings.today;
-    let ctx = SheetCtx::new(g, today, answers);
+    let ctx = SheetCtx::new(g, today, answers, tiebreak);
     let transposed = g.transposed();
-    let tctx = SheetCtx::new(&transposed, today, answers);
+    let tctx = SheetCtx::new(&transposed, today, answers, tiebreak);
 
     let mut candidates: Vec<Candidate> = Vec::new();
     candidates.extend(crate::layout_calendar::read(&ctx));

@@ -54,27 +54,29 @@ impl Task {
             Task::ColumnRole => answer(&[
                 "person", "site", "date", "day", "time", "status", "note", "ignore",
             ]),
+            // Groups, not one entry per person per day: "Mon-Fri: Mike, Jose
+            // @ Smith" is one short group instead of ten entries, which
+            // keeps the output (and the time) small. Empty means unreadable.
             Task::FreeText => json!({
                 "type": "object",
                 "properties": {
-                    "readable": {"type": "boolean"},
-                    "entries": {
+                    "groups": {
                         "type": "array",
-                        "maxItems": 12,
+                        "maxItems": 6,
                         "items": {
                             "type": "object",
                             "properties": {
-                                "person": {"type": "string", "maxLength": 40},
-                                "day": {"type": "string", "enum": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]},
+                                "days": {"type": "array", "minItems": 1, "maxItems": 7, "items": {"type": "string", "enum": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]}},
+                                "people": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"type": "string", "maxLength": 40}},
                                 "site": {"type": "string", "maxLength": 60},
                                 "time": {"type": ["string", "null"], "pattern": "^[0-2][0-9]:[0-5][0-9]-[0-2][0-9]:[0-5][0-9]$"}
                             },
-                            "required": ["person", "day", "site"],
+                            "required": ["days", "people", "site", "time"],
                             "additionalProperties": false
                         }
                     }
                 },
-                "required": ["readable", "entries"],
+                "required": ["groups"],
                 "additionalProperties": false
             }),
         }
@@ -82,7 +84,7 @@ impl Task {
 
     pub fn max_tokens(self) -> usize {
         match self {
-            Task::FreeText => 320,
+            Task::FreeText => 200,
             _ => 24,
         }
     }

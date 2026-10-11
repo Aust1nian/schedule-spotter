@@ -815,7 +815,8 @@ fn read_day_cell(
         };
         match kind {
             Kind::People => {
-                let parsed = cells::parse_cell(t, Expect::Sites);
+                let mut parsed = cells::parse_cell(t, Expect::Sites);
+                cell_meaning(ctx, &mut parsed, t, r, day);
                 person_cell(
                     sink,
                     &ctx.crews,
@@ -863,6 +864,40 @@ fn read_day_cell(
 /// Weeks one under another are stacked; separate week blocks in one header
 /// row are side by side. One continuous run of dates is a single schedule,
 /// however many weeks it spans.
+/// A lone value in a person's day that reads as neither a site nor a
+/// person ("dr appt", "school"): the model says what it is (T3). A status
+/// becomes `out`; a note or nothing is dropped; anything else stays a site.
+fn cell_meaning(ctx: &SheetCtx, parsed: &mut cells::Parsed, text: &str, r: usize, day: &DaySpan) {
+    if !ctx.tiebreak.available() || parsed.items.len() != 1 || parsed.status.is_some() {
+        return;
+    }
+    let value = parsed.items[0].text.clone();
+    if site_score(&value) >= 0.3 || person_score(&value) >= 0.5 {
+        return;
+    }
+    let neighbors: Vec<String> = (0..ctx.g.width())
+        .filter(|c| !day.cols.iter().any(|(dc, _)| dc == c))
+        .map(|c| ctx.g.text(r, c).to_string())
+        .filter(|t| !t.is_empty())
+        .take(3)
+        .collect();
+    match ctx
+        .tiebreak
+        .cell_meaning(text, "day", &neighbors)
+        .as_deref()
+    {
+        Some("status") => {
+            parsed.items.clear();
+            parsed.status = Some((crate::model::Status::Out, None));
+        }
+        Some("note") | Some("empty") => {
+            let item = parsed.items.remove(0);
+            parsed.note = Some(item.text);
+        }
+        _ => {}
+    }
+}
+
 fn arrangement_of(runs: &[Run]) -> Arrangement {
     let rows: std::collections::BTreeSet<usize> = runs.iter().map(|r| r.row).collect();
     if runs.len() > rows.len() {

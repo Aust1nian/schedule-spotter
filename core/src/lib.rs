@@ -7,6 +7,7 @@ pub mod cells;
 pub mod classify;
 pub mod dates;
 pub mod example;
+mod freetext;
 pub mod grid;
 pub mod identity;
 pub mod layout;
@@ -29,7 +30,7 @@ pub use settings::{Settings, Workdays};
 
 /// Stages 1–6: reads `input` into assignments, or says why it can't.
 pub fn read_schedule(input: &Input, settings: &Settings) -> Result<Reading, ReadError> {
-    read_schedule_with(input, settings, &Answers::default())
+    read_schedule_with(input, settings, &Answers::default(), &NoModel)
 }
 
 /// Stages 1–6 with the owner's answers about sheets, layouts, dates,
@@ -38,14 +39,15 @@ pub fn read_schedule_with(
     input: &Input,
     settings: &Settings,
     answers: &Answers,
+    tiebreak: &dyn Tiebreaker,
 ) -> Result<Reading, ReadError> {
     let workbook = read::read(input)?;
-    let mut reading = layout::read_workbook(&workbook, settings, answers);
+    let reading = layout::read_workbook(&workbook, settings, answers, tiebreak);
     if reading.assignments.is_empty() && reading.grid_jobs.is_empty() {
-        if matches!(input, Input::Paste { .. }) {
-            // Free-form text needs the model (task T5); without it, ask for a table.
-            reading.questions.push(Question::PasteAsTable);
-            return Ok(reading);
+        if let Input::Paste { text } = input {
+            // Free-form text: the model reads it line by line (task T5);
+            // without one, the owner is asked for a table.
+            return Ok(freetext::read(text, settings, tiebreak));
         }
         return Err(ReadError::NotASchedule);
     }
@@ -67,7 +69,7 @@ pub fn analyze_with(
     answers: &Answers,
     tiebreak: &dyn Tiebreaker,
 ) -> Report {
-    match read_schedule_with(input, settings, answers) {
+    match read_schedule_with(input, settings, answers, tiebreak) {
         Ok(reading) => {
             let matching = matching::match_entities(&reading, answers, tiebreak);
             let (flags, info) = analyze::analyze(&reading, settings, &matching);

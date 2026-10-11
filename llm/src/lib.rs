@@ -18,12 +18,15 @@ use std::time::{Duration, Instant};
 
 use llama_cpp_2::context::LlamaContext;
 use llama_cpp_2::context::params::LlamaContextParams;
+use llama_cpp_2::context::session::{LlamaStateSeqFlags, SeqState};
 use llama_cpp_2::llama_backend::LlamaBackend;
 use llama_cpp_2::llama_batch::LlamaBatch;
 use llama_cpp_2::model::params::LlamaModelParams;
 use llama_cpp_2::model::{LlamaChatMessage, LlamaChatTemplate, LlamaModel};
 use llama_cpp_2::sampling::LlamaSampler;
 use llama_cpp_2::token::LlamaToken;
+use llama_cpp_2::token::data::LlamaTokenData;
+use llama_cpp_2::token::data_array::LlamaTokenDataArray;
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use spotter_core::matching::{TextEntry, Tiebreaker, Verdict};
@@ -48,6 +51,9 @@ pub const CALL_LIMIT: Duration = Duration::from_secs(5);
 pub enum LoadError {
     Missing,
     HashMismatch,
+    /// An Intel Mac without AVX2 (the 2013 Mac Pro): the app runs with the
+    /// model off.
+    UnsupportedCpu,
     Llama(String),
 }
 
@@ -56,14 +62,97 @@ impl std::fmt::Display for LoadError {
         match self {
             LoadError::Missing => write!(f, "model file not found"),
             LoadError::HashMismatch => write!(f, "model file doesn't match its checksum"),
+            LoadError::UnsupportedCpu => write!(f, "this Mac's processor can't run the model"),
             LoadError::Llama(e) => write!(f, "model failed to load: {e}"),
         }
+    }
+}
+
+/// Greedy choice under the grammar: the highest-logit token the grammar
+/// allows. Checks the 40 likeliest tokens first and the whole vocabulary
+/// only when none of them fits; the result is the same either way, and
+/// skipping the full check saves about a third of generation time.
+fn pick(grammar: &mut LlamaSampler, logits: &[f32]) -> Option<LlamaToken> {
+    const TOP: usize = 40;
+    let best = |data: Vec<LlamaTokenData>, grammar: &mut LlamaSampler| {
+        let mut arr = LlamaTokenDataArray::new(data, false);
+        grammar.apply(&mut arr);
+        arr.data
+            .iter()
+            .filter(|d| d.logit().is_finite())
+            .max_by(|a, b| a.logit().total_cmp(&b.logit()))
+            .map(LlamaTokenData::id)
+    };
+    let mut ids: Vec<usize> = (0..logits.len()).collect();
+    let top = TOP.min(ids.len());
+    ids.select_nth_unstable_by(top.saturating_sub(1), |&a, &b| {
+        logits[b].total_cmp(&logits[a])
+    });
+    let shortlist = ids[..top]
+        .iter()
+        .map(|&i| LlamaTokenData::new(LlamaToken(i as i32), logits[i], 0.0))
+        .collect();
+    let token = best(shortlist, grammar).or_else(|| {
+        let all = logits
+            .iter()
+            .enumerate()
+            .map(|(i, &l)| LlamaTokenData::new(LlamaToken(i as i32), l, 0.0))
+            .collect();
+        best(all, grammar)
+    })?;
+    grammar.accept(token);
+    Some(token)
+}
+
+/// T5's groups as one entry per person per day, in the line's order.
+fn expand_groups(v: &Value) -> Vec<TextEntry> {
+    let mut out = Vec::new();
+    for g in v["groups"].as_array().into_iter().flatten() {
+        let (Some(site), Some(days), Some(people)) = (
+            g["site"].as_str(),
+            g["days"].as_array(),
+            g["people"].as_array(),
+        ) else {
+            continue;
+        };
+        for day in days.iter().filter_map(Value::as_str) {
+            for person in people.iter().filter_map(Value::as_str) {
+                out.push(TextEntry {
+                    person: person.to_string(),
+                    day: day.to_string(),
+                    site: site.to_string(),
+                    time: g["time"].as_str().map(str::to_string),
+                });
+            }
+        }
+    }
+    out
+}
+
+/// Where the CPU modules (`ggml-cpu-*`) live: beside the program when
+/// installed, else the build's own directory (development).
+#[cfg(all(target_arch = "x86_64", target_os = "windows"))]
+fn load_cpu_modules() {
+    let beside = std::env::current_exe()
+        .ok()
+        .and_then(|exe| exe.parent().map(Path::to_path_buf))
+        .filter(|dir| {
+            std::fs::read_dir(dir).is_ok_and(|mut entries| {
+                entries
+                    .any(|e| e.is_ok_and(|e| e.file_name().to_string_lossy().contains("ggml-cpu-")))
+            })
+        });
+    match beside {
+        Some(dir) => llama_cpp_2::llama_backend::load_backends_from_path(&dir),
+        None => llama_cpp_2::llama_backend::load_backends(),
     }
 }
 
 fn backend() -> &'static LlamaBackend {
     static BACKEND: OnceLock<LlamaBackend> = OnceLock::new();
     BACKEND.get_or_init(|| {
+        #[cfg(all(target_arch = "x86_64", target_os = "windows"))]
+        load_cpu_modules();
         let mut b = LlamaBackend::init().expect("llama backend initializes once");
         b.void_logs();
         b
@@ -102,6 +191,9 @@ struct Inner {
     cached: Vec<LlamaToken>,
     /// Answers already given, by task and question.
     answers: HashMap<String, Option<Value>>,
+    /// Each task's fixed prefix (instructions and examples), evaluated once
+    /// and restored when the task comes up again.
+    prefixes: HashMap<Task, (Vec<LlamaToken>, SeqState)>,
 }
 
 /// A loaded model, ready to answer tiebreaker questions.
@@ -132,6 +224,12 @@ impl Engine {
         threads: i32,
     ) -> Result<Engine, LoadError> {
         let started = Instant::now();
+        #[cfg(all(target_arch = "x86_64", target_os = "macos"))]
+        if !std::arch::is_x86_feature_detected!("avx2")
+            || !std::arch::is_x86_feature_detected!("fma")
+        {
+            return Err(LoadError::UnsupportedCpu);
+        }
         if !path.exists() {
             return Err(LoadError::Missing);
         }
@@ -174,6 +272,7 @@ impl Engine {
                 ctx,
                 cached: Vec::new(),
                 answers: HashMap::new(),
+                prefixes: HashMap::new(),
             }),
             limit: CALL_LIMIT,
             load_secs: started.elapsed().as_secs_f64(),
@@ -198,8 +297,23 @@ impl Engine {
         answer
     }
 
-    fn complete(&self, inner: &mut Inner, task: Task, question: &Value) -> Option<Value> {
+    /// Evaluates the tasks' fixed prefixes ahead of time so the first
+    /// question of each task is as fast as the rest. Run on the loading
+    /// thread after `load`, in the order questions come (reading: T4, T3;
+    /// matching: T1, T2; T5 only when text is pasted). Returns seconds.
+    pub fn warm(&self, tasks: &[Task]) -> f64 {
         let started = Instant::now();
+        for &task in tasks {
+            // One task at a time, so a question can get in between.
+            if let Ok(mut inner) = self.inner.lock() {
+                self.prefix(&mut inner, task);
+            }
+        }
+        started.elapsed().as_secs_f64()
+    }
+
+    /// The whole prompt for one question, rendered with the model's template.
+    fn render(&self, task: Task, question: &str) -> Option<String> {
         let p = self.prompts.get(task);
         let mut chat = vec![LlamaChatMessage::new("system".into(), p.system.clone()).ok()?];
         for (user, assistant) in &p.examples {
@@ -207,38 +321,38 @@ impl Engine {
             chat.push(LlamaChatMessage::new("assistant".into(), assistant.clone()).ok()?);
         }
         chat.push(LlamaChatMessage::new("user".into(), question.to_string()).ok()?);
-        let prompt = match self.model.apply_chat_template(&self.template, &chat, true) {
-            Ok(p) => p,
+        match self.model.apply_chat_template(&self.template, &chat, true) {
+            Ok(p) => Some(p),
             // llama.cpp's built-in template engine doesn't know every new
             // format yet; render the ones we've verified ourselves.
-            Err(e) => match render_known(
-                &self.template_text,
-                &p.system,
-                &p.examples,
-                &question.to_string(),
-            ) {
-                Some(p) => p,
-                None => {
+            Err(e) => {
+                let rendered = render_known(&self.template_text, &p.system, &p.examples, question);
+                if rendered.is_none() {
                     debug(&format!("chat template failed: {e}"));
-                    return None;
                 }
-            },
-        };
+                rendered
+            }
+        }
+    }
+
+    fn tokenize(&self, text: &str) -> Vec<LlamaToken> {
         let vocab = self.model.vocab();
-        let mut tokens = vocab.tokenize(prompt.as_bytes(), false, true);
+        let mut tokens = vocab.tokenize(text.as_bytes(), false, true);
         if vocab.should_add_bos() && tokens.first() != Some(&vocab.bos()) {
             tokens.insert(0, vocab.bos());
         }
-        if tokens.len() + task.max_tokens() >= N_CTX as usize {
-            return None;
-        }
+        tokens
+    }
 
-        // Reuse the cached prefix (system prompt and examples) when the task
-        // repeats; keep at least one token to evaluate for fresh logits.
+    /// Evaluates `tokens` from what's already cached on; logits only for
+    /// the last token. Returns the batch index holding those logits.
+    fn eval(&self, inner: &mut Inner, tokens: &[LlamaToken]) -> Option<i32> {
+        // Reuse the cached prefix; keep at least one token to evaluate for
+        // fresh logits.
         let common = inner
             .cached
             .iter()
-            .zip(&tokens)
+            .zip(tokens)
             .take_while(|(a, b)| a == b)
             .count()
             .min(tokens.len() - 1);
@@ -247,7 +361,6 @@ impl Engine {
             .clear_kv_cache_seq(Some(0), Some(common as u32), None)
             .ok()?;
         inner.cached.truncate(common);
-        // Prompt in chunks of the batch size; logits only for the last token.
         let mut batch = LlamaBatch::new(512, 1);
         let fresh = &tokens[common..];
         for (n, chunk) in fresh.chunks(512).enumerate() {
@@ -260,20 +373,72 @@ impl Engine {
             }
             if let Err(e) = inner.ctx.decode(&mut batch) {
                 debug(&format!("decode failed: {e}"));
+                inner.cached.clear();
                 return None;
             }
         }
         inner.cached.extend_from_slice(fresh);
+        Some(batch.n_tokens() - 1)
+    }
 
-        let grammar = LlamaSampler::grammar(self.model, &self.grammars[&task], "root").ok()?;
-        let mut sampler = LlamaSampler::chain_simple([grammar, LlamaSampler::greedy()]);
+    /// The task's fixed prefix in the cache: restored if saved, else
+    /// evaluated and saved. Returns its tokens.
+    fn prefix(&self, inner: &mut Inner, task: Task) -> Option<Vec<LlamaToken>> {
+        if let Some((tokens, state)) = inner.prefixes.get(&task) {
+            let tokens = tokens.clone();
+            if !inner.cached.starts_with(&tokens) {
+                inner.ctx.clear_kv_cache_seq(Some(0), None, None).ok()?;
+                let state = state.clone();
+                inner.ctx.state_seq_set(&state, 0).ok()?;
+                inner.cached = tokens.clone();
+            }
+            return Some(tokens);
+        }
+        // The prefix is what two different questions share.
+        let a = self.tokenize(&self.render(task, "{}")?);
+        let b = self.tokenize(&self.render(task, "[]")?);
+        let n = a.iter().zip(&b).take_while(|(x, y)| x == y).count();
+        let tokens = a[..n].to_vec();
+        self.eval(inner, &tokens)?;
+        // eval leaves the last token for fresh logits only when it was
+        // already cached; the full prefix is in the cache now.
+        let state = inner
+            .ctx
+            .state_seq_get(0, LlamaStateSeqFlags::default())
+            .ok()?;
+        inner.prefixes.insert(task, (tokens.clone(), state));
+        Some(tokens)
+    }
+
+    fn complete(&self, inner: &mut Inner, task: Task, question: &Value) -> Option<Value> {
+        let started = Instant::now();
+        let prompt = self.render(task, &question.to_string())?;
+        let tokens = self.tokenize(&prompt);
+        if tokens.len() + task.max_tokens() >= N_CTX as usize {
+            return None;
+        }
+        if let Some(prefix) = self.prefix(inner, task)
+            && !tokens.starts_with(&prefix)
+        {
+            debug(&format!("{task:?}: prompt doesn't start with its prefix"));
+        }
+        let mut idx = self.eval(inner, &tokens)?;
+        let prompt_done = started.elapsed();
+        let fresh_n = tokens.len();
+        let vocab = self.model.vocab();
+
+        let mut grammar = LlamaSampler::grammar(self.model, &self.grammars[&task], "root").ok()?;
         let mut out: Vec<u8> = Vec::new();
-        let mut idx = batch.n_tokens() - 1;
+        let mut batch = LlamaBatch::new(1, 1);
+        let mut sample_time = Duration::ZERO;
         for pos in (tokens.len() as i32..).take(task.max_tokens()) {
             if started.elapsed() > self.limit {
+                debug(&format!("{task:?} over the time limit: {question}"));
                 return None;
             }
-            let token = sampler.sample(&inner.ctx, idx);
+            let t0 = Instant::now();
+            let token = pick(&mut grammar, inner.ctx.get_logits_ith(idx))?;
+            sample_time += t0.elapsed();
             if vocab.is_eog(token) {
                 break;
             }
@@ -282,7 +447,13 @@ impl Engine {
                 && let Ok(v) = serde_json::from_str::<Value>(text.trim())
                 && v.is_object()
             {
-                debug(&format!("{task:?} {question} -> {v}"));
+                debug(&format!(
+                    "{task:?} prompt {fresh_n} tok {:.2}s, output {} tok {:.2}s (sampling {:.2}s): {question} -> {v}",
+                    prompt_done.as_secs_f64(),
+                    pos - tokens.len() as i32 + 1,
+                    (started.elapsed() - prompt_done).as_secs_f64(),
+                    sample_time.as_secs_f64()
+                ));
                 return Some(v);
             }
             batch.clear();
@@ -387,10 +558,7 @@ impl Tiebreaker for Engine {
     fn free_text(&self, line: &str, roster: &[String], sites: &[String]) -> Option<Vec<TextEntry>> {
         let q = json!({"line": line, "known_people": roster, "known_sites": sites});
         let v = self.ask(Task::FreeText, &q)?;
-        if v["readable"].as_bool() != Some(true) {
-            return None;
-        }
-        let entries: Vec<TextEntry> = serde_json::from_value(v["entries"].clone()).ok()?;
+        let entries = expand_groups(&v);
         // T5 guard: every person and site must appear in the line itself.
         let line_key = norm(line);
         let ok = entries.iter().all(|e| {
@@ -403,5 +571,53 @@ impl Tiebreaker for Engine {
 
     fn available(&self) -> bool {
         true
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn groups_expand_to_one_entry_per_person_per_day() {
+        let v = json!({"groups": [
+            {"days": ["mon", "tue"], "people": ["Tony", "Sam"], "site": "Birch", "time": null},
+            {"days": ["wed"], "people": ["Kyle"], "site": "Hale job", "time": "07:00-15:00"}
+        ]});
+        let got: Vec<String> = expand_groups(&v)
+            .iter()
+            .map(|e| format!("{} {} {} {:?}", e.day, e.person, e.site, e.time))
+            .collect();
+        assert_eq!(
+            got,
+            [
+                "mon Tony Birch None",
+                "mon Sam Birch None",
+                "tue Tony Birch None",
+                "tue Sam Birch None",
+                "wed Kyle Hale job Some(\"07:00-15:00\")"
+            ]
+        );
+        assert!(expand_groups(&json!({"groups": []})).is_empty());
+    }
+
+    #[test]
+    fn every_prompt_parses_and_stays_small() {
+        for v in ["A", "B-E2B", "C"] {
+            let prompts = prompts::Prompts::for_variant(v);
+            for task in Task::ALL {
+                let p = prompts.get(task);
+                assert!(
+                    (4..=6).contains(&p.examples.len()),
+                    "{v} {task:?}: 4-6 examples"
+                );
+                let chars: usize = p.examples.iter().map(|(u, a)| u.len() + a.len()).sum();
+                // Spec: examples under 600 tokens; ~3.5 characters a token.
+                assert!(
+                    chars < 600 * 3,
+                    "{v} {task:?}: examples too long ({chars} chars)"
+                );
+            }
+        }
     }
 }

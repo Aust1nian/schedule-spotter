@@ -92,7 +92,7 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
         .map(|c| column_stats(ctx, c, &data_rows))
         .collect();
     let mut sink = Sink::default();
-    let Some(roles) = assign_roles(ctx, header, &stats, &mut sink) else {
+    let Some(roles) = assign_roles(ctx, header, &stats, &data_rows, &mut sink) else {
         return Vec::new();
     };
 
@@ -474,6 +474,7 @@ fn assign_roles(
     ctx: &SheetCtx,
     header: Option<usize>,
     stats: &[Stats],
+    data_rows: &[usize],
     sink: &mut Sink,
 ) -> Option<Vec<Role>> {
     let g = ctx.g;
@@ -606,12 +607,36 @@ fn assign_roles(
                 continue;
             }
         }
+        // Scores too close to call with no header: the model first (T4),
+        // then the owner.
+        let tied = header.is_none() && (p - st).abs() < 0.08 && p > 0.3;
+        let mut settled = false;
+        if tied {
+            let samples: Vec<String> = data_rows
+                .iter()
+                .map(|&r| g.text(r, c).to_string())
+                .filter(|t| !t.is_empty())
+                .take(8)
+                .collect();
+            match ctx.tiebreak.column_role(&header_text, &samples).as_deref() {
+                Some("person") => {
+                    p = 9.0;
+                    settled = true;
+                }
+                Some("site") => {
+                    st = 9.0;
+                    p = 0.0;
+                    settled = true;
+                }
+                _ => {}
+            }
+        }
         if p > st && p >= 0.45 {
             person_cols.push(c);
         } else if st >= 0.35 {
             site_cands.push((st - p, c));
         }
-        if header.is_none() && (p - st).abs() < 0.08 && p > 0.3 {
+        if tied && !settled {
             let options = vec![
                 Role::Person.label().to_string(),
                 Role::Site.label().to_string(),

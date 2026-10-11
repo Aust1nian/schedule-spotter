@@ -35,15 +35,32 @@ fn peak_rss_mb() -> f64 {
             }
         }
     }
+    #[cfg(windows)]
+    {
+        use windows_sys::Win32::System::ProcessStatus::{
+            GetProcessMemoryInfo, PROCESS_MEMORY_COUNTERS,
+        };
+        use windows_sys::Win32::System::Threading::GetCurrentProcess;
+        let mut c: PROCESS_MEMORY_COUNTERS = unsafe { std::mem::zeroed() };
+        c.cb = std::mem::size_of::<PROCESS_MEMORY_COUNTERS>() as u32;
+        // SAFETY: pseudo-handle for this process and a correctly sized struct.
+        if unsafe { GetProcessMemoryInfo(GetCurrentProcess(), &mut c, c.cb) } != 0 {
+            return c.PeakWorkingSetSize as f64 / 1048576.0;
+        }
+    }
+    #[allow(unreachable_code)]
     0.0
 }
 
+/// The labeled questions. Controls the rules settle on their own in the app
+/// (`kind: control_never_asked`, e.g. Mike B / Mike R) stay in: the spec
+/// names them as part of the set.
 fn read_jsonl(path: &Path) -> Vec<Value> {
     std::fs::read_to_string(path)
         .unwrap_or_default()
         .lines()
         .filter(|l| !l.trim().is_empty())
-        .filter_map(|l| serde_json::from_str(l).ok())
+        .filter_map(|l| serde_json::from_str::<Value>(l).ok())
         .collect()
 }
 
@@ -66,9 +83,18 @@ struct Tally {
     different_items: usize,
     latencies: Vec<f64>,
     wrong: Vec<String>,
+    /// One record per question: id, kind, and right / wrong / unsure.
+    records: Vec<Value>,
 }
 
 impl Tally {
+    fn record(&mut self, q: &Value, outcome: &str, said: &str) {
+        self.records.push(json!({
+            "id": q["id"], "kind": q["kind"], "outcome": outcome, "said": said,
+            "latency_s": self.latencies.last().copied().unwrap_or(0.0),
+        }));
+    }
+
     fn json(&self) -> Value {
         let mut l = self.latencies.clone();
         l.sort_by(f64::total_cmp);
@@ -120,6 +146,9 @@ fn main() {
         }
     };
     let load_s = engine.load_secs;
+    // As in the app: task prefixes are evaluated on the loading thread
+    // before the first question.
+    let warm_s = engine.warm(&spotter_llm::Task::ALL);
 
     let mut tallies: Vec<(&str, Tally)> = Vec::new();
     let take = |v: Vec<Value>| -> Vec<Value> {
@@ -154,7 +183,10 @@ fn main() {
                 t.different_items += 1;
             }
             match v {
-                Verdict::Unsure => t.unsure += 1,
+                Verdict::Unsure => {
+                    t.unsure += 1;
+                    t.record(&q, "unsure", "unsure");
+                }
                 v => {
                     t.answered += 1;
                     let said = if v == Verdict::Same {
@@ -162,6 +194,7 @@ fn main() {
                     } else {
                         "different"
                     };
+                    t.record(&q, if said == label { "right" } else { "wrong" }, said);
                     if said == label {
                         t.correct += 1;
                     } else {
@@ -198,10 +231,15 @@ fn main() {
             t.latencies.push(start.elapsed().as_secs_f64());
             t.items += 1;
             match got {
-                None => t.unsure += 1,
+                None => {
+                    t.unsure += 1;
+                    t.record(&q, "unsure", "unsure");
+                }
                 Some(g) => {
                     t.answered += 1;
-                    if Some(g.as_str()) == q["label"].as_str() {
+                    let right = Some(g.as_str()) == q["label"].as_str();
+                    t.record(&q, if right { "right" } else { "wrong" }, &g);
+                    if right {
                         t.correct += 1;
                     } else {
                         t.wrong.push(format!(
@@ -224,8 +262,14 @@ fn main() {
             let got = engine.free_text(line, &strings(&q["roster"]), &strings(&q["sites"]));
             t.latencies.push(start.elapsed().as_secs_f64());
             t.items += 1;
-            let canon = |person: &str, day: &str, site: &str| {
-                format!("{}|{}|{}", norm(person), day, norm(site))
+            let canon = |person: &str, day: &str, site: &str, time: Option<&str>| {
+                format!(
+                    "{}|{}|{}|{}",
+                    norm(person),
+                    day,
+                    norm(site),
+                    time.unwrap_or("-")
+                )
             };
             let expected: Option<Vec<String>> = q["label"].as_array().map(|a| {
                 let mut v: Vec<String> = a
@@ -235,6 +279,7 @@ fn main() {
                             e["person"].as_str().unwrap_or(""),
                             e["day"].as_str().unwrap_or(""),
                             e["site"].as_str().unwrap_or(""),
+                            e["time"].as_str(),
                         )
                     })
                     .collect();
@@ -244,13 +289,21 @@ fn main() {
             let actual: Option<Vec<String>> = got.map(|es| {
                 let mut v: Vec<String> = es
                     .iter()
-                    .map(|e| canon(&e.person, &e.day, &e.site))
+                    .map(|e| canon(&e.person, &e.day, &e.site, e.time.as_deref()))
                     .collect();
                 v.sort();
                 v
             });
             // "cannot read" answered correctly counts as answered and right.
             t.answered += 1;
+            let said = actual
+                .as_ref()
+                .map_or("cannot read".to_string(), |v| v.join("; "));
+            t.record(
+                &q,
+                if expected == actual { "right" } else { "wrong" },
+                &said,
+            );
             if expected == actual {
                 t.correct += 1;
             } else {
@@ -286,6 +339,7 @@ fn main() {
         "os": std::env::consts::OS,
         "arch": std::env::consts::ARCH,
         "load_s": load_s,
+        "warm_s": warm_s,
         "peak_rss_mb": peak_rss_mb(),
         "rss_before_load_mb": rss_before,
         "overall": {
@@ -297,6 +351,7 @@ fn main() {
             "latency_p95_s": pct(0.95),
         },
         "tasks": tallies.iter().map(|(n, t)| (n.to_string(), t.json())).collect::<serde_json::Map<String, Value>>(),
+        "records": tallies.iter().flat_map(|(_, t)| t.records.iter().cloned()).collect::<Vec<_>>(),
     });
     let text = serde_json::to_string_pretty(&result).expect("json");
     println!("{text}");

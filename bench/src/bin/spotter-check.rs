@@ -15,11 +15,53 @@ use spotter_core::model::{Assignment, Status};
 use spotter_core::settings::Workdays;
 use spotter_core::times::fmt;
 use spotter_core::{
-    Answer, Answers, Input, NoModel, Question, Report, Settings, analyze, analyze_with,
+    Answer, Answers, Input, NoModel, Question, Report, Settings, Tiebreaker, analyze_with,
 };
+
+/// The model under test (`--model PATH --variant X`), if any.
+static MODEL: std::sync::OnceLock<Option<spotter_llm::Engine>> = std::sync::OnceLock::new();
+
+fn model() -> Option<&'static spotter_llm::Engine> {
+    MODEL.get().and_then(Option::as_ref)
+}
+
+/// The tiebreaker runs use: the model under test, or none.
+fn tiebreak() -> &'static dyn Tiebreaker {
+    match model() {
+        Some(m) => m,
+        None => &NoModel,
+    }
+}
+
+fn analyze(input: &Input, settings: &Settings) -> Report {
+    analyze_with(input, settings, &Answers::default(), tiebreak())
+}
 
 fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
+    let engine = flag(&args, "--model").map(|path| {
+        let variant = flag(&args, "--variant").unwrap_or_else(|| "C".into());
+        let threads = flag(&args, "--threads")
+            .and_then(|t| t.parse().ok())
+            .unwrap_or_else(spotter_llm::default_threads);
+        match spotter_llm::Engine::load(
+            Path::new(&path),
+            flag(&args, "--sha").as_deref(),
+            &variant,
+            threads,
+        ) {
+            Ok(e) => e,
+            Err(e) => {
+                eprintln!("model {path}: {e}");
+                std::process::exit(2);
+            }
+        }
+    });
+    // As in the app: task prefixes are evaluated right after loading.
+    if let Some(e) = &engine {
+        e.warm(&spotter_llm::Task::ALL);
+    }
+    let _ = MODEL.set(engine);
     let code = match args.first().map(String::as_str) {
         Some("run") => cmd_run(&args[1..]),
         Some("fixtures") => cmd_fixtures(&args[1..]),
@@ -351,7 +393,13 @@ fn check_fixture(dir: &Path) -> Option<Outcome> {
     let settings = settings_from(&expected);
     let input = load_input(&dir.join(input_name), paste);
     let started = Instant::now();
-    let report = analyze(&input, &settings);
+    // Script tier always runs with the model off: it defines the rules'
+    // behavior. Model tier runs with the model under test.
+    let report = if tier == "model" {
+        analyze(&input, &settings)
+    } else {
+        analyze_with(&input, &settings, &Answers::default(), &NoModel)
+    };
     out.millis = started.elapsed().as_secs_f64() * 1000.0;
     let questions: Vec<Value> = report
         .questions
@@ -359,9 +407,9 @@ fn check_fixture(dir: &Path) -> Option<Outcome> {
         .map(|q| serde_json::to_value(q).expect("json"))
         .collect();
 
-    // A model-tier fixture with the model off: only the questions it must
-    // fall back to are checked.
-    if tier == "model" {
+    // A model-tier fixture needs the model; without one it's skipped.
+    let model_run = tier == "model" && model().is_some();
+    if tier == "model" && !model_run {
         out.skipped = true;
         return Some(out);
     }
@@ -440,6 +488,7 @@ fn check_fixture(dir: &Path) -> Option<Outcome> {
     }
     for spec in expected
         .get("ask")
+        .filter(|_| !model_run)
         .and_then(Value::as_array)
         .into_iter()
         .flatten()
@@ -477,7 +526,12 @@ fn check_fixture(dir: &Path) -> Option<Outcome> {
     // The owner answers; results update.
     if let Some(given) = expected.get("answers").and_then(Value::as_array) {
         let answers = answers_from(given, &report.questions);
-        let after = analyze_with(&input, &settings, &answers, &NoModel);
+        let after = analyze_with(
+            &input,
+            &settings,
+            &answers,
+            if model_run { tiebreak() } else { &NoModel },
+        );
         let target = &expected["after_answers"];
         if let Some(exp) = target.get("assignments").and_then(Value::as_array) {
             let e: Vec<String> = exp.iter().map(tuple).collect();
@@ -789,7 +843,7 @@ fn cmd_generated(args: &[String]) -> i32 {
         let after = if oracle.is_empty() {
             report.clone()
         } else {
-            analyze_with(&input, &settings, &oracle, &NoModel)
+            analyze_with(&input, &settings, &oracle, tiebreak())
         };
         let after_flags: Vec<String> = after
             .flags
@@ -952,9 +1006,11 @@ fn cmd_generated(args: &[String]) -> i32 {
         );
     }
     let files = question_counts.len().max(1) as f64;
+    let questions_mean = question_counts.iter().sum::<usize>() as f64 / files;
     println!(
-        "questions per file (model off): mean {:.2}, files with none {}/{}, same-person/site questions {match_questions}",
-        question_counts.iter().sum::<usize>() as f64 / files,
+        "questions per file (model {}): mean {:.2}, files with none {}/{}, same-person/site questions {match_questions}",
+        if model().is_some() { "on" } else { "off" },
+        questions_mean,
         question_counts.iter().filter(|n| **n == 0).count(),
         question_counts.len()
     );
@@ -968,6 +1024,20 @@ fn cmd_generated(args: &[String]) -> i32 {
     if let Some(path) = flag(args, "--report") {
         std::fs::write(path, serde_json::to_string(&report_rows).expect("json"))
             .expect("write --report");
+    }
+    if let Some(path) = flag(args, "--summary") {
+        let summary = json!({
+            "model": model().is_some(),
+            "files": question_counts.len(),
+            "questions_per_file": questions_mean,
+            "files_without_questions": question_counts.iter().filter(|n| **n == 0).count(),
+            "match_questions": match_questions,
+            "merges": merges_total,
+            "false_merges": false_merges.len(),
+            "clean_with_red_flag": clean_with_red.len(),
+        });
+        std::fs::write(path, serde_json::to_string_pretty(&summary).expect("json"))
+            .expect("write --summary");
     }
     times.sort_by(f64::total_cmp);
     let p95 = times
