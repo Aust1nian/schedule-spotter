@@ -24,7 +24,9 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def decode(path: Path):
     b = path.read_bytes()
-    if path.suffix in (".xlsx", ".ods", ".docx"):
+    if path.suffix in (".numbers", ".xls", ".xlsb"):
+        return None, "binary", ""  # no plain text to search; the build script is the check
+    if path.suffix in (".xlsx", ".xlsm", ".ods", ".docx"):
         with zipfile.ZipFile(path) as z:
             xml = " ".join(z.read(n).decode("utf-8") for n in z.namelist() if n.endswith(".xml"))
         # paragraph/cell boundaries become spaces; entity-decode the text
@@ -53,8 +55,11 @@ def main():
     for folder in sorted(p for p in ROOT.iterdir() if p.is_dir() and re.match(r"^[A-N]\d\d-", p.name)):
         exp = json.loads((folder / "expected.json").read_text(encoding="utf-8"))
         text, enc, eol = decode(folder / exp["input"])
-        hay = " ".join(text.replace('""', '"').split())  # undo CSV quote doubling, collapse whitespace
         errs = []
+        if text is None:
+            print(f"skip {folder.name:45s} {exp['input']:10s} {enc:14s} (binary format, not text-checked)")
+            continue
+        hay = " ".join(text.replace('""', '"').split())  # undo CSV quote doubling, collapse whitespace
         blocks = [exp] + ([exp["after_answers"]] if "after_answers" in exp else [])
         for blk in blocks:
             assigns = blk.get("assignments", [])

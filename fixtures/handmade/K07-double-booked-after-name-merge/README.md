@@ -1,0 +1,1 @@
+'Mike B' at Smith remodel on Tuesday is Michael Baker (nickname Mike + initial B), who is at 1420 Johnson St that day: a double-booking that only shows once the names merge, flagged as 'Michael Baker'.

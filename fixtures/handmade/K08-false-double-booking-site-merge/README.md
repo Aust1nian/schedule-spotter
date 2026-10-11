@@ -1,0 +1,1 @@
+Dave Kim is listed at '1420 Johnson St' and, in a row added at the bottom, '1420 Johnson Street' on Wednesday: St/Street with the same house number is one site, so it's a duplicate entry (info), not a double-booking.

@@ -9,8 +9,28 @@ Inputs per fixture:
   expected.json         assignments, settings, layout (and after_answers)
   _make/hints/<ID>.json facts about the input that assignments alone can't
                         carry: the grid's day axis ("window"), a roster block
-                        ("roster"), the job rows of a job grid ("jobs"), and
-                        job-grid cells marked inactive ("inactive").
+                        ("roster"), the job rows of a job grid ("jobs"),
+                        job-grid cells marked inactive ("inactive"), merges the
+                        deterministic matcher (spec stage 7) must make
+                        ("same_person", "same_site": lists of [a, b] pairs), and,
+                        for a fixture whose expected assignments are only a
+                        sample, the full truth the flags come from
+                        ("assignments").
+
+Readings chosen where FORMAT.md is silent (fixtures avoid the cases that the
+other plausible reading would decide differently):
+  - Times are half-open [start, end): 7-12 and 12-4 touch but do not overlap.
+  - end < start ends the next day; end == start is a 24-hour shift.
+  - double_booked compares records that share a date. An overnight shift is
+    not compared with the next date's records (fixtures keep the next morning's
+    work after the shift ends, so the other reading agrees).
+  - An AM or PM part is the half day 00:00-12:00 / 12:00-24:00. "half" (which
+    half unknown) behaves like no part: it conflicts with anything that day.
+  - duplicate_entry: two records at one site whose times or parts overlap
+    (no time and no part counts as overlapping). AM + PM at one site is a full
+    day, not a duplicate.
+  - Unstaffed, non-job-grid layouts: explicit unstaffed days on working dates
+    count as assigned when finding a job's first and last day in a week.
 
 Also validates every expected.json against FORMAT.md's shape.
 
@@ -115,15 +135,33 @@ def week_start(iso: str) -> str:
 
 
 class Canon:
-    """Canonical display names: the longest spelling among those that normalize alike."""
+    """Canonical display names: the longest spelling among those that normalize
+    alike or that a merge hint joins (FORMAT.md: "the longest name among the
+    merged spellings")."""
 
-    def __init__(self, names):
-        self.best = {}
-        for n in names:
-            k = norm(n)
-            cur = self.best.get(k)
-            if cur is None or len(" ".join(n.split())) > len(cur):
-                self.best[k] = " ".join(n.split())
+    def __init__(self, names, merges=()):
+        parent = {}
+
+        def find(k):
+            parent.setdefault(k, k)
+            while parent[k] != k:
+                parent[k] = parent[parent[k]]
+                k = parent[k]
+            return k
+
+        spellings = [" ".join(n.split()) for n in names] + [" ".join(n.split()) for pair in merges for n in pair]
+        for n in spellings:
+            find(norm(n))
+        for pair in merges:
+            ks = [find(norm(n)) for n in pair]
+            for k in ks[1:]:
+                parent[k] = ks[0]
+        best = {}
+        for n in spellings:
+            r = find(norm(n))
+            if r not in best or len(n) > len(best[r]):
+                best[r] = n
+        self.best = {k: best[find(k)] for k in parent}
 
     def __call__(self, n):
         return self.best.get(norm(n), " ".join(n.split()))
@@ -134,8 +172,10 @@ def compute(assigns, settings, layout, hints):
     workdays = set(settings.get("workdays") or WEEKDAYS)
     days_off = set(settings.get("days_off") or [])
 
-    persons = Canon([a["person"] for a in assigns if a.get("person")] + list(hints.get("roster", [])))
-    sites = Canon([a["site"] for a in assigns if a.get("site")] + list(hints.get("jobs", [])))
+    persons = Canon([a["person"] for a in assigns if a.get("person")] + list(hints.get("roster", [])),
+                    hints.get("same_person", []))
+    sites = Canon([a["site"] for a in assigns if a.get("site")] + list(hints.get("jobs", [])),
+                  hints.get("same_site", []))
 
     # Window
     if hints.get("window"):
@@ -154,9 +194,9 @@ def compute(assigns, settings, layout, hints):
         if a.get("unstaffed"):
             explicit.append((sites(a["site"]), a["date"]))
         elif "status" in a:
-            status[(norm(a["person"]), a["date"])].append(a)
+            status[(norm(persons(a["person"])), a["date"])].append(a)
         else:
-            work[(norm(a["person"]), a["date"])].append(a)
+            work[(norm(persons(a["person"])), a["date"])].append(a)
 
     flags, info = [], []
 
@@ -243,7 +283,7 @@ def compute(assigns, settings, layout, hints):
                     un.append((j, date))
     else:
         assigned = defaultdict(set)
-        for (j, date) in staffed:
+        for (j, date) in list(staffed) + explicit:
             if not is_internal(j) and date in working:
                 assigned[j].add(date)
         for j, ds in assigned.items():
@@ -381,12 +421,22 @@ def check(folder: Path) -> tuple[list[str], dict]:
             continue
         errs += validate_assignments(blk["assignments"], where)
         partial = where == "top" and exp.get("assignments_exact") is False
+        truth = blk["assignments"]
         if partial:
-            if "flags" in blk:
-                errs.append(f"  {where}: flags given but assignments are partial")
-            continue
+            if "assignments" not in hints:
+                if "flags" in blk:
+                    errs.append(f"  {where}: flags given but assignments are partial and no truth hint")
+                continue
+            truth = hints["assignments"]
+            errs += validate_assignments(truth, "hint truth")
+            have = Counter(json.dumps(a, sort_keys=True, ensure_ascii=False) for a in truth)
+            for a in blk["assignments"]:
+                k = json.dumps(a, sort_keys=True, ensure_ascii=False)
+                if have[k] <= 0:
+                    errs.append(f"  {where}: sample assignment not in the truth hint: {show(a)}")
+                have[k] -= 1
         try:
-            flags, info = compute(blk["assignments"], st, exp.get("layout"), hints)
+            flags, info = compute(truth, st, exp.get("layout"), hints)
         except Exception as e:  # noqa: BLE001
             errs.append(f"  {where}: could not compute: {e}")
             continue

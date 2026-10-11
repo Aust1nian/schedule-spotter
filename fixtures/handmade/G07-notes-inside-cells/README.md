@@ -1,0 +1,1 @@
+Notes inside cells: 'Johnson - bring ladder' and 'Smith (punch list)' give sites Johnson and Smith with the note split off; the hyphen in 'Lopez-Hart kitchen' has no spaces around it and stays in the site.

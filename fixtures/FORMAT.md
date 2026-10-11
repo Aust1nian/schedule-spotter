@@ -185,7 +185,16 @@ A shop plus two job sites is still `double_booked` for the two jobs. The flag's 
 
 Placeholders and subcontractors never get `double_booked`, `assigned_while_off` or `not_booked`. A subcontractor at two or more job sites on one date is `subcontractor_multi_site` info.
 
+**Times, precisely.**
+- Times are start-inclusive and end-exclusive, so 7a–12p and 12p–4p do not overlap; that day is `split_day`.
+- An overnight shift ("10p-6a") belongs to its start date. It is compared only with records on that date.
+- AM is 00:00–12:00 and PM is 12:00–24:00. `half` has no known half, so it clashes with nothing that has a part or time of its own.
+- A part word where a note would go ("Smith remodel (AM only)", "Oak Ridge Apts - half day") sets `part`, not `note`.
+- A status written in an AM or PM sub-column carries that part.
+
 **`assigned_while_off`.** An employee has a status record (any status) and a work record on the same date. A status with a `part` (`"off PM"`) does not conflict with work that has the other part, or with work whose time falls only in the other half of the day.
+
+A half-day status ("half day off") never conflicts: it implies the other half is worked.
 
 **`not_booked`.** A roster employee with no work record and no status record on a working date. Amber, not red.
 
@@ -195,6 +204,8 @@ Placeholders and subcontractors never get `double_booked`, `assigned_while_off` 
   - **Active dates, job grids** (`job_by_day`, `day_by_job`): every working date in the window, except cells marked inactive (x, —, n/a, "no work", "closed", "done").
   - **Active dates, other layouts:** from the job's first to its last assigned working date within each Monday–Sunday week. Explicitly unstaffed days (TBD) count as assigned for this range.
 - **Never unstaffed:** internal locations and status pseudo-rows (an "OFF" or "PTO" row in a job grid). A job with only placeholders or subcontractors on it is staffed.
+
+**Very large files.** Over 20,000 rows, only the earliest four Monday–Sunday weeks present are read, and a note says so. Flags cover those weeks only.
 
 **Red vs amber.** `double_booked` and `assigned_while_off` are red. `not_booked` is amber. `unstaffed` is shown under the grid, striped. Info items are never red.
 

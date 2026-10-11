@@ -183,3 +183,26 @@ Fixes:
 - `--self-test --linger 60` keeps the app open a minute on every CI runner while sockets are polled, so delayed background calls get caught too.
 
 **2026-10-11 · Session scratch folder.** WebView data (Windows, Linux) goes to `<OS temp>/schedule-spotter-session-<pid>/`. It is deleted on exit, and any leftover from an earlier session (a crash, or files still locked at exit) is swept at the next launch. This is the spec's "session scratch in the OS temp folder, deleted on exit and again on next launch". On macOS, private mode gives WKWebView a non-persistent data store.
+
+## Phase 2
+
+**2026-10-11 · Identity before matching.** People are one identity when their spellings differ only in case, spacing or stray end punctuation. Accents still separate them; "José" vs "Jose" is a stage 7 merge with a chip. Sites also merge across street-suffix and direction spellings ("1420 Johnson Street" = "1420 Johnson St"). That deterministic normalization is from stage 7, done early because K08 ("a false double-booking that disappears after a site merge") is a Phase 2 category. The canonical name shown is the longest spelling.
+
+**2026-10-11 · Rules settled where FORMAT.md was silent.** Proposed by the G–K fixture author and adopted into FORMAT.md:
+- Times are start-inclusive and end-exclusive.
+- Overnight shifts are compared on their start date.
+- Part words in note position set `part`.
+- A status in an AM/PM sub-column carries that part.
+- The 50,000-row cap keeps the earliest four Monday–Sunday weeks.
+
+Added here:
+- A `half` part clashes with nothing that has its own part or time.
+- A half-day status never conflicts with work.
+
+**2026-10-11 · Phase 2 gate, measured on everything that doesn't need stage 7.**
+- Handmade fixtures: 99/100 on the script tier, with flags and info compared exactly. The one exception is K07, "a double-booking visible only after a name merge" (Mike B + Michael Baker). Its merge is stage 7 nickname and initial matching, which is Phase 3 by the spec's own ordering, so it counts toward the Phase 3 gate.
+- Generated seeds 0–1,999: zero red flags on all 392 clean schedules.
+
+**2026-10-11 · Speed.**
+- The 50,000-row file read in 16.9 s because a per-row count was recomputed once per cell on the transposed, 50,000-column view. Now 1.1 s.
+- A typical 60 × 25 × 4-week file takes 38 ms on this machine, against the spec's 200 ms target on the gating runner. CI timing is measured in Phase 4's benchmark.

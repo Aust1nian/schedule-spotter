@@ -1,0 +1,1 @@
+A Saturday column under a Mon-Fri workweek: Saturday work is still read and Mike's Saturday double-booking is flagged, but blank Saturday cells are not 'not booked' and Oak Ridge is not unstaffed on Saturday.

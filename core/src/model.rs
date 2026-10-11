@@ -179,12 +179,41 @@ pub enum FlagKind {
     Unstaffed,
 }
 
+/// A red or amber finding. `person` is the canonical display name (the
+/// longest spelling among merged ones); `site` is set for unstaffed jobs.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Flag {
     pub kind: FlagKind,
-    pub person: Option<String>,
-    pub job: Option<String>,
     pub date: NaiveDate,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub person: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub site: Option<String>,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub sites: Vec<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub status: Option<Status>,
+    /// Unstaffed because the cell said so (TBD, open), not inferred.
+    #[serde(skip_serializing_if = "std::ops::Not::not", default)]
+    pub explicit: bool,
+    pub message: String,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum InfoKind {
+    DuplicateEntry,
+    SplitDay,
+    InternalPlusSite,
+    SubcontractorMultiSite,
+}
+
+/// Shown as information, never as a red flag.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct Info {
+    pub kind: InfoKind,
+    pub date: NaiveDate,
+    pub person: String,
     pub sites: Vec<String>,
     pub message: String,
 }
@@ -203,4 +232,5 @@ pub struct Report {
     pub reading: Reading,
     pub error: Option<ReadError>,
     pub flags: Vec<Flag>,
+    pub info: Vec<Info>,
 }

@@ -1,0 +1,1 @@
+Long list with TBD, need guy, ?, open and need 1 in the Employee column: each is an explicit unstaffed job-day, and those days count toward the job's range, so Lincoln School's empty Tuesday is unstaffed too.

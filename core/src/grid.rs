@@ -22,6 +22,8 @@ pub struct Grid {
     /// True where a vertical merged range was filled down.
     pub filled_from_merge: Vec<Vec<bool>>,
     transposed: bool,
+    /// Non-empty cells per row, counted once (wide sheets ask a lot).
+    nonempty: Vec<usize>,
 }
 
 impl Grid {
@@ -100,7 +102,14 @@ impl Grid {
             days,
             filled_from_merge,
             transposed: false,
+            nonempty: Vec::new(),
         }
+        .counted()
+    }
+
+    fn counted(mut self) -> Grid {
+        self.nonempty = self.cells.iter().map(|row| row.iter().filter(|c| !c.is_empty()).count()).collect();
+        self
     }
 
     pub fn height(&self) -> usize {
@@ -159,7 +168,7 @@ impl Grid {
     }
 
     pub fn row_nonempty(&self, r: usize) -> usize {
-        (0..self.width()).filter(|&c| !self.is_empty(r, c)).count()
+        self.nonempty.get(r).copied().unwrap_or(0)
     }
 
     pub fn first_nonempty(&self, r: usize) -> Option<usize> {
@@ -188,7 +197,9 @@ impl Grid {
             days,
             filled_from_merge: filled,
             transposed: !self.transposed,
+            nonempty: Vec::new(),
         }
+        .counted()
     }
 }
 

@@ -1,0 +1,54 @@
+{
+  "category": "J",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Dale Duran", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Lucas Morrow", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Rafael Rojas", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Simon Trujillo", "date": "2026-10-12", "site": "1420 Johnson St"},
+    {"person": "Arturo Bishop", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Diego Fleming", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Eric Graves", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Tobias Vega", "date": "2026-10-12", "site": "88 Elm Ave"},
+    {"person": "Dean Farley", "date": "2026-10-12", "site": "312 Birch Rd"},
+    {"person": "Gabriel Hendrix", "date": "2026-10-12", "site": "312 Birch Rd"},
+    {"person": "Gary Hobbs", "date": "2026-10-12", "site": "312 Birch Rd"},
+    {"person": "Pablo Quintero", "date": "2026-10-12", "site": "312 Birch Rd"},
+    {"person": "Trent Whitaker", "date": "2026-10-15", "site": "Parker kitchen"},
+    {"person": "Trent Whitaker", "date": "2026-10-15", "site": "Sunset Plaza"},
+    {"person": "Wendell Nolan", "date": "2026-10-20", "site": "Delgado patio"},
+    {"person": "Wendell Nolan", "date": "2026-10-20", "status": "pto"},
+    {"person": "Bruce Cabrera", "date": "2026-10-19", "site": "905 Maple Dr"},
+    {"person": "Cyrus Gill", "date": "2026-10-19", "site": "905 Maple Dr"},
+    {"person": "Omar Pace", "date": "2026-11-06", "site": "Hartman attic"},
+    {"person": "Sergio Tate", "date": "2026-11-06", "site": "Hartman attic"},
+    {"person": "Angel Becker", "date": "2026-11-06", "site": "Fairview dental"},
+    {"person": "Derek Fischer", "date": "2026-11-06", "site": "Fairview dental"},
+    {"person": "Glen Holt", "date": "2026-11-06", "site": "Fairview dental"},
+    {"person": "Jorge Lucero", "date": "2026-11-06", "site": "Fairview dental"}
+  ],
+  "assignments_exact": false,
+  "flags": [
+    {"type": "double_booked", "person": "Trent Whitaker", "date": "2026-10-15", "sites": ["Sunset Plaza", "Parker kitchen"]},
+    {"type": "assigned_while_off", "person": "Wendell Nolan", "date": "2026-10-20", "sites": ["Delgado patio"], "status": "pto"},
+    {"type": "unstaffed", "site": "905 Maple Dr", "date": "2026-10-22"},
+    {"type": "not_booked", "person": "Dustin Gallegos", "date": "2026-10-28"},
+    {"type": "not_booked", "person": "Marcus Navarro", "date": "2026-11-06"}
+  ],
+  "flags_exact": true,
+  "info": [],
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"}
+  ],
+  "notes": ["first 4 weeks"]
+}

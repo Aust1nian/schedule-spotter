@@ -60,6 +60,31 @@ Weakest spots, to revisit as Phase 2 needs them:
 
 Written by an independent author and sealed (`fixtures/holdout/SEALED.sha256`, 104 files). CI verifies the seal on every push. It has not been run.
 
+## Phase 2 — analysis (gate passed 2026-10-11, K07 deferred to Phase 3)
+
+### Handmade fixtures, flags and info compared exactly
+
+| Category | Pass |
+|---|---|
+| A | 10/10 |
+| B | 10/10 |
+| C | 19/19 |
+| D | 14/14 |
+| G Status and unstaffed | 8/8 |
+| H Times | 8/8 |
+| I | 9/9 |
+| J Scale | 5/5 |
+| K Flag logic | 11/12. K07 needs the stage 7 merge Mike B → Michael Baker (Phase 3). |
+| M | 5/5, with 3 model-tier skipped |
+
+Slowest: J05, 50,000 rows capped to the first four weeks, in 1.1 s. J04, 2,000 rows, in 73 ms. J03, 60 people × 25 jobs × 4 weeks, in 38 ms.
+
+### Generator, seeds 0–1,999, model off
+
+- **Clean schedules with a red flag: 0 of 392** (gate: zero).
+- **Flag precision and recall** before stage 7, all types together: assigned_while_off 86/91%, double_booked 89/91%, unstaffed 100/64%.
+- **not_booked precision is 7%.** Of its 40,700 extra flags, 40,300 are in the 1,151 cases whose names are spelled two ways (nicknames, initials). Each spelling is still a separate person who is idle on the other spelling's days. Stage 7 matching (Phase 3) is what fixes this.
+
 ## Changed expectations
 
 None.

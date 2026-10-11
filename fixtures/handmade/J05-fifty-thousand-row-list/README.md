@@ -1,0 +1,1 @@
+Long list of 50,000 rows (100 people, 25 jobs, 100 weeks from 10/12/2026, sorted by date): over 20,000 rows, so only the first 4 weeks are read, the notes say so, and it never hangs; the planted flags are all in those 4 weeks.

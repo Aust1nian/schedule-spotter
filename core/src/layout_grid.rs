@@ -805,20 +805,12 @@ fn read_day_cell(
     }
 }
 
-/// Weeks one under another are stacked; more than one week in a header row
-/// is side by side.
+/// Weeks one under another are stacked; separate week blocks in one header
+/// row are side by side. One continuous run of dates is a single schedule,
+/// however many weeks it spans.
 fn arrangement_of(runs: &[Run]) -> Arrangement {
-    use chrono::Datelike;
     let rows: std::collections::BTreeSet<usize> = runs.iter().map(|r| r.row).collect();
-    let weeks_in_a_row = rows.iter().any(|row| {
-        let weeks: std::collections::BTreeSet<_> = runs
-            .iter()
-            .filter(|r| r.row == *row)
-            .flat_map(|r| r.dates.iter().map(|d| d.iso_week()))
-            .collect();
-        weeks.len() > 1
-    });
-    if weeks_in_a_row {
+    if runs.len() > rows.len() {
         Arrangement::SideBySide
     } else if rows.len() > 1 {
         Arrangement::Stacked

@@ -344,3 +344,124 @@ def emit(fid: str, slug: str, readme: str, files: dict, exp: dict, hints: dict |
     elif hp.exists():
         hp.unlink()
     return folder
+
+
+# ---------------------------------------------------------------- G, H, J, K helpers
+# Added for the status / times / scale / flag-logic fixtures. Append-only: nothing
+# above changes, so the A-D, I and M builds stay byte-identical.
+
+UNSTAFFED_TEXT = {"tbd", "open", "?", "need guy", "need 1"}
+INACTIVE_TEXT = {"x", "—", "n/a", "no work", "closed", "done"}  # job-grid cells only
+PART_TEXT = {"am": "am", "am only": "am", "pm": "pm", "pm only": "pm", "half day": "half", "half": "half"}
+
+_CLOCK = re.compile(r"^(\d{1,2})(?::(\d{2}))?\s*([ap])?m?$", re.I)
+_RANGE = re.compile(r"^(.*?)\s*[-–]\s*(.*)$")
+
+
+def _clock(text):
+    m = _CLOCK.match(text.strip())
+    assert m, f"not a clock time: {text!r}"
+    h, mm, ap = int(m.group(1)), int(m.group(2) or 0), (m.group(3) or "").lower()
+    return h, mm, ap
+
+
+def time_range(text: str):
+    """'7-11' -> ('07:00','11:00'); '7a-3p'; '7:00–15:30'; '10p-6a'; '12-4' -> 12:00-16:00.
+    Hours without am/pm follow DECISIONS.md: a start of 5-11 is morning, 12 is noon,
+    1-4 is afternoon; the end is the first matching hour after the start."""
+    m = _RANGE.match(text.strip())
+    assert m, text
+    (h1, m1, a1), (h2, m2, a2) = _clock(m.group(1)), _clock(m.group(2))
+    if a1:
+        s = (h1 % 12 + (12 if a1 == "p" else 0)) * 60 + m1
+    elif h1 >= 13:
+        s = h1 * 60 + m1
+    else:
+        s = (h1 + (12 if 1 <= h1 <= 4 else 0)) * 60 + m1
+    if a2:
+        e = (h2 % 12 + (12 if a2 == "p" else 0)) * 60 + m2
+    elif h2 >= 13:
+        e = h2 * 60 + m2
+    else:
+        cands = [(h2 % 12) * 60 + m2, (h2 % 12 + 12) * 60 + m2]
+        later = [c for c in cands if c > s]
+        e = min(later) if later else cands[0]
+    return f"{s // 60:02d}:{s % 60:02d}", f"{e // 60:02d}:{e % 60:02d}"
+
+
+_TRAIL_TIME = re.compile(r"^(.*\S)\s+(\d{1,2}(?::\d{2})?\s*(?:[ap]m?)?\s*[-–]\s*\d{1,2}(?::\d{2})?\s*(?:[ap]m?)?)$", re.I)
+
+
+def entry_recs(person, date, entry, **kw):
+    """One entry of a person-grid cell (cells split on ' / ' first):
+    status word, optionally with a trailing note ('PTO (dentist)', 'sick - flu');
+    or a site with an optional trailing part ('(AM only)', ' - half day'),
+    trailing time range ('Smith remodel 7-11') and trailing note."""
+    t = " ".join(entry.split())
+    if not t:
+        return []
+    base, note = split_note(t)
+    if base.lower() in STATUS_TEXT:
+        r = ST(person, date, STATUS_TEXT[base.lower()], **kw)
+        if note:
+            r["note"] = note
+        return [r]
+    extra = dict(kw)
+    if note is not None and note.lower() in PART_TEXT:
+        extra["part"] = PART_TEXT[note.lower()]
+        base, note = split_note(base)
+    m = _TRAIL_TIME.match(base)
+    if m:
+        base = m.group(1)
+        extra["start"], extra["end"] = time_range(m.group(2))
+    assert base.lower() not in UNSTAFFED_TEXT and base.lower() not in PART_TEXT, t
+    if note:
+        extra["note"] = note
+    return [W(person, date, base, **extra)]
+
+
+def person_cells(rows, dates, sep=" / "):
+    """rows: [(person, [cell per date])] -> records, using entry_recs per entry."""
+    out = []
+    for person, cells in rows:
+        assert len(cells) == len(dates), (person, cells)
+        for date, cell in zip(dates, cells):
+            for entry in (cell or "").split(sep):
+                out += entry_recs(person, date, entry)
+    return out
+
+
+def job_cells(rows, dates):
+    """Job x day grid -> (records, inactive [(job, date)]).
+    Unstaffed markers give an unstaffed record; inactive markers give nothing;
+    a status label row ('PTO', 'Off') gives status records."""
+    out, inactive = [], []
+    for job, cells in rows:
+        assert len(cells) == len(dates), (job, cells)
+        status = STATUS_TEXT.get(job.strip().lower())
+        for date, cell in zip(dates, cells):
+            t = " ".join((cell or "").split())
+            if not t:
+                continue
+            if not status and t.lower() in UNSTAFFED_TEXT:
+                out.append(UN(date, job))
+                continue
+            if not status and t.lower() in INACTIVE_TEXT:
+                inactive.append([job, date])
+                continue
+            for name in split_names(t):
+                assert name.lower() not in UNSTAFFED_TEXT | INACTIVE_TEXT, (job, cell)
+                out.append(ST(name, date, status) if status else W(name, date, job))
+    return out, inactive
+
+
+def SUBMULTI(person, date, *sites):
+    return {"type": "subcontractor_multi_site", "person": person, "date": d(date), "sites": list(sites)}
+
+
+def xlsx_workbook(creator="Office"):
+    import openpyxl
+    wb = openpyxl.Workbook()
+    wb.properties.creator = creator
+    wb.properties.created = wb.properties.modified = dt.datetime(*FIXED_TIME)
+    return wb

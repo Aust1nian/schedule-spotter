@@ -1,0 +1,1 @@
+Person x day grid with the time written after the site in each cell ('Smith remodel 7-11 / Parker kitchen 12-4'): the time is split off the site name; overlapping times are double-booked, others a split day.

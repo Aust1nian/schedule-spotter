@@ -81,6 +81,10 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
     let data_rows: Vec<usize> = (start..g.height())
         .filter(|&r| is_data_row(ctx, r, header))
         .collect();
+    let mut is_data = vec![false; g.height()];
+    for &r in &data_rows {
+        is_data[r] = true;
+    }
     if data_rows.is_empty() {
         return Vec::new();
     }
@@ -127,7 +131,7 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
                 continue;
             }
         }
-        if !data_rows.contains(&r) {
+        if !is_data[r] {
             continue;
         }
         let anchor = section_anchor
@@ -542,6 +546,7 @@ fn assign_roles(
 
     // People and sites among the remaining text columns.
     let mut person_cols = Vec::new();
+    let mut roster_cols: Vec<usize> = Vec::new();
     let mut site_cands: Vec<(f32, usize)> = Vec::new();
     for c in 0..w {
         if roles[c] != Role::Ignore || stats[c].entity_n == 0 || Some(c) == day_col {
@@ -551,6 +556,12 @@ fn assign_roles(
             hroles[c],
             Some(HeaderRole::Hours) | Some(HeaderRole::JobNumber)
         ) {
+            continue;
+        }
+        // A "Roster" column beside the list names the crew, not this row's
+        // people, unless it's the list's only name column ("Team", "Employees").
+        if header.is_some_and(|h| is_roster_title(&key(g.text(h, c)))) {
+            roster_cols.push(c);
             continue;
         }
         let s = &stats[c];
@@ -580,6 +591,12 @@ fn assign_roles(
                 chosen,
             });
         }
+    }
+    if person_cols.is_empty() {
+        person_cols = roster_cols
+            .into_iter()
+            .filter(|&c| stats[c].entity_n > 0 && stats[c].person / stats[c].entity_n as f32 >= 0.45)
+            .collect();
     }
     if person_cols.is_empty() {
         return None;

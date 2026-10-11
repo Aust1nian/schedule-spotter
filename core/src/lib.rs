@@ -2,11 +2,13 @@
 //! the findings shown to the owner. No UI and no model code lives here; the
 //! model is reached only through the tiebreaker interface added in Phase 4.
 
+pub mod analyze;
 pub mod cells;
 pub mod classify;
 pub mod dates;
 pub mod example;
 pub mod grid;
+pub mod identity;
 pub mod layout;
 mod layout_calendar;
 mod layout_grid;
@@ -41,16 +43,11 @@ pub fn read_schedule(input: &Input, settings: &Settings) -> Result<Reading, Read
 /// Reads `input` and computes the findings under `settings`.
 pub fn analyze(input: &Input, settings: &Settings) -> Report {
     match read_schedule(input, settings) {
-        Ok(reading) => Report {
-            reading,
-            error: None,
-            flags: Vec::new(),
-        },
-        Err(error) => Report {
-            reading: Reading::default(),
-            error: Some(error),
-            flags: Vec::new(),
-        },
+        Ok(reading) => {
+            let (flags, info) = analyze::analyze(&reading, settings);
+            Report { reading, error: None, flags, info }
+        }
+        Err(error) => Report { reading: Reading::default(), error: Some(error), flags: Vec::new(), info: Vec::new() },
     }
 }
 

@@ -1,0 +1,1 @@
+Person x day grid (.xlsx) with each date merged over AM and PM sub-columns: different sites AM and PM are a split day, the same site twice is a full day, and 'off' in a PM cell does not conflict with that morning's work.

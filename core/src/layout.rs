@@ -133,6 +133,8 @@ pub struct Sink {
     pub understood: usize,
     pub junk: usize,
     pub used_crews: bool,
+    /// Names from an employee roster block on the sheet.
+    pub roster: Option<Vec<String>>,
 }
 
 /// Per-record extras gathered from the cell and its column.
@@ -332,11 +334,22 @@ pub fn read_workbook(wb: &Workbook, settings: &Settings) -> Reading {
     reading.window = sink.window.iter().copied().collect();
     reading.assignments = std::mem::take(&mut sink.assignments);
     reading.grid_jobs = sink.grid_jobs;
+    reading.roster = sink.roster;
     reading.inactive = sink.inactive;
     reading.columns = sink.columns;
     reading.questions.extend(sink.questions);
     reading.notes.extend(sink.notes);
     reading
+}
+
+/// The readers, for the timing example: (name, reader(ctx, transposed)).
+#[doc(hidden)]
+pub fn readers() -> Vec<(&'static str, fn(&SheetCtx, bool) -> Vec<Candidate>)> {
+    vec![
+        ("calendar", |c, _| crate::layout_calendar::read(c)),
+        ("grid", crate::layout_grid::read),
+        ("list", |c, _| crate::layout_list::read(c)),
+    ]
 }
 
 /// The best reading of one sheet, or `None` if nothing in it reads as a
@@ -377,6 +390,7 @@ pub fn read_sheet(g: &Grid, settings: &Settings) -> Option<Candidate> {
             "Using the roster block ({} names) as the full crew list.",
             roster.len()
         ));
+        best.sink.roster = Some(roster.clone());
     }
     if best.sink.used_crews {
         best.layout = Layout::CrewBased;
@@ -538,6 +552,7 @@ fn find_roster(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Option<Vec<S
             if t.is_empty()
                 || is_roster_title(&key(t))
                 || person_score(t) < 0.4
+                || crew_name(&key(t))
                 || status_word(&key(t)).is_some()
             {
                 break;
@@ -554,6 +569,33 @@ fn find_roster(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Option<Vec<S
         if !names.is_empty() {
             consumed.insert((r, c));
             return Some(names);
+        }
+    }
+    // A "Roster" heading beside the schedule, names below it. When the
+    // heading sits in a header row ("Name | Job | Staff"), the column may be
+    // the list's own name column, so its cells stay readable and the roster
+    // equals everyone seen. Anywhere else it's a separate block.
+    for r in 0..g.height() {
+        for c in 0..g.width() {
+            if g.row_nonempty(r) < 2 || !is_roster_title(&key(g.text(r, c))) {
+                continue;
+            }
+            let rows: Vec<usize> = (r + 1..g.height())
+                .take_while(|&rr| {
+                    let t = g.text(rr, c);
+                    !t.is_empty() && person_score(t) >= 0.4 && !crew_name(&key(t)) && status_word(&key(t)).is_none()
+                })
+                .collect();
+            if rows.len() >= 2 {
+                let header_row = (0..g.width()).filter(|&cc| crate::lexicon::header_role(&key(g.text(r, cc))).is_some()).count() >= 2;
+                if !header_row {
+                    consumed.insert((r, c));
+                    for &rr in &rows {
+                        consumed.insert((rr, c));
+                    }
+                }
+                return Some(rows.iter().map(|&rr| clean(g.text(rr, c))).collect());
+            }
         }
     }
     None

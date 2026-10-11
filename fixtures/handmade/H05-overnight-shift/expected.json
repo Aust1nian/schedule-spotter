@@ -1,0 +1,51 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": ["mon", "tue", "wed", "thu", "fri"],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {"person": "Mike Baker", "date": "2026-10-12", "site": "1420 Johnson St", "start": "07:00", "end": "15:00"},
+    {"person": "Ray Jones", "date": "2026-10-12", "site": "1420 Johnson St", "start": "07:00", "end": "15:00"},
+    {"person": "Ray Jones", "date": "2026-10-12", "site": "Hwy 99 overpass", "start": "22:00", "end": "06:00"},
+    {"person": "Carlos Mendez", "date": "2026-10-12", "site": "Lincoln School", "start": "14:00", "end": "22:00"},
+    {"person": "Tom Reed", "date": "2026-10-12", "site": "Hwy 99 overpass", "start": "22:00", "end": "06:00"},
+    {"person": "Mike Baker", "date": "2026-10-13", "site": "1420 Johnson St", "start": "07:00", "end": "15:00"},
+    {"person": "Ray Jones", "date": "2026-10-13", "site": "1420 Johnson St", "start": "07:00", "end": "15:00"},
+    {"person": "Carlos Mendez", "date": "2026-10-13", "site": "Lincoln School", "start": "14:00", "end": "22:00"},
+    {"person": "Tom Reed", "date": "2026-10-13", "site": "Hwy 99 overpass", "start": "22:00", "end": "06:00"},
+    {"person": "Mike Baker", "date": "2026-10-14", "site": "1420 Johnson St", "start": "07:00", "end": "15:00"},
+    {"person": "Ray Jones", "date": "2026-10-14", "site": "1420 Johnson St", "start": "07:00", "end": "15:00"},
+    {"person": "Carlos Mendez", "date": "2026-10-14", "site": "Lincoln School", "start": "14:00", "end": "22:00"},
+    {"person": "Tom Reed", "date": "2026-10-14", "site": "Hwy 99 overpass", "start": "22:00", "end": "06:00"},
+    {"person": "Mike Baker", "date": "2026-10-15", "site": "1420 Johnson St", "start": "07:00", "end": "15:00"},
+    {"person": "Ray Jones", "date": "2026-10-15", "site": "1420 Johnson St", "start": "07:00", "end": "15:00"},
+    {"person": "Carlos Mendez", "date": "2026-10-15", "site": "Lincoln School", "start": "14:00", "end": "22:00"},
+    {"person": "Carlos Mendez", "date": "2026-10-15", "site": "Hwy 99 overpass", "start": "20:00", "end": "04:00"},
+    {"person": "Tom Reed", "date": "2026-10-15", "site": "Hwy 99 overpass", "start": "22:00", "end": "06:00"},
+    {"person": "Mike Baker", "date": "2026-10-16", "site": "1420 Johnson St", "start": "07:00", "end": "15:00"},
+    {"person": "Ray Jones", "date": "2026-10-16", "site": "1420 Johnson St", "start": "07:00", "end": "15:00"},
+    {"person": "Carlos Mendez", "date": "2026-10-16", "site": "Lincoln School", "start": "14:00", "end": "22:00"},
+    {"person": "Tom Reed", "date": "2026-10-16", "site": "Hwy 99 overpass", "start": "22:00", "end": "06:00"}
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {"type": "double_booked", "person": "Carlos Mendez", "date": "2026-10-15", "sites": ["Lincoln School", "Hwy 99 overpass"]}
+  ],
+  "flags_exact": true,
+  "info": [
+    {"type": "split_day", "person": "Ray Jones", "date": "2026-10-12", "sites": ["1420 Johnson St", "Hwy 99 overpass"]}
+  ],
+  "info_exact": true,
+  "must_not_ask": [
+    {"type": "pick_layout"},
+    {"type": "column_role"},
+    {"type": "cell_meaning"}
+  ]
+}

@@ -90,9 +90,11 @@ fn parse_line(line: &str, expect: Expect, out: &mut Parsed) {
         return;
     }
 
-    // Time anywhere in the line.
+    // One time anywhere in the line applies to the whole line; with several
+    // ("Smith 7-11 / Parker 12-4") each segment keeps its own.
     let mut line_time = None;
-    if let Some((range, span)) = times::find_range(&line) {
+    let several_times = count_ranges(&line) > 1;
+    if let Some((range, span)) = times::find_range(&line).filter(|_| !several_times) {
         line_time = Some(range);
         line = clean(&format!("{} {}", &line[..span.start], &line[span.end..]));
         line = line
@@ -148,6 +150,10 @@ fn parse_line(line: &str, expect: Expect, out: &mut Parsed) {
             continue;
         }
         let mut item = Item::default();
+        if several_times && let Some((range, span)) = times::find_range(&seg) {
+            item.time = Some(range);
+            seg = clean(&format!("{} {}", &seg[..span.start], &seg[span.end..]));
+        }
         if let Some((before, inside)) = trailing_paren(&seg) {
             match part_word(&key(&inside)) {
                 Some(p) => item.part = Some(p),
@@ -188,6 +194,16 @@ fn parse_line(line: &str, expect: Expect, out: &mut Parsed) {
     {
         out.note = Some(n);
     }
+}
+
+fn count_ranges(line: &str) -> usize {
+    let mut n = 0;
+    let mut rest = line;
+    while let Some((_, span)) = times::find_range(rest) {
+        n += 1;
+        rest = &rest[span.end..];
+    }
+    n
 }
 
 /// "1/2 day" and "½" read as "half day" before any "/" splitting.

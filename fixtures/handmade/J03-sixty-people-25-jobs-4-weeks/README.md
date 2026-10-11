@@ -1,0 +1,1 @@
+Typical-size file: 60 people x 25 jobs x 4 weeks in one person x day grid (20 weekday columns), with two double-bookings, two not-booked days and one unstaffed job-day planted; must read and analyze in under 200 ms.
