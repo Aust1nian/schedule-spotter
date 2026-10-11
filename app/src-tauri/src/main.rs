@@ -14,14 +14,16 @@ use tauri::{AppHandle, Manager, RunEvent, State, WebviewUrl, WebviewWindowBuilde
 
 /// WebView2 runs Edge's background services unless told not to: component
 /// updates, SmartScreen, phishing checks, sync, pings, crash upload. All
-/// off, and every host name except localhost fails to resolve, so nothing in
-/// the page can reach the network. The CI no-socket test checks this.
+/// off, and no host name resolves at all, not even the app's own
+/// tauri.localhost: Tauri answers those requests in-process, and without
+/// the rule Chromium pre-connects to loopback port 80 anyway. The CI
+/// no-socket test checks this.
 /// (wry's own defaults, msWebOOUI, msPdfOOUI and msSmartScreenProtection, are
 /// repeated here because setting arguments replaces them.)
 const WEBVIEW2_ARGS: &str = "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,msExperimentation,msEdgeUpdate,AutofillServerCommunication,OptimizationHints,Translate,MediaRouter \
 --disable-background-networking --disable-component-update --disable-domain-reliability \
 --disable-client-side-phishing-detection --disable-sync --disable-default-apps --no-pings --no-first-run \
---disable-breakpad --host-resolver-rules=\"MAP * ~NOTFOUND, EXCLUDE localhost, EXCLUDE *.localhost\"";
+--disable-breakpad --dns-prefetch-disable --host-resolver-rules=\"MAP * ~NOTFOUND\"";
 
 struct AppState {
     started: Instant,
@@ -78,8 +80,16 @@ fn main() {
     let scratch = scratch::create().expect("Schedule Spotter needs its temp folder");
 
     let app = tauri::Builder::default()
-        .manage(AppState { started, self_test, scratch: scratch.clone() })
-        .invoke_handler(tauri::generate_handler![app_mode, run_example, self_test_done])
+        .manage(AppState {
+            started,
+            self_test,
+            scratch: scratch.clone(),
+        })
+        .invoke_handler(tauri::generate_handler![
+            app_mode,
+            run_example,
+            self_test_done
+        ])
         .setup(move |app| {
             WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
                 .title("Schedule Spotter")

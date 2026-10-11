@@ -16,7 +16,9 @@ pub fn create() -> std::io::Result<PathBuf> {
 }
 
 fn sweep(temp: &Path) {
-    let Ok(entries) = std::fs::read_dir(temp) else { return };
+    let Ok(entries) = std::fs::read_dir(temp) else {
+        return;
+    };
     let mine = format!("{PREFIX}{}", std::process::id());
     for entry in entries.flatten() {
         let name = entry.file_name().to_string_lossy().into_owned();

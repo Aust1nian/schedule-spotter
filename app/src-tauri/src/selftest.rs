@@ -29,7 +29,11 @@ pub struct Args {
 
 impl Args {
     pub fn parse(mut args: impl Iterator<Item = String>) -> Args {
-        let mut parsed = Args { self_test: false, json_out: None, linger: Duration::ZERO };
+        let mut parsed = Args {
+            self_test: false,
+            json_out: None,
+            linger: Duration::ZERO,
+        };
         while let Some(arg) = args.next() {
             match arg.as_str() {
                 "--self-test" => parsed.self_test = true,
@@ -68,7 +72,12 @@ impl SelfTest {
                 std::process::exit(3);
             }
         });
-        SelfTest { json_out, linger, page_ready_ms: OnceLock::new(), done }
+        SelfTest {
+            json_out,
+            linger,
+            page_ready_ms: OnceLock::new(),
+            done,
+        }
     }
 
     pub fn linger(&self) -> Duration {

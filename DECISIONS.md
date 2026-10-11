@@ -178,7 +178,7 @@ This page serves this gift only. Because of the no-co-mingling rule, any website
 **2026-10-11 · WebView2 reached the network; now locked down.** The CI no-socket test caught the Windows WebView2 runtime connecting to a Microsoft server (150.171.22.17:443) during `--self-test`. The first runs missed it only because of timing. Since the app never loads remote content, this was Edge's background services.
 
 Fixes:
-- The window is created in code with WebView2 arguments that switch off component updates, SmartScreen, phishing detection, sync, pings and crash upload. `--host-resolver-rules` makes every host except localhost unresolvable.
+- The window is created in code with WebView2 arguments that switch off component updates, SmartScreen, phishing detection, sync, pings and crash upload. `--host-resolver-rules="MAP * ~NOTFOUND"` with `--dns-prefetch-disable` makes every host name unresolvable, including the app's own `tauri.localhost`. A second CI run showed Chromium pre-connecting to loopback port 80 for that origin even though Tauri answers its requests in-process.
 - The window runs in private (incognito) mode, and its data directory is the session temp folder.
 - `--self-test --linger 60` keeps the app open a minute on every CI runner while sockets are polled, so delayed background calls get caught too.
 
