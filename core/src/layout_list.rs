@@ -4,6 +4,8 @@
 //! English or Spanish. A list may carry its dates in a date column, in a
 //! weekday column under a "Week of" line, or in section rows ("MONDAY 10/12").
 
+use std::collections::HashMap;
+
 use chrono::{Datelike, Duration, NaiveDate};
 
 use crate::cells::{self, Expect, Item};
@@ -57,6 +59,8 @@ struct Stats {
     weekday: usize,
     time: usize,
     single_time: usize,
+    /// Clock times written as clock times ("7:30", "4pm"), not bare numbers.
+    clock: usize,
     status: usize,
     numeric: usize,
     person: f32,
@@ -188,9 +192,18 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
     let site_col = roles.iter().position(|r| *r == Role::Site);
     let mut site_fill: Vec<String> = Vec::new();
     if let Some(c) = site_col {
+        // A row with a status ("off", "Out") has no job on purpose.
+        let has_status =
+            |r: usize| (0..g.width()).any(|cc| status_word(&key(g.text(r, cc))).is_some());
         let mut labels: Vec<(usize, String, bool)> = rows
             .iter()
-            .map(|row| (row.r, clean(g.text(row.r, c)), row.has_people))
+            .map(|row| {
+                (
+                    row.r,
+                    clean(g.text(row.r, c)),
+                    row.has_people && !has_status(row.r),
+                )
+            })
             .collect();
         let header_text = header
             .map(|h| clean(g.text(h, c)))
@@ -198,6 +211,35 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
         let block_row = g.source(rows[0].r, c).row;
         crate::layout::fill_down_labels(&mut labels, &header_text, &mut sink, block_row);
         site_fill = labels.into_iter().map(|(_, l, _)| l).collect();
+    }
+
+    // Merged-cell blanks in a name column: a name written once over its
+    // rows. Only when that's the file's style (most rows blank under a name),
+    // since a lone blank name can mean nobody is on the job.
+    let mut person_fill: HashMap<(usize, usize), String> = HashMap::new();
+    let person_cols: Vec<usize> = roles
+        .iter()
+        .enumerate()
+        .filter(|(_, r)| **r == Role::Person)
+        .map(|(c, _)| c)
+        .collect();
+    if let Some(&c) = person_cols.first() {
+        // Rows with a date but no name in any name column.
+        let with_data: Vec<&Row> = rows.iter().filter(|row| row.date.is_some()).collect();
+        let nameless = |r: usize| person_cols.iter().all(|&pc| g.is_empty(r, pc));
+        let blanks = with_data.iter().filter(|row| nameless(row.r)).count();
+        if !with_data.is_empty() && blanks * 10 >= with_data.len() * 3 {
+            let mut last = String::new();
+            for row in &with_data {
+                if nameless(row.r) {
+                    if !last.is_empty() {
+                        person_fill.insert((row.r, c), last.clone());
+                    }
+                } else if !g.is_empty(row.r, c) {
+                    last = g.text(row.r, c).to_string();
+                }
+            }
+        }
     }
 
     // Very large files: the first four weeks only.
@@ -242,7 +284,15 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
                 site_fill[i].clone()
             }
         });
-        read_row(ctx, &mut sink, &roles, r, date, site_text.as_deref());
+        read_row(
+            ctx,
+            &mut sink,
+            &roles,
+            r,
+            date,
+            site_text.as_deref(),
+            &person_fill,
+        );
     }
 
     // Window: every date from the earliest to the latest.
@@ -361,6 +411,14 @@ fn column_stats(ctx: &SheetCtx, c: usize, rows: &[usize]) -> Stats {
         }
         if times::parse_single(t).is_some() {
             s.single_time += 1;
+            let lower = t.trim().to_ascii_lowercase();
+            if lower.contains(':')
+                || lower.ends_with('m')
+                || lower.ends_with('a')
+                || lower.ends_with('p')
+            {
+                s.clock += 1;
+            }
         }
         let k = key(t);
         if status_word(&k).is_some() {
@@ -458,17 +516,28 @@ fn assign_roles(
             Some(HeaderRole::End) if rate(s.single_time, s) >= 0.5 => Role::End,
             Some(HeaderRole::Status) => Role::Status,
             Some(HeaderRole::Note) => Role::Note,
-            Some(HeaderRole::Hours) => Role::Ignore,
-            _ if rate(s.time, s) >= 0.6 => Role::Time,
-            _ if rate(s.status, s) >= 0.6 && s.n >= 1 => Role::Status,
-            _ if rate(s.numeric, s) >= 0.8
-                && hroles[c] != Some(HeaderRole::Person)
-                && hroles[c] != Some(HeaderRole::Site) =>
-            {
-                Role::Ignore
-            }
-            _ => Role::Ignore,
+            Some(HeaderRole::Hours) if rate(s.time, s) >= 0.5 => Role::Time,
+            // A header naming people, jobs or dates wins over content; those
+            // roles are settled below.
+            Some(_) => Role::Ignore,
+            None if rate(s.time, s) >= 0.6 => Role::Time,
+            None if rate(s.status, s) >= 0.9 => Role::Status,
+            None => Role::Ignore,
         };
+    }
+
+    // Two untitled columns of clock times side by side: start and end.
+    for c in 0..w.saturating_sub(1) {
+        let single = |c: usize| {
+            hroles[c].is_none()
+                && roles[c] == Role::Ignore
+                && stats[c].n > 0
+                && rate(stats[c].clock, &stats[c]) >= 0.8
+        };
+        if single(c) && single(c + 1) {
+            roles[c] = Role::Start;
+            roles[c + 1] = Role::End;
+        }
     }
 
     // People and sites among the remaining text columns.
@@ -543,6 +612,7 @@ fn read_row(
     r: usize,
     date: NaiveDate,
     site_text: Option<&str>,
+    person_fill: &HashMap<(usize, usize), String>,
 ) {
     let g = ctx.g;
     let src_of = |c: usize| g.source(r, c);
@@ -575,10 +645,14 @@ fn read_row(
     let mut unstaffed_at: Option<usize> = None;
     let mut person_status = None;
     for (c, role) in roles.iter().enumerate() {
-        if *role != Role::Person || g.is_empty(r, c) {
+        let text = person_fill
+            .get(&(r, c))
+            .map(String::as_str)
+            .unwrap_or_else(|| g.text(r, c));
+        if *role != Role::Person || text.trim().is_empty() {
             continue;
         }
-        let parsed = cells::parse_cell(g.text(r, c), Expect::People);
+        let parsed = cells::parse_cell(text, Expect::People);
         if parsed.unstaffed {
             unstaffed_at = Some(c);
         }

@@ -328,17 +328,31 @@ pub fn resolve_run(
     toks: &[DayTok],
     anchor: Option<NaiveDate>,
     today: NaiveDate,
+    day_first_hint: bool,
 ) -> Option<Vec<NaiveDate>> {
     if toks.is_empty() {
         return None;
     }
     if toks.iter().all(DayTok::has_date) {
-        let df = day_first(toks);
-        let mut dates: Vec<NaiveDate> = toks
-            .iter()
-            .map(|t| resolve(t, df, today))
-            .collect::<Option<_>>()?;
-        fix_year_rollover(toks, &mut dates);
+        let resolve_all = |df: bool| -> Option<Vec<NaiveDate>> {
+            let mut dates: Vec<NaiveDate> = toks
+                .iter()
+                .map(|t| resolve(t, df, today))
+                .collect::<Option<_>>()?;
+            fix_year_rollover(toks, &mut dates);
+            Some(dates)
+        };
+        let df = day_first(toks) || (day_first_hint && !second_over_12(toks));
+        let dates = resolve_all(df)?;
+        // An all-ambiguous header stays month-first, unless that spreads its
+        // days over months while day-first makes them a week.
+        if !df
+            && !second_over_12(toks)
+            && span_days(&dates) > 31
+            && let Some(alt) = resolve_all(true).filter(|alt| span_days(alt) <= 14)
+        {
+            return Some(alt);
+        }
         return Some(dates);
     }
     if toks.iter().any(DayTok::has_date) {
@@ -347,6 +361,18 @@ pub fn resolve_run(
     let weekdays = weekday_sequence(toks)?;
     let anchor = anchor?;
     Some(weekdays_in_week(&weekdays, anchor))
+}
+
+fn second_over_12(toks: &[DayTok]) -> bool {
+    toks.iter()
+        .any(|t| matches!(t, DayTok::Numeric { second, .. } if *second > 12))
+}
+
+fn span_days(dates: &[NaiveDate]) -> i64 {
+    match (dates.iter().min(), dates.iter().max()) {
+        (Some(a), Some(b)) => (*b - *a).num_days(),
+        _ => 0,
+    }
 }
 
 /// Without a written year, "12/28 … 1/3" must roll into the next year.
@@ -521,26 +547,26 @@ mod tests {
             .iter()
             .map(|s| parse(s).unwrap())
             .collect();
-        let dates = resolve_run(&toks, Some(d(2026, 10, 12)), t).unwrap();
+        let dates = resolve_run(&toks, Some(d(2026, 10, 12)), t, false).unwrap();
         assert_eq!(dates[3], d(2026, 10, 15));
         let toks: Vec<DayTok> = ["M", "T", "W", "T", "F", "S", "S"]
             .iter()
             .map(|s| parse(s).unwrap())
             .collect();
-        let dates = resolve_run(&toks, Some(d(2026, 10, 12)), t).unwrap();
+        let dates = resolve_run(&toks, Some(d(2026, 10, 12)), t, false).unwrap();
         assert_eq!(dates[6], d(2026, 10, 18));
         let toks: Vec<DayTok> = ["12/28", "12/29", "12/30", "12/31", "1/1", "1/2", "1/3"]
             .iter()
             .map(|s| parse(s).unwrap())
             .collect();
-        let dates = resolve_run(&toks, None, t).unwrap();
+        let dates = resolve_run(&toks, None, t, false).unwrap();
         assert_eq!(dates[0], d(2026, 12, 28));
         assert_eq!(dates[6], d(2027, 1, 3));
         let toks: Vec<DayTok> = ["5/10", "6/10", "7/10", "13/10"]
             .iter()
             .map(|s| parse(s).unwrap())
             .collect();
-        let dates = resolve_run(&toks, None, t).unwrap();
+        let dates = resolve_run(&toks, None, t, false).unwrap();
         assert_eq!(dates[0], d(2026, 10, 5));
     }
 

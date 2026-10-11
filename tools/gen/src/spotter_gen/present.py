@@ -151,7 +151,7 @@ class Presenter:
                 kinds.append("NOACCENT")
             if c["typo"] and u[6] < 0.25:
                 kinds.append("TYPO")
-            if p.spec.compound and u[7] < 0.5:
+            if p.spec.compound and u[7] < 0.2:
                 kinds.append("SHORT_COMPOUND")
             prim_s = form(p.first, p.last, prim, P.li_dot)
             pal = [(prim, prim_s)]
@@ -324,6 +324,8 @@ class Presenter:
                 txt = self.final[("p", p.id, idx)]
                 if kind == "TYPO" and txt != prim and norm_key(txt) != norm_key(p.name):
                     reasons.append(f"typo:{txt}")
+                if kind == "SHORT_COMPOUND" and txt != prim and norm_key(txt) != norm_key(p.name):
+                    reasons.append(f"compound_surname:{txt}")  # José García vs José García López
                 n = sum(1 for e in emps if compatible(txt, e.first, e.last))
                 if n >= 2:
                     reasons.append(f"ambiguous:{txt}")

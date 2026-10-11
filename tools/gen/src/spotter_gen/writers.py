@@ -155,10 +155,14 @@ def write_xls(cv: Canvas, P: Plan) -> bytes:
 
 
 def write_ods(cv: Canvas, P: Plan) -> bytes:
+    from odf.element import Element
     from odf.opendocument import OpenDocumentSpreadsheet
     from odf.table import CoveredTableCell, Table, TableCell, TableRow
     from odf.text import P as TP
 
+    # odfpy keeps xmlns declarations in a class-level dict shared by every document in the
+    # process; reset it so the output depends only on this document.
+    Element.namespaces.clear()
     doc = OpenDocumentSpreadsheet()
     table = Table(name=P.sheet_name)
     spans = {}

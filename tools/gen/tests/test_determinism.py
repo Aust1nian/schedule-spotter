@@ -5,9 +5,10 @@ import subprocess
 import sys
 from pathlib import Path
 
+import random
+
 from spotter_gen.gen import generate
 from spotter_gen.plan import draw_plan
-import random
 
 
 def test_same_seed_same_bytes_in_process():
@@ -19,16 +20,17 @@ def test_same_seed_same_bytes_in_process():
     assert {"csv", "xlsx", "docx", "xls", "ods", "txt", "tsv"} <= seen
 
 
-def _run(out: Path, hashseed: str) -> None:
+def _run(out: Path, hashseed: str, seeds: str) -> None:
     env = dict(os.environ, PYTHONHASHSEED=hashseed)
-    subprocess.run([sys.executable, "-m", "spotter_gen.cli", "--seeds", "0-59", "--out", str(out), "--quiet"],
+    subprocess.run([sys.executable, "-m", "spotter_gen.cli", "--seeds", seeds, "--out", str(out), "--quiet"],
                    check=True, env=env)
 
 
 def test_cli_bytes_identical_across_processes(tmp_path):
+    """Different hash seeds and opposite generation order give byte-identical files."""
     a, b = tmp_path / "a", tmp_path / "b"
-    _run(a, "0")
-    _run(b, "4242")
+    _run(a, "0", "0-59")
+    _run(b, "4242", ",".join(str(s) for s in range(59, -1, -1)))
     fa = sorted(p.relative_to(a) for p in a.rglob("*") if p.is_file())
     fb = sorted(p.relative_to(b) for p in b.rglob("*") if p.is_file())
     assert fa == fb and len(fa) == 180

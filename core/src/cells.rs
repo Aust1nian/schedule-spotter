@@ -6,7 +6,7 @@
 //! after one name belongs to that name only.
 
 use crate::classify::site_score;
-use crate::lexicon::{is_inactive_marker, is_unstaffed_marker, part_word, status_word};
+use crate::lexicon::{JOB_WORDS, is_inactive_marker, is_unstaffed_marker, part_word, status_word};
 use crate::model::{Part, Status};
 use crate::text::{clean, key};
 use crate::times::{self, TimeRange};
@@ -337,18 +337,41 @@ fn split_sites(text: &str) -> Vec<String> {
             .flat_map(|p| p.split(sep).map(str::to_string).collect::<Vec<_>>())
             .collect();
     }
-    // " & " and "," split only when both sides read as sites on their own,
-    // and never "1420 Johnson St, Fresno".
+    // ",", " & " and " and " split only when every side reads as a site
+    // (or a status) on its own: never "1420 Johnson St, Fresno", and never
+    // "Smith & Jones remodel".
     let mut out = Vec::new();
     for part in parts {
         let mut pieces = vec![part];
-        for sep in [" & ", ","] {
+        for (sep, min) in [
+            (",", 0.45),
+            (" & ", 0.45),
+            (" and ", 0.45),
+            (" And ", 0.45),
+            (" y ", 0.45),
+        ] {
             pieces = pieces
                 .into_iter()
                 .flat_map(|p| {
                     let split: Vec<String> = p.split(sep).map(|s| s.trim().to_string()).collect();
+                    let standalone = |s: &String| {
+                        let k = key(s);
+                        status_word(&k).is_some() || is_unstaffed_marker(&k) || site_score(s) >= min
+                    };
+                    // "Smith & Jones remodel" is one job: a lone word joined to
+                    // a name that ends in a job word shares that job word.
+                    let shared_suffix = sep != ","
+                        && split.len() == 2
+                        && !split[0].contains(' ')
+                        && split[1].contains(' ')
+                        && split[1]
+                            .rsplit(' ')
+                            .next()
+                            .is_some_and(|w| JOB_WORDS.contains(key(w).as_str()))
+                        && site_score(&split[0]) < 0.85;
                     let all_sites = split.len() > 1
-                        && split.iter().all(|s| !s.is_empty() && site_score(s) >= 0.45)
+                        && !shared_suffix
+                        && split.iter().all(|s| !s.is_empty() && standalone(s))
                         && !(sep == "," && looks_like_city_suffix(&split));
                     if all_sites { split } else { vec![p] }
                 })
@@ -373,6 +396,10 @@ fn looks_like_city_suffix(parts: &[String]) -> bool {
                     .all(|w| w.len() == 2 || w.chars().all(|c| c.is_ascii_digit()))
         })
         && parts[1..].iter().all(|p| site_score(p) < 0.85)
+        && parts[1..].iter().all(|p| {
+            let k = key(p);
+            status_word(&k).is_none() && !is_unstaffed_marker(&k)
+        })
 }
 
 #[cfg(test)]

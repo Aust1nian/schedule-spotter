@@ -25,66 +25,40 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
     };
     let weekdays: Vec<Weekday> = cols.iter().map(|(_, w)| *w).collect();
 
-    // Rows of day numbers under the weekday columns.
-    let mut number_rows: Vec<(usize, Vec<Option<u32>>)> = Vec::new();
+    // Rows of full dates ("10/18") under the weekday columns, if the
+    // calendar writes them; otherwise rows of day numbers.
+    let mut date_rows: Vec<(usize, Vec<Option<NaiveDate>>)> = Vec::new();
     for r in header_row + 1..g.height() {
-        let nums: Vec<Option<u32>> = cols
+        let toks: Vec<Option<DayTok>> = cols
             .iter()
-            .map(|(c, _)| leading_day_number(g, r, *c))
+            .map(|(c, _)| g.day(r, *c).filter(DayTok::has_date))
             .collect();
-        let present: Vec<u32> = nums.iter().flatten().copied().collect();
-        let increasing = present
-            .windows(2)
-            .all(|w| w[1] == w[0] + 1 || (w[1] == 1 && w[0] >= 28));
-        if present.len() >= 3 && increasing {
-            number_rows.push((r, nums));
+        let present: Vec<DayTok> = toks.iter().flatten().copied().collect();
+        if present.len() < 3 {
+            continue;
+        }
+        let df = dates::day_first(&present);
+        let resolved: Vec<Option<NaiveDate>> = toks
+            .iter()
+            .map(|t| t.and_then(|t| dates::resolve(&t, df, ctx.today)))
+            .collect();
+        let days: Vec<NaiveDate> = resolved.iter().flatten().copied().collect();
+        if days.windows(2).all(|w| (w[1] - w[0]).num_days() == 1) {
+            date_rows.push((r, resolved));
         }
     }
-    if number_rows.len() < 2 {
-        return Vec::new();
-    }
-
-    let (year, month) = match month_title(ctx, header_row) {
-        Some(ym) => ym,
-        None => match infer_month(ctx.today, &weekdays, &number_rows[0].1) {
-            Some(ym) => ym,
+    let (rows_at, cell_dates): (Vec<usize>, Vec<Vec<Option<NaiveDate>>>) = if date_rows.len() >= 2 {
+        date_rows.into_iter().unzip()
+    } else {
+        match number_row_dates(ctx, header_row, &cols, &weekdays) {
+            Some(found) => found,
             None => return Vec::new(),
-        },
+        }
     };
 
-    // Dates for each (number row, column), rolling months forward when the
-    // numbers restart.
-    let first_n = number_rows[0]
-        .1
-        .iter()
-        .flatten()
-        .next()
-        .copied()
-        .unwrap_or(1);
-    let mut offset: i32 = if first_n > 7 { -1 } else { 0 };
-    let mut prev = 0u32;
-    let mut cell_dates: Vec<Vec<Option<NaiveDate>>> = Vec::new();
-    for (_, nums) in &number_rows {
-        let mut row_dates = Vec::new();
-        for n in nums {
-            row_dates.push(n.and_then(|n| {
-                if n < prev {
-                    offset += 1;
-                }
-                prev = n;
-                let total = year * 12 + (month as i32 - 1) + offset;
-                NaiveDate::from_ymd_opt(total.div_euclid(12), (total.rem_euclid(12) + 1) as u32, n)
-            }));
-        }
-        cell_dates.push(row_dates);
-    }
-
     let mut sink = Sink::default();
-    for (k, (r, _)) in number_rows.iter().enumerate() {
-        let end = number_rows
-            .get(k + 1)
-            .map(|(nr, _)| *nr)
-            .unwrap_or(g.height());
+    for (k, r) in rows_at.iter().enumerate() {
+        let end = rows_at.get(k + 1).copied().unwrap_or(g.height());
         for (j, (c, w)) in cols.iter().enumerate() {
             let Some(date) = cell_dates[k][j] else {
                 continue;
@@ -132,6 +106,81 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
         arrangement: Arrangement::Single,
         sink,
     }]
+}
+
+/// Day-number rows ("13 14 15 …") and their dates: the month comes from a
+/// title or from weekday alignment, rolling forward when numbers restart.
+#[allow(clippy::type_complexity)]
+fn number_row_dates(
+    ctx: &SheetCtx,
+    header_row: usize,
+    cols: &[(usize, Weekday)],
+    weekdays: &[Weekday],
+) -> Option<(Vec<usize>, Vec<Vec<Option<NaiveDate>>>)> {
+    let g = ctx.g;
+    let mut number_rows: Vec<(usize, Vec<Option<u32>>)> = Vec::new();
+    for r in header_row + 1..g.height() {
+        let nums: Vec<Option<u32>> = cols
+            .iter()
+            .map(|(c, _)| leading_day_number(g, r, *c))
+            .collect();
+        let present: Vec<u32> = nums.iter().flatten().copied().collect();
+        let increasing = present
+            .windows(2)
+            .all(|w| w[1] == w[0] + 1 || (w[1] == 1 && w[0] >= 28));
+        if present.len() >= 3 && increasing {
+            number_rows.push((r, nums));
+        }
+    }
+    if number_rows.len() < 2 {
+        return None;
+    }
+    let (year, month) = match month_title(ctx, header_row) {
+        Some(ym) => ym,
+        None => infer_month(ctx.today, weekdays, &number_rows[0].1)?,
+    };
+    // The first week may start in the titled month (a "Sep – Oct" calendar
+    // that opens on the 13th) or show the previous month's last days: pick
+    // the month that puts the first numbers under the right weekday names.
+    let first_cells: Vec<(u32, Weekday)> = number_rows[0]
+        .1
+        .iter()
+        .zip(weekdays)
+        .filter_map(|(n, w)| n.map(|n| (n, *w)))
+        .collect();
+    let fits = |offset: i32| {
+        let total = year * 12 + (month as i32 - 1) + offset;
+        let (y, m) = (total.div_euclid(12), (total.rem_euclid(12) + 1) as u32);
+        let mut prev = 0;
+        first_cells
+            .iter()
+            .take_while(|(n, _)| {
+                let ok = *n > prev;
+                prev = *n;
+                ok
+            })
+            .all(|(n, w)| NaiveDate::from_ymd_opt(y, m, *n).is_some_and(|d| d.weekday() == *w))
+    };
+    let mut offset: i32 = [0, -1, 1].into_iter().find(|o| fits(*o)).unwrap_or(0);
+    let mut prev = 0u32;
+    let mut rows = Vec::new();
+    let mut cell_dates = Vec::new();
+    for (r, nums) in &number_rows {
+        let mut row_dates = Vec::new();
+        for n in nums {
+            row_dates.push(n.and_then(|n| {
+                if n < prev {
+                    offset += 1;
+                }
+                prev = n;
+                let total = year * 12 + (month as i32 - 1) + offset;
+                NaiveDate::from_ymd_opt(total.div_euclid(12), (total.rem_euclid(12) + 1) as u32, n)
+            }));
+        }
+        rows.push(*r);
+        cell_dates.push(row_dates);
+    }
+    Some((rows, cell_dates))
 }
 
 /// A row with five or more weekday names in order and no dates.

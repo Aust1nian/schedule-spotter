@@ -530,11 +530,12 @@ pub fn header_role(key: &str) -> Option<HeaderRole> {
         "day" | "weekday" | "dia" | "day of week" => Day,
         "time" | "shift" | "horario" | "hora" | "turno" | "time slot" | "hours (time)"
         | "start-end" | "start - end" => Time,
-        "start" | "start time" | "in" | "time in" | "from" | "entrada" | "inicio" | "desde" => {
-            Start
-        }
+        "start" | "start time" | "in" | "time in" | "from" | "entrada" | "inicio" | "desde"
+        | "begin" | "begins" | "starts" | "start at" | "clock in" | "arrive" | "arrival"
+        | "hora de entrada" | "comienzo" => Start,
         "end" | "end time" | "time out" | "to" | "until" | "salida" | "fin" | "hasta"
-        | "finish" => End,
+        | "finish" | "ends" | "clock out" | "leave" | "stop" | "quit" | "depart"
+        | "hora de salida" | "termina" => End,
         "status" | "estado" | "off?" | "availability" => Status,
         "notes" | "note" | "comments" | "comment" | "remarks" | "memo" | "details"
         | "description" | "task" | "tasks" | "work" | "scope" | "notas" | "nota"

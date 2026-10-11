@@ -154,3 +154,23 @@ This page serves this gift only. Because of the no-co-mingling rule, any website
 - `weekday_mismatch` keeps the date until answered.
 - Crew-based schedules follow the window rules of the grid or list they're drawn as.
 - Emoji stay in names.
+
+**2026-10-11 · Blank rows and columns are removed before any layout decision.** Detection works on a compressed view of each sheet. Structure comes from headers and content, never from where the blanks are. That makes the spec's property "adding blank rows or columns changes nothing" true by construction. Section breaks between stacked weeks come from their own header rows and "Week of" titles.
+
+**2026-10-11 · Reading stage 5 for header runs.** "Switch a column to day-first only if a value over 12 appears in the first position" is applied per sheet: one author, one habit. A side-by-side layout whose first week is all-ambiguous ("02/11 … 06/11") but whose second week shows "13/11" reads both weeks day-first. As a backstop, an all-ambiguous header row stays month-first unless month-first spreads consecutive day columns over more than a month while day-first makes them one week. Plain all-ambiguous files stay month-first (D02).
+
+**2026-10-11 · Fill-down rules (spec stage 6: "only when the block shows a merged-cell pattern; otherwise ask").**
+- Dates and jobs fill down silently when the pattern of a value with blanks below it occurs at least twice. A single occurrence fills down and asks `fill_down`.
+- A row that carries a status ("off", "Out") never gets a job filled into it.
+- Names fill down only when at least 30% of dated rows have no name in any name column, so a single blank name, which can mean nobody is on the job, is never filled.
+- Real .xlsx merges (single-column, vertical) always fill.
+
+**2026-10-11 · Header words beat content for column roles.** A column headed "Job" stays the job column even when most of its non-blank cells are OFF or vac, as in a merged-blank list where each job is written once. Content alone makes a column Status only at 90% or more status words, and Start/End only for clock-like values ("7:30", "4pm"), never bare numbers.
+
+**2026-10-11 · How competing readings are chosen.** Every reader (day-axis grid in both orientations, list, calendar) proposes a reading, scored by: the share of data cells it understood × a size factor × how much its "names" look like people. Dates and bare numbers are never accepted as names or sites. A day-axis grid whose labels are mostly header words ("Customer", "Crew") is rejected, because that is a list with a date column. When the top two readings of different families score within 0.03, the owner is asked (`pick_layout`) and the better one is used meanwhile.
+
+**2026-10-11 · Hours without am/pm.** A start of 5–11 is morning, 12 is noon, 1–4 is afternoon, and the end is the first matching hour after the start. A 5 o'clock start is read as 5am, the early-crew case. The generator's own convention treats 5 as afternoon, but it never emits a 5 o'clock start.
+
+**2026-10-11 · Phase 1 gate: passed.**
+- Fixture categories A–D, I and M pass 67/67 on the script tier. The three model-tier free-text pastes are left to Phase 4, as the gate's "non-model parts" allows.
+- Generator seeds 0–1,999 with the model off: 99.55% assignment recall (gate ≥ 99%) and 99.47% precision.

@@ -48,6 +48,9 @@ pub struct SheetCtx<'a> {
     /// Cells that belong to crew or roster blocks, not the schedule.
     pub consumed: HashSet<(usize, usize)>,
     pub roster: Option<Vec<String>>,
+    /// Some numeric date in the sheet has a first part over 12 (and none a
+    /// second part over 12): the author writes day-first.
+    pub day_first: bool,
 }
 
 impl<'a> SheetCtx<'a> {
@@ -67,6 +70,11 @@ impl<'a> SheetCtx<'a> {
         let mut consumed = HashSet::new();
         let crews = find_crews(g, &mut consumed);
         let roster = find_roster(g, &mut consumed);
+        let numeric: Vec<dates::DayTok> = (0..g.height())
+            .flat_map(|r| (0..g.width()).filter_map(move |c| g.day(r, c)))
+            .filter(|t| matches!(t, dates::DayTok::Numeric { .. }))
+            .collect();
+        let day_first = dates::day_first(&numeric);
         SheetCtx {
             g,
             today,
@@ -74,6 +82,7 @@ impl<'a> SheetCtx<'a> {
             crews,
             consumed,
             roster,
+            day_first,
         }
     }
 
@@ -442,12 +451,18 @@ fn find_crews(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Crews {
             let right: Vec<usize> = (c + 1..g.width())
                 .take_while(|&cc| !g.is_empty(r, cc))
                 .collect();
-            let row_is_roster = !right.is_empty()
+            // The crew name leads its row ("Crew 1 | Mike | Jose"); a crew
+            // name inside a schedule row is an assignment, not a list.
+            let leads_row = g.first_nonempty(r) == Some(c);
+            let row_is_roster = leads_row
+                && !right.is_empty()
                 && right.iter().all(|&cc| g.day(r, cc).is_none())
                 && right.iter().all(|&cc| {
                     let p = cells::parse_cell(g.text(r, cc), Expect::People);
                     !p.items.is_empty()
-                        && p.items.iter().all(|i| person_score(&i.text) >= 0.4)
+                        && p.items
+                            .iter()
+                            .all(|i| person_score(&i.text) >= 0.4 && !crew_name(&key(&i.text)))
                         && p.status.is_none()
                 })
                 && (row_title_is_crew_list(g, r)
@@ -468,17 +483,20 @@ fn find_crews(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Crews {
                 consumed.insert((r, c));
                 continue;
             }
-            // A column headed by the crew name with members listed below,
-            // next to other crew-name headers.
+            // Columns headed by crew names ("Crew A | Crew B") with members
+            // listed below. The header row holds nothing but crew names.
             let peers = (0..g.width())
                 .filter(|&cc| cc != c && crew_name(&key(g.text(r, cc))))
                 .count();
-            if peers >= 1 && (0..g.width()).all(|cc| g.day(r, cc).is_none()) {
+            let header_only_crews =
+                (0..g.width()).all(|cc| g.is_empty(r, cc) || crew_name(&key(g.text(r, cc))));
+            if peers >= 1 && header_only_crews {
                 let mut members = Vec::new();
                 let mut rr = r + 1;
                 while rr < g.height()
                     && !g.is_empty(rr, c)
                     && person_score(g.text(rr, c)) >= 0.4
+                    && !crew_name(&key(g.text(rr, c)))
                     && g.day(rr, c).is_none()
                 {
                     members.push(g.text(rr, c).to_string());
@@ -542,6 +560,21 @@ fn find_roster(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Option<Vec<S
 }
 
 // ------------------------------------------------------------- shared helpers
+
+/// Section titles inside a schedule: "Week of 9/28/2026", "OCTOBER 2026",
+/// "Crew Schedule".
+pub fn is_title_text(text: &str, today: NaiveDate) -> bool {
+    let k = key(text);
+    dates::week_anchor(text, today).is_some()
+        || k.contains("schedule")
+        || k.contains("horario")
+        || k.starts_with("week ")
+        || k.starts_with("semana ")
+        || k.split(' ')
+            .any(|w| crate::lexicon::is_month_word(w).is_some())
+            && k.chars().any(|c| c.is_ascii_digit())
+            && k.split(' ').count() <= 3
+}
 
 /// Rows that carry no schedule data: titles, footers, signature lines.
 pub fn is_footer_text(text: &str) -> bool {

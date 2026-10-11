@@ -57,8 +57,9 @@ def test_dates_and_weekdays(cases):
         for f in e["flags"]:
             if f["type"] == "not_booked":
                 assert DAY_KEYS[dt.date.fromisoformat(f["date"]).weekday()] in work
+        dayfirst = t["render"]["date_format"] == "dmy4"
         for label, iso in t["date_labels"]:
-            check_label(label, dt.date.fromisoformat(iso), c.seed)
+            check_label(label, dt.date.fromisoformat(iso), c.seed, dayfirst)
 
 
 WD = {"mon": 0, "tue": 1, "wed": 2, "thu": 3, "fri": 4, "sat": 5, "sun": 6, "m": 0, "t": 1, "w": 2,
@@ -68,7 +69,7 @@ WD = {"mon": 0, "tue": 1, "wed": 2, "thu": 3, "fri": 4, "sat": 5, "sun": 6, "m":
 MON = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
 
 
-def check_label(label: str, d: dt.date, seed: int) -> None:
+def check_label(label: str, d: dt.date, seed: int, dayfirst: bool = False) -> None:
     low = label.casefold()
     first = low.split()[0].rstrip(":")
     if first in ("week", "wk"):
@@ -90,8 +91,8 @@ def check_label(label: str, d: dt.date, seed: int) -> None:
         assert dt.date.fromisoformat(low) == d, (seed, label)
     elif "/" in low:
         parts = [int(x) for x in low.split("/")]
-        if len(parts) == 3 and parts[0] == d.day and parts[1] == d.month and parts[0] > 12:
-            pass  # day-first file
+        if dayfirst and len(parts) == 3:
+            assert (parts[0], parts[1], parts[2]) == (d.day, d.month, d.year), (seed, label)
         else:
             assert (parts[0], parts[1]) == (d.month, d.day), (seed, label)
             if len(parts) == 3:

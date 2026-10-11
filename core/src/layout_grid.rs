@@ -64,7 +64,7 @@ pub fn read(ctx: &SheetCtx, transposed: bool) -> Vec<Candidate> {
         return Vec::new();
     }
     let sections = build_sections(ctx, &runs);
-    if sections.is_empty() {
+    if sections.is_empty() || labels_are_headers(ctx, &sections) {
         return Vec::new();
     }
     let kind = decide_kind(ctx, &sections);
@@ -143,7 +143,7 @@ fn find_runs(ctx: &SheetCtx) -> Vec<Run> {
             let cols: Vec<usize> = group.iter().map(|(c, _)| *c).collect();
             let span = cols[0]..cols[cols.len() - 1] + 1;
             let anchor = ctx.anchor_for(r, span).or(Some(ctx.default_anchor()));
-            let Some(dates) = dates::resolve_run(&toks, anchor, ctx.today) else {
+            let Some(dates) = dates::resolve_run(&toks, anchor, ctx.today, ctx.day_first) else {
                 continue;
             };
             if dates.windows(2).any(|w| w[1] <= w[0])
@@ -151,12 +151,15 @@ fn find_runs(ctx: &SheetCtx) -> Vec<Run> {
             {
                 continue;
             }
-            runs.push(Run {
-                row: r,
-                cols,
-                toks,
-                dates,
-            });
+            runs.extend(split_at_inner_labels(
+                ctx,
+                Run {
+                    row: r,
+                    cols,
+                    toks,
+                    dates,
+                },
+            ));
         }
     }
     // Weekday-only weeks that share one "Week of" anchor follow each other:
@@ -181,6 +184,52 @@ fn find_runs(ctx: &SheetCtx) -> Vec<Run> {
         }
     }
     runs
+}
+
+/// Side-by-side weeks that each repeat the name column: an untitled column
+/// inside a run whose values repeat the labels to the left of the run starts
+/// a new week, not a sub-column of the day before it.
+fn split_at_inner_labels(ctx: &SheetCtx, run: Run) -> Vec<Run> {
+    let g = ctx.g;
+    let Some(label_col) = run.cols[0].checked_sub(1) else {
+        return vec![run];
+    };
+    let body: Vec<usize> = (run.row + 1..g.height().min(run.row + 40)).collect();
+    let same_labels = |c: usize| {
+        let pairs: Vec<(String, String)> = body
+            .iter()
+            .map(|&r| (key(g.text(r, label_col)), key(g.text(r, c))))
+            .filter(|(a, b)| !a.is_empty() && !b.is_empty())
+            .collect();
+        let alike = pairs
+            .iter()
+            .filter(|(a, b)| a == b || a.split(' ').next() == b.split(' ').next())
+            .count();
+        pairs.len() >= 2 && alike * 10 >= pairs.len() * 6
+    };
+    let mut out = Vec::new();
+    let mut start = 0;
+    for k in 1..run.cols.len() {
+        let gap_label =
+            (run.cols[k - 1] + 1..run.cols[k]).any(|c| g.is_empty(run.row, c) && same_labels(c));
+        if gap_label {
+            out.push(Run {
+                row: run.row,
+                cols: run.cols[start..k].to_vec(),
+                toks: run.toks[start..k].to_vec(),
+                dates: run.dates[start..k].to_vec(),
+            });
+            start = k;
+        }
+    }
+    out.push(Run {
+        row: run.row,
+        cols: run.cols[start..].to_vec(),
+        toks: run.toks[start..].to_vec(),
+        dates: run.dates[start..].to_vec(),
+    });
+    out.retain(|r| !r.cols.is_empty());
+    out
 }
 
 fn build_sections(ctx: &SheetCtx, runs: &[Run]) -> Vec<Section> {
@@ -350,8 +399,11 @@ fn pick_label_col(
 }
 
 /// Whether a label marks a row (or the rest of the block) as not schedule.
-fn skip_label(text: &str) -> Option<bool> {
+fn skip_label(text: &str, today: chrono::NaiveDate) -> Option<bool> {
     let k = key(text);
+    if crate::layout::is_title_text(text, today) {
+        return Some(false);
+    }
     if is_total_label(&k) {
         return Some(false); // skip this row
     }
@@ -373,6 +425,55 @@ fn label_status(text: &str) -> Option<crate::model::Status> {
     })
 }
 
+/// "Name | Wk of 9/28" or "Name | Mon | Tue" between stacked weeks: a header
+/// word in the label column and nothing but days, titles or header words
+/// across the row.
+fn is_repeated_header(ctx: &SheetCtx, s: &Section, r: usize, label: &str) -> bool {
+    let g = ctx.g;
+    if crate::lexicon::header_role(&key(label)).is_none() {
+        return false;
+    }
+    s.days.iter().flat_map(|d| d.cols.iter()).all(|&(c, _)| {
+        let t = g.text(r, c);
+        t.is_empty()
+            || g.day(r, c).is_some()
+            || crate::layout::is_title_text(t, ctx.today)
+            || crate::lexicon::header_role(&key(t)).is_some()
+    })
+}
+
+/// A row whose only content is a title ("Week of 11/23/2026") between
+/// stacked weeks.
+fn is_title_row(ctx: &SheetCtx, s: &Section, r: usize) -> bool {
+    let g = ctx.g;
+    let cells: Vec<&str> = s
+        .label_col
+        .into_iter()
+        .chain(s.days.iter().flat_map(|d| d.cols.iter().map(|(c, _)| *c)))
+        .map(|c| g.text(r, c))
+        .filter(|t| !t.is_empty())
+        .collect();
+    cells.len() == 1 && crate::layout::is_title_text(cells[0], ctx.today)
+}
+
+/// A grid's labels are people or jobs. If they're mostly header words
+/// ("Customer", "Crew", "Name"), this is a list whose date column happens to
+/// look like a day axis.
+fn labels_are_headers(ctx: &SheetCtx, sections: &[Section]) -> bool {
+    let g = ctx.g;
+    let labels: Vec<&str> = sections
+        .iter()
+        .filter_map(|s| s.label_col.map(|c| (s, c)))
+        .flat_map(|(s, c)| s.body.clone().map(move |r| g.text(r, c)))
+        .filter(|t| !t.is_empty())
+        .collect();
+    let headers = labels
+        .iter()
+        .filter(|t| crate::lexicon::header_role(&key(t)).is_some() && !crew_name(&key(t)))
+        .count();
+    !labels.is_empty() && headers * 2 >= labels.len()
+}
+
 /// (kind, margin): which way the evidence points, and how strongly.
 fn decide_kind(ctx: &SheetCtx, sections: &[Section]) -> (Kind, f32) {
     let g = ctx.g;
@@ -385,7 +486,10 @@ fn decide_kind(ctx: &SheetCtx, sections: &[Section]) -> (Kind, f32) {
         for r in s.body.clone() {
             if let Some(c) = s.label_col {
                 let t = g.text(r, c);
-                if !t.is_empty() && skip_label(t).is_none() && !ctx.consumed.contains(&(r, c)) {
+                if !t.is_empty()
+                    && skip_label(t, ctx.today).is_none()
+                    && !ctx.consumed.contains(&(r, c))
+                {
                     if label_status(t).is_some() {
                         status_labels += 1;
                     } else {
@@ -493,7 +597,7 @@ fn extract(
                 .label_col
                 .map(|c| g.text(r, c).to_string())
                 .unwrap_or_default();
-            if let Some(stop) = skip_label(&label) {
+            if let Some(stop) = skip_label(&label, ctx.today) {
                 if stop {
                     break;
                 }
@@ -508,6 +612,9 @@ fn extract(
                     .any(|&(c, _)| !g.is_empty(r, c) && !ctx.consumed.contains(&(r, c)))
             });
             if label.trim().is_empty() && !has_data {
+                continue;
+            }
+            if is_repeated_header(ctx, s, r, &label) || is_title_row(ctx, s, r) {
                 continue;
             }
             labels.push((r, clean(&label), has_data));
@@ -531,7 +638,23 @@ fn extract(
                     "No crew list found for \u{201c}{label}\u{201d}; read it as one name."
                 ));
             }
+            // "TBD" / "Open" rows in a person grid list jobs that need someone.
+            let unstaffed_row =
+                kind == Kind::People && crate::lexicon::is_unstaffed_marker(&key(&label));
             for day in &s.days {
+                if unstaffed_row {
+                    for &(c, _) in &day.cols {
+                        let t = g.text(r, c);
+                        if t.is_empty() || ctx.consumed.contains(&(r, c)) {
+                            continue;
+                        }
+                        for site in cells::parse_cell(t, Expect::Sites).items {
+                            sink.unstaffed(&site.text, day.date, g.source(r, c));
+                        }
+                        sink.understood += 1;
+                    }
+                    continue;
+                }
                 read_day_cell(ctx, &mut sink, kind, status_row, &label, r, day);
             }
         }

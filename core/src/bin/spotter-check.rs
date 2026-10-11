@@ -491,6 +491,7 @@ fn cmd_generated(args: &[String]) -> i32 {
     let mut cases = 0usize;
     let mut worst: Vec<(f64, String, Vec<String>, Vec<String>)> = Vec::new();
     let mut times = Vec::new();
+    let mut report_rows: Vec<Value> = Vec::new();
     for dir in fixture_dirs(std::slice::from_ref(root)) {
         let Ok(text) = std::fs::read_to_string(dir.join("expected.json")) else {
             continue;
@@ -531,6 +532,16 @@ fn cmd_generated(args: &[String]) -> i32 {
         } else {
             matched as f64 / e.len() as f64
         };
+        report_rows.push(json!({
+            "case": dir.file_name().map(|n| n.to_string_lossy().into_owned()),
+            "layout": expected["layout"],
+            "input": expected["input"],
+            "expected": e.len(),
+            "actual": a.len(),
+            "missing": missing,
+            "extra": extra,
+            "got_layout": report.reading.layout,
+        }));
         if recall < 1.0 || !extra.is_empty() {
             let name = format!(
                 "{} ({}, {})",
@@ -569,6 +580,10 @@ fn cmd_generated(args: &[String]) -> i32 {
                 println!("        extra   {x}");
             }
         }
+    }
+    if let Some(path) = flag(args, "--report") {
+        std::fs::write(path, serde_json::to_string(&report_rows).expect("json"))
+            .expect("write --report");
     }
     times.sort_by(f64::total_cmp);
     let p95 = times
