@@ -3,6 +3,9 @@
 # instead of repacking them into extra anonymous memory at load. Measured on
 # Phi-4-mini: 4.10 GB -> 2.88 GB peak, ~10% slower. DECISIONS.md, Phase 4.
 GGML_CPU_REPACK = "OFF"
+# Intel Macs: CPU only, no Metal (tools/cmake/intel-mac-cpu.cmake). The cmake
+# crate reads this only when building for x86_64-apple-darwin.
+CMAKE_TOOLCHAIN_FILE_x86_64_apple_darwin = { value = "tools/cmake/intel-mac-cpu.cmake", relative = true }
 
 # Intel Macs: one static CPU build. Every Intel Mac that runs macOS 11+ has
 # AVX2, FMA and F16C except the 2013 Mac Pro, where the model stays off

@@ -317,3 +317,8 @@ Latency rose about 10%. Without this change, A and B-E2B both break the 4.0 GB c
 - **Reporting.** MODEL_REPORT.md reports both the raw answers and the gated ones.
 
 **2026-10-11 · Windows on Arm runs the x64 build.** llama.cpp's own Arm build refuses MSVC ("MSVC is not supported for ARM, use clang"). The spec ships Windows x64 only, and the app's self-test on `windows-11-arm` already runs the x64 installer under emulation. So the benchmark on that runner builds `x86_64-pc-windows-msvc` and runs it emulated: it measures what an Arm laptop would actually run. The runner stays non-blocking.
+
+**2026-10-11 · Intel Macs: Metal off at build time.**
+- **What happened.** llama.cpp turns Metal on for every Apple build, whatever the binding's features say. On `macos-15-intel` the benchmark spent 62 s compiling Metal shaders, then aborted in the Metal backend (`GGML_ASSERT(buf_dst)`) on the runner's paravirtual GPU.
+- **The fix.** The spec says "CPU on Intel Macs". A universal build compiles both architectures in one run, so a plain environment variable can't separate them. Instead, `CMAKE_TOOLCHAIN_FILE_x86_64_apple_darwin` (in `.cargo/config.toml`) points the cmake crate at `tools/cmake/intel-mac-cpu.cmake` for the Intel slice only, and that file forces `GGML_METAL=OFF`. Apple Silicon keeps Metal.
+- **CI caches.** The cmake crate doesn't declare that variable as a rebuild trigger, so the macOS CI caches got new keys.
