@@ -137,3 +137,5 @@ Open items for Phase 6, to ask Austin then:
 - Whether the Pi's upload bandwidth suits 1–3.7 GB downloads.
 
 This page serves this gift only. Because of the no-co-mingling rule, any website-wide pieces shared across gifts belong outside this repo.
+
+**2026-10-11 · Phase 1 drafting overlapped the Phase 0 CI run.** While the first CI matrix ran (about 30 minutes), Phase 1 groundwork was drafted on the `phase-1` branch: the fixture contract `fixtures/FORMAT.md`, the name lists, and the stage 1 reader. Independent agents also began the holdout fixtures and the generator. Nothing from Phase 1 was merged into `main` before the Phase 0 gate passed (run 38121971582). The spec's ordering applies to merging and gating, and both were respected.
