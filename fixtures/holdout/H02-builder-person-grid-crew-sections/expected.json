@@ -1,0 +1,368 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.xlsx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Danny Ochoa",
+      "date": "2026-10-19",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Eli Bowman",
+      "date": "2026-10-19",
+      "status": "pto"
+    },
+    {
+      "person": "Gary Linde",
+      "date": "2026-10-19",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Gary Linde",
+      "date": "2026-10-19",
+      "site": "Shop"
+    },
+    {
+      "person": "Helper",
+      "date": "2026-10-19",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Jake Furlong",
+      "date": "2026-10-19",
+      "site": "Shop",
+      "note": "orientation"
+    },
+    {
+      "person": "Kev Tran",
+      "date": "2026-10-19",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Marisol Vega",
+      "date": "2026-10-19",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Pat Oyelaran",
+      "date": "2026-10-19",
+      "site": "Ambrose bath"
+    },
+    {
+      "person": "Rich Kowalczyk",
+      "date": "2026-10-19",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Shane Mulroney",
+      "date": "2026-10-19",
+      "site": "Cole St duplex"
+    },
+    {
+      "person": "Tom Brandt",
+      "date": "2026-10-19",
+      "site": "Shop"
+    },
+    {
+      "person": "Danny Ochoa",
+      "date": "2026-10-20",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Eli Bowman",
+      "date": "2026-10-20",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Gary Linde",
+      "date": "2026-10-20",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Helper",
+      "date": "2026-10-20",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Kev Tran",
+      "date": "2026-10-20",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Marisol Vega",
+      "date": "2026-10-20",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Pat Oyelaran",
+      "date": "2026-10-20",
+      "site": "Ambrose bath"
+    },
+    {
+      "person": "Rich Kowalczyk",
+      "date": "2026-10-20",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Shane Mulroney",
+      "date": "2026-10-20",
+      "site": "Cole St duplex"
+    },
+    {
+      "person": "Tom Brandt",
+      "date": "2026-10-20",
+      "site": "Ambrose bath"
+    },
+    {
+      "person": "Danny Ochoa",
+      "date": "2026-10-21",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Eli Bowman",
+      "date": "2026-10-21",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Gary Linde",
+      "date": "2026-10-21",
+      "site": "Hendricks kitchen",
+      "note": "pick up cabinets"
+    },
+    {
+      "person": "Helper",
+      "date": "2026-10-21",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Kev Tran",
+      "date": "2026-10-21",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Kev Tran",
+      "date": "2026-10-21",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Marisol Vega",
+      "date": "2026-10-21",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Pat Oyelaran",
+      "date": "2026-10-21",
+      "status": "sick"
+    },
+    {
+      "person": "Rich Kowalczyk",
+      "date": "2026-10-21",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Shane Mulroney",
+      "date": "2026-10-21",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Tom Brandt",
+      "date": "2026-10-21",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Danny Ochoa",
+      "date": "2026-10-22",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Eli Bowman",
+      "date": "2026-10-22",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Gary Linde",
+      "date": "2026-10-22",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Helper",
+      "date": "2026-10-22",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Jake Furlong",
+      "date": "2026-10-22",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Kev Tran",
+      "date": "2026-10-22",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Marisol Vega",
+      "date": "2026-10-22",
+      "status": "vacation"
+    },
+    {
+      "person": "Pat Oyelaran",
+      "date": "2026-10-22",
+      "site": "Ambrose bath",
+      "note": "punch list"
+    },
+    {
+      "person": "Rich Kowalczyk",
+      "date": "2026-10-22",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Shane Mulroney",
+      "date": "2026-10-22",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Tom Brandt",
+      "date": "2026-10-22",
+      "site": "Ambrose bath"
+    },
+    {
+      "person": "Tom Brandt",
+      "date": "2026-10-22",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Danny Ochoa",
+      "date": "2026-10-23",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Eli Bowman",
+      "date": "2026-10-23",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Gary Linde",
+      "date": "2026-10-23",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Jake Furlong",
+      "date": "2026-10-23",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Kev Tran",
+      "date": "2026-10-23",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Marisol Vega",
+      "date": "2026-10-23",
+      "status": "vacation"
+    },
+    {
+      "person": "Pat Oyelaran",
+      "date": "2026-10-23",
+      "status": "off"
+    },
+    {
+      "person": "Rich Kowalczyk",
+      "date": "2026-10-23",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Shane Mulroney",
+      "date": "2026-10-23",
+      "site": "Lot 14 Deer Run"
+    },
+    {
+      "person": "Tom Brandt",
+      "date": "2026-10-23",
+      "site": "Hendricks kitchen"
+    },
+    {
+      "person": "Danny Ochoa",
+      "date": "2026-10-24",
+      "site": "Pruitt Res."
+    },
+    {
+      "person": "Rich Kowalczyk",
+      "date": "2026-10-24",
+      "site": "Pruitt Res."
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Kev Tran",
+      "date": "2026-10-21",
+      "sites": [
+        "Pruitt Res.",
+        "Hendricks kitchen"
+      ]
+    },
+    {
+      "type": "double_booked",
+      "person": "Tom Brandt",
+      "date": "2026-10-22",
+      "sites": [
+        "Hendricks kitchen",
+        "Ambrose bath"
+      ]
+    },
+    {
+      "type": "not_booked",
+      "person": "Jake Furlong",
+      "date": "2026-10-20"
+    },
+    {
+      "type": "not_booked",
+      "person": "Jake Furlong",
+      "date": "2026-10-21"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Ambrose bath",
+      "date": "2026-10-21"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "internal_plus_site",
+      "person": "Gary Linde",
+      "date": "2026-10-19",
+      "sites": [
+        "Shop",
+        "Hendricks kitchen"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "weekday_mismatch"
+    },
+    {
+      "type": "fill_down"
+    }
+  ],
+  "error": null
+}

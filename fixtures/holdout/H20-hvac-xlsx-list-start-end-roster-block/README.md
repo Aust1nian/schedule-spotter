@@ -1,0 +1,1 @@
+Heating and air company's xlsx long list: real Excel date cells shown as 'Mon 10/26' and time cells for Start/End, blank rows between days, a TECHS roster block beside the list that names 'Robert Dunn' while every row says 'Bob Dunn', overlapping times (flag) vs split day vs office shop time, PTO/sick rows, a duplicated row left beside a sick row, a Temp, and TBD for a 2nd tech.

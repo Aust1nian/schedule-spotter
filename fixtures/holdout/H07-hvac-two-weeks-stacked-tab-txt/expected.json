@@ -1,0 +1,454 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.txt",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "stacked",
+  "assignments": [
+    {
+      "person": "Brad Sowers",
+      "date": "2026-10-19",
+      "site": "Warehouse"
+    },
+    {
+      "person": "Carlos Mejia",
+      "date": "2026-10-19",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Dennis Kuhl",
+      "date": "2026-10-19",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Jeff Ames",
+      "date": "2026-10-19",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-19",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Ricky Banks",
+      "date": "2026-10-19",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Stan Wolfe",
+      "date": "2026-10-19",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Trinh Nguyen",
+      "date": "2026-10-19",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Brad Sowers",
+      "date": "2026-10-20",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Carlos Mejia",
+      "date": "2026-10-20",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Dennis Kuhl",
+      "date": "2026-10-20",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Jeff Ames",
+      "date": "2026-10-20",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-20",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Ricky Banks",
+      "date": "2026-10-20",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Stan Wolfe",
+      "date": "2026-10-20",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Trinh Nguyen",
+      "date": "2026-10-20",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Brad Sowers",
+      "date": "2026-10-21",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Carlos Mejia",
+      "date": "2026-10-21",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Dennis Kuhl",
+      "date": "2026-10-21",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Jeff Ames",
+      "date": "2026-10-21",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-21",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Ricky Banks",
+      "date": "2026-10-21",
+      "site": "Warehouse"
+    },
+    {
+      "person": "Stan Wolfe",
+      "date": "2026-10-21",
+      "site": "Warehouse"
+    },
+    {
+      "person": "Trinh Nguyen",
+      "date": "2026-10-21",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Brad Sowers",
+      "date": "2026-10-22",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Carlos Mejia",
+      "date": "2026-10-22",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Dennis Kuhl",
+      "date": "2026-10-22",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Jeff Ames",
+      "date": "2026-10-22",
+      "status": "sick"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-22",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Ricky Banks",
+      "date": "2026-10-22",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Stan Wolfe",
+      "date": "2026-10-22",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Temp",
+      "date": "2026-10-22",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Trinh Nguyen",
+      "date": "2026-10-22",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Brad Sowers",
+      "date": "2026-10-23",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Carlos Mejia",
+      "date": "2026-10-23",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Dennis Kuhl",
+      "date": "2026-10-23",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Jeff Ames",
+      "date": "2026-10-23",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-23",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Ricky Banks",
+      "date": "2026-10-23",
+      "status": "pto"
+    },
+    {
+      "person": "Stan Wolfe",
+      "date": "2026-10-23",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Brad Sowers",
+      "date": "2026-10-26",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Carlos Mejia",
+      "date": "2026-10-26",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Dennis Kuhl",
+      "date": "2026-10-26",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Jeff Ames",
+      "date": "2026-10-26",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-26",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Ricky Banks",
+      "date": "2026-10-26",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Stan Wolfe",
+      "date": "2026-10-26",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Trinh Nguyen",
+      "date": "2026-10-26",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Brad Sowers",
+      "date": "2026-10-27",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Carlos Mejia",
+      "date": "2026-10-27",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Dennis Kuhl",
+      "date": "2026-10-27",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Jeff Ames",
+      "date": "2026-10-27",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-27",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-27",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Ricky Banks",
+      "date": "2026-10-27",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Stan Wolfe",
+      "date": "2026-10-27",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Trinh Nguyen",
+      "date": "2026-10-27",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Brad Sowers",
+      "date": "2026-10-28",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Carlos Mejia",
+      "date": "2026-10-28",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Dennis Kuhl",
+      "date": "2026-10-28",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Jeff Ames",
+      "date": "2026-10-28",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-28",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Ricky Banks",
+      "date": "2026-10-28",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Stan Wolfe",
+      "date": "2026-10-28",
+      "status": "vacation"
+    },
+    {
+      "person": "Trinh Nguyen",
+      "date": "2026-10-28",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Brad Sowers",
+      "date": "2026-10-29",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Dennis Kuhl",
+      "date": "2026-10-29",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Jeff Ames",
+      "date": "2026-10-29",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-29",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Ricky Banks",
+      "date": "2026-10-29",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Stan Wolfe",
+      "date": "2026-10-29",
+      "status": "vacation"
+    },
+    {
+      "person": "Trinh Nguyen",
+      "date": "2026-10-29",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Brad Sowers",
+      "date": "2026-10-30",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Carlos Mejia",
+      "date": "2026-10-30",
+      "site": "Warehouse"
+    },
+    {
+      "person": "Dennis Kuhl",
+      "date": "2026-10-30",
+      "site": "Elmwood Apts bldg 2"
+    },
+    {
+      "person": "Jeff Ames",
+      "date": "2026-10-30",
+      "site": "Bayview Plaza unit 4"
+    },
+    {
+      "person": "Omar Haddad",
+      "date": "2026-10-30",
+      "site": "Kroll residence"
+    },
+    {
+      "person": "Ricky Banks",
+      "date": "2026-10-30",
+      "site": "St. Agnes rectory"
+    },
+    {
+      "person": "Stan Wolfe",
+      "date": "2026-10-30",
+      "status": "vacation"
+    },
+    {
+      "person": "Trinh Nguyen",
+      "date": "2026-10-30",
+      "site": "Kroll residence"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Omar Haddad",
+      "date": "2026-10-27",
+      "sites": [
+        "Kroll residence",
+        "Bayview Plaza unit 4"
+      ]
+    },
+    {
+      "type": "not_booked",
+      "person": "Trinh Nguyen",
+      "date": "2026-10-23"
+    },
+    {
+      "type": "not_booked",
+      "person": "Carlos Mejia",
+      "date": "2026-10-29"
+    },
+    {
+      "type": "unstaffed",
+      "site": "St. Agnes rectory",
+      "date": "2026-10-21"
+    }
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [],
+  "error": null
+}

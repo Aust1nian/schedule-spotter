@@ -1,0 +1,1 @@
+Masonry company's October 2026 job calendar in xlsx (Excel calendar template style): Sunday-first week rows, day-number row over 'Job: names' entry lines, blank days from September, OFF/PTO/VAC lines, Saturday overtime with a note, Yard as internal, crews changing jobs mid-month, merged title and footer notes.

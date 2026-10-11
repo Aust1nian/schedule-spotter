@@ -1,0 +1,376 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Eddie Kwan",
+      "date": "2026-10-19",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Gabe Lutz",
+      "date": "2026-10-19",
+      "site": "Ellison chimney rebuild",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Hector Ruiz",
+      "date": "2026-10-19",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Jim Kovac",
+      "date": "2026-10-19",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Laborer",
+      "date": "2026-10-19",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Lance Moody",
+      "date": "2026-10-19",
+      "status": "pto"
+    },
+    {
+      "person": "Marty Flynn",
+      "date": "2026-10-19",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Owen Price",
+      "date": "2026-10-19",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Pablo Vega",
+      "date": "2026-10-19",
+      "site": "Yard"
+    },
+    {
+      "person": "Reuben Cho",
+      "date": "2026-10-19",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Sal DiNapoli",
+      "date": "2026-10-19",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Tony Russo",
+      "date": "2026-10-19",
+      "site": "Ellison chimney rebuild",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Eddie Kwan",
+      "date": "2026-10-20",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Gabe Lutz",
+      "date": "2026-10-20",
+      "site": "Ellison chimney rebuild",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Hector Ruiz",
+      "date": "2026-10-20",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Jim Kovac",
+      "date": "2026-10-20",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Lance Moody",
+      "date": "2026-10-20",
+      "status": "pto"
+    },
+    {
+      "person": "Marty Flynn",
+      "date": "2026-10-20",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Owen Price",
+      "date": "2026-10-20",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Pablo Vega",
+      "date": "2026-10-20",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Reuben Cho",
+      "date": "2026-10-20",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Sal DiNapoli",
+      "date": "2026-10-20",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Tony Russo",
+      "date": "2026-10-20",
+      "site": "Ellison chimney rebuild",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Anthony Russo",
+      "date": "2026-10-21",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Eddie Kwan",
+      "date": "2026-10-21",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Gabe Lutz",
+      "date": "2026-10-21",
+      "site": "Ellison chimney rebuild"
+    },
+    {
+      "person": "Hector Ruiz",
+      "date": "2026-10-21",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Jim Kovac",
+      "date": "2026-10-21",
+      "site": "Yard"
+    },
+    {
+      "person": "Lance Moody",
+      "date": "2026-10-21",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Marty Flynn",
+      "date": "2026-10-21",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Owen Price",
+      "date": "2026-10-21",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Pablo Vega",
+      "date": "2026-10-21",
+      "site": "Yard"
+    },
+    {
+      "person": "Sal DiNapoli",
+      "date": "2026-10-21",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Tony Russo",
+      "date": "2026-10-21",
+      "site": "Ellison chimney rebuild"
+    },
+    {
+      "person": "Eddie Kwan",
+      "date": "2026-10-22",
+      "site": "Yard"
+    },
+    {
+      "person": "Gabe Lutz",
+      "date": "2026-10-22",
+      "site": "Ellison chimney rebuild",
+      "start": "07:00",
+      "end": "11:00"
+    },
+    {
+      "person": "Hector Ruiz",
+      "date": "2026-10-22",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Jim Kovac",
+      "date": "2026-10-22",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Lance Moody",
+      "date": "2026-10-22",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Marty Flynn",
+      "date": "2026-10-22",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Owen Price",
+      "date": "2026-10-22",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Pablo Vega",
+      "date": "2026-10-22",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Reuben Cho",
+      "date": "2026-10-22",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Sal DiNapoli",
+      "date": "2026-10-22",
+      "status": "sick"
+    },
+    {
+      "person": "Tony Russo",
+      "date": "2026-10-22",
+      "site": "Ellison chimney rebuild",
+      "start": "07:00",
+      "end": "11:00"
+    },
+    {
+      "person": "Tony Russo",
+      "date": "2026-10-22",
+      "site": "St. Rita's steps",
+      "start": "11:30",
+      "end": "15:30"
+    },
+    {
+      "person": "Eddie Kwan",
+      "date": "2026-10-23",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Gabe Lutz",
+      "date": "2026-10-23",
+      "site": "Ellison chimney rebuild"
+    },
+    {
+      "person": "Hector Ruiz",
+      "date": "2026-10-23",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Jim Kovac",
+      "date": "2026-10-23",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Lance Moody",
+      "date": "2026-10-23",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Marty Flynn",
+      "date": "2026-10-23",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Owen Price",
+      "date": "2026-10-23",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Pablo Vega",
+      "date": "2026-10-23",
+      "status": "vacation"
+    },
+    {
+      "person": "Pablo Vega",
+      "date": "2026-10-23",
+      "site": "St. Rita's steps"
+    },
+    {
+      "person": "Reuben Cho",
+      "date": "2026-10-23",
+      "site": "Westbrook library veneer"
+    },
+    {
+      "person": "Sal DiNapoli",
+      "date": "2026-10-23",
+      "site": "Calder St retaining wall"
+    },
+    {
+      "person": "Tony Russo",
+      "date": "2026-10-23",
+      "site": "Ellison chimney rebuild"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Anthony Russo",
+      "date": "2026-10-21",
+      "sites": [
+        "Ellison chimney rebuild",
+        "Westbrook library veneer"
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Pablo Vega",
+      "date": "2026-10-23",
+      "sites": [
+        "St. Rita's steps"
+      ],
+      "status": "vacation"
+    },
+    {
+      "type": "not_booked",
+      "person": "Reuben Cho",
+      "date": "2026-10-21"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Calder St retaining wall",
+      "date": "2026-10-22"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "split_day",
+      "person": "Anthony Russo",
+      "date": "2026-10-22",
+      "sites": [
+        "Ellison chimney rebuild",
+        "St. Rita's steps"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "error": null
+}

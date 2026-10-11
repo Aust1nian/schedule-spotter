@@ -1,0 +1,42 @@
+{
+  "window": [
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16"
+  ],
+  "roster": null,
+  "person_canon": {},
+  "internal": [
+    "Shop"
+  ],
+  "placeholders": [
+    "Helper"
+  ],
+  "subs": [
+    "Northside Roofing LLC"
+  ],
+  "jobs": [
+    "Lot 3 Sorrel Ridge",
+    "Lot 7 Sorrel Ridge",
+    "Kim remodel",
+    "Halvorsen deck",
+    "Mt. Olive Church roof",
+    "Shop"
+  ],
+  "inactive": [
+    [
+      "Halvorsen deck",
+      "2026-10-12"
+    ],
+    [
+      "Mt. Olive Church roof",
+      "2026-10-16"
+    ]
+  ],
+  "pseudo_rows": [
+    "OFF"
+  ],
+  "fixture_dir": "H11-homebuilder-materials-sheet-then-job-grid-clean"
+}

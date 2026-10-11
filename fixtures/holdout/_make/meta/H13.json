@@ -1,0 +1,52 @@
+{
+  "window": [
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22",
+    "2026-10-23"
+  ],
+  "roster": [
+    "Arlo",
+    "Brett",
+    "Cesar",
+    "Darius",
+    "Emmett",
+    "Felix",
+    "Grady",
+    "Hollis",
+    "Ivan",
+    "Wade"
+  ],
+  "person_canon": {},
+  "internal": [
+    "Shop"
+  ],
+  "placeholders": [],
+  "subs": [
+    "Bayside Concrete Inc."
+  ],
+  "jobs": [
+    "Bishop Rd barn",
+    "Quincy St 4-plex",
+    "Hartman ADU",
+    "Fire Stn 12 bays",
+    "Lakeside pavilion",
+    "Shop"
+  ],
+  "inactive": [
+    [
+      "Lakeside pavilion",
+      "2026-10-19"
+    ],
+    [
+      "Lakeside pavilion",
+      "2026-10-20"
+    ]
+  ],
+  "pseudo_rows": [
+    "OFF",
+    "VAC"
+  ],
+  "fixture_dir": "H13-builder-ods-job-grid-roster-block"
+}

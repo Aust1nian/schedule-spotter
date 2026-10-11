@@ -1,0 +1,1 @@
+Interiors contractor's long list saved as Excel 'CSV (Comma delimited)' on Windows: Windows-1252 with José/Martín/Ávila and smart quotes inside job names, CRLF, rows grouped by job rather than date, Start/End columns on some rows (split day vs untimed second job), PTO/vac rows appended at the bottom, a drywall subcontractor at two jobs, a title with an en dash and footer lines.

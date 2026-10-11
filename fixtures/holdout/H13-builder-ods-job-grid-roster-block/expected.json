@@ -1,0 +1,372 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.ods",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "job_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Arlo",
+      "date": "2026-10-19",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Brett",
+      "date": "2026-10-19",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Cesar",
+      "date": "2026-10-19",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Colton",
+      "date": "2026-10-19",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Darius",
+      "date": "2026-10-19",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Emmett",
+      "date": "2026-10-19",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Felix",
+      "date": "2026-10-19",
+      "site": "Hartman ADU"
+    },
+    {
+      "person": "Grady",
+      "date": "2026-10-19",
+      "site": "Hartman ADU"
+    },
+    {
+      "person": "Hollis",
+      "date": "2026-10-19",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Ivan",
+      "date": "2026-10-19",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Wade",
+      "date": "2026-10-19",
+      "status": "vacation"
+    },
+    {
+      "person": "Arlo",
+      "date": "2026-10-20",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Bayside Concrete Inc.",
+      "date": "2026-10-20",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Brett",
+      "date": "2026-10-20",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Cesar",
+      "date": "2026-10-20",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Colton",
+      "date": "2026-10-20",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Darius",
+      "date": "2026-10-20",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Emmett",
+      "date": "2026-10-20",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Felix",
+      "date": "2026-10-20",
+      "site": "Hartman ADU"
+    },
+    {
+      "person": "Grady",
+      "date": "2026-10-20",
+      "site": "Hartman ADU"
+    },
+    {
+      "person": "Hollis",
+      "date": "2026-10-20",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Ivan",
+      "date": "2026-10-20",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Wade",
+      "date": "2026-10-20",
+      "status": "vacation"
+    },
+    {
+      "person": "Arlo",
+      "date": "2026-10-21",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Brett",
+      "date": "2026-10-21",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Cesar",
+      "date": "2026-10-21",
+      "site": "Hartman ADU"
+    },
+    {
+      "person": "Colton",
+      "date": "2026-10-21",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Darius",
+      "date": "2026-10-21",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Emmett",
+      "date": "2026-10-21",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Felix",
+      "date": "2026-10-21",
+      "site": "Hartman ADU"
+    },
+    {
+      "person": "Grady",
+      "date": "2026-10-21",
+      "site": "Hartman ADU"
+    },
+    {
+      "person": "Hollis",
+      "date": "2026-10-21",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Ivan",
+      "date": "2026-10-21",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Wade",
+      "date": "2026-10-21",
+      "status": "vacation"
+    },
+    {
+      "date": "2026-10-21",
+      "site": "Lakeside pavilion",
+      "unstaffed": true
+    },
+    {
+      "person": "Arlo",
+      "date": "2026-10-22",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Bayside Concrete Inc.",
+      "date": "2026-10-22",
+      "site": "Lakeside pavilion"
+    },
+    {
+      "person": "Brett",
+      "date": "2026-10-22",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Cesar",
+      "date": "2026-10-22",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Darius",
+      "date": "2026-10-22",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Emmett",
+      "date": "2026-10-22",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Felix",
+      "date": "2026-10-22",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Grady",
+      "date": "2026-10-22",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Grady",
+      "date": "2026-10-22",
+      "site": "Lakeside pavilion"
+    },
+    {
+      "person": "Hollis",
+      "date": "2026-10-22",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Ivan",
+      "date": "2026-10-22",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Arlo",
+      "date": "2026-10-23",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Bayside Concrete Inc.",
+      "date": "2026-10-23",
+      "site": "Fire Stn 12 bays"
+    },
+    {
+      "person": "Bayside Concrete Inc.",
+      "date": "2026-10-23",
+      "site": "Lakeside pavilion"
+    },
+    {
+      "person": "Brett",
+      "date": "2026-10-23",
+      "status": "off"
+    },
+    {
+      "person": "Brett",
+      "date": "2026-10-23",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Cesar",
+      "date": "2026-10-23",
+      "site": "Bishop Rd barn"
+    },
+    {
+      "person": "Darius",
+      "date": "2026-10-23",
+      "site": "Quincy St 4-plex"
+    },
+    {
+      "person": "Emmett",
+      "date": "2026-10-23",
+      "site": "Lakeside pavilion"
+    },
+    {
+      "person": "Felix",
+      "date": "2026-10-23",
+      "site": "Hartman ADU"
+    },
+    {
+      "person": "Grady",
+      "date": "2026-10-23",
+      "site": "Hartman ADU"
+    },
+    {
+      "person": "Hollis",
+      "date": "2026-10-23",
+      "site": "Shop"
+    },
+    {
+      "person": "Ivan",
+      "date": "2026-10-23",
+      "site": "Fire Stn 12 bays"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Grady",
+      "date": "2026-10-22",
+      "sites": [
+        "Fire Stn 12 bays",
+        "Lakeside pavilion"
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Brett",
+      "date": "2026-10-23",
+      "sites": [
+        "Bishop Rd barn"
+      ],
+      "status": "off"
+    },
+    {
+      "type": "not_booked",
+      "person": "Wade",
+      "date": "2026-10-22"
+    },
+    {
+      "type": "not_booked",
+      "person": "Wade",
+      "date": "2026-10-23"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Hartman ADU",
+      "date": "2026-10-22"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Lakeside pavilion",
+      "date": "2026-10-21"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "subcontractor_multi_site",
+      "person": "Bayside Concrete Inc.",
+      "date": "2026-10-23",
+      "sites": [
+        "Fire Stn 12 bays",
+        "Lakeside pavilion"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "error": null
+}

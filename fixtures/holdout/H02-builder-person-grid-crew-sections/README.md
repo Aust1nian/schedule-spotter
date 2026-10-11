@@ -1,0 +1,1 @@
+Custom-home builder's xlsx person x day grid: merged title block, 'Week of' line, 'Mon 10/19' headers, a blank spacer column, merged crew-section label rows (FRAMING / FINISH), a floater listed under two sections, two sites in one cell, shop plus a site, notes in cells, PTO/sick/OFF/vac, a Saturday column under Mon-Fri, a placeholder Helper row and a totals row.

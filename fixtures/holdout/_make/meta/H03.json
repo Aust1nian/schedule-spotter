@@ -1,0 +1,40 @@
+{
+  "window": [
+    "2026-10-26",
+    "2026-10-27",
+    "2026-10-28",
+    "2026-10-29",
+    "2026-10-30"
+  ],
+  "roster": null,
+  "person_canon": {},
+  "internal": [
+    "Shop"
+  ],
+  "placeholders": [
+    "Helper"
+  ],
+  "subs": [
+    "Delta Electric LLC"
+  ],
+  "jobs": [
+    "1420 Johnson St",
+    "1240 Johnson St",
+    "Whitfield addition",
+    "88 Larchmont Ave",
+    "Fenwick basement",
+    "Riverside Dental TI",
+    "Shop"
+  ],
+  "inactive": [
+    [
+      "Fenwick basement",
+      "2026-10-30"
+    ]
+  ],
+  "pseudo_rows": [
+    "OFF",
+    "VAC"
+  ],
+  "fixture_dir": "H03-remodeler-job-grid-twin-addresses"
+}

@@ -1,0 +1,1 @@
+Roofing contractor's hand-kept long list (comma CSV, LF): title rows, footer notes, times on some rows (7-3:30, 7a-3p, 1p-4p), split day vs overlapping times, rows appended out of order, Saturday overtime under a Mon-Fri week, PTO/sick rows, 'need 1', a gutter subcontractor at two sites, a placeholder laborer, stray spaces in a name.

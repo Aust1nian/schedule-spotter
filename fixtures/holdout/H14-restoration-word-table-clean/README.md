@@ -1,0 +1,1 @@
+Clean schedule (no double-bookings, no one assigned while off) typed as a table in a Word .docx: heading and 'week of 10/26/2026' paragraph above, full weekday names (Monday..Friday) as the only column headers, Office as an internal site and Office plus a job, notes after ' - ' in cells, PTO/vac, blank days, a job with nobody on it mid-week and a signature line below.

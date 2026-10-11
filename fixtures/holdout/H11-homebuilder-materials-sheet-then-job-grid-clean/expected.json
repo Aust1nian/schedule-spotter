@@ -1,0 +1,322 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.xlsx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "job_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Curtis",
+      "date": "2026-10-12",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Dave",
+      "date": "2026-10-12",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Eddie",
+      "date": "2026-10-12",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Gordo",
+      "date": "2026-10-12",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Jamie",
+      "date": "2026-10-12",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Lucas",
+      "date": "2026-10-12",
+      "site": "Kim remodel"
+    },
+    {
+      "person": "Nell",
+      "date": "2026-10-12",
+      "site": "Shop"
+    },
+    {
+      "person": "Northside Roofing LLC",
+      "date": "2026-10-12",
+      "site": "Mt. Olive Church roof"
+    },
+    {
+      "person": "Raymond",
+      "date": "2026-10-12",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Tobias",
+      "date": "2026-10-12",
+      "site": "Kim remodel"
+    },
+    {
+      "person": "Curtis",
+      "date": "2026-10-13",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Dave",
+      "date": "2026-10-13",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Eddie",
+      "date": "2026-10-13",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Gordo",
+      "date": "2026-10-13",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Jamie",
+      "date": "2026-10-13",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Lucas",
+      "date": "2026-10-13",
+      "site": "Kim remodel"
+    },
+    {
+      "person": "Nell",
+      "date": "2026-10-13",
+      "site": "Halvorsen deck"
+    },
+    {
+      "person": "Northside Roofing LLC",
+      "date": "2026-10-13",
+      "site": "Mt. Olive Church roof"
+    },
+    {
+      "person": "Raymond",
+      "date": "2026-10-13",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Sam",
+      "date": "2026-10-13",
+      "site": "Halvorsen deck"
+    },
+    {
+      "person": "Tobias",
+      "date": "2026-10-13",
+      "site": "Kim remodel"
+    },
+    {
+      "person": "Curtis",
+      "date": "2026-10-14",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Dave",
+      "date": "2026-10-14",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Eddie",
+      "date": "2026-10-14",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Gordo",
+      "date": "2026-10-14",
+      "site": "Halvorsen deck"
+    },
+    {
+      "person": "Helper",
+      "date": "2026-10-14",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Jamie",
+      "date": "2026-10-14",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Lucas",
+      "date": "2026-10-14",
+      "site": "Shop"
+    },
+    {
+      "person": "Nell",
+      "date": "2026-10-14",
+      "site": "Kim remodel"
+    },
+    {
+      "person": "Raymond",
+      "date": "2026-10-14",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Sam",
+      "date": "2026-10-14",
+      "site": "Halvorsen deck"
+    },
+    {
+      "person": "Tobias",
+      "date": "2026-10-14",
+      "site": "Kim remodel"
+    },
+    {
+      "person": "Curtis",
+      "date": "2026-10-15",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Dave",
+      "date": "2026-10-15",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Eddie",
+      "date": "2026-10-15",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Gordo",
+      "date": "2026-10-15",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Jamie",
+      "date": "2026-10-15",
+      "status": "off"
+    },
+    {
+      "person": "Lucas",
+      "date": "2026-10-15",
+      "site": "Shop"
+    },
+    {
+      "person": "Nell",
+      "date": "2026-10-15",
+      "site": "Kim remodel"
+    },
+    {
+      "person": "Northside Roofing LLC",
+      "date": "2026-10-15",
+      "site": "Mt. Olive Church roof"
+    },
+    {
+      "person": "Raymond",
+      "date": "2026-10-15",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Sam",
+      "date": "2026-10-15",
+      "site": "Halvorsen deck"
+    },
+    {
+      "person": "Tobias",
+      "date": "2026-10-15",
+      "site": "Kim remodel"
+    },
+    {
+      "person": "Curtis",
+      "date": "2026-10-16",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Dave",
+      "date": "2026-10-16",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Eddie",
+      "date": "2026-10-16",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Gordo",
+      "date": "2026-10-16",
+      "site": "Shop"
+    },
+    {
+      "person": "Jamie",
+      "date": "2026-10-16",
+      "site": "Lot 3 Sorrel Ridge"
+    },
+    {
+      "person": "Lucas",
+      "date": "2026-10-16",
+      "status": "off"
+    },
+    {
+      "person": "Nell",
+      "date": "2026-10-16",
+      "site": "Halvorsen deck"
+    },
+    {
+      "person": "Raymond",
+      "date": "2026-10-16",
+      "site": "Lot 7 Sorrel Ridge"
+    },
+    {
+      "person": "Sam",
+      "date": "2026-10-16",
+      "site": "Halvorsen deck"
+    },
+    {
+      "person": "Tobias",
+      "date": "2026-10-16",
+      "status": "off"
+    },
+    {
+      "date": "2026-10-16",
+      "site": "Kim remodel",
+      "unstaffed": true
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "not_booked",
+      "person": "Sam",
+      "date": "2026-10-12"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Kim remodel",
+      "date": "2026-10-16"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Mt. Olive Church roof",
+      "date": "2026-10-14"
+    }
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "pick_sheet"
+    },
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "error": null
+}

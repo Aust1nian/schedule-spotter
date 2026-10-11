@@ -1,0 +1,1 @@
+Concrete flatwork company's Excel 97-2003 .xls with days down and jobs across (Mon-Sat): merged title, 'Week of' line, 'Mon 10/19' row labels, names split by commas and '/', an OFF column, a Yard column, inactive cells (x and em dash), 'need 1', blank job-days, a placeholder laborer and a footer note.

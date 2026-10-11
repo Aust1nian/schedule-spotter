@@ -1,0 +1,1 @@
+Clean schedule (no double-bookings, no one assigned while off) across the Dec 28 2026 - Jan 3 2027 week: Excel 'CSV UTF-8' with BOM and CRLF, person x day with 'Mon 12/28/2026' headers spanning the year change, HOLIDAY column, Sat/Sun columns under Mon-Fri, an AM-only cell, vacation/sick/OFF, an idle helper and a job left empty mid-week.

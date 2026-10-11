@@ -1,0 +1,529 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.xlsx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "job_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Brian",
+      "date": "2026-10-26",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Dom",
+      "date": "2026-10-26",
+      "site": "88 Larchmont Ave"
+    },
+    {
+      "person": "Ike",
+      "date": "2026-10-26",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Kenji",
+      "date": "2026-10-26",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Luke",
+      "date": "2026-10-26",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Manny",
+      "date": "2026-10-26",
+      "site": "1240 Johnson St"
+    },
+    {
+      "person": "Mike B",
+      "date": "2026-10-26",
+      "site": "Riverside Dental TI"
+    },
+    {
+      "person": "Mike R",
+      "date": "2026-10-26",
+      "site": "Fenwick basement"
+    },
+    {
+      "person": "Nate",
+      "date": "2026-10-26",
+      "site": "88 Larchmont Ave"
+    },
+    {
+      "person": "Phil",
+      "date": "2026-10-26",
+      "site": "Fenwick basement"
+    },
+    {
+      "person": "Rosa",
+      "date": "2026-10-26",
+      "site": "1240 Johnson St"
+    },
+    {
+      "person": "Trevor",
+      "date": "2026-10-26",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Brian",
+      "date": "2026-10-27",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Delta Electric LLC",
+      "date": "2026-10-27",
+      "site": "88 Larchmont Ave"
+    },
+    {
+      "person": "Delta Electric LLC",
+      "date": "2026-10-27",
+      "site": "Riverside Dental TI"
+    },
+    {
+      "person": "Dom",
+      "date": "2026-10-27",
+      "site": "88 Larchmont Ave"
+    },
+    {
+      "person": "Ike",
+      "date": "2026-10-27",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Kenji",
+      "date": "2026-10-27",
+      "status": "off",
+      "note": "dentist"
+    },
+    {
+      "person": "Kenji",
+      "date": "2026-10-27",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Luke",
+      "date": "2026-10-27",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Manny",
+      "date": "2026-10-27",
+      "site": "1240 Johnson St"
+    },
+    {
+      "person": "Mike B",
+      "date": "2026-10-27",
+      "site": "Riverside Dental TI"
+    },
+    {
+      "person": "Mike R",
+      "date": "2026-10-27",
+      "site": "Fenwick basement"
+    },
+    {
+      "person": "Nate",
+      "date": "2026-10-27",
+      "site": "88 Larchmont Ave"
+    },
+    {
+      "person": "Phil",
+      "date": "2026-10-27",
+      "site": "Fenwick basement"
+    },
+    {
+      "person": "Rosa",
+      "date": "2026-10-27",
+      "site": "1240 Johnson St"
+    },
+    {
+      "person": "Trevor",
+      "date": "2026-10-27",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Brian",
+      "date": "2026-10-28",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Dom",
+      "date": "2026-10-28",
+      "site": "Shop"
+    },
+    {
+      "person": "Helper",
+      "date": "2026-10-28",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Ike",
+      "date": "2026-10-28",
+      "site": "Riverside Dental TI"
+    },
+    {
+      "person": "Kenji",
+      "date": "2026-10-28",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Luke",
+      "date": "2026-10-28",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Manny",
+      "date": "2026-10-28",
+      "site": "1240 Johnson St"
+    },
+    {
+      "person": "Mike B",
+      "date": "2026-10-28",
+      "site": "Riverside Dental TI"
+    },
+    {
+      "person": "Mike R",
+      "date": "2026-10-28",
+      "site": "Fenwick basement"
+    },
+    {
+      "person": "Phil",
+      "date": "2026-10-28",
+      "site": "Fenwick basement"
+    },
+    {
+      "person": "Rosa",
+      "date": "2026-10-28",
+      "site": "Fenwick basement"
+    },
+    {
+      "person": "Trevor",
+      "date": "2026-10-28",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Brian",
+      "date": "2026-10-29",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Delta Electric LLC",
+      "date": "2026-10-29",
+      "site": "Riverside Dental TI"
+    },
+    {
+      "person": "Dom",
+      "date": "2026-10-29",
+      "site": "88 Larchmont Ave"
+    },
+    {
+      "person": "Ike",
+      "date": "2026-10-29",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Kenji",
+      "date": "2026-10-29",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Luke",
+      "date": "2026-10-29",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Luke",
+      "date": "2026-10-29",
+      "site": "Shop"
+    },
+    {
+      "person": "Mike R",
+      "date": "2026-10-29",
+      "site": "Fenwick basement"
+    },
+    {
+      "person": "Mike R",
+      "date": "2026-10-29",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Nate",
+      "date": "2026-10-29",
+      "site": "88 Larchmont Ave"
+    },
+    {
+      "person": "Phil",
+      "date": "2026-10-29",
+      "site": "Fenwick basement"
+    },
+    {
+      "person": "Rosa",
+      "date": "2026-10-29",
+      "status": "vacation"
+    },
+    {
+      "person": "Trevor",
+      "date": "2026-10-29",
+      "site": "Whitfield addition"
+    },
+    {
+      "date": "2026-10-29",
+      "site": "1240 Johnson St",
+      "unstaffed": true
+    },
+    {
+      "person": "Brian",
+      "date": "2026-10-30",
+      "site": "1420 Johnson St"
+    },
+    {
+      "person": "Ike",
+      "date": "2026-10-30",
+      "site": "Shop"
+    },
+    {
+      "person": "Kenji",
+      "date": "2026-10-30",
+      "site": "Whitfield addition"
+    },
+    {
+      "person": "Luke",
+      "date": "2026-10-30",
+      "status": "off"
+    },
+    {
+      "person": "Manny",
+      "date": "2026-10-30",
+      "site": "1240 Johnson St"
+    },
+    {
+      "person": "Mike B",
+      "date": "2026-10-30",
+      "site": "Riverside Dental TI"
+    },
+    {
+      "person": "Mike R",
+      "date": "2026-10-30",
+      "site": "Shop"
+    },
+    {
+      "person": "Nate",
+      "date": "2026-10-30",
+      "site": "Riverside Dental TI"
+    },
+    {
+      "person": "Rosa",
+      "date": "2026-10-30",
+      "site": "1240 Johnson St"
+    },
+    {
+      "person": "Trevor",
+      "date": "2026-10-30",
+      "site": "Shop"
+    },
+    {
+      "person": "Trevor",
+      "date": "2026-10-30",
+      "site": "Whitfield addition"
+    },
+    {
+      "date": "2026-10-30",
+      "site": "88 Larchmont Ave",
+      "unstaffed": true
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Mike R",
+      "date": "2026-10-29",
+      "sites": [
+        "Whitfield addition",
+        "Fenwick basement"
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Kenji",
+      "date": "2026-10-27",
+      "sites": [
+        "Whitfield addition"
+      ],
+      "status": "off"
+    },
+    {
+      "type": "not_booked",
+      "person": "Manny",
+      "date": "2026-10-29"
+    },
+    {
+      "type": "not_booked",
+      "person": "Dom",
+      "date": "2026-10-30"
+    },
+    {
+      "type": "not_booked",
+      "person": "Nate",
+      "date": "2026-10-28"
+    },
+    {
+      "type": "not_booked",
+      "person": "Phil",
+      "date": "2026-10-30"
+    },
+    {
+      "type": "not_booked",
+      "person": "Mike B",
+      "date": "2026-10-29"
+    },
+    {
+      "type": "unstaffed",
+      "site": "1240 Johnson St",
+      "date": "2026-10-29"
+    },
+    {
+      "type": "unstaffed",
+      "site": "88 Larchmont Ave",
+      "date": "2026-10-30"
+    },
+    {
+      "type": "unstaffed",
+      "site": "88 Larchmont Ave",
+      "date": "2026-10-28"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "internal_plus_site",
+      "person": "Luke",
+      "date": "2026-10-29",
+      "sites": [
+        "Shop",
+        "1420 Johnson St"
+      ]
+    },
+    {
+      "type": "internal_plus_site",
+      "person": "Trevor",
+      "date": "2026-10-30",
+      "sites": [
+        "Shop",
+        "Whitfield addition"
+      ]
+    },
+    {
+      "type": "subcontractor_multi_site",
+      "person": "Delta Electric LLC",
+      "date": "2026-10-27",
+      "sites": [
+        "88 Larchmont Ave",
+        "Riverside Dental TI"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [
+    {
+      "type": "same_site",
+      "a": "1420 Johnson St",
+      "b": "1240 Johnson St"
+    }
+  ],
+  "must_not_ask": [
+    {
+      "type": "same_person",
+      "a": "Mike B",
+      "b": "Mike R"
+    },
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "answers": [
+    {
+      "question": {
+        "type": "same_site",
+        "a": "1420 Johnson St",
+        "b": "1240 Johnson St"
+      },
+      "answer": "no"
+    }
+  ],
+  "after_answers": {
+    "flags": [
+      {
+        "type": "double_booked",
+        "person": "Mike R",
+        "date": "2026-10-29",
+        "sites": [
+          "Whitfield addition",
+          "Fenwick basement"
+        ]
+      },
+      {
+        "type": "assigned_while_off",
+        "person": "Kenji",
+        "date": "2026-10-27",
+        "sites": [
+          "Whitfield addition"
+        ],
+        "status": "off"
+      },
+      {
+        "type": "not_booked",
+        "person": "Manny",
+        "date": "2026-10-29"
+      },
+      {
+        "type": "not_booked",
+        "person": "Dom",
+        "date": "2026-10-30"
+      },
+      {
+        "type": "not_booked",
+        "person": "Nate",
+        "date": "2026-10-28"
+      },
+      {
+        "type": "not_booked",
+        "person": "Phil",
+        "date": "2026-10-30"
+      },
+      {
+        "type": "not_booked",
+        "person": "Mike B",
+        "date": "2026-10-29"
+      },
+      {
+        "type": "unstaffed",
+        "site": "1240 Johnson St",
+        "date": "2026-10-29"
+      },
+      {
+        "type": "unstaffed",
+        "site": "88 Larchmont Ave",
+        "date": "2026-10-30"
+      },
+      {
+        "type": "unstaffed",
+        "site": "88 Larchmont Ave",
+        "date": "2026-10-28"
+      }
+    ]
+  },
+  "error": null
+}

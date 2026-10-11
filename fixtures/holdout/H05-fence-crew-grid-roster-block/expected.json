@@ -1,0 +1,466 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.xlsx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "crew_based",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Andre Lucas",
+      "date": "2026-10-12",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Bill Wexler",
+      "date": "2026-10-12",
+      "site": "Oakes",
+      "note": "gate repair"
+    },
+    {
+      "person": "Dwayne Cole",
+      "date": "2026-10-12",
+      "site": "319 Quarry Rd"
+    },
+    {
+      "person": "Gus Pappas",
+      "date": "2026-10-12",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Hugo Saldana",
+      "date": "2026-10-12",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Jamal Reed",
+      "date": "2026-10-12",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Ken Ashby",
+      "date": "2026-10-12",
+      "site": "Shop"
+    },
+    {
+      "person": "Luis Ortiz",
+      "date": "2026-10-12",
+      "site": "319 Quarry Rd"
+    },
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-12",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Pete Varga",
+      "date": "2026-10-12",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Pete Varga",
+      "date": "2026-10-12",
+      "site": "Oakes",
+      "note": "gate repair"
+    },
+    {
+      "person": "Rafa Torres",
+      "date": "2026-10-12",
+      "site": "319 Quarry Rd"
+    },
+    {
+      "person": "Sione Taufa",
+      "date": "2026-10-12",
+      "site": "319 Quarry Rd"
+    },
+    {
+      "person": "Ty Gentry",
+      "date": "2026-10-12",
+      "site": "Oakes",
+      "note": "gate repair"
+    },
+    {
+      "person": "Andre Lucas",
+      "date": "2026-10-13",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Bill Wexler",
+      "date": "2026-10-13",
+      "site": "Shop"
+    },
+    {
+      "person": "Dwayne Cole",
+      "date": "2026-10-13",
+      "site": "319 Quarry Rd"
+    },
+    {
+      "person": "Gus Pappas",
+      "date": "2026-10-13",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Hugo Saldana",
+      "date": "2026-10-13",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Jamal Reed",
+      "date": "2026-10-13",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Ken Ashby",
+      "date": "2026-10-13",
+      "site": "Shop"
+    },
+    {
+      "person": "Luis Ortiz",
+      "date": "2026-10-13",
+      "site": "319 Quarry Rd"
+    },
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-13",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Pete Varga",
+      "date": "2026-10-13",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Pete Varga",
+      "date": "2026-10-13",
+      "site": "Shop"
+    },
+    {
+      "person": "Rafa Torres",
+      "date": "2026-10-13",
+      "site": "319 Quarry Rd"
+    },
+    {
+      "person": "Sione Taufa",
+      "date": "2026-10-13",
+      "site": "319 Quarry Rd"
+    },
+    {
+      "person": "Ty Gentry",
+      "date": "2026-10-13",
+      "site": "Shop"
+    },
+    {
+      "person": "Andre Lucas",
+      "date": "2026-10-14",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Bill Wexler",
+      "date": "2026-10-14",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Dwayne Cole",
+      "date": "2026-10-14",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Gus Pappas",
+      "date": "2026-10-14",
+      "site": "Ferris deck"
+    },
+    {
+      "person": "Hugo Saldana",
+      "date": "2026-10-14",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Jamal Reed",
+      "date": "2026-10-14",
+      "site": "Ferris deck"
+    },
+    {
+      "person": "Luis Ortiz",
+      "date": "2026-10-14",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-14",
+      "site": "Ferris deck"
+    },
+    {
+      "person": "Pete Varga",
+      "date": "2026-10-14",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Pete Varga",
+      "date": "2026-10-14",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Rafa Torres",
+      "date": "2026-10-14",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Sione Taufa",
+      "date": "2026-10-14",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Ty Gentry",
+      "date": "2026-10-14",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Andre Lucas",
+      "date": "2026-10-15",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Bill Wexler",
+      "date": "2026-10-15",
+      "site": "52 Sumac Dr"
+    },
+    {
+      "person": "Dwayne Cole",
+      "date": "2026-10-15",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Gus Pappas",
+      "date": "2026-10-15",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Hugo Saldana",
+      "date": "2026-10-15",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Jamal Reed",
+      "date": "2026-10-15",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Luis Ortiz",
+      "date": "2026-10-15",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Mike B",
+      "date": "2026-10-15",
+      "site": "Linwood Elem.",
+      "note": "layout"
+    },
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-15",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Pete Varga",
+      "date": "2026-10-15",
+      "site": "52 Sumac Dr"
+    },
+    {
+      "person": "Pete Varga",
+      "date": "2026-10-15",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Rafa Torres",
+      "date": "2026-10-15",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Sione Taufa",
+      "date": "2026-10-15",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Ty Gentry",
+      "date": "2026-10-15",
+      "site": "52 Sumac Dr"
+    },
+    {
+      "person": "Andre Lucas",
+      "date": "2026-10-16",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Bill Wexler",
+      "date": "2026-10-16",
+      "site": "52 Sumac Dr"
+    },
+    {
+      "person": "Dwayne Cole",
+      "date": "2026-10-16",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Gus Pappas",
+      "date": "2026-10-16",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Hugo Saldana",
+      "date": "2026-10-16",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Jamal Reed",
+      "date": "2026-10-16",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Ken Ashby",
+      "date": "2026-10-16",
+      "site": "Shop"
+    },
+    {
+      "person": "Luis Ortiz",
+      "date": "2026-10-16",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Mike Baker",
+      "date": "2026-10-16",
+      "site": "Brennan deck"
+    },
+    {
+      "person": "Pete Varga",
+      "date": "2026-10-16",
+      "site": "52 Sumac Dr"
+    },
+    {
+      "person": "Pete Varga",
+      "date": "2026-10-16",
+      "site": "Haskell Farm"
+    },
+    {
+      "person": "Rafa Torres",
+      "date": "2026-10-16",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Sione Taufa",
+      "date": "2026-10-16",
+      "status": "vacation"
+    },
+    {
+      "person": "Sione Taufa",
+      "date": "2026-10-16",
+      "site": "Linwood Elem."
+    },
+    {
+      "person": "Ty Gentry",
+      "date": "2026-10-16",
+      "site": "52 Sumac Dr"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Pete Varga",
+      "date": "2026-10-12",
+      "sites": [
+        "Haskell Farm",
+        "Oakes"
+      ]
+    },
+    {
+      "type": "double_booked",
+      "person": "Pete Varga",
+      "date": "2026-10-15",
+      "sites": [
+        "Haskell Farm",
+        "52 Sumac Dr"
+      ]
+    },
+    {
+      "type": "double_booked",
+      "person": "Pete Varga",
+      "date": "2026-10-16",
+      "sites": [
+        "Haskell Farm",
+        "52 Sumac Dr"
+      ]
+    },
+    {
+      "type": "double_booked",
+      "person": "Mike Baker",
+      "date": "2026-10-15",
+      "sites": [
+        "Brennan deck",
+        "Linwood Elem."
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Sione Taufa",
+      "date": "2026-10-16",
+      "sites": [
+        "Linwood Elem."
+      ],
+      "status": "vacation"
+    },
+    {
+      "type": "not_booked",
+      "person": "Ken Ashby",
+      "date": "2026-10-14"
+    },
+    {
+      "type": "not_booked",
+      "person": "Ken Ashby",
+      "date": "2026-10-15"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Brennan deck",
+      "date": "2026-10-14"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "internal_plus_site",
+      "person": "Pete Varga",
+      "date": "2026-10-13",
+      "sites": [
+        "Haskell Farm",
+        "Shop"
+      ]
+    },
+    {
+      "type": "duplicate_entry",
+      "person": "Pete Varga",
+      "date": "2026-10-14",
+      "sites": [
+        "Haskell Farm"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,57 @@
+Fecha	Empleado	Obra	Horario
+10/26/2026	Efrén Castro	Brookfield Apts bldg C	7-3:30
+10/26/2026	Lázaro Méndez	Brookfield Apts bldg C	7-3:30
+10/26/2026	Paco Ríos	Brookfield Apts bldg C	7-3:30
+10/26/2026	Rigoberto Soto	Cedar Hills HOA	
+10/26/2026	Saúl Herrera	Cedar Hills HOA	
+10/26/2026	Teo Vargas	Cedar Hills HOA	
+10/26/2026	Uriel Gómez	Rancho Verde clubhouse	
+10/26/2026	Wilfredo Paz	Rancho Verde clubhouse	
+10/26/2026	Yahir Luna	Shop	
+10/27/2026	Efrén Castro	Brookfield Apts bldg C	
+10/27/2026	Lázaro Méndez	Brookfield Apts bldg C	
+10/27/2026	Paco Ríos	Brookfield Apts bldg C	
+10/27/2026	Rigoberto Soto	Cedar Hills HOA	
+10/27/2026	Saúl Herrera	Cedar Hills HOA	
+10/27/2026	Teo Vargas	enfermo	
+10/27/2026	Uriel Gómez	Rancho Verde clubhouse	
+10/27/2026	Wilfredo Paz	Rancho Verde clubhouse	
+10/27/2026	Yahir Luna	Rancho Verde clubhouse	
+10/28/2026	Efrén Castro	Brookfield Apts bldg C	7a-11a
+10/28/2026	Efrén Castro	Rancho Verde clubhouse	12-3:30
+10/28/2026	Lázaro Méndez	Brookfield Apts bldg C	
+10/28/2026	Paco Ríos	Brookfield Apts bldg C	
+10/28/2026	Francisco Ríos	Cedar Hills HOA	
+10/28/2026	Rigoberto Soto	Cedar Hills HOA	
+10/28/2026	Saúl Herrera	Cedar Hills HOA	
+10/28/2026	Teo Vargas	Cedar Hills HOA	
+10/28/2026	Uriel Gómez	Rancho Verde clubhouse	
+10/28/2026	Wilfredo Paz	Rancho Verde clubhouse	
+10/29/2026	Efrén Castro	Brookfield Apts bldg C	
+10/29/2026	Lázaro Méndez	Brookfield Apts bldg C	
+10/29/2026	Paco Ríos	Brookfield Apts bldg C	
+10/29/2026	Rigoberto Soto	Cedar Hills HOA	
+10/29/2026	Saúl Herrera	vacaciones	
+10/29/2026	Teo Vargas	Cedar Hills HOA	
+10/29/2026	TBD	Cedar Hills HOA	
+10/29/2026	Uriel Gómez	Rancho Verde clubhouse	
+10/29/2026	Wilfredo Paz	Rancho Verde clubhouse	
+10/29/2026	Yahir Luna	Rancho Verde clubhouse	
+10/30/2026	Efrén Castro	Brookfield Apts bldg C	
+10/30/2026	Lázaro Méndez	Brookfield Apts bldg C	
+10/30/2026	Paco Ríos	Brookfield Apts bldg C	
+10/30/2026	Rigoberto Soto	Cedar Hills HOA	
+10/30/2026	Saúl Herrera	vacaciones	
+10/30/2026	Teo Vargas	Cedar Hills HOA	
+10/30/2026	Saúl Herrera	Cedar Hills HOA	
+10/30/2026	Wilfredo Paz	Rancho Verde clubhouse	
+10/30/2026	Yahir Luna	Shop	
+10/31/2026	Efrén Castro	Brookfield Apts bldg C	7-12
+10/31/2026	Lázaro Méndez	Brookfield Apts bldg C	7-12
+10/31/2026	Paco Ríos	descanso	
+10/31/2026	Rigoberto Soto	descanso	
+10/31/2026	Saúl Herrera	vacaciones	
+10/31/2026	Teo Vargas	descanso	
+10/31/2026	Uriel Gómez	descanso	
+10/31/2026	Wilfredo Paz	descanso	
+10/31/2026	Yahir Luna	descanso	

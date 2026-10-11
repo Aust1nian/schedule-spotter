@@ -1,0 +1,1 @@
+Remodeler's xlsx job x day grid: merged title, names split by comma/&/'/'/+/line breaks, 1420 vs 1240 Johnson St as two real jobs (ask, never merge), Mike B vs Mike R, an electrical subcontractor at two jobs, Helper placeholder, TBD/open/done cells, a blank job-day, Shop row, OFF and VAC pseudo-rows (one with a note), footer notes.

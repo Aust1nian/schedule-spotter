@@ -1,0 +1,1 @@
+Paste: a long list copied from Google Sheets (tabs, LF) with Spanish headers (Fecha, Empleado, Obra, Horario), Mon-Sat: Spanish statuses, times on some rows (7-3:30, 7a-11a, 12-3:30, 7-12) with a split day, one man written 'Paco Rios' on most rows and 'Francisco Rios' on one, a copied row left behind next to a vacation row, TBD beside a staffed crew, Shop.

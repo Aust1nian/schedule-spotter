@@ -1,0 +1,359 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.xlsx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Amir Nasser",
+      "date": "2026-10-26",
+      "site": "Pinewood Sr. Living",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Bob Dunn",
+      "date": "2026-10-26",
+      "site": "Northfield Middle School RTU",
+      "start": "06:00",
+      "end": "14:30"
+    },
+    {
+      "person": "Greta Olson",
+      "date": "2026-10-26",
+      "site": "Pinewood Sr. Living",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Hugo Brandt",
+      "date": "2026-10-26",
+      "status": "pto"
+    },
+    {
+      "person": "Kelly Marsh",
+      "date": "2026-10-26",
+      "site": "Northfield Middle School RTU",
+      "start": "06:00",
+      "end": "14:30"
+    },
+    {
+      "person": "Paul Lindqvist",
+      "date": "2026-10-26",
+      "site": "Shop",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Sean Doherty",
+      "date": "2026-10-26",
+      "site": "Ames Family Dental",
+      "start": "13:00",
+      "end": "16:30"
+    },
+    {
+      "person": "Sean Doherty",
+      "date": "2026-10-26",
+      "site": "Harlow res. furnace",
+      "start": "08:00",
+      "end": "12:00"
+    },
+    {
+      "person": "Victor Han",
+      "date": "2026-10-26",
+      "site": "Cascade Credit Union",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Amir Nasser",
+      "date": "2026-10-27",
+      "site": "Pinewood Sr. Living",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Bob Dunn",
+      "date": "2026-10-27",
+      "site": "Northfield Middle School RTU",
+      "start": "06:00",
+      "end": "14:30"
+    },
+    {
+      "person": "Greta Olson",
+      "date": "2026-10-27",
+      "site": "Pinewood Sr. Living",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Hugo Brandt",
+      "date": "2026-10-27",
+      "status": "pto"
+    },
+    {
+      "person": "Kelly Marsh",
+      "date": "2026-10-27",
+      "site": "Northfield Middle School RTU",
+      "start": "06:00",
+      "end": "14:30"
+    },
+    {
+      "person": "Paul Lindqvist",
+      "date": "2026-10-27",
+      "site": "Cascade Credit Union",
+      "start": "07:00",
+      "end": "11:00"
+    },
+    {
+      "person": "Paul Lindqvist",
+      "date": "2026-10-27",
+      "site": "Shop",
+      "start": "12:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Sean Doherty",
+      "date": "2026-10-27",
+      "site": "Ames Family Dental",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Victor Han",
+      "date": "2026-10-27",
+      "site": "Cascade Credit Union",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Amir Nasser",
+      "date": "2026-10-28",
+      "site": "Pinewood Sr. Living",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Bob Dunn",
+      "date": "2026-10-28",
+      "site": "Harlow res. furnace",
+      "start": "13:00",
+      "end": "16:00"
+    },
+    {
+      "person": "Bob Dunn",
+      "date": "2026-10-28",
+      "site": "Northfield Middle School RTU",
+      "start": "06:00",
+      "end": "14:30"
+    },
+    {
+      "person": "Greta Olson",
+      "date": "2026-10-28",
+      "status": "sick"
+    },
+    {
+      "person": "Greta Olson",
+      "date": "2026-10-28",
+      "site": "Pinewood Sr. Living",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Hugo Brandt",
+      "date": "2026-10-28",
+      "site": "Cascade Credit Union",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Kelly Marsh",
+      "date": "2026-10-28",
+      "site": "Northfield Middle School RTU",
+      "start": "06:00",
+      "end": "14:30"
+    },
+    {
+      "person": "Paul Lindqvist",
+      "date": "2026-10-28",
+      "site": "Shop"
+    },
+    {
+      "person": "Sean Doherty",
+      "date": "2026-10-28",
+      "site": "Ames Family Dental",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Temp",
+      "date": "2026-10-28",
+      "site": "Pinewood Sr. Living"
+    },
+    {
+      "person": "Victor Han",
+      "date": "2026-10-28",
+      "site": "Cascade Credit Union",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Amir Nasser",
+      "date": "2026-10-29",
+      "site": "Pinewood Sr. Living"
+    },
+    {
+      "person": "Bob Dunn",
+      "date": "2026-10-29",
+      "site": "Northfield Middle School RTU",
+      "start": "06:00",
+      "end": "14:30"
+    },
+    {
+      "person": "Greta Olson",
+      "date": "2026-10-29",
+      "site": "Pinewood Sr. Living"
+    },
+    {
+      "person": "Hugo Brandt",
+      "date": "2026-10-29",
+      "site": "Cascade Credit Union"
+    },
+    {
+      "person": "Kelly Marsh",
+      "date": "2026-10-29",
+      "site": "Northfield Middle School RTU",
+      "start": "06:00",
+      "end": "14:30"
+    },
+    {
+      "person": "Paul Lindqvist",
+      "date": "2026-10-29",
+      "site": "Shop"
+    },
+    {
+      "person": "Sean Doherty",
+      "date": "2026-10-29",
+      "site": "Ames Family Dental"
+    },
+    {
+      "person": "Amir Nasser",
+      "date": "2026-10-30",
+      "site": "Pinewood Sr. Living"
+    },
+    {
+      "person": "Bob Dunn",
+      "date": "2026-10-30",
+      "site": "Northfield Middle School RTU"
+    },
+    {
+      "person": "Greta Olson",
+      "date": "2026-10-30",
+      "site": "Pinewood Sr. Living"
+    },
+    {
+      "person": "Hugo Brandt",
+      "date": "2026-10-30",
+      "site": "Cascade Credit Union"
+    },
+    {
+      "person": "Kelly Marsh",
+      "date": "2026-10-30",
+      "site": "Northfield Middle School RTU"
+    },
+    {
+      "person": "Paul Lindqvist",
+      "date": "2026-10-30",
+      "site": "Shop"
+    },
+    {
+      "person": "Sean Doherty",
+      "date": "2026-10-30",
+      "site": "Ames Family Dental"
+    },
+    {
+      "person": "Victor Han",
+      "date": "2026-10-30",
+      "site": "Cascade Credit Union"
+    },
+    {
+      "date": "2026-10-30",
+      "site": "Northfield Middle School RTU",
+      "unstaffed": true
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Robert Dunn",
+      "date": "2026-10-28",
+      "sites": [
+        "Northfield Middle School RTU",
+        "Harlow res. furnace"
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Greta Olson",
+      "date": "2026-10-28",
+      "sites": [
+        "Pinewood Sr. Living"
+      ],
+      "status": "sick"
+    },
+    {
+      "type": "not_booked",
+      "person": "Victor Han",
+      "date": "2026-10-29"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Northfield Middle School RTU",
+      "date": "2026-10-30"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Harlow res. furnace",
+      "date": "2026-10-27"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "split_day",
+      "person": "Sean Doherty",
+      "date": "2026-10-26",
+      "sites": [
+        "Harlow res. furnace",
+        "Ames Family Dental"
+      ]
+    },
+    {
+      "type": "internal_plus_site",
+      "person": "Paul Lindqvist",
+      "date": "2026-10-27",
+      "sites": [
+        "Cascade Credit Union",
+        "Shop"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [],
+  "error": null
+}

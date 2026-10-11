@@ -1,0 +1,364 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Ace Drywall Inc.",
+      "date": "2026-10-26",
+      "site": "Harbor Pointe bldg 7"
+    },
+    {
+      "person": "Dwight Harlan",
+      "date": "2026-10-26",
+      "site": "St. Luke’s parish hall"
+    },
+    {
+      "person": "Efraín Montes",
+      "date": "2026-10-26",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Germán Ávila",
+      "date": "2026-10-26",
+      "site": "Harbor Pointe bldg 7"
+    },
+    {
+      "person": "Joaquín Saenz",
+      "date": "2026-10-26",
+      "site": "Harbor Pointe bldg 7"
+    },
+    {
+      "person": "José Peña",
+      "date": "2026-10-26",
+      "site": "Oak Hollow “model home”",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Kurt Neumann",
+      "date": "2026-10-26",
+      "site": "Dunmore condo 3B"
+    },
+    {
+      "person": "Lorena Díaz",
+      "date": "2026-10-26",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Martín Ibáñez",
+      "date": "2026-10-26",
+      "site": "Oak Hollow “model home”",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Raúl Ortega",
+      "date": "2026-10-26",
+      "site": "Oak Hollow “model home”",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Rubén Ochoa",
+      "date": "2026-10-26",
+      "site": "St. Luke’s parish hall"
+    },
+    {
+      "person": "Ace Drywall Inc.",
+      "date": "2026-10-27",
+      "site": "Dunmore condo 3B"
+    },
+    {
+      "person": "Ace Drywall Inc.",
+      "date": "2026-10-27",
+      "site": "Harbor Pointe bldg 7"
+    },
+    {
+      "person": "Dwight Harlan",
+      "date": "2026-10-27",
+      "site": "St. Luke’s parish hall"
+    },
+    {
+      "person": "Efraín Montes",
+      "date": "2026-10-27",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Germán Ávila",
+      "date": "2026-10-27",
+      "site": "Harbor Pointe bldg 7"
+    },
+    {
+      "person": "Joaquín Saenz",
+      "date": "2026-10-27",
+      "site": "Harbor Pointe bldg 7"
+    },
+    {
+      "person": "José Peña",
+      "date": "2026-10-27",
+      "site": "Oak Hollow “model home”"
+    },
+    {
+      "person": "Kurt Neumann",
+      "date": "2026-10-27",
+      "site": "Dunmore condo 3B"
+    },
+    {
+      "person": "Lorena Díaz",
+      "date": "2026-10-27",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Martín Ibáñez",
+      "date": "2026-10-27",
+      "site": "Oak Hollow “model home”"
+    },
+    {
+      "person": "Raúl Ortega",
+      "date": "2026-10-27",
+      "site": "Oak Hollow “model home”"
+    },
+    {
+      "person": "Rubén Ochoa",
+      "date": "2026-10-27",
+      "site": "St. Luke’s parish hall"
+    },
+    {
+      "person": "Dwight Harlan",
+      "date": "2026-10-28",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Efraín Montes",
+      "date": "2026-10-28",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Germán Ávila",
+      "date": "2026-10-28",
+      "site": "Harbor Pointe bldg 7"
+    },
+    {
+      "person": "Joaquín Saenz",
+      "date": "2026-10-28",
+      "site": "Harbor Pointe bldg 7"
+    },
+    {
+      "person": "José Peña",
+      "date": "2026-10-28",
+      "site": "Oak Hollow “model home”"
+    },
+    {
+      "person": "Kurt Neumann",
+      "date": "2026-10-28",
+      "site": "Dunmore condo 3B"
+    },
+    {
+      "person": "Lorena Díaz",
+      "date": "2026-10-28",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Martín Ibáñez",
+      "date": "2026-10-28",
+      "site": "Oak Hollow “model home”"
+    },
+    {
+      "person": "Raúl Ortega",
+      "date": "2026-10-28",
+      "site": "Harbor Pointe bldg 7"
+    },
+    {
+      "person": "Rubén Ochoa",
+      "date": "2026-10-28",
+      "site": "Dunmore condo 3B"
+    },
+    {
+      "person": "Dwight Harlan",
+      "date": "2026-10-29",
+      "site": "St. Luke’s parish hall"
+    },
+    {
+      "person": "Efraín Montes",
+      "date": "2026-10-29",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Germán Ávila",
+      "date": "2026-10-29",
+      "site": "Harbor Pointe bldg 7",
+      "start": "07:00",
+      "end": "11:00"
+    },
+    {
+      "person": "Germán Ávila",
+      "date": "2026-10-29",
+      "site": "St. Luke’s parish hall",
+      "start": "12:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Joaquín Saenz",
+      "date": "2026-10-29",
+      "site": "Harbor Pointe bldg 7"
+    },
+    {
+      "person": "José Peña",
+      "date": "2026-10-29",
+      "site": "Oak Hollow “model home”",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "José Peña",
+      "date": "2026-10-29",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Kurt Neumann",
+      "date": "2026-10-29",
+      "site": "Dunmore condo 3B"
+    },
+    {
+      "person": "Lorena Díaz",
+      "date": "2026-10-29",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Martín Ibáñez",
+      "date": "2026-10-29",
+      "site": "Oak Hollow “model home”"
+    },
+    {
+      "person": "Raúl Ortega",
+      "date": "2026-10-29",
+      "site": "Oak Hollow “model home”"
+    },
+    {
+      "person": "Rubén Ochoa",
+      "date": "2026-10-29",
+      "site": "St. Luke’s parish hall"
+    },
+    {
+      "person": "Dwight Harlan",
+      "date": "2026-10-30",
+      "site": "St. Luke’s parish hall"
+    },
+    {
+      "person": "Efraín Montes",
+      "date": "2026-10-30",
+      "site": "Tanaka residence"
+    },
+    {
+      "person": "Joaquín Saenz",
+      "date": "2026-10-30",
+      "status": "vacation"
+    },
+    {
+      "person": "José Peña",
+      "date": "2026-10-30",
+      "site": "Oak Hollow “model home”"
+    },
+    {
+      "person": "Kurt Neumann",
+      "date": "2026-10-30",
+      "site": "Dunmore condo 3B"
+    },
+    {
+      "person": "Lorena Díaz",
+      "date": "2026-10-30",
+      "site": "Dunmore condo 3B"
+    },
+    {
+      "person": "Martín Ibáñez",
+      "date": "2026-10-30",
+      "status": "pto"
+    },
+    {
+      "person": "Martín Ibáñez",
+      "date": "2026-10-30",
+      "site": "Oak Hollow “model home”"
+    },
+    {
+      "person": "Raúl Ortega",
+      "date": "2026-10-30",
+      "site": "Shop"
+    },
+    {
+      "person": "Rubén Ochoa",
+      "date": "2026-10-30",
+      "site": "St. Luke’s parish hall"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "José Peña",
+      "date": "2026-10-29",
+      "sites": [
+        "Oak Hollow “model home”",
+        "Tanaka residence"
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Martín Ibáñez",
+      "date": "2026-10-30",
+      "sites": [
+        "Oak Hollow “model home”"
+      ],
+      "status": "pto"
+    },
+    {
+      "type": "not_booked",
+      "person": "Germán Ávila",
+      "date": "2026-10-30"
+    },
+    {
+      "type": "unstaffed",
+      "site": "St. Luke’s parish hall",
+      "date": "2026-10-28"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "split_day",
+      "person": "Germán Ávila",
+      "date": "2026-10-29",
+      "sites": [
+        "Harbor Pointe bldg 7",
+        "St. Luke’s parish hall"
+      ]
+    },
+    {
+      "type": "subcontractor_multi_site",
+      "person": "Ace Drywall Inc.",
+      "date": "2026-10-27",
+      "sites": [
+        "Harbor Pointe bldg 7",
+        "Dunmore condo 3B"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [],
+  "error": null
+}

@@ -1,0 +1,227 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.docx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Ade Okafor",
+      "date": "2026-10-26",
+      "site": "Unit 12 Laurel Ct mold"
+    },
+    {
+      "person": "Bryce Neal",
+      "date": "2026-10-26",
+      "site": "Unit 12 Laurel Ct mold"
+    },
+    {
+      "person": "Jared Quinn",
+      "date": "2026-10-26",
+      "site": "Delmar Ave water loss"
+    },
+    {
+      "person": "Lena Fox",
+      "date": "2026-10-26",
+      "site": "Delmar Ave water loss"
+    },
+    {
+      "person": "Rocco Bianchi",
+      "date": "2026-10-26",
+      "site": "Pike Creek fire job"
+    },
+    {
+      "person": "Shawn Pratt",
+      "date": "2026-10-26",
+      "status": "vacation"
+    },
+    {
+      "person": "Tomas Herrera",
+      "date": "2026-10-26",
+      "site": "Pike Creek fire job"
+    },
+    {
+      "person": "Ade Okafor",
+      "date": "2026-10-27",
+      "site": "Unit 12 Laurel Ct mold"
+    },
+    {
+      "person": "Bryce Neal",
+      "date": "2026-10-27",
+      "site": "Unit 12 Laurel Ct mold"
+    },
+    {
+      "person": "Jared Quinn",
+      "date": "2026-10-27",
+      "site": "Delmar Ave water loss"
+    },
+    {
+      "person": "Lena Fox",
+      "date": "2026-10-27",
+      "site": "Delmar Ave water loss"
+    },
+    {
+      "person": "Rocco Bianchi",
+      "date": "2026-10-27",
+      "site": "Pike Creek fire job"
+    },
+    {
+      "person": "Shawn Pratt",
+      "date": "2026-10-27",
+      "status": "vacation"
+    },
+    {
+      "person": "Tomas Herrera",
+      "date": "2026-10-27",
+      "site": "Pike Creek fire job"
+    },
+    {
+      "person": "Bryce Neal",
+      "date": "2026-10-28",
+      "site": "Unit 12 Laurel Ct mold",
+      "note": "containment"
+    },
+    {
+      "person": "Jared Quinn",
+      "date": "2026-10-28",
+      "site": "Delmar Ave water loss"
+    },
+    {
+      "person": "Lena Fox",
+      "date": "2026-10-28",
+      "site": "Office"
+    },
+    {
+      "person": "Rocco Bianchi",
+      "date": "2026-10-28",
+      "site": "Delmar Ave water loss"
+    },
+    {
+      "person": "Shawn Pratt",
+      "date": "2026-10-28",
+      "status": "vacation"
+    },
+    {
+      "person": "Tomas Herrera",
+      "date": "2026-10-28",
+      "site": "Office",
+      "note": "training"
+    },
+    {
+      "person": "Ade Okafor",
+      "date": "2026-10-29",
+      "site": "Unit 12 Laurel Ct mold"
+    },
+    {
+      "person": "Jared Quinn",
+      "date": "2026-10-29",
+      "site": "Pike Creek fire job"
+    },
+    {
+      "person": "Lena Fox",
+      "date": "2026-10-29",
+      "site": "Delmar Ave water loss"
+    },
+    {
+      "person": "Lena Fox",
+      "date": "2026-10-29",
+      "site": "Office"
+    },
+    {
+      "person": "Rocco Bianchi",
+      "date": "2026-10-29",
+      "site": "Delmar Ave water loss"
+    },
+    {
+      "person": "Shawn Pratt",
+      "date": "2026-10-29",
+      "status": "vacation"
+    },
+    {
+      "person": "Tomas Herrera",
+      "date": "2026-10-29",
+      "site": "Pike Creek fire job"
+    },
+    {
+      "person": "Ade Okafor",
+      "date": "2026-10-30",
+      "site": "Unit 12 Laurel Ct mold"
+    },
+    {
+      "person": "Bryce Neal",
+      "date": "2026-10-30",
+      "site": "Unit 12 Laurel Ct mold"
+    },
+    {
+      "person": "Jared Quinn",
+      "date": "2026-10-30",
+      "site": "Pike Creek fire job"
+    },
+    {
+      "person": "Lena Fox",
+      "date": "2026-10-30",
+      "site": "Delmar Ave water loss"
+    },
+    {
+      "person": "Rocco Bianchi",
+      "date": "2026-10-30",
+      "site": "Delmar Ave water loss"
+    },
+    {
+      "person": "Shawn Pratt",
+      "date": "2026-10-30",
+      "status": "vacation"
+    },
+    {
+      "person": "Tomas Herrera",
+      "date": "2026-10-30",
+      "status": "pto"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "not_booked",
+      "person": "Bryce Neal",
+      "date": "2026-10-29"
+    },
+    {
+      "type": "not_booked",
+      "person": "Ade Okafor",
+      "date": "2026-10-28"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Pike Creek fire job",
+      "date": "2026-10-28"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "internal_plus_site",
+      "person": "Lena Fox",
+      "date": "2026-10-29",
+      "sites": [
+        "Office",
+        "Delmar Ave water loss"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [],
+  "error": null
+}

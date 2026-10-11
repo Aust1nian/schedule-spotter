@@ -1,0 +1,56 @@
+{
+  "window": [
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22",
+    "2026-10-23",
+    "2026-10-24"
+  ],
+  "roster": null,
+  "person_canon": {},
+  "internal": [
+    "Yard"
+  ],
+  "placeholders": [
+    "Laborer 2"
+  ],
+  "subs": [],
+  "jobs": [
+    "Sav-Mor lot patch",
+    "Vista Ridge sidewalks",
+    "214 Pine driveway",
+    "Calvary Baptist steps",
+    "Yard"
+  ],
+  "inactive": [
+    [
+      "214 Pine driveway",
+      "2026-10-19"
+    ],
+    [
+      "Calvary Baptist steps",
+      "2026-10-19"
+    ],
+    [
+      "214 Pine driveway",
+      "2026-10-20"
+    ],
+    [
+      "Calvary Baptist steps",
+      "2026-10-20"
+    ],
+    [
+      "Calvary Baptist steps",
+      "2026-10-21"
+    ],
+    [
+      "Sav-Mor lot patch",
+      "2026-10-22"
+    ]
+  ],
+  "pseudo_rows": [
+    "OFF"
+  ],
+  "fixture_dir": "H04-flatwork-day-by-job-xls"
+}

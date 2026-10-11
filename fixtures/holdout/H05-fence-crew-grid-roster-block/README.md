@@ -1,0 +1,1 @@
+Fence and deck company's xlsx crew-based week: crew names in the grid, crew roster block to the right, weekday-only headers under a 'Week of' line, one man listed in two crews, individual rows for people outside crews (one written 'Mike B' while the roster says Mike Baker), a vac override row, Shop, a note in a site cell and a job left empty mid-week.

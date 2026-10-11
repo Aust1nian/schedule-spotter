@@ -1,0 +1,270 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Arturo Vela",
+      "date": "2026-12-28",
+      "site": "1907 Elm Ct repipe"
+    },
+    {
+      "person": "Dom Pirelli",
+      "date": "2026-12-28",
+      "site": "Ridgeway Elem. restrooms"
+    },
+    {
+      "person": "Gil Navarro",
+      "date": "2026-12-28",
+      "site": "Fairview Hosp. boiler"
+    },
+    {
+      "person": "Hung Tran",
+      "date": "2026-12-28",
+      "site": "Lakeview Mall food court"
+    },
+    {
+      "person": "Josh Pruett",
+      "date": "2026-12-28",
+      "site": "1907 Elm Ct repipe"
+    },
+    {
+      "person": "Kendra Bly",
+      "date": "2026-12-28",
+      "status": "vacation"
+    },
+    {
+      "person": "Pete Garza",
+      "date": "2026-12-28",
+      "site": "Lakeview Mall food court"
+    },
+    {
+      "person": "Sean McCabe",
+      "date": "2026-12-28",
+      "site": "Lakeview Mall food court"
+    },
+    {
+      "person": "Arturo Vela",
+      "date": "2026-12-29",
+      "site": "1907 Elm Ct repipe"
+    },
+    {
+      "person": "Dom Pirelli",
+      "date": "2026-12-29",
+      "site": "Fairview Hosp. boiler"
+    },
+    {
+      "person": "Gil Navarro",
+      "date": "2026-12-29",
+      "site": "Fairview Hosp. boiler"
+    },
+    {
+      "person": "Hung Tran",
+      "date": "2026-12-29",
+      "site": "Lakeview Mall food court"
+    },
+    {
+      "person": "Josh Pruett",
+      "date": "2026-12-29",
+      "site": "1907 Elm Ct repipe"
+    },
+    {
+      "person": "Kendra Bly",
+      "date": "2026-12-29",
+      "status": "vacation"
+    },
+    {
+      "person": "Marcus Hill",
+      "date": "2026-12-29",
+      "site": "Shop"
+    },
+    {
+      "person": "Pete Garza",
+      "date": "2026-12-29",
+      "site": "Lakeview Mall food court"
+    },
+    {
+      "person": "Sean McCabe",
+      "date": "2026-12-29",
+      "site": "Lakeview Mall food court"
+    },
+    {
+      "person": "Arturo Vela",
+      "date": "2026-12-30",
+      "site": "Service calls"
+    },
+    {
+      "person": "Dom Pirelli",
+      "date": "2026-12-30",
+      "site": "Fairview Hosp. boiler"
+    },
+    {
+      "person": "Gil Navarro",
+      "date": "2026-12-30",
+      "site": "Fairview Hosp. boiler"
+    },
+    {
+      "person": "Hung Tran",
+      "date": "2026-12-30",
+      "status": "sick"
+    },
+    {
+      "person": "Josh Pruett",
+      "date": "2026-12-30",
+      "site": "1907 Elm Ct repipe"
+    },
+    {
+      "person": "Kendra Bly",
+      "date": "2026-12-30",
+      "status": "vacation"
+    },
+    {
+      "person": "Marcus Hill",
+      "date": "2026-12-30",
+      "site": "Shop"
+    },
+    {
+      "person": "Pete Garza",
+      "date": "2026-12-30",
+      "site": "Ridgeway Elem. restrooms"
+    },
+    {
+      "person": "Sean McCabe",
+      "date": "2026-12-30",
+      "site": "Lakeview Mall food court"
+    },
+    {
+      "person": "Arturo Vela",
+      "date": "2026-12-31",
+      "site": "Service calls"
+    },
+    {
+      "person": "Dom Pirelli",
+      "date": "2026-12-31",
+      "site": "Fairview Hosp. boiler"
+    },
+    {
+      "person": "Gil Navarro",
+      "date": "2026-12-31",
+      "site": "Fairview Hosp. boiler",
+      "part": "am"
+    },
+    {
+      "person": "Hung Tran",
+      "date": "2026-12-31",
+      "site": "Lakeview Mall food court"
+    },
+    {
+      "person": "Josh Pruett",
+      "date": "2026-12-31",
+      "status": "vacation"
+    },
+    {
+      "person": "Kendra Bly",
+      "date": "2026-12-31",
+      "status": "vacation"
+    },
+    {
+      "person": "Pete Garza",
+      "date": "2026-12-31",
+      "site": "Lakeview Mall food court"
+    },
+    {
+      "person": "Sean McCabe",
+      "date": "2026-12-31",
+      "status": "off"
+    },
+    {
+      "person": "Arturo Vela",
+      "date": "2027-01-01",
+      "status": "holiday"
+    },
+    {
+      "person": "Dom Pirelli",
+      "date": "2027-01-01",
+      "status": "holiday"
+    },
+    {
+      "person": "Gil Navarro",
+      "date": "2027-01-01",
+      "status": "holiday"
+    },
+    {
+      "person": "Hung Tran",
+      "date": "2027-01-01",
+      "status": "holiday"
+    },
+    {
+      "person": "Josh Pruett",
+      "date": "2027-01-01",
+      "status": "holiday"
+    },
+    {
+      "person": "Kendra Bly",
+      "date": "2027-01-01",
+      "status": "holiday"
+    },
+    {
+      "person": "Marcus Hill",
+      "date": "2027-01-01",
+      "status": "holiday"
+    },
+    {
+      "person": "Pete Garza",
+      "date": "2027-01-01",
+      "status": "holiday"
+    },
+    {
+      "person": "Sean McCabe",
+      "date": "2027-01-01",
+      "status": "holiday"
+    },
+    {
+      "person": "Arturo Vela",
+      "date": "2027-01-02",
+      "site": "Service calls"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "not_booked",
+      "person": "Marcus Hill",
+      "date": "2026-12-28"
+    },
+    {
+      "type": "not_booked",
+      "person": "Marcus Hill",
+      "date": "2026-12-31"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Ridgeway Elem. restrooms",
+      "date": "2026-12-29"
+    }
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "error": null
+}

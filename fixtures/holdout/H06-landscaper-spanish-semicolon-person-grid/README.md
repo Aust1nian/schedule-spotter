@@ -1,0 +1,1 @@
+Landscaping company's semicolon CSV in Spanish (Empleado, Lunes 10/12 ... Sabado), Mon-Sat: 'Semana del' title line, accented names, Spanish statuses (descanso, enfermo, vacaciones, libre) plus x, two sites in one cell joined by '/' and by ' y ', a note in a cell, blank days, a totals row and a signature line.

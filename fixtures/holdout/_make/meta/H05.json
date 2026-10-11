@@ -1,0 +1,33 @@
+{
+  "window": [
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16"
+  ],
+  "roster": [
+    "Hugo Saldana",
+    "Pete Varga",
+    "Andre Lucas",
+    "Rafa Torres",
+    "Dwayne Cole",
+    "Sione Taufa",
+    "Luis Ortiz",
+    "Bill Wexler",
+    "Ty Gentry",
+    "Gus Pappas",
+    "Mike Baker",
+    "Jamal Reed",
+    "Ken Ashby"
+  ],
+  "person_canon": {
+    "Mike B": "Mike Baker"
+  },
+  "internal": [
+    "Shop"
+  ],
+  "placeholders": [],
+  "subs": [],
+  "fixture_dir": "H05-fence-crew-grid-roster-block"
+}

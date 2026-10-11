@@ -1,0 +1,1 @@
+Clean schedule (no double-bookings, no one assigned while off) as a .tsv with days down and people across (first names only): company title containing 'Electric', 'Week of' line, 'Mon 10/12' row labels, sick/PTO, Shop plus a site in one cell, blank days, a job that sits idle two days mid-week and footer notes.

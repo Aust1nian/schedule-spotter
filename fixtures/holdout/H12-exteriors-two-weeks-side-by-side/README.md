@@ -1,0 +1,1 @@
+Siding/windows company's xlsx person x day board with two weeks side by side (Mon-Sat), merged 'WEEK OF' bands over single-letter day headers (M T W Th F Sa + M/D), a blank spacer column between weeks, two different Mikes by full name, a two-site cell, Shop plus a site, off/x/PTO/vac/sick, a Saturday left blank and a job left empty mid-week.

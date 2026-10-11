@@ -1,0 +1,369 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri",
+      "sat"
+    ],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Adán Solís",
+      "date": "2026-10-12",
+      "site": "Shop"
+    },
+    {
+      "person": "Chuy Medina",
+      "date": "2026-10-12",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Gerardo Paz",
+      "date": "2026-10-12",
+      "site": "1820 Monte Vista"
+    },
+    {
+      "person": "Lalo Fuentes",
+      "date": "2026-10-12",
+      "site": "1820 Monte Vista"
+    },
+    {
+      "person": "Memo Cárdenas",
+      "date": "2026-10-12",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Nacho Ibarra",
+      "date": "2026-10-12",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Pepe Lozano",
+      "date": "2026-10-12",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Ramón Herrera",
+      "date": "2026-10-12",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Toño Ruiz",
+      "date": "2026-10-12",
+      "status": "vacation"
+    },
+    {
+      "person": "Wilmer Ortega",
+      "date": "2026-10-12",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Adán Solís",
+      "date": "2026-10-13",
+      "site": "Escuela Roosevelt",
+      "note": "riego"
+    },
+    {
+      "person": "Chuy Medina",
+      "date": "2026-10-13",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Gerardo Paz",
+      "date": "2026-10-13",
+      "site": "1820 Monte Vista"
+    },
+    {
+      "person": "Gerardo Paz",
+      "date": "2026-10-13",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Lalo Fuentes",
+      "date": "2026-10-13",
+      "site": "1820 Monte Vista"
+    },
+    {
+      "person": "Memo Cárdenas",
+      "date": "2026-10-13",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Nacho Ibarra",
+      "date": "2026-10-13",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Pepe Lozano",
+      "date": "2026-10-13",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Ramón Herrera",
+      "date": "2026-10-13",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Toño Ruiz",
+      "date": "2026-10-13",
+      "status": "vacation"
+    },
+    {
+      "person": "Wilmer Ortega",
+      "date": "2026-10-13",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Adán Solís",
+      "date": "2026-10-14",
+      "site": "Escuela Roosevelt"
+    },
+    {
+      "person": "Chuy Medina",
+      "date": "2026-10-14",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Gerardo Paz",
+      "date": "2026-10-14",
+      "site": "Escuela Roosevelt"
+    },
+    {
+      "person": "Memo Cárdenas",
+      "date": "2026-10-14",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Nacho Ibarra",
+      "date": "2026-10-14",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Pepe Lozano",
+      "date": "2026-10-14",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Ramón Herrera",
+      "date": "2026-10-14",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Toño Ruiz",
+      "date": "2026-10-14",
+      "status": "vacation"
+    },
+    {
+      "person": "Wilmer Ortega",
+      "date": "2026-10-14",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Adán Solís",
+      "date": "2026-10-15",
+      "site": "Escuela Roosevelt"
+    },
+    {
+      "person": "Chuy Medina",
+      "date": "2026-10-15",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Gerardo Paz",
+      "date": "2026-10-15",
+      "site": "Escuela Roosevelt"
+    },
+    {
+      "person": "Lalo Fuentes",
+      "date": "2026-10-15",
+      "site": "1820 Monte Vista"
+    },
+    {
+      "person": "Memo Cárdenas",
+      "date": "2026-10-15",
+      "site": "Escuela Roosevelt"
+    },
+    {
+      "person": "Memo Cárdenas",
+      "date": "2026-10-15",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Nacho Ibarra",
+      "date": "2026-10-15",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Pepe Lozano",
+      "date": "2026-10-15",
+      "status": "sick"
+    },
+    {
+      "person": "Ramón Herrera",
+      "date": "2026-10-15",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Toño Ruiz",
+      "date": "2026-10-15",
+      "status": "vacation"
+    },
+    {
+      "person": "Wilmer Ortega",
+      "date": "2026-10-15",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Adán Solís",
+      "date": "2026-10-16",
+      "site": "Escuela Roosevelt"
+    },
+    {
+      "person": "Chuy Medina",
+      "date": "2026-10-16",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Gerardo Paz",
+      "date": "2026-10-16",
+      "site": "Escuela Roosevelt"
+    },
+    {
+      "person": "Lalo Fuentes",
+      "date": "2026-10-16",
+      "site": "1820 Monte Vista"
+    },
+    {
+      "person": "Memo Cárdenas",
+      "date": "2026-10-16",
+      "site": "Escuela Roosevelt"
+    },
+    {
+      "person": "Nacho Ibarra",
+      "date": "2026-10-16",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Pepe Lozano",
+      "date": "2026-10-16",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Ramón Herrera",
+      "date": "2026-10-16",
+      "site": "1820 Monte Vista"
+    },
+    {
+      "person": "Toño Ruiz",
+      "date": "2026-10-16",
+      "status": "vacation"
+    },
+    {
+      "person": "Wilmer Ortega",
+      "date": "2026-10-16",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Adán Solís",
+      "date": "2026-10-17",
+      "status": "off"
+    },
+    {
+      "person": "Chuy Medina",
+      "date": "2026-10-17",
+      "site": "Whitman patio"
+    },
+    {
+      "person": "Lalo Fuentes",
+      "date": "2026-10-17",
+      "site": "1820 Monte Vista"
+    },
+    {
+      "person": "Memo Cárdenas",
+      "date": "2026-10-17",
+      "status": "off"
+    },
+    {
+      "person": "Nacho Ibarra",
+      "date": "2026-10-17",
+      "site": "Linden HOA"
+    },
+    {
+      "person": "Pepe Lozano",
+      "date": "2026-10-17",
+      "status": "off"
+    },
+    {
+      "person": "Ramón Herrera",
+      "date": "2026-10-17",
+      "status": "off"
+    },
+    {
+      "person": "Toño Ruiz",
+      "date": "2026-10-17",
+      "status": "vacation"
+    },
+    {
+      "person": "Wilmer Ortega",
+      "date": "2026-10-17",
+      "site": "Whitman patio"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Memo Cárdenas",
+      "date": "2026-10-15",
+      "sites": [
+        "Linden HOA",
+        "Escuela Roosevelt"
+      ]
+    },
+    {
+      "type": "double_booked",
+      "person": "Gerardo Paz",
+      "date": "2026-10-13",
+      "sites": [
+        "1820 Monte Vista",
+        "Whitman patio"
+      ]
+    },
+    {
+      "type": "not_booked",
+      "person": "Lalo Fuentes",
+      "date": "2026-10-14"
+    },
+    {
+      "type": "not_booked",
+      "person": "Gerardo Paz",
+      "date": "2026-10-17"
+    },
+    {
+      "type": "unstaffed",
+      "site": "1820 Monte Vista",
+      "date": "2026-10-14"
+    }
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "error": null
+}

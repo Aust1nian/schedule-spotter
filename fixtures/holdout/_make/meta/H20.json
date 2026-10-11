@@ -1,0 +1,24 @@
+{
+  "window": null,
+  "roster": [
+    "Robert Dunn",
+    "Kelly Marsh",
+    "Victor Han",
+    "Sean Doherty",
+    "Amir Nasser",
+    "Paul Lindqvist",
+    "Greta Olson",
+    "Hugo Brandt"
+  ],
+  "person_canon": {
+    "Bob Dunn": "Robert Dunn"
+  },
+  "internal": [
+    "Shop"
+  ],
+  "placeholders": [
+    "Temp"
+  ],
+  "subs": [],
+  "fixture_dir": "H20-hvac-xlsx-list-start-end-roster-block"
+}

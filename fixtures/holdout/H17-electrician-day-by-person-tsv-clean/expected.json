@@ -1,0 +1,209 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.tsv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "day_by_person",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Andre",
+      "date": "2026-10-12",
+      "site": "Riverbend Plaza"
+    },
+    {
+      "person": "Greg",
+      "date": "2026-10-12",
+      "site": "Shop"
+    },
+    {
+      "person": "Lisa",
+      "date": "2026-10-12",
+      "site": "Patel residence"
+    },
+    {
+      "person": "Mo",
+      "date": "2026-10-12",
+      "site": "Oak St duplex"
+    },
+    {
+      "person": "Stan",
+      "date": "2026-10-12",
+      "site": "Hillcrest Elem."
+    },
+    {
+      "person": "Wojtek",
+      "date": "2026-10-12",
+      "site": "Hillcrest Elem."
+    },
+    {
+      "person": "Andre",
+      "date": "2026-10-13",
+      "site": "Riverbend Plaza"
+    },
+    {
+      "person": "Greg",
+      "date": "2026-10-13",
+      "site": "Patel residence"
+    },
+    {
+      "person": "Lisa",
+      "date": "2026-10-13",
+      "site": "Patel residence"
+    },
+    {
+      "person": "Mo",
+      "date": "2026-10-13",
+      "site": "Riverbend Plaza"
+    },
+    {
+      "person": "Stan",
+      "date": "2026-10-13",
+      "site": "Hillcrest Elem."
+    },
+    {
+      "person": "Wojtek",
+      "date": "2026-10-13",
+      "site": "Hillcrest Elem."
+    },
+    {
+      "person": "Andre",
+      "date": "2026-10-14",
+      "site": "Riverbend Plaza"
+    },
+    {
+      "person": "Greg",
+      "date": "2026-10-14",
+      "site": "Patel residence"
+    },
+    {
+      "person": "Lisa",
+      "date": "2026-10-14",
+      "site": "Patel residence"
+    },
+    {
+      "person": "Stan",
+      "date": "2026-10-14",
+      "site": "Hillcrest Elem."
+    },
+    {
+      "person": "Wojtek",
+      "date": "2026-10-14",
+      "status": "sick"
+    },
+    {
+      "person": "Andre",
+      "date": "2026-10-15",
+      "site": "Riverbend Plaza"
+    },
+    {
+      "person": "Greg",
+      "date": "2026-10-15",
+      "site": "Patel residence"
+    },
+    {
+      "person": "Mo",
+      "date": "2026-10-15",
+      "site": "Oak St duplex"
+    },
+    {
+      "person": "Stan",
+      "date": "2026-10-15",
+      "site": "Hillcrest Elem."
+    },
+    {
+      "person": "Wojtek",
+      "date": "2026-10-15",
+      "site": "Hillcrest Elem."
+    },
+    {
+      "person": "Andre",
+      "date": "2026-10-16",
+      "status": "pto"
+    },
+    {
+      "person": "Greg",
+      "date": "2026-10-16",
+      "site": "Riverbend Plaza"
+    },
+    {
+      "person": "Greg",
+      "date": "2026-10-16",
+      "site": "Shop"
+    },
+    {
+      "person": "Lisa",
+      "date": "2026-10-16",
+      "site": "Patel residence"
+    },
+    {
+      "person": "Mo",
+      "date": "2026-10-16",
+      "site": "Riverbend Plaza"
+    },
+    {
+      "person": "Stan",
+      "date": "2026-10-16",
+      "site": "Hillcrest Elem."
+    },
+    {
+      "person": "Wojtek",
+      "date": "2026-10-16",
+      "site": "Hillcrest Elem."
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "not_booked",
+      "person": "Mo",
+      "date": "2026-10-14"
+    },
+    {
+      "type": "not_booked",
+      "person": "Lisa",
+      "date": "2026-10-15"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Oak St duplex",
+      "date": "2026-10-13"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Oak St duplex",
+      "date": "2026-10-14"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "internal_plus_site",
+      "person": "Greg",
+      "date": "2026-10-16",
+      "sites": [
+        "Shop",
+        "Riverbend Plaza"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "error": null
+}

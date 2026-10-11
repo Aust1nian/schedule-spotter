@@ -1,0 +1,839 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.xlsx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "calendar_month",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Andy",
+      "date": "2026-10-01",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-01",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-01",
+      "site": "Yard"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-01",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-01",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-01",
+      "site": "Yard"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-01",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-02",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-02",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-02",
+      "site": "Yard"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-02",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-02",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-02",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-03",
+      "site": "Bell Tower Lofts",
+      "note": "OT"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-05",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-05",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-05",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-05",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-05",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-05",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-05",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-06",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-06",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-06",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-06",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-06",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-06",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-06",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-07",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-07",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-07",
+      "site": "Yard"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-07",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-07",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-07",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-07",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-08",
+      "status": "off"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-08",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-08",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-08",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-08",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-08",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-08",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-09",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-09",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-09",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-09",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-09",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-09",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-09",
+      "site": "Ashford chimney"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-12",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-12",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-12",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-12",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-12",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-12",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-12",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-13",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-13",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-13",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-13",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-13",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-13",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-13",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-14",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-14",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-14",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-14",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-14",
+      "status": "pto"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-14",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-14",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-15",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-15",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-15",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-15",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-15",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-15",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-15",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-16",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-16",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-16",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-16",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-16",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-16",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-16",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-16",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-19",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-19",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-19",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-19",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-19",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-19",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-19",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-20",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-20",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-20",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-20",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-20",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-20",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-20",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-21",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-21",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-21",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-21",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-21",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-21",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-21",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-22",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-22",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-22",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-22",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-22",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-22",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-22",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-23",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-23",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-23",
+      "site": "Yard"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-23",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-23",
+      "site": "Bell Tower Lofts"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-23",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-23",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-26",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-26",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-26",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-26",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-26",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-26",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-26",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-27",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-27",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-27",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-27",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-27",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-27",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-27",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-28",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-28",
+      "status": "vacation"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-28",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-28",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-28",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-28",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-28",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-29",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-29",
+      "status": "vacation"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-29",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-29",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-29",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-29",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-29",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Andy",
+      "date": "2026-10-30",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Deon",
+      "date": "2026-10-30",
+      "status": "vacation"
+    },
+    {
+      "person": "Hai",
+      "date": "2026-10-30",
+      "site": "Greer retaining wall"
+    },
+    {
+      "person": "Rusty",
+      "date": "2026-10-30",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Sal",
+      "date": "2026-10-30",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Victor",
+      "date": "2026-10-30",
+      "site": "Pinehurst Library steps"
+    },
+    {
+      "person": "Walt",
+      "date": "2026-10-30",
+      "site": "Greer retaining wall"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Rusty",
+      "date": "2026-10-16",
+      "sites": [
+        "Greer retaining wall",
+        "Bell Tower Lofts"
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Deon",
+      "date": "2026-10-29",
+      "sites": [
+        "Greer retaining wall"
+      ],
+      "status": "vacation"
+    },
+    {
+      "type": "not_booked",
+      "person": "Victor",
+      "date": "2026-10-02"
+    },
+    {
+      "type": "not_booked",
+      "person": "Rusty",
+      "date": "2026-10-29"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Bell Tower Lofts",
+      "date": "2026-10-21"
+    }
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [],
+  "error": null
+}

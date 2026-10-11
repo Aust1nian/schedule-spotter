@@ -1,0 +1,372 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "paste.txt",
+  "paste": true,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri",
+      "sat"
+    ],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Efrén Castro",
+      "date": "2026-10-26",
+      "site": "Brookfield Apts bldg C",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Lázaro Méndez",
+      "date": "2026-10-26",
+      "site": "Brookfield Apts bldg C",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Paco Ríos",
+      "date": "2026-10-26",
+      "site": "Brookfield Apts bldg C",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Rigoberto Soto",
+      "date": "2026-10-26",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Saúl Herrera",
+      "date": "2026-10-26",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Teo Vargas",
+      "date": "2026-10-26",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Uriel Gómez",
+      "date": "2026-10-26",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "person": "Wilfredo Paz",
+      "date": "2026-10-26",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "person": "Yahir Luna",
+      "date": "2026-10-26",
+      "site": "Shop"
+    },
+    {
+      "person": "Efrén Castro",
+      "date": "2026-10-27",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Lázaro Méndez",
+      "date": "2026-10-27",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Paco Ríos",
+      "date": "2026-10-27",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Rigoberto Soto",
+      "date": "2026-10-27",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Saúl Herrera",
+      "date": "2026-10-27",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Teo Vargas",
+      "date": "2026-10-27",
+      "status": "sick"
+    },
+    {
+      "person": "Uriel Gómez",
+      "date": "2026-10-27",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "person": "Wilfredo Paz",
+      "date": "2026-10-27",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "person": "Yahir Luna",
+      "date": "2026-10-27",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "person": "Efrén Castro",
+      "date": "2026-10-28",
+      "site": "Brookfield Apts bldg C",
+      "start": "07:00",
+      "end": "11:00"
+    },
+    {
+      "person": "Efrén Castro",
+      "date": "2026-10-28",
+      "site": "Rancho Verde clubhouse",
+      "start": "12:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Francisco Ríos",
+      "date": "2026-10-28",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Lázaro Méndez",
+      "date": "2026-10-28",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Paco Ríos",
+      "date": "2026-10-28",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Rigoberto Soto",
+      "date": "2026-10-28",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Saúl Herrera",
+      "date": "2026-10-28",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Teo Vargas",
+      "date": "2026-10-28",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Uriel Gómez",
+      "date": "2026-10-28",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "person": "Wilfredo Paz",
+      "date": "2026-10-28",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "person": "Efrén Castro",
+      "date": "2026-10-29",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Lázaro Méndez",
+      "date": "2026-10-29",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Paco Ríos",
+      "date": "2026-10-29",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Rigoberto Soto",
+      "date": "2026-10-29",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Saúl Herrera",
+      "date": "2026-10-29",
+      "status": "vacation"
+    },
+    {
+      "person": "Teo Vargas",
+      "date": "2026-10-29",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Uriel Gómez",
+      "date": "2026-10-29",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "person": "Wilfredo Paz",
+      "date": "2026-10-29",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "person": "Yahir Luna",
+      "date": "2026-10-29",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "date": "2026-10-29",
+      "site": "Cedar Hills HOA",
+      "unstaffed": true
+    },
+    {
+      "person": "Efrén Castro",
+      "date": "2026-10-30",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Lázaro Méndez",
+      "date": "2026-10-30",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Paco Ríos",
+      "date": "2026-10-30",
+      "site": "Brookfield Apts bldg C"
+    },
+    {
+      "person": "Rigoberto Soto",
+      "date": "2026-10-30",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Saúl Herrera",
+      "date": "2026-10-30",
+      "status": "vacation"
+    },
+    {
+      "person": "Saúl Herrera",
+      "date": "2026-10-30",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Teo Vargas",
+      "date": "2026-10-30",
+      "site": "Cedar Hills HOA"
+    },
+    {
+      "person": "Wilfredo Paz",
+      "date": "2026-10-30",
+      "site": "Rancho Verde clubhouse"
+    },
+    {
+      "person": "Yahir Luna",
+      "date": "2026-10-30",
+      "site": "Shop"
+    },
+    {
+      "person": "Efrén Castro",
+      "date": "2026-10-31",
+      "site": "Brookfield Apts bldg C",
+      "start": "07:00",
+      "end": "12:00"
+    },
+    {
+      "person": "Lázaro Méndez",
+      "date": "2026-10-31",
+      "site": "Brookfield Apts bldg C",
+      "start": "07:00",
+      "end": "12:00"
+    },
+    {
+      "person": "Paco Ríos",
+      "date": "2026-10-31",
+      "status": "off"
+    },
+    {
+      "person": "Rigoberto Soto",
+      "date": "2026-10-31",
+      "status": "off"
+    },
+    {
+      "person": "Saúl Herrera",
+      "date": "2026-10-31",
+      "status": "vacation"
+    },
+    {
+      "person": "Teo Vargas",
+      "date": "2026-10-31",
+      "status": "off"
+    },
+    {
+      "person": "Uriel Gómez",
+      "date": "2026-10-31",
+      "status": "off"
+    },
+    {
+      "person": "Wilfredo Paz",
+      "date": "2026-10-31",
+      "status": "off"
+    },
+    {
+      "person": "Yahir Luna",
+      "date": "2026-10-31",
+      "status": "off"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Francisco Ríos",
+      "date": "2026-10-28",
+      "sites": [
+        "Brookfield Apts bldg C",
+        "Cedar Hills HOA"
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Saúl Herrera",
+      "date": "2026-10-30",
+      "sites": [
+        "Cedar Hills HOA"
+      ],
+      "status": "vacation"
+    },
+    {
+      "type": "not_booked",
+      "person": "Yahir Luna",
+      "date": "2026-10-28"
+    },
+    {
+      "type": "not_booked",
+      "person": "Uriel Gómez",
+      "date": "2026-10-30"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Cedar Hills HOA",
+      "date": "2026-10-29"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "split_day",
+      "person": "Efrén Castro",
+      "date": "2026-10-28",
+      "sites": [
+        "Brookfield Apts bldg C",
+        "Rancho Verde clubhouse"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "paste_as_table"
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,1 @@
+Clean schedule (no double-bookings, no one assigned while off) on the second sheet of an xlsx whose first sheet is a Materials order list with job names, dates and people's names (must not ask which sheet): job x day grid with merged title, a roofing subcontractor-only job, Helper placeholder, TBD, em dash and 'done' cells, Shop and OFF rows, nickname 'Gordo'.

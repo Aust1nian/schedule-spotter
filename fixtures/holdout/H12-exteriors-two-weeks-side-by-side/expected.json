@@ -1,0 +1,914 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.xlsx",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri",
+      "sat"
+    ],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "side_by_side",
+  "assignments": [
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-12",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-12",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-12",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-12",
+      "site": "Shop"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-12",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-12",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-12",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-12",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-12",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-12",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-12",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-12",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-12",
+      "status": "vacation"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-12",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-13",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-13",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-13",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-13",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-13",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-13",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-13",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-13",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-13",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-13",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-13",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-13",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-13",
+      "status": "vacation"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-13",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-14",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-14",
+      "status": "sick"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-14",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-14",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-14",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-14",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-14",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-14",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-14",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-14",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-14",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-14",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-14",
+      "status": "vacation"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-14",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-15",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-15",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-15",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-15",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-15",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-15",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-15",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-15",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-15",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-15",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-15",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-15",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-15",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-15",
+      "status": "vacation"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-15",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-16",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-16",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-16",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-16",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-16",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-16",
+      "status": "pto"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-16",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-16",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-16",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-16",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-16",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-16",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-16",
+      "status": "vacation"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-16",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-17",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-17",
+      "status": "off"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-17",
+      "status": "off"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-17",
+      "status": "off"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-17",
+      "status": "off"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-17",
+      "status": "pto"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-17",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-17",
+      "status": "off"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-17",
+      "status": "off"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-17",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-17",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-17",
+      "status": "vacation"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-17",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-19",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-19",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-19",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-19",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-19",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-19",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-19",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-19",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-19",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-19",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-19",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-19",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-19",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-19",
+      "site": "Shop"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-19",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-20",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-20",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-20",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-20",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-20",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-20",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-20",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-20",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-20",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-20",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-20",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-20",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-20",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-20",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-21",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-21",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-21",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-21",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-21",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-21",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-21",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-21",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-21",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-21",
+      "site": "Shop"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-21",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-21",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-21",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-21",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-22",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-22",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-22",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-22",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-22",
+      "site": "St. Paul's gutters"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-22",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-22",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-22",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-22",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-22",
+      "site": "Shop"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-22",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-22",
+      "status": "pto"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-22",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-22",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-23",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-23",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-23",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-23",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-23",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-23",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-23",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-23",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-23",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-23",
+      "site": "Ostrander re-side"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-23",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-23",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-23",
+      "site": "Fenton Rd siding"
+    },
+    {
+      "person": "Bobby Kerr",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Chris Delaney",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Dmitri Volkov",
+      "date": "2026-10-24",
+      "site": "Haley windows"
+    },
+    {
+      "person": "Jesse Ward",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Kyle Brenner",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Mike Doyle",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Mike Szabo",
+      "date": "2026-10-24",
+      "site": "Maple Grove Condos"
+    },
+    {
+      "person": "Nick Hamm",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Ollie Grant",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Pedro Aguilar",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Ray Castillo",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Tommy Vu",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Travis Lunde",
+      "date": "2026-10-24",
+      "status": "off"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Juan Pablo Rios",
+      "date": "2026-10-15",
+      "sites": [
+        "Haley windows",
+        "St. Paul's gutters"
+      ]
+    },
+    {
+      "type": "not_booked",
+      "person": "Mike Doyle",
+      "date": "2026-10-17"
+    },
+    {
+      "type": "not_booked",
+      "person": "Ollie Grant",
+      "date": "2026-10-23"
+    },
+    {
+      "type": "unstaffed",
+      "site": "St. Paul's gutters",
+      "date": "2026-10-21"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "internal_plus_site",
+      "person": "Tommy Vu",
+      "date": "2026-10-19",
+      "sites": [
+        "Shop",
+        "Fenton Rd siding"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "same_person",
+      "a": "Mike Doyle",
+      "b": "Mike Szabo"
+    },
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "error": null
+}

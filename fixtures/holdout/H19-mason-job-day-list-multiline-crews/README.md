@@ -1,0 +1,1 @@
+Masonry company's list with one row per job per day and the whole crew in one quoted cell (commas, '&' and line breaks inside quotes), Date + Day columns, times on some rows applying to the whole crew, a split day, PTO/SICK/VAC used as the job, a placeholder Laborer, Yard, and the owner's son written 'Tony Russo' on most rows but 'Anthony Russo' on one.

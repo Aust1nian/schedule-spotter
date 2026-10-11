@@ -1,0 +1,256 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "paste.txt",
+  "paste": true,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "person_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Brandon Ash",
+      "date": "2026-10-19",
+      "site": "Ridley Rd"
+    },
+    {
+      "person": "Corey Mills",
+      "date": "2026-10-19",
+      "site": "Ridley Rd"
+    },
+    {
+      "person": "Danny Kim",
+      "date": "2026-10-19",
+      "site": "Garvey bath"
+    },
+    {
+      "person": "Ezra Cohen",
+      "date": "2026-10-19",
+      "site": "Mercer kitchen"
+    },
+    {
+      "person": "Freddy Soto",
+      "date": "2026-10-19",
+      "site": "Mercer kitchen"
+    },
+    {
+      "person": "Glen Harper",
+      "date": "2026-10-19",
+      "site": "Old Mill Inn"
+    },
+    {
+      "person": "Hank Doyle",
+      "date": "2026-10-19",
+      "site": "Old Mill Inn"
+    },
+    {
+      "person": "Isaac Long",
+      "date": "2026-10-19",
+      "site": "Shop"
+    },
+    {
+      "person": "Brandon Ash",
+      "date": "2026-10-20",
+      "site": "Ridley Rd"
+    },
+    {
+      "person": "Corey Mills",
+      "date": "2026-10-20",
+      "site": "Ridley Rd"
+    },
+    {
+      "person": "Danny Kim",
+      "date": "2026-10-20",
+      "site": "Garvey bath"
+    },
+    {
+      "person": "Ezra Cohen",
+      "date": "2026-10-20",
+      "site": "Mercer kitchen"
+    },
+    {
+      "person": "Freddy Soto",
+      "date": "2026-10-20",
+      "site": "Mercer kitchen"
+    },
+    {
+      "person": "Glen Harper",
+      "date": "2026-10-20",
+      "site": "Old Mill Inn"
+    },
+    {
+      "person": "Hank Doyle",
+      "date": "2026-10-20",
+      "status": "pto"
+    },
+    {
+      "person": "Isaac Long",
+      "date": "2026-10-20",
+      "site": "Old Mill Inn"
+    },
+    {
+      "person": "Brandon Ash",
+      "date": "2026-10-21",
+      "site": "Ridley Rd"
+    },
+    {
+      "person": "Corey Mills",
+      "date": "2026-10-21",
+      "site": "Garvey bath"
+    },
+    {
+      "person": "Corey Mills",
+      "date": "2026-10-21",
+      "site": "Ridley Rd"
+    },
+    {
+      "person": "Ezra Cohen",
+      "date": "2026-10-21",
+      "site": "Mercer kitchen"
+    },
+    {
+      "person": "Freddy Soto",
+      "date": "2026-10-21",
+      "site": "Mercer kitchen"
+    },
+    {
+      "person": "Glen Harper",
+      "date": "2026-10-21",
+      "site": "Shop"
+    },
+    {
+      "person": "Hank Doyle",
+      "date": "2026-10-21",
+      "status": "pto"
+    },
+    {
+      "person": "Brandon Ash",
+      "date": "2026-10-22",
+      "site": "Ridley Rd"
+    },
+    {
+      "person": "Corey Mills",
+      "date": "2026-10-22",
+      "site": "Ridley Rd"
+    },
+    {
+      "person": "Danny Kim",
+      "date": "2026-10-22",
+      "site": "Garvey bath"
+    },
+    {
+      "person": "Ezra Cohen",
+      "date": "2026-10-22",
+      "status": "sick"
+    },
+    {
+      "person": "Freddy Soto",
+      "date": "2026-10-22",
+      "site": "Mercer kitchen"
+    },
+    {
+      "person": "Glen Harper",
+      "date": "2026-10-22",
+      "site": "Old Mill Inn"
+    },
+    {
+      "person": "Hank Doyle",
+      "date": "2026-10-22",
+      "site": "Old Mill Inn"
+    },
+    {
+      "person": "Isaac Long",
+      "date": "2026-10-22",
+      "site": "Mercer kitchen"
+    },
+    {
+      "person": "Brandon Ash",
+      "date": "2026-10-23",
+      "site": "Ridley Rd"
+    },
+    {
+      "person": "Corey Mills",
+      "date": "2026-10-23",
+      "status": "off"
+    },
+    {
+      "person": "Danny Kim",
+      "date": "2026-10-23",
+      "site": "Garvey bath"
+    },
+    {
+      "person": "Ezra Cohen",
+      "date": "2026-10-23",
+      "site": "Mercer kitchen"
+    },
+    {
+      "person": "Freddy Soto",
+      "date": "2026-10-23",
+      "site": "Mercer kitchen"
+    },
+    {
+      "person": "Glen Harper",
+      "date": "2026-10-23",
+      "site": "Old Mill Inn"
+    },
+    {
+      "person": "Isaac Long",
+      "date": "2026-10-23",
+      "site": "Old Mill Inn"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Corey Mills",
+      "date": "2026-10-21",
+      "sites": [
+        "Ridley Rd",
+        "Garvey bath"
+      ]
+    },
+    {
+      "type": "not_booked",
+      "person": "Danny Kim",
+      "date": "2026-10-21"
+    },
+    {
+      "type": "not_booked",
+      "person": "Hank Doyle",
+      "date": "2026-10-23"
+    },
+    {
+      "type": "not_booked",
+      "person": "Isaac Long",
+      "date": "2026-10-21"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Old Mill Inn",
+      "date": "2026-10-21"
+    }
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "paste_as_table"
+    },
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,1 @@
+HVAC installer's Excel 'Text (Tab delimited)' export (.txt, Windows-1252, CRLF): two weeks stacked, each a 'Week of' line over weekday-only headers (Mon..Fri), header repeated mid-file, Warehouse as an internal site, PTO/sick/vac, two sites in one cell, a Temp placeholder row, blank days and a footer note.

@@ -1,0 +1,1 @@
+Paste: a person x day range copied straight out of Excel (tabs, CRLF, a quoted cell holding two sites on two lines), 'Mon 10/19' headers with no year anywhere (year from today), off/sick/PTO, Shop, blank days, a job nobody covers mid-week and an 'On jobs' count row at the bottom.

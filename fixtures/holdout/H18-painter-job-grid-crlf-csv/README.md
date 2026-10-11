@@ -1,0 +1,1 @@
+Painting contractor's job x day grid saved as Excel CSV with CRLF: M/D/YYYY date headers with a Saturday column under a Mon-Fri week, quoted multi-name cells split by commas, '&' and '/', 'no work' and 'done' cells, TBD, a blank job-day, Shop and OFF rows, a floater with gaps, 16 painters on 7 jobs, title rows and footer notes.

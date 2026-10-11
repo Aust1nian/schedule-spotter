@@ -1,0 +1,343 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.xls",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri",
+      "sat"
+    ],
+    "days_off": []
+  },
+  "layout": "day_by_job",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Beto",
+      "date": "2026-10-19",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Chava",
+      "date": "2026-10-19",
+      "site": "Sav-Mor lot patch"
+    },
+    {
+      "person": "Darnell",
+      "date": "2026-10-19",
+      "status": "off"
+    },
+    {
+      "person": "Ernesto",
+      "date": "2026-10-19",
+      "site": "Sav-Mor lot patch"
+    },
+    {
+      "person": "Junior",
+      "date": "2026-10-19",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Kyle",
+      "date": "2026-10-19",
+      "site": "Yard"
+    },
+    {
+      "person": "Lupe",
+      "date": "2026-10-19",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Rigo",
+      "date": "2026-10-19",
+      "site": "Sav-Mor lot patch"
+    },
+    {
+      "person": "Beto",
+      "date": "2026-10-20",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Chava",
+      "date": "2026-10-20",
+      "site": "Sav-Mor lot patch"
+    },
+    {
+      "person": "Darnell",
+      "date": "2026-10-20",
+      "status": "off"
+    },
+    {
+      "person": "Ernesto",
+      "date": "2026-10-20",
+      "site": "Sav-Mor lot patch"
+    },
+    {
+      "person": "Junior",
+      "date": "2026-10-20",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Kyle",
+      "date": "2026-10-20",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Lupe",
+      "date": "2026-10-20",
+      "status": "off"
+    },
+    {
+      "person": "Lupe",
+      "date": "2026-10-20",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Rigo",
+      "date": "2026-10-20",
+      "site": "Sav-Mor lot patch"
+    },
+    {
+      "person": "Beto",
+      "date": "2026-10-21",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Chava",
+      "date": "2026-10-21",
+      "site": "Sav-Mor lot patch"
+    },
+    {
+      "person": "Ernesto",
+      "date": "2026-10-21",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Junior",
+      "date": "2026-10-21",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Kyle",
+      "date": "2026-10-21",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Laborer 2",
+      "date": "2026-10-21",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Lupe",
+      "date": "2026-10-21",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Rigo",
+      "date": "2026-10-21",
+      "site": "Sav-Mor lot patch"
+    },
+    {
+      "person": "Beto",
+      "date": "2026-10-22",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Chava",
+      "date": "2026-10-22",
+      "site": "Calvary Baptist steps"
+    },
+    {
+      "person": "Darnell",
+      "date": "2026-10-22",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Ernesto",
+      "date": "2026-10-22",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Junior",
+      "date": "2026-10-22",
+      "site": "Calvary Baptist steps"
+    },
+    {
+      "person": "Kyle",
+      "date": "2026-10-22",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Lupe",
+      "date": "2026-10-22",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Rigo",
+      "date": "2026-10-22",
+      "site": "Calvary Baptist steps"
+    },
+    {
+      "person": "Beto",
+      "date": "2026-10-23",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Chava",
+      "date": "2026-10-23",
+      "site": "Sav-Mor lot patch"
+    },
+    {
+      "person": "Darnell",
+      "date": "2026-10-23",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Ernesto",
+      "date": "2026-10-23",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Junior",
+      "date": "2026-10-23",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Junior",
+      "date": "2026-10-23",
+      "site": "Yard"
+    },
+    {
+      "person": "Kyle",
+      "date": "2026-10-23",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Lupe",
+      "date": "2026-10-23",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Rigo",
+      "date": "2026-10-23",
+      "site": "Sav-Mor lot patch"
+    },
+    {
+      "person": "Rigo",
+      "date": "2026-10-23",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "date": "2026-10-23",
+      "site": "Calvary Baptist steps",
+      "unstaffed": true
+    },
+    {
+      "person": "Beto",
+      "date": "2026-10-24",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Chava",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Darnell",
+      "date": "2026-10-24",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Ernesto",
+      "date": "2026-10-24",
+      "site": "214 Pine driveway"
+    },
+    {
+      "person": "Junior",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Kyle",
+      "date": "2026-10-24",
+      "status": "off"
+    },
+    {
+      "person": "Lupe",
+      "date": "2026-10-24",
+      "site": "Vista Ridge sidewalks"
+    },
+    {
+      "person": "Rigo",
+      "date": "2026-10-24",
+      "status": "off"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Rigo",
+      "date": "2026-10-23",
+      "sites": [
+        "Sav-Mor lot patch",
+        "Vista Ridge sidewalks"
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Lupe",
+      "date": "2026-10-20",
+      "sites": [
+        "Vista Ridge sidewalks"
+      ],
+      "status": "off"
+    },
+    {
+      "type": "not_booked",
+      "person": "Darnell",
+      "date": "2026-10-21"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Sav-Mor lot patch",
+      "date": "2026-10-24"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Calvary Baptist steps",
+      "date": "2026-10-23"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Calvary Baptist steps",
+      "date": "2026-10-24"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "internal_plus_site",
+      "person": "Junior",
+      "date": "2026-10-23",
+      "sites": [
+        "Vista Ridge sidewalks",
+        "Yard"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "weekday_mismatch"
+    }
+  ],
+  "error": null
+}

@@ -1,0 +1,29 @@
+NORTHGATE MECHANICAL					
+INSTALL SCHEDULE					
+					
+Week of 10/19/2026					
+Tech	Mon	Tue	Wed	Thu	Fri
+Dennis Kuhl	Elmwood Apts bldg 2	Elmwood Apts bldg 2	Elmwood Apts bldg 2	Elmwood Apts bldg 2	Elmwood Apts bldg 2
+Omar Haddad	Elmwood Apts bldg 2	Elmwood Apts bldg 2	Kroll residence	Kroll residence	Elmwood Apts bldg 2
+Ricky Banks	St. Agnes rectory	St. Agnes rectory	Warehouse	St. Agnes rectory	PTO
+Stan Wolfe	St. Agnes rectory	St. Agnes rectory	Warehouse	St. Agnes rectory	St. Agnes rectory
+Trinh Nguyen	Kroll residence	Kroll residence	Kroll residence	Kroll residence	
+Jeff Ames	Bayview Plaza unit 4	Bayview Plaza unit 4	Bayview Plaza unit 4	sick	Bayview Plaza unit 4
+Carlos Mejia	Bayview Plaza unit 4	Bayview Plaza unit 4	Bayview Plaza unit 4	Bayview Plaza unit 4	Bayview Plaza unit 4
+Brad Sowers	Warehouse	Elmwood Apts bldg 2	Elmwood Apts bldg 2	Elmwood Apts bldg 2	Elmwood Apts bldg 2
+Temp				Bayview Plaza unit 4	
+					
+Week of 10/26/2026					
+Tech	Mon	Tue	Wed	Thu	Fri
+Dennis Kuhl	Elmwood Apts bldg 2	Elmwood Apts bldg 2	Elmwood Apts bldg 2	Elmwood Apts bldg 2	Elmwood Apts bldg 2
+Omar Haddad	Elmwood Apts bldg 2	Kroll residence / Bayview Plaza unit 4	Kroll residence	Kroll residence	Kroll residence
+Ricky Banks	St. Agnes rectory	St. Agnes rectory	St. Agnes rectory	St. Agnes rectory	St. Agnes rectory
+Stan Wolfe	St. Agnes rectory	St. Agnes rectory	vac	vac	vac
+Trinh Nguyen	Kroll residence	Kroll residence	Kroll residence	Kroll residence	Kroll residence
+Jeff Ames	Bayview Plaza unit 4	Bayview Plaza unit 4	Bayview Plaza unit 4	Bayview Plaza unit 4	Bayview Plaza unit 4
+Carlos Mejia	Bayview Plaza unit 4	Bayview Plaza unit 4	Bayview Plaza unit 4		Warehouse
+Brad Sowers	Elmwood Apts bldg 2	Elmwood Apts bldg 2	St. Agnes rectory	Elmwood Apts bldg 2	Elmwood Apts bldg 2
+Temp					
+					
+NOTE: Elmwood bldg 2 startup Fri 10/30 - Dennis meets the inspector at 8.					
+Warehouse = pull equipment for the next job, back on site after lunch if done.					

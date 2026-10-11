@@ -1,0 +1,468 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "job_by_day",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Ana",
+      "date": "2026-10-26",
+      "status": "off"
+    },
+    {
+      "person": "Bo",
+      "date": "2026-10-26",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Dev",
+      "date": "2026-10-26",
+      "site": "Shelby res. ext."
+    },
+    {
+      "person": "Jorge",
+      "date": "2026-10-26",
+      "site": "Marlowe res. int."
+    },
+    {
+      "person": "Kat",
+      "date": "2026-10-26",
+      "site": "Shelby res. ext."
+    },
+    {
+      "person": "Lamar",
+      "date": "2026-10-26",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Nikolai",
+      "date": "2026-10-26",
+      "site": "Marlowe res. int."
+    },
+    {
+      "person": "Reggie",
+      "date": "2026-10-26",
+      "site": "First Baptist fellowship hall"
+    },
+    {
+      "person": "Ricky",
+      "date": "2026-10-26",
+      "site": "Grandview Medical 2nd fl"
+    },
+    {
+      "person": "Sergio",
+      "date": "2026-10-26",
+      "site": "Grandview Medical 2nd fl"
+    },
+    {
+      "person": "Tasha",
+      "date": "2026-10-26",
+      "site": "First Baptist fellowship hall"
+    },
+    {
+      "person": "Vince",
+      "date": "2026-10-26",
+      "site": "Tinsley condo 5C"
+    },
+    {
+      "person": "Wendell",
+      "date": "2026-10-26",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Yolanda",
+      "date": "2026-10-26",
+      "site": "Tinsley condo 5C"
+    },
+    {
+      "date": "2026-10-26",
+      "site": "Gas station #14 canopy",
+      "unstaffed": true
+    },
+    {
+      "person": "Bo",
+      "date": "2026-10-27",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Dev",
+      "date": "2026-10-27",
+      "site": "Shelby res. ext."
+    },
+    {
+      "person": "Jorge",
+      "date": "2026-10-27",
+      "site": "Marlowe res. int."
+    },
+    {
+      "person": "Kat",
+      "date": "2026-10-27",
+      "site": "Shelby res. ext."
+    },
+    {
+      "person": "Lamar",
+      "date": "2026-10-27",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Nikolai",
+      "date": "2026-10-27",
+      "status": "off"
+    },
+    {
+      "person": "Nikolai",
+      "date": "2026-10-27",
+      "site": "Marlowe res. int."
+    },
+    {
+      "person": "Reggie",
+      "date": "2026-10-27",
+      "site": "First Baptist fellowship hall"
+    },
+    {
+      "person": "Ricky",
+      "date": "2026-10-27",
+      "site": "Grandview Medical 2nd fl"
+    },
+    {
+      "person": "Sergio",
+      "date": "2026-10-27",
+      "site": "Grandview Medical 2nd fl"
+    },
+    {
+      "person": "Tasha",
+      "date": "2026-10-27",
+      "site": "First Baptist fellowship hall"
+    },
+    {
+      "person": "Vince",
+      "date": "2026-10-27",
+      "site": "Tinsley condo 5C"
+    },
+    {
+      "person": "Wendell",
+      "date": "2026-10-27",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Yolanda",
+      "date": "2026-10-27",
+      "site": "Tinsley condo 5C"
+    },
+    {
+      "person": "Zeke",
+      "date": "2026-10-27",
+      "site": "Gas station #14 canopy"
+    },
+    {
+      "person": "Ana",
+      "date": "2026-10-28",
+      "site": "Grandview Medical 2nd fl"
+    },
+    {
+      "person": "Bo",
+      "date": "2026-10-28",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Dev",
+      "date": "2026-10-28",
+      "site": "Shop"
+    },
+    {
+      "person": "Jorge",
+      "date": "2026-10-28",
+      "site": "Marlowe res. int."
+    },
+    {
+      "person": "Kat",
+      "date": "2026-10-28",
+      "site": "Shop"
+    },
+    {
+      "person": "Lamar",
+      "date": "2026-10-28",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Nikolai",
+      "date": "2026-10-28",
+      "site": "Marlowe res. int."
+    },
+    {
+      "person": "Reggie",
+      "date": "2026-10-28",
+      "site": "First Baptist fellowship hall"
+    },
+    {
+      "person": "Ricky",
+      "date": "2026-10-28",
+      "site": "Grandview Medical 2nd fl"
+    },
+    {
+      "person": "Sergio",
+      "date": "2026-10-28",
+      "site": "Grandview Medical 2nd fl"
+    },
+    {
+      "person": "Tasha",
+      "date": "2026-10-28",
+      "site": "First Baptist fellowship hall"
+    },
+    {
+      "person": "Vince",
+      "date": "2026-10-28",
+      "site": "Tinsley condo 5C"
+    },
+    {
+      "person": "Wendell",
+      "date": "2026-10-28",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Zeke",
+      "date": "2026-10-28",
+      "site": "Gas station #14 canopy"
+    },
+    {
+      "person": "Ana",
+      "date": "2026-10-29",
+      "site": "Marlowe res. int."
+    },
+    {
+      "person": "Bo",
+      "date": "2026-10-29",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Dev",
+      "date": "2026-10-29",
+      "site": "Gas station #14 canopy"
+    },
+    {
+      "person": "Dev",
+      "date": "2026-10-29",
+      "site": "Shelby res. ext."
+    },
+    {
+      "person": "Jorge",
+      "date": "2026-10-29",
+      "site": "Marlowe res. int."
+    },
+    {
+      "person": "Kat",
+      "date": "2026-10-29",
+      "site": "Shelby res. ext."
+    },
+    {
+      "person": "Lamar",
+      "date": "2026-10-29",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Nikolai",
+      "date": "2026-10-29",
+      "site": "Marlowe res. int."
+    },
+    {
+      "person": "Reggie",
+      "date": "2026-10-29",
+      "site": "Tinsley condo 5C"
+    },
+    {
+      "person": "Ricky",
+      "date": "2026-10-29",
+      "site": "Grandview Medical 2nd fl"
+    },
+    {
+      "person": "Sergio",
+      "date": "2026-10-29",
+      "site": "Grandview Medical 2nd fl"
+    },
+    {
+      "person": "Tasha",
+      "date": "2026-10-29",
+      "site": "Tinsley condo 5C"
+    },
+    {
+      "person": "Vince",
+      "date": "2026-10-29",
+      "site": "Tinsley condo 5C"
+    },
+    {
+      "person": "Wendell",
+      "date": "2026-10-29",
+      "status": "off"
+    },
+    {
+      "person": "Yolanda",
+      "date": "2026-10-29",
+      "site": "Tinsley condo 5C"
+    },
+    {
+      "person": "Zeke",
+      "date": "2026-10-29",
+      "site": "Gas station #14 canopy"
+    },
+    {
+      "person": "Bo",
+      "date": "2026-10-30",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Dev",
+      "date": "2026-10-30",
+      "site": "Shelby res. ext."
+    },
+    {
+      "person": "Jorge",
+      "date": "2026-10-30",
+      "site": "Marlowe res. int."
+    },
+    {
+      "person": "Kat",
+      "date": "2026-10-30",
+      "site": "Shelby res. ext."
+    },
+    {
+      "person": "Lamar",
+      "date": "2026-10-30",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Reggie",
+      "date": "2026-10-30",
+      "site": "First Baptist fellowship hall"
+    },
+    {
+      "person": "Ricky",
+      "date": "2026-10-30",
+      "site": "Grandview Medical 2nd fl"
+    },
+    {
+      "person": "Sergio",
+      "date": "2026-10-30",
+      "status": "off"
+    },
+    {
+      "person": "Tasha",
+      "date": "2026-10-30",
+      "site": "First Baptist fellowship hall"
+    },
+    {
+      "person": "Vince",
+      "date": "2026-10-30",
+      "site": "First Baptist fellowship hall"
+    },
+    {
+      "person": "Wendell",
+      "date": "2026-10-30",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Yolanda",
+      "date": "2026-10-30",
+      "site": "Tinsley condo 5C"
+    },
+    {
+      "person": "Zeke",
+      "date": "2026-10-30",
+      "site": "Shelby res. ext."
+    },
+    {
+      "person": "Bo",
+      "date": "2026-10-31",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Lamar",
+      "date": "2026-10-31",
+      "site": "Windsor Apts bldg 4"
+    },
+    {
+      "person": "Reggie",
+      "date": "2026-10-31",
+      "site": "First Baptist fellowship hall"
+    },
+    {
+      "person": "Tasha",
+      "date": "2026-10-31",
+      "site": "First Baptist fellowship hall"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Dev",
+      "date": "2026-10-29",
+      "sites": [
+        "Shelby res. ext.",
+        "Gas station #14 canopy"
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Nikolai",
+      "date": "2026-10-27",
+      "sites": [
+        "Marlowe res. int."
+      ],
+      "status": "off"
+    },
+    {
+      "type": "not_booked",
+      "person": "Ana",
+      "date": "2026-10-27"
+    },
+    {
+      "type": "not_booked",
+      "person": "Ana",
+      "date": "2026-10-30"
+    },
+    {
+      "type": "not_booked",
+      "person": "Zeke",
+      "date": "2026-10-26"
+    },
+    {
+      "type": "not_booked",
+      "person": "Nikolai",
+      "date": "2026-10-30"
+    },
+    {
+      "type": "not_booked",
+      "person": "Yolanda",
+      "date": "2026-10-28"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Gas station #14 canopy",
+      "date": "2026-10-26"
+    },
+    {
+      "type": "unstaffed",
+      "site": "First Baptist fellowship hall",
+      "date": "2026-10-29"
+    }
+  ],
+  "flags_exact": true,
+  "info": [],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [],
+  "error": null
+}

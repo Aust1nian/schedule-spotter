@@ -1,0 +1,423 @@
+{
+  "category": "H",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {
+    "today": "2026-10-10",
+    "workdays": [
+      "mon",
+      "tue",
+      "wed",
+      "thu",
+      "fri"
+    ],
+    "days_off": []
+  },
+  "layout": "long_list",
+  "arrangement": "single",
+  "assignments": [
+    {
+      "person": "Andre Moss",
+      "date": "2026-10-12",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Cody Lind",
+      "date": "2026-10-12",
+      "status": "pto"
+    },
+    {
+      "person": "Dale Whitaker",
+      "date": "2026-10-12",
+      "site": "2210 Birch Ln",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Hector Salas",
+      "date": "2026-10-12",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Jordan Pike",
+      "date": "2026-10-12",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Laborer 2",
+      "date": "2026-10-12",
+      "site": "418 Kestrel Ct"
+    },
+    {
+      "person": "Marco Reyes",
+      "date": "2026-10-12",
+      "site": "2210 Birch Ln",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Sam Ferreira",
+      "date": "2026-10-12",
+      "site": "Shop",
+      "note": "load trailer"
+    },
+    {
+      "person": "Summit Gutter Co.",
+      "date": "2026-10-12",
+      "site": "77 Arbor Way"
+    },
+    {
+      "person": "Tyler Bunch",
+      "date": "2026-10-12",
+      "site": "2210 Birch Ln"
+    },
+    {
+      "person": "Wes Hartley",
+      "date": "2026-10-12",
+      "site": "418 Kestrel Ct"
+    },
+    {
+      "person": "Andre Moss",
+      "date": "2026-10-13",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Cody Lind",
+      "date": "2026-10-13",
+      "status": "pto"
+    },
+    {
+      "person": "Dale Whitaker",
+      "date": "2026-10-13",
+      "site": "2210 Birch Ln"
+    },
+    {
+      "person": "Hector Salas",
+      "date": "2026-10-13",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Jordan Pike",
+      "date": "2026-10-13",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Marco Reyes",
+      "date": "2026-10-13",
+      "site": "2210 Birch Ln"
+    },
+    {
+      "person": "Sam Ferreira",
+      "date": "2026-10-13",
+      "site": "418 Kestrel Ct"
+    },
+    {
+      "person": "Sam Ferreira",
+      "date": "2026-10-13",
+      "site": "Shop"
+    },
+    {
+      "person": "Tyler Bunch",
+      "date": "2026-10-13",
+      "site": "2210 Birch Ln"
+    },
+    {
+      "person": "Wes Hartley",
+      "date": "2026-10-13",
+      "site": "418 Kestrel Ct"
+    },
+    {
+      "person": "Andre Moss",
+      "date": "2026-10-14",
+      "status": "sick"
+    },
+    {
+      "person": "Dale Whitaker",
+      "date": "2026-10-14",
+      "site": "2210 Birch Ln",
+      "start": "07:00",
+      "end": "11:00"
+    },
+    {
+      "person": "Dale Whitaker",
+      "date": "2026-10-14",
+      "site": "Linden Church",
+      "start": "12:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Hector Salas",
+      "date": "2026-10-14",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Jordan Pike",
+      "date": "2026-10-14",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Marco Reyes",
+      "date": "2026-10-14",
+      "site": "2210 Birch Ln"
+    },
+    {
+      "person": "Sam Ferreira",
+      "date": "2026-10-14",
+      "site": "418 Kestrel Ct"
+    },
+    {
+      "person": "Summit Gutter Co.",
+      "date": "2026-10-14",
+      "site": "418 Kestrel Ct"
+    },
+    {
+      "person": "Summit Gutter Co.",
+      "date": "2026-10-14",
+      "site": "77 Arbor Way"
+    },
+    {
+      "person": "Tyler Bunch",
+      "date": "2026-10-14",
+      "site": "2210 Birch Ln"
+    },
+    {
+      "person": "Wes Hartley",
+      "date": "2026-10-14",
+      "site": "418 Kestrel Ct"
+    },
+    {
+      "person": "Andre Moss",
+      "date": "2026-10-15",
+      "status": "sick"
+    },
+    {
+      "person": "Andre Moss",
+      "date": "2026-10-15",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Cody Lind",
+      "date": "2026-10-15",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Dale Whitaker",
+      "date": "2026-10-15",
+      "site": "Linden Church",
+      "start": "07:00",
+      "end": "15:00"
+    },
+    {
+      "person": "Hector Salas",
+      "date": "2026-10-15",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Jordan Pike",
+      "date": "2026-10-15",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Marco Reyes",
+      "date": "2026-10-15",
+      "site": "2210 Birch Ln",
+      "start": "07:00",
+      "end": "15:30"
+    },
+    {
+      "person": "Marco Reyes",
+      "date": "2026-10-15",
+      "site": "Linden Church",
+      "start": "13:00",
+      "end": "16:00"
+    },
+    {
+      "person": "Sam Ferreira",
+      "date": "2026-10-15",
+      "site": "2210 Birch Ln"
+    },
+    {
+      "person": "Tyler Bunch",
+      "date": "2026-10-15",
+      "site": "2210 Birch Ln"
+    },
+    {
+      "person": "Wes Hartley",
+      "date": "2026-10-15",
+      "site": "Shop"
+    },
+    {
+      "date": "2026-10-15",
+      "site": "Linden Church",
+      "unstaffed": true
+    },
+    {
+      "person": "Andre Moss",
+      "date": "2026-10-16",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Cody Lind",
+      "date": "2026-10-16",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Dale Whitaker",
+      "date": "2026-10-16",
+      "site": "Linden Church"
+    },
+    {
+      "person": "Hector Salas",
+      "date": "2026-10-16",
+      "site": "Oakmont HOA bldg C"
+    },
+    {
+      "person": "Laborer 2",
+      "date": "2026-10-16",
+      "site": "Linden Church"
+    },
+    {
+      "person": "Marco Reyes",
+      "date": "2026-10-16",
+      "site": "Linden Church"
+    },
+    {
+      "person": "Sam Ferreira",
+      "date": "2026-10-16",
+      "site": "418 Kestrel Ct"
+    },
+    {
+      "person": "Tyler Bunch",
+      "date": "2026-10-16",
+      "site": "2210 Birch Ln"
+    },
+    {
+      "person": "Wes Hartley",
+      "date": "2026-10-16",
+      "site": "Shop"
+    },
+    {
+      "person": "Hector Salas",
+      "date": "2026-10-17",
+      "site": "418 Kestrel Ct"
+    },
+    {
+      "person": "Hector Salas",
+      "date": "2026-10-17",
+      "site": "Oakmont HOA bldg C",
+      "start": "07:00",
+      "end": "12:00"
+    },
+    {
+      "person": "Marco Reyes",
+      "date": "2026-10-17",
+      "site": "2210 Birch Ln",
+      "start": "07:00",
+      "end": "12:00"
+    },
+    {
+      "person": "Tyler Bunch",
+      "date": "2026-10-17",
+      "site": "2210 Birch Ln",
+      "start": "07:00",
+      "end": "12:00"
+    }
+  ],
+  "assignments_exact": true,
+  "flags": [
+    {
+      "type": "double_booked",
+      "person": "Marco Reyes",
+      "date": "2026-10-15",
+      "sites": [
+        "2210 Birch Ln",
+        "Linden Church"
+      ]
+    },
+    {
+      "type": "double_booked",
+      "person": "Hector Salas",
+      "date": "2026-10-17",
+      "sites": [
+        "Oakmont HOA bldg C",
+        "418 Kestrel Ct"
+      ]
+    },
+    {
+      "type": "assigned_while_off",
+      "person": "Andre Moss",
+      "date": "2026-10-15",
+      "sites": [
+        "Oakmont HOA bldg C"
+      ],
+      "status": "sick"
+    },
+    {
+      "type": "not_booked",
+      "person": "Jordan Pike",
+      "date": "2026-10-16"
+    },
+    {
+      "type": "not_booked",
+      "person": "Cody Lind",
+      "date": "2026-10-14"
+    },
+    {
+      "type": "unstaffed",
+      "site": "Linden Church",
+      "date": "2026-10-15"
+    },
+    {
+      "type": "unstaffed",
+      "site": "77 Arbor Way",
+      "date": "2026-10-13"
+    },
+    {
+      "type": "unstaffed",
+      "site": "418 Kestrel Ct",
+      "date": "2026-10-15"
+    }
+  ],
+  "flags_exact": true,
+  "info": [
+    {
+      "type": "split_day",
+      "person": "Dale Whitaker",
+      "date": "2026-10-14",
+      "sites": [
+        "2210 Birch Ln",
+        "Linden Church"
+      ]
+    },
+    {
+      "type": "internal_plus_site",
+      "person": "Sam Ferreira",
+      "date": "2026-10-13",
+      "sites": [
+        "Shop",
+        "418 Kestrel Ct"
+      ]
+    },
+    {
+      "type": "subcontractor_multi_site",
+      "person": "Summit Gutter Co.",
+      "date": "2026-10-14",
+      "sites": [
+        "77 Arbor Way",
+        "418 Kestrel Ct"
+      ]
+    }
+  ],
+  "info_exact": false,
+  "ask": [],
+  "must_not_ask": [
+    {
+      "type": "weekday_mismatch"
+    },
+    {
+      "type": "pick_layout"
+    }
+  ],
+  "error": null
+}
