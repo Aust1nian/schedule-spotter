@@ -139,3 +139,18 @@ Open items for Phase 6, to ask Austin then:
 This page serves this gift only. Because of the no-co-mingling rule, any website-wide pieces shared across gifts belong outside this repo.
 
 **2026-10-11 · Phase 1 drafting overlapped the Phase 0 CI run.** While the first CI matrix ran (about 30 minutes), Phase 1 groundwork was drafted on the `phase-1` branch: the fixture contract `fixtures/FORMAT.md`, the name lists, and the stage 1 reader. Independent agents also began the holdout fixtures and the generator. Nothing from Phase 1 was merged into `main` before the Phase 0 gate passed (run 38121971582). The spec's ordering applies to merging and gating, and both were respected.
+
+## Phase 1
+
+**2026-10-11 · `nix` is allowed, with its file-system feature only.** `zip` 9 uses `nix` with `fs` on Unix. That crate also wraps sockets behind its `socket`/`net` features. `tools/depcheck.py` now fails if any of those features is ever enabled, so the crate can stay without opening a network code path.
+
+**2026-10-11 · Fixture rules clarified in `fixtures/FORMAT.md`.** The independent fixture author flagged nine ambiguities, all resolved without changing any expectation:
+- AM/PM sub-columns give one record per cell.
+- Notes columns fill `note`.
+- Merged-cell patterns exported to CSV fill down silently.
+- Weekday names with no anchor mean the current or coming week.
+- Shop plus one job is always `internal_plus_site`.
+- `pick_sheet` options compare as a set.
+- `weekday_mismatch` keeps the date until answered.
+- Crew-based schedules follow the window rules of the grid or list they're drawn as.
+- Emoji stay in names.

@@ -54,6 +54,20 @@ def shipped_crates(target: str) -> set[str]:
     return {line.split()[0] for line in out.splitlines() if line.strip()}
 
 
+# Crates allowed only with a reviewed feature set: their network features
+# must never be enabled.
+FEATURE_DENY = {"nix": {"socket", "net", "uio"}}
+
+
+def enabled_features(target: str, crate: str) -> set[str]:
+    out = subprocess.run(
+        ["cargo", "tree", "-p", "schedule-spotter", "--target", target, "-e", "normal,features,no-proc-macro",
+         "-i", crate, "--prefix", "none"],
+        cwd=ROOT, capture_output=True, text=True,
+    ).stdout
+    return set(re.findall(rf'^{re.escape(crate)} feature "([^"]+)"', out, re.M))
+
+
 def main() -> int:
     update = "--update-allowlist" in sys.argv
     problems: list[str] = []
@@ -63,6 +77,10 @@ def main() -> int:
         found = shipped_crates(target)
         for name in sorted(found & DENY):
             problems.append(f"{target}: network-capable crate in the shipped tree: {name}")
+        for crate, banned in FEATURE_DENY.items():
+            if crate in found:
+                for feature in sorted(enabled_features(target, crate) & banned):
+                    problems.append(f"{target}: {crate} has network feature \"{feature}\" enabled")
         crates |= found
 
     allowed = {
