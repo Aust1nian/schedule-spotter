@@ -78,6 +78,8 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
+          # llama.cpp's DLLs (and the ggml-cpu-* variants) beside the exe, as installed.
+          python tools/ci/collect-llama-libs.py --profile $env:TARGET_DIR --to $env:TARGET_DIR
           $extra = if ($env:FULL -eq "1") { "" } else { "--max-per-task 6" }
           tools/ci/run-limited.ps1 -Exe "$env:TARGET_DIR/spotter-bench.exe" -LimitMB 4096 `
             -Arguments "--model ${{ steps.model.outputs.file }} --sha ${{ steps.model.outputs.sha }} --variant ${{ matrix.variant }} --threads 2 --limit 5 $extra" `
