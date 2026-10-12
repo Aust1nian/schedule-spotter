@@ -70,7 +70,7 @@ The Pi's upload speed sets how long each download takes, and downloads running a
 
 | Build | Size | One download |
 | --- | --- | --- |
-| Model off | about 15 MB (Windows) to 30 MB (Mac) | seconds |
+| Model off | 16 MB (Mac), 223 MB (Windows: Microsoft's WebView2 offline installer) | seconds (Mac), about 1.5 minutes (Windows) |
 | C (Llama 3.2 1B) | about 1 GB | about 7 minutes |
 | A (Phi-4-mini) | about 2.7 GB | about 18 minutes |
 | B-E2B (Gemma 4 E2B) | about 3.6 GB | about 24 minutes |
