@@ -416,3 +416,10 @@ Each change shows the rules' result at once; the model's pass follows, and a pas
 **2026-10-11 · Diagnostics.** The text is built from structured data with placeholders (Person 1, Site 2, Text 3). Then every spelling the schedule contains, plus the file name, is scrubbed as whole words, as a second guard. It adds the app's own log: what was opened (extension and size only), timings, model status and page errors. The owner sees the full text before saving it.
 
 **2026-10-11 · About.** It shows the version, Tight Line, the privacy line and how to check it, the model and its license, "Built with Llama" for variant C, and a short license list. The full license texts go into the bundle's Licenses folder in Phase 6. The website and contact line are blank until Austin gives them (`app/src/brand.ts`, `TODO(Austin)`); both are plain text, never links.
+
+**2026-10-11 · System dialogs through `rfd` 0.17, asynchronously.** The open and save dialogs are `rfd::AsyncFileDialog`, parented to the window, called from the app's async commands:
+- **macOS:** a sheet on the window, run on the main thread by rfd.
+- **Windows:** a COM file dialog on rfd's own thread.
+- **Linux (development only):** the `gtk3` backend with no XDG portal (the portal would bring D-Bus networking crates). It runs GTK on a thread of its own beside Tauri's. Checked in the dev container: the dialog opens and the app keeps answering.
+
+WebDriver can't drive any of these dialogs, so the UI tests use the `ui-test` hooks, and the real dialogs get a manual check on each platform before release (RELEASE.md, Phase 6).
