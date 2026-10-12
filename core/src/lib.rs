@@ -6,7 +6,9 @@ pub mod analyze;
 pub mod cells;
 pub mod classify;
 pub mod dates;
+pub mod describe;
 pub mod example;
+pub mod export;
 mod freetext;
 pub mod grid;
 pub mod identity;
@@ -20,9 +22,11 @@ pub mod model;
 pub mod read;
 mod read_docx;
 mod read_numbers;
+pub mod session;
 pub mod settings;
 pub mod text;
 pub mod times;
+pub mod view;
 
 pub use matching::{NoModel, Tiebreaker};
 pub use model::{Answer, Answers, Flag, FlagKind, Input, Question, ReadError, Reading, Report};
@@ -75,6 +79,7 @@ pub fn analyze_with(
             let (flags, info) = analyze::analyze(&reading, settings, &matching);
             let mut questions = reading.questions.clone();
             questions.extend(matching.questions.iter().cloned());
+            let week = view::build(&reading, settings, &matching, &flags);
             Report {
                 reading,
                 error: None,
@@ -82,6 +87,7 @@ pub fn analyze_with(
                 info,
                 merges: matching.merges,
                 questions,
+                week,
             }
         }
         Err(error) => Report {

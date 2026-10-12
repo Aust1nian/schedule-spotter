@@ -3255,12 +3255,14 @@ dependencies = [
  "spotter-core",
  "spotter-llm",
  "windows-sys 0.61.2",
+ "zip 9.0.1",
 ]
 
 [[package]]
 name = "spotter-core"
 version = "0.1.0"
 dependencies = [
+ "base64 0.22.1",
  "calamine",
  "chrono",
  "csv",

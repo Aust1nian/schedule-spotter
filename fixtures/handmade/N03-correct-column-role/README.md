@@ -1,0 +1,1 @@
+Correcting a column role: the helpers are written in the Notes column, which reads as notes; setting Notes to Person in What I read shows Dave Kim double-booked on Tuesday and the helpers' empty days.

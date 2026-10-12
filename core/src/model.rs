@@ -238,6 +238,9 @@ pub struct Reading {
     pub roster: Option<Vec<String>>,
     pub questions: Vec<Question>,
     pub notes: Vec<String>,
+    /// Every way the sheet could be read, best first, as the owner would
+    /// pick them in "What I read" (answered as `PickLayout`).
+    pub layout_options: Vec<String>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
@@ -310,4 +313,6 @@ pub struct Report {
     pub merges: Vec<crate::matching::Merge>,
     /// Every open question: the reader's and matching's.
     pub questions: Vec<Question>,
+    /// The week grid and job rows, as the app draws them.
+    pub week: crate::view::WeekView,
 }

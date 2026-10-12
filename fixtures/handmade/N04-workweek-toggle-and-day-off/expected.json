@@ -1,0 +1,21 @@
+{
+  "category": "N",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {"today": "2026-10-10"},
+  "layout": "person_by_day",
+  "flags": [
+    {"type": "not_booked", "person": "Dave Kim", "date": "2026-10-14"},
+    {"type": "not_booked", "person": "Dave Kim", "date": "2026-10-17"},
+    {"type": "not_booked", "person": "Jose Garcia", "date": "2026-10-17"}
+  ],
+  "flags_exact": true,
+  "steps": [
+    {"workdays": ["mon", "tue", "wed", "thu", "fri"]},
+    {"day_off": "2026-10-14"}
+  ],
+  "after_steps": {
+    "flags": []
+  }
+}

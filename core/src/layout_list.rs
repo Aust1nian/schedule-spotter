@@ -50,6 +50,51 @@ impl Role {
             Role::Ignore => "Ignore",
         }
     }
+
+    /// The role an owner picked in "What I read".
+    fn from_label(label: &str) -> Option<Role> {
+        let k = key(label);
+        [
+            Role::Date,
+            Role::Day,
+            Role::Person,
+            Role::Site,
+            Role::Time,
+            Role::Start,
+            Role::End,
+            Role::Status,
+            Role::Note,
+            Role::Ignore,
+        ]
+        .into_iter()
+        .find(|r| key(r.label()) == k)
+        .or(match k.as_str() {
+            "site" => Some(Role::Site),
+            _ => None,
+        })
+    }
+}
+
+/// How a column is named to the owner and in answers: its header, or
+/// "Column 3" when it has none.
+fn column_title(ctx: &SheetCtx, header: Option<usize>, c: usize) -> String {
+    header
+        .map(|h| clean(ctx.g.text(h, c)))
+        .filter(|t| !t.is_empty())
+        .unwrap_or_else(|| format!("Column {}", ctx.g.source(0, c).col + 1))
+}
+
+/// Roles the owner set in "What I read", by column.
+fn owner_roles(ctx: &SheetCtx, header: Option<usize>) -> Vec<Option<Role>> {
+    (0..ctx.g.width())
+        .map(|c| {
+            let subject = format!("column_role:{}", key(&column_title(ctx, header, c)));
+            match ctx.answers.get_subject(&subject) {
+                Some(crate::model::Answer::Pick(role)) => Role::from_label(role),
+                _ => None,
+            }
+        })
+        .collect()
 }
 
 #[derive(Default, Clone, Debug)]
@@ -333,7 +378,7 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
         let src = g.source(header.unwrap_or(0), c);
         sink.columns.push(ColumnReading {
             index: src.col,
-            header: header.map(|h| clean(g.text(h, c))).unwrap_or_default(),
+            header: column_title(ctx, header, c),
             role: role.label().into(),
         });
     }
@@ -484,9 +529,14 @@ fn assign_roles(
         .collect();
     let rate = |x: usize, s: &Stats| if s.n == 0 { 0.0 } else { x as f32 / s.n as f32 };
     let mut roles = vec![Role::Ignore; w];
+    // The owner's corrections beat every score.
+    let forced = owner_roles(ctx, header);
+    let free = |c: usize, role: Role| forced[c].is_none() || forced[c] == Some(role);
 
     // Dates.
+    let owner_date = (0..w).find(|&c| forced[c] == Some(Role::Date));
     let date_col = (0..w)
+        .filter(|&c| owner_date.is_none() && free(c, Role::Date))
         // One stray date isn't a date column, unless the header says so.
         .filter(|&c| {
             stats[c].date >= 2 || (stats[c].date >= 1 && hroles[c] == Some(HeaderRole::Date))
@@ -509,17 +559,25 @@ fn assign_roles(
                     0.0
                 };
             sa.total_cmp(&sb)
-        });
+        })
+        .or(owner_date);
     if let Some(c) = date_col {
         roles[c] = Role::Date;
     }
+    let owner_day = (0..w).find(|&c| forced[c] == Some(Role::Day));
     let day_col = (0..w)
-        .filter(|&c| roles[c] == Role::Ignore && rate(stats[c].weekday, &stats[c]) >= 0.5)
+        .filter(|&c| {
+            owner_day.is_none()
+                && free(c, Role::Day)
+                && roles[c] == Role::Ignore
+                && rate(stats[c].weekday, &stats[c]) >= 0.5
+        })
         .max_by(|&a, &b| {
             rate(stats[a].weekday, &stats[a]).total_cmp(&rate(stats[b].weekday, &stats[b]))
-        });
+        })
+        .or(owner_day);
     if let Some(c) = day_col {
-        if date_col.is_none() {
+        if date_col.is_none() || owner_day.is_some() {
             roles[c] = Role::Day;
         } else {
             roles[c] = Role::Ignore; // a weekday next to a full date adds nothing
@@ -527,7 +585,19 @@ fn assign_roles(
     }
 
     for c in 0..w {
-        if roles[c] != Role::Ignore || stats[c].n == 0 || Some(c) == day_col {
+        if roles[c] != Role::Ignore || Some(c) == day_col {
+            continue;
+        }
+        match forced[c] {
+            None => {}
+            // Settled with the names and jobs below.
+            Some(Role::Person | Role::Site | Role::Date | Role::Day) => continue,
+            Some(role) => {
+                roles[c] = role;
+                continue;
+            }
+        }
+        if stats[c].n == 0 {
             continue;
         }
         let s = &stats[c];
@@ -551,6 +621,7 @@ fn assign_roles(
     for c in 0..w.saturating_sub(1) {
         let single = |c: usize| {
             hroles[c].is_none()
+                && forced[c].is_none()
                 && roles[c] == Role::Ignore
                 && stats[c].n > 0
                 && rate(stats[c].clock, &stats[c]) >= 0.8
@@ -566,50 +637,49 @@ fn assign_roles(
     let mut roster_cols: Vec<usize> = Vec::new();
     let mut site_cands: Vec<(f32, usize)> = Vec::new();
     for c in 0..w {
-        if roles[c] != Role::Ignore || stats[c].entity_n == 0 || Some(c) == day_col {
+        if roles[c] != Role::Ignore
+            || (stats[c].entity_n == 0 && forced[c].is_none())
+            || Some(c) == day_col
+            || forced[c] == Some(Role::Ignore)
+        {
             continue;
         }
-        if matches!(
-            hroles[c],
-            Some(HeaderRole::Hours) | Some(HeaderRole::JobNumber)
-        ) {
+        if forced[c].is_none()
+            && matches!(
+                hroles[c],
+                Some(HeaderRole::Hours) | Some(HeaderRole::JobNumber)
+            )
+        {
             continue;
         }
         // A "Roster" column beside the list names the crew, not this row's
         // people, unless it's the list's only name column ("Team", "Employees").
-        if header.is_some_and(|h| is_roster_title(&key(g.text(h, c)))) {
+        if forced[c].is_none() && header.is_some_and(|h| is_roster_title(&key(g.text(h, c)))) {
             roster_cols.push(c);
             continue;
         }
         let s = &stats[c];
-        let mut p = s.person / s.entity_n as f32;
-        let mut st = s.site / s.entity_n as f32;
+        let n = s.entity_n.max(1) as f32;
+        let mut p = s.person / n;
+        let mut st = s.site / n;
         match hroles[c] {
             Some(HeaderRole::Person) | Some(HeaderRole::Crew) => p += 0.5,
             Some(HeaderRole::Site) => st += 0.5,
             _ => {}
         }
         // The owner said what this column is.
-        let header_text = header
-            .map(|h| clean(g.text(h, c)))
-            .filter(|t| !t.is_empty())
-            .unwrap_or_else(|| format!("Column {}", g.source(0, c).col + 1));
-        if let Some(crate::model::Answer::Pick(role)) = ctx
-            .answers
-            .get_subject(&format!("column_role:{}", key(&header_text)))
-        {
-            if role.eq_ignore_ascii_case(Role::Person.label()) {
-                p = 9.0;
-            } else if role.eq_ignore_ascii_case(Role::Site.label()) {
+        let header_text = column_title(ctx, header, c);
+        match forced[c] {
+            Some(Role::Person) => p = 9.0,
+            Some(Role::Site) => {
                 st = 9.0;
                 p = 0.0;
-            } else {
-                continue;
             }
+            _ => {}
         }
         // Scores too close to call with no header: the model first (T4),
         // then the owner.
-        let tied = header.is_none() && (p - st).abs() < 0.08 && p > 0.3;
+        let tied = forced[c].is_none() && header.is_none() && (p - st).abs() < 0.08 && p > 0.3;
         let mut settled = false;
         if tied {
             let samples: Vec<String> = data_rows

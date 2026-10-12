@@ -1,0 +1,22 @@
+{
+  "category": "N",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {"today": "2026-10-10", "workdays": ["mon", "tue", "wed", "thu", "fri"], "days_off": []},
+  "layout": "person_by_day",
+  "flags": [
+    {"type": "not_booked", "person": "Dave Kim", "date": "2026-10-14"}
+  ],
+  "flags_exact": true,
+  "ask": [{"type": "same_site", "a": "Johnson job", "b": "1420 Johnson St"}],
+  "ui": "keyboard",
+  "steps": [
+    {"answer": {"question": {"type": "same_site", "a": "Johnson job", "b": "1420 Johnson St"}, "answer": "yes"}},
+    {"day_off": "2026-10-14"}
+  ],
+  "after_steps": {
+    "flags": [],
+    "must_not_ask": [{"type": "same_site"}]
+  }
+}

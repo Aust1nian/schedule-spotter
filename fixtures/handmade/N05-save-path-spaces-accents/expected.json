@@ -1,0 +1,20 @@
+{
+  "category": "N",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {"today": "2026-10-10", "workdays": ["mon", "tue", "wed", "thu", "fri"], "days_off": []},
+  "layout": "long_list",
+  "flags": [
+    {"type": "double_booked", "person": "José García", "date": "2026-10-13", "sites": ["Casa Martínez", "Oficina Peña"]}
+  ],
+  "flags_exact": true,
+  "steps": [
+    {"save_reopen": "Mis Documentos/Revisión de horario – José/Schedule check - week of 2026-10-12.xlsx"}
+  ],
+  "after_steps": {
+    "flags": [
+      {"type": "double_booked", "person": "José García", "date": "2026-10-13", "sites": ["Casa Martínez", "Oficina Peña"]}
+    ]
+  }
+}

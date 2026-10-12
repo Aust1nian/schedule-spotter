@@ -123,6 +123,9 @@ impl Tiebreaker for NoModel {}
 pub struct Matching {
     person_of: HashMap<String, String>,
     site_of: HashMap<String, String>,
+    /// Site spellings the owner split from the rest of their key ("no" to
+    /// a "1420 Johnson St" / "1420 Johnson Street" chip): spelling → key.
+    site_split: HashMap<String, String>,
     pub people: Names,
     pub sites: Names,
     pub merges: Vec<Merge>,
@@ -138,7 +141,11 @@ impl Matching {
 
     /// The identity key of a site spelling.
     pub fn site(&self, raw: &str) -> String {
-        let k = site_key(raw);
+        let k = self
+            .site_split
+            .get(&crate::text::clean(raw))
+            .cloned()
+            .unwrap_or_else(|| site_key(raw));
         self.site_of.get(&k).cloned().unwrap_or(k)
     }
 }
@@ -832,13 +839,50 @@ fn match_sites(reading: &Reading, answers: &Answers, tiebreak: &dyn Tiebreaker, 
     let mut spellings = Names::default();
     let mut order: Vec<String> = Vec::new();
     let mut raw_by_key: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
-    let raws = reading
+    let raws: Vec<&str> = reading
         .assignments
         .iter()
         .filter_map(|a| a.site.as_deref())
-        .chain(reading.grid_jobs.iter().map(String::as_str));
-    for raw in raws {
+        .chain(reading.grid_jobs.iter().map(String::as_str))
+        .collect();
+    // Spellings that share a key ("St" / "Street") are one site, unless the
+    // owner undid that chip: then the spelling gets a key of its own.
+    let mut by_key: BTreeMap<String, Names> = BTreeMap::new();
+    let mut seen_raw: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+    for raw in &raws {
         let k = site_key(raw);
+        by_key.entry(k.clone()).or_default().add(&k, raw);
+        seen_raw
+            .entry(k)
+            .or_default()
+            .insert(crate::text::clean(raw));
+    }
+    for (k, group) in &seen_raw {
+        let display = by_key[k].display(k);
+        for raw in group {
+            // The display spelling stays; the other side is split off.
+            let undone = *raw != display
+                && group.iter().any(|other| {
+                    other != raw
+                        && answered(
+                            answers,
+                            &Question::SameSite {
+                                a: raw.clone(),
+                                b: other.clone(),
+                            },
+                        ) == Some(false)
+                });
+            if undone {
+                m.site_split.insert(raw.clone(), format!("{k}\u{1}{raw}"));
+            }
+        }
+    }
+    for raw in raws {
+        let k = m
+            .site_split
+            .get(&crate::text::clean(raw))
+            .cloned()
+            .unwrap_or_else(|| site_key(raw));
         if !order.contains(&k) {
             order.push(k.clone());
         }

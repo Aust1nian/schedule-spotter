@@ -1,0 +1,23 @@
+{
+  "category": "N",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {"today": "2026-10-10", "workdays": ["mon", "tue", "wed", "thu", "fri"], "days_off": []},
+  "layout": "long_list",
+  "flags": [],
+  "flags_exact": true,
+  "steps": [
+    {"column_role": {"header": "Notes", "role": "Person"}}
+  ],
+  "after_steps": {
+    "columns": [{"header": "Notes", "role": "Person"}],
+    "flags": [
+      {"type": "double_booked", "person": "Dave Kim", "date": "2026-10-13", "sites": ["1420 Johnson St", "Smith remodel"]},
+      {"type": "not_booked", "person": "Luis Ortiz", "date": "2026-10-12"},
+      {"type": "not_booked", "person": "Luis Ortiz", "date": "2026-10-13"},
+      {"type": "not_booked", "person": "Tom Reed", "date": "2026-10-13"},
+      {"type": "not_booked", "person": "Dave Kim", "date": "2026-10-14"}
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "category": "N",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {"today": "2026-10-10", "workdays": ["mon", "tue", "wed", "thu", "fri"], "days_off": []},
+  "layout": "long_list",
+  "flags": [],
+  "flags_exact": true,
+  "must_not_ask": [{"type": "same_site"}],
+  "steps": [
+    {"undo_merge": {"from": "1420 Johnson St", "into": "1420 Johnson Street"}}
+  ],
+  "after_steps": {
+    "flags": [
+      {"type": "unstaffed", "site": "1420 Johnson Street", "date": "2026-10-13"}
+    ],
+    "merges": [],
+    "must_not_ask": [{"type": "same_site"}]
+  }
+}

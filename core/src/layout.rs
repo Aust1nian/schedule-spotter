@@ -147,6 +147,8 @@ pub struct Sink {
     pub used_crews: bool,
     /// Names from an employee roster block on the sheet.
     pub roster: Option<Vec<String>>,
+    /// Every way the sheet could be read, best first (for "What I read").
+    pub layout_options: Vec<String>,
 }
 
 /// Per-record extras gathered from the cell and its column.
@@ -361,6 +363,7 @@ pub fn read_workbook(
     reading.roster = sink.roster;
     reading.inactive = sink.inactive;
     reading.columns = sink.columns;
+    reading.layout_options = sink.layout_options;
     reading.questions.extend(sink.questions);
     reading.notes.extend(sink.notes);
     reading
@@ -408,7 +411,15 @@ pub fn read_sheet(
             .position(|c| layout_name(c.layout) == name.as_str()),
         _ => None,
     };
+    let mut options: Vec<String> = Vec::new();
+    for c in &candidates {
+        let name = layout_name(c.layout).to_string();
+        if !options.contains(&name) {
+            options.push(name);
+        }
+    }
     let mut best = candidates.remove(picked.unwrap_or(0));
+    best.sink.layout_options = options;
     if let Some(second) = candidates.first().filter(|_| picked.is_none()) {
         let close = best.score() - second.score() < 0.03 && second.score() > 0.5;
         if close && family(best.layout) != family(second.layout) {

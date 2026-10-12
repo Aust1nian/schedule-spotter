@@ -5,6 +5,9 @@
 //!   spotter-check fixtures <dir>... [--only ID] [--verbose] [--json out.json]
 //!   spotter-check generated <dir> [--verbose] [--min-recall 0.99]
 
+#[path = "../session_checks.rs"]
+mod session_checks;
+
 use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 use std::time::Instant;
@@ -567,6 +570,22 @@ fn check_fixture(dir: &Path) -> Option<Outcome> {
             let actual: Vec<Value> = after.info.iter().map(info_json).collect();
             compare_findings("after answers, info", exp, &actual, exact, &mut problem);
         }
+    }
+
+    // Phase 5: the saved workbook, saving errors, and category N steps, all
+    // through the app's session.
+    let session_tiebreak: &dyn Tiebreaker = if model_run { tiebreak() } else { &NoModel };
+    let mut session = session_checks::session_for(&input, &settings);
+    if expected.get("export_check").and_then(Value::as_bool) == Some(true) {
+        session_checks::export_check(&session, &report, &mut problem);
+    }
+    if let Some(spec) = expected.get("save_test") {
+        session_checks::save_test(spec, &session, &report, &mut problem);
+    }
+    if let Some(steps) = expected.get("steps").and_then(Value::as_array) {
+        session_checks::run_steps(steps, &mut session, session_tiebreak, &mut problem);
+        let after = session.report(session_tiebreak);
+        session_checks::check_after(&expected["after_steps"], &after, &mut problem);
     }
     Some(out)
 }

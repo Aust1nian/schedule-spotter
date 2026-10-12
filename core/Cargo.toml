@@ -8,6 +8,7 @@ publish.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+base64 = "0.22"
 calamine = { version = "0.36", default-features = false }
 chrono = { version = "0.4", default-features = false, features = ["std", "serde"] }
 csv = "1.4"

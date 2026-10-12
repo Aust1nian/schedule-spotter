@@ -1,0 +1,28 @@
+{
+  "category": "N",
+  "tier": "script",
+  "input": "input.csv",
+  "paste": false,
+  "settings": {"today": "2026-10-10", "workdays": ["mon", "tue", "wed", "thu", "fri"], "days_off": []},
+  "layout": "person_by_day",
+  "flags": [
+    {"type": "double_booked", "person": "Michael Baker", "date": "2026-10-14", "sites": ["Smith remodel", "Parker kitchen"]}
+  ],
+  "flags_exact": true,
+  "ask": [{"type": "same_site", "a": "Johnson job", "b": "1420 Johnson St"}],
+  "steps": [
+    {"answer": {"question": {"type": "same_site", "a": "Johnson job", "b": "1420 Johnson St"}, "answer": "yes"}},
+    {"undo_merge": {"from": "Mike B", "into": "Michael Baker"}},
+    {"save_reopen": "Schedule check - week of 2026-10-12.xlsx"}
+  ],
+  "after_steps": {
+    "flags": [
+      {"type": "not_booked", "person": "Mike B", "date": "2026-10-12"},
+      {"type": "not_booked", "person": "Mike B", "date": "2026-10-13"}
+    ],
+    "must_not_ask": [
+      {"type": "same_site", "a": "Johnson job", "b": "1420 Johnson St"},
+      {"type": "same_person", "a": "Mike B", "b": "Michael Baker"}
+    ]
+  }
+}
