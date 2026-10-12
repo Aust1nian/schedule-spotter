@@ -73,7 +73,6 @@ gdk-sys
 gdkwayland-sys
 gdkx11
 gdkx11-sys
-generic-array
 getrandom
 gio
 gio-sys
@@ -86,6 +85,7 @@ gtk-sys
 hashbrown
 heck
 http
+hybrid-array
 icu_collections
 icu_locale_core
 icu_normalizer

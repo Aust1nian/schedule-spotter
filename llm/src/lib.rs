@@ -210,7 +210,7 @@ pub fn sha256_file(path: &Path) -> std::io::Result<String> {
         }
         h.update(&buf[..n]);
     }
-    Ok(format!("{:x}", h.finalize()))
+    Ok(h.finalize().iter().map(|b| format!("{b:02x}")).collect())
 }
 
 struct Inner {

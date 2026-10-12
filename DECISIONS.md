@@ -335,3 +335,9 @@ Latency rose about 10%. Without this change, A and B-E2B both break the 4.0 GB c
 - **What we measured.** On the CI Macs, Metal on "Apple Paravirtual device" generated about 4 tokens/s. The development machine's two CPU threads manage about 15–20. The paravirtual GPU lacks the SIMD-group operations llama.cpp's fast kernels need. The CPU's speed on the runners themselves comes from the next nightly, which runs both backends.
 - **The rule.** `use_gpu()` keeps Metal on real Apple Silicon and uses the CPU when every GPU llama.cpp sees is paravirtual: no GPU layers, and no KV or op offload. That matches the spec's weak-hardware intent and helps anyone running macOS in a VM. `SPOTTER_LLM_BACKEND=cpu|gpu` overrides the choice.
 - **Reporting.** The benchmark records which backend ran. On Apple Silicon runners it adds a short forced-Metal run, so MODEL_REPORT.md shows what the choice is worth. Load time is reported with the SHA-256 check's share.
+
+**2026-10-11 · `sha2` 0.11 for the model checksum.**
+- **What happened.** On the Apple Silicon runner, the SHA-256 check took 21.5 s of E4B-QAT's 28.1 s load, about 240 MB/s. `sha2` 0.10 only uses the ARM SHA instructions with its `asm` feature, so it ran in software.
+- **The fix.** `sha2` 0.11.0 (published 2026-03-25) detects the instructions at run time by default.
+- **Verified locally.** The output hash is unchanged, and a mismatch still turns the model off.
+- **What's left.** If the runner's disk turns out to be the limit, the next step is to run the hash alongside the model load.
