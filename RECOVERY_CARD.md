@@ -18,7 +18,7 @@ For Tight Line salespeople helping an owner install Schedule Spotter. The PDF co
 
 ## A slow download
 
-- Sizes: about 1 GB for the build with the smallest model, about 3.6 GB for the largest. The download page shows the size and a rough time.
+- Sizes: from about 1 GB for the build with the smallest model to about 3.6 GB for the largest. The download page shows the size and a rough time.
 - Office Wi-Fi is often slow. A wired connection, or a time with fewer people online, helps.
 - If it stops, choose **Resume** in the browser's downloads, or open the emailed link again. Resuming doesn't use up the link. A link allows 5 fresh downloads.
 - If the link has expired (after 7 days), the page says so and offers a new one. Getting it takes a minute.

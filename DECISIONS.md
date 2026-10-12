@@ -503,6 +503,17 @@ Windows:
 
 **2026-10-12 · macOS builds link clang's runtime library** (`llm/build.rs`). The first release run, a fresh build with no cache, failed to link on Apple Silicon with `Undefined symbols: ___isPlatformVersionAtLeast`. llama.cpp's Metal code uses `@available`, which clang turns into a call into its runtime library (`libclang_rt.osx.a`). rustc links with `-nodefaultlibs`, so that library is never linked unless something names it. CI's own Mac build reused an older cached llama.cpp build and never hit this. The build script asks `xcrun clang --print-runtime-dir` where the library is and links it.
 
+**2026-10-12 · Windows runs and installs the multi-GB installers** (release run 38236036646, `windows-2025`). This settles the Phase 0 risk.
+- **A:** 2.71 GB installer. The silent standard-user install unpacked and verified the model, the model loaded in 3.1 s, and peak memory was 3.0 GB.
+- **B-E2B:** 3.65 GB installer. Model load 4.4 s, peak memory 1.75 GB.
+- **Both:** all 20 questions asked, no socket opened, nothing left after uninstall.
+
+**2026-10-12 · Known limit, logged and not blocking: the model self-test times out on `windows-11-arm`.**
+- **Fails:** A and B-E2B install and run correctly there, but under x64 emulation loading and warming the model takes longer than the self-test's 240 s wait.
+- **Passes:** C and model off pass on the same runner.
+- This fits Phase 4's finding that the model is impractical on Windows on Arm. The app answers on its own meanwhile, sending every unsure item to the owner.
+- The spec makes this runner logged, not blocking. The wait stays at 240 s, because a longer one would only hide how slow it is.
+
 **2026-10-12 · Silent uninstall now removes Tauri's registry key.** Tauri's uninstaller keeps `HKCU\Software\Tight Line\Schedule Spotter` (install folder and language) unless the owner ticks "delete app data", and a silent uninstall never does. The app keeps nothing there, so the uninstall hook deletes it, except during an update. `bundle.publisher` is now "Tight Line": it names that key and the uninstall entry's publisher, and it keeps the publisher different from the product name, which the Microsoft Store would require.
 
 **2026-10-12 · Licenses folder** (`tools/release/licenses.py`, run by `prepare.py` for each variant and platform). It holds:

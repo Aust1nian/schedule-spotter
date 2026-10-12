@@ -266,6 +266,45 @@ DECISIONS.md, Phase 6 has the fix for each.
 
 `--self-test` now loads the bundled model and asks it 20 tiebreaker questions. Local Linux check, variant C: the model loaded in 0.5 s, all 20 questions were asked, p95 was 0.63 s and peak RSS 1.13 GB, and the self-test passed. With the model file removed, the self-test fails with "model did not load: the model file is missing". The release run's results for each variant on each runner are below.
 
+### Release candidate: every variant on every runner (release run 38236036646)
+
+`release.yml` built each variant as a universal macOS disk image and a Windows installer, all UNSIGNED because no signing secrets exist yet. It then ran the install test for each file on each runner. Each self-test ran from the installed app, with its bundled model.
+
+| Variant | Mac disk image | Windows installer | Mac build time |
+| --- | --- | --- | --- |
+| off | 0.016 GB | 0.223 GB | 10 min |
+| C (Llama 3.2 1B) | 0.823 GB | 1.031 GB | 12 min |
+| A (Phi-4-mini) | 2.507 GB | 2.715 GB | 13 min |
+| B-E2B (Gemma 4 E2B) | 3.430 GB | 3.651 GB | 18 min |
+
+Install test and self-test, with peak RSS, model load time (including the SHA-256 check), latency p95, and answers out of 20:
+
+| Variant | macos-15 | macos-26 | macos-15-intel | windows-2025 | windows-11-arm (not blocking) |
+| --- | --- | --- | --- | --- | --- |
+| off | pass, 88 MB | pass, 96 MB | pass, 52 MB | pass, 34 MB | pass, 57 MB |
+| C | pass, 1.08 GB, 1.8 s, 2.6 s, 7 | pass, 1.10 GB, 2.5 s, 2.5 s, 7 | pass, 1.12 GB, 11.1 s, 5.2 s, 7 | pass, 1.07 GB, 1.5 s, 2.3 s, 7 | pass, 0.96 GB, 3.4 s, 5.2 s, 7 |
+| A | pass, 3.00 GB, 4.1 s, 5.4 s, 13 | pass, 3.05 GB, 5.3 s, 5.3 s, 11 | pass, 3.23 GB, 15.4 s, 12.7 s, 6 | pass, 3.03 GB, 3.1 s, 5.1 s, 12 | **fail**: model still loading after 240 s |
+| B-E2B | pass, 2.95 GB, 11.7 s, 5.1 s, 17 | pass, 2.72 GB, 10.1 s, 5.0 s, 17 | pass, 3.65 GB, 21.1 s, 6.7 s, 9 | pass, 1.75 GB, 4.4 s, 5.1 s, 16 | **fail**: model still loading after 240 s |
+
+Every file passed every other check on every runner:
+- **Both platforms:** the model is in place and its checksum verified; no socket opens; nothing is left behind.
+- **Mac:** quarantine, signature verification, the sandbox and the hardened runtime.
+- **Windows:** Mark of the Web, a silent install as a standard user, and a clean silent uninstall.
+
+The two `windows-11-arm` failures are the known Windows-on-Arm limit (DECISIONS.md, Phase 6). That runner is logged, not blocking (spec).
+
+Latency p95 sits near 5 s because each call stops at the 5 s limit and becomes an owner question. The benchmark judges latency and accuracy (MODEL_REPORT.md); the self-test only proves that the installed model loads and answers.
+
+### Gate
+
+| Gate item | Result |
+| --- | --- |
+| Install tests pass on every runner (unsigned allowed until secrets exist) | **Pass.** All four variants pass on `macos-15`, `macos-26`, `macos-15-intel` and `windows-2025`. On the non-blocking `windows-11-arm`, off and C pass, and A and B-E2B time out loading the model (known limit, logged). |
+
+**Not yet covered:**
+- **Signed builds.** The Developer ID signing, notarization and stapling steps, and the install test's `--signed` checks, run once Austin adds the Apple secrets. Notarization of the 2.5–3.4 GB bundles gets timed on that first run.
+- **Manual checks of each release candidate:** first-launch prompts, the system dialogs, drag-and-drop, and a real download over office internet (RELEASE.md).
+
 ### Download site
 
 - `site/tests/test_site.py`: 15 unit tests, all passing. They cover links, expiry, tampering, the download limit with resume, refusing other files, rate limits, the hidden field, address retention, the follow-up opt-in and the page on each kind of device.

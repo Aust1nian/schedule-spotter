@@ -68,11 +68,11 @@ The script refuses a file that failed an install test or one that isn't signed. 
 
 The Pi's upload speed sets how long each download takes, and downloads running at the same time share it. Rough figures at 20 Mbit/s upload:
 
-| Build | Size | One download |
+| Build | Size (Mac / Windows) | One download |
 | --- | --- | --- |
-| Model off | 16 MB (Mac), 223 MB (Windows: Microsoft's WebView2 offline installer) | seconds (Mac), about 1.5 minutes (Windows) |
-| C (Llama 3.2 1B) | about 1 GB | about 7 minutes |
-| A (Phi-4-mini) | about 2.7 GB | about 18 minutes |
-| B-E2B (Gemma 4 E2B) | about 3.6 GB | about 24 minutes |
+| Model off | 16 MB / 223 MB (Windows: Microsoft's WebView2 offline installer) | seconds / about 1.5 minutes |
+| C (Llama 3.2 1B) | 0.82 / 1.03 GB | about 6–7 minutes |
+| A (Phi-4-mini) | 2.51 / 2.71 GB | about 17–18 minutes |
+| B-E2B (Gemma 4 E2B) | 3.43 / 3.65 GB | about 23–24 minutes |
 
 If many owners download at once, or the office upload is slower, the multi-GB builds may need a host with more bandwidth. That would be Cloudflare R2, as the spec first planned. Only `upload.sh` and the `alias` in the nginx config would change.
