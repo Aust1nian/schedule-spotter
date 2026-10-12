@@ -496,6 +496,11 @@ Windows:
 - Runs the self-test from the installed location (as the runner's account, since a scheduled task has no desktop for a window), watching the app and its WebView2 processes for sockets.
 - Uninstalls silently as the standard user, then compares that user's profile and registry with a snapshot taken before the install. Anything of the app's left behind fails the test.
 
+**2026-10-12 · Install test findings on Windows.**
+- **A file with a Mark of the Web hangs when started through the shell from a scheduled task.** The shell shows its "publisher could not be verified" prompt, and a task has no desktop to click it on: the first run waited 20 minutes. The test now starts the installer directly with `CreateProcess`, as a silent deployment would. The file keeps its mark. An owner sees SmartScreen there instead (recovery card).
+- **WebView2 holds the session folder past the app's exit.** On both Windows runners its processes still had files open in the scratch folder when the app exited, so the folder outlived the session. When `scratch::remove` can't delete it, the app now starts a hidden copy of itself (`--remove-scratch <folder> <pid>`). The copy waits for the app to exit, then deletes the folder, retrying for up to a minute. It only ever deletes a `schedule-spotter-session-*` folder directly in the temp folder, and the next launch still sweeps anything left.
+- **NSIS's uninstaller runs from a copy of itself in `%TEMP%\~nsu*.tmp`,** which it can't delete while running. That copy is NSIS's standard behavior and lives in the temp folder, so the leftover check reports it with the other new paths rather than failing on it.
+
 **2026-10-12 · Silent uninstall now removes Tauri's registry key.** Tauri's uninstaller keeps `HKCU\Software\Tight Line\Schedule Spotter` (install folder and language) unless the owner ticks "delete app data", and a silent uninstall never does. The app keeps nothing there, so the uninstall hook deletes it, except during an update. `bundle.publisher` is now "Tight Line": it names that key and the uninstall entry's publisher, and it keeps the publisher different from the product name, which the Microsoft Store would require.
 
 **2026-10-12 · Licenses folder** (`tools/release/licenses.py`, run by `prepare.py` for each variant and platform). It holds:
