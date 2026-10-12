@@ -179,7 +179,7 @@ Results are in MODEL_REPORT.md, from CI benchmark run 38184895853.
 | All three variants run on every runner | Pass. All six builds of A, B and C ran the benchmark on `macos-15`, `macos-15-intel`, `windows-2025`, `macos-26` and `windows-11-arm` (run 38184895853). On the CI Macs' paravirtual GPU, forced Metal can't fit Gemma E4B, but the app doesn't use Metal there. |
 | MODEL_REPORT.md draft has every metric | Pass. Per variant and runner: load time, peak RSS, latency p50/p95, accuracy, false-merge rate and unsure rate. It also has questions per file against model off (1.61), and the recommendation under the selection rule. |
 
-## Phase 5: app (in progress)
+## Phase 5: app (gate passed 2026-10-11)
 
 ### Handmade fixtures
 
@@ -210,7 +210,38 @@ The page must show the core's findings, questions and week-grid rows for the exa
 
 ### UI tests (`tools/ui/ui_tests.py`)
 
-Linux dev container (WebKitGTK through `tauri-driver`): 9 of 9 pass. They cover the example, editing the table, the Paste box, and N01–N06 (N06 by keyboard alone).
+They cover the example, editing the table, the Paste box, and N01–N06 (N06 by keyboard alone).
+
+| Where | Result |
+| --- | --- |
+| Linux dev container (WebKitGTK through `tauri-driver`) | 9 of 9 pass |
+| CI `ubuntu-24.04` (run 38209824504) | 9 of 9 pass |
+| CI `windows-2025` (WebView2 153.0.4234.48, Edge WebDriver attached; run 38209824504) | 9 of 9 pass |
+
+### Self-test in CI (run 38209824504)
+
+Every runner shows the core's 5 findings, 1 question and 7 grid rows for the example.
+
+| Runner | Peak RSS | Page ready |
+| --- | --- | --- |
+| macos-15 (installed from the disk image) | 87.4 MB | 3.2 s |
+| macos-26 | 93.6 MB | 4.7 s |
+| macos-15-intel | 52.2 MB | 2.8 s |
+| windows-2025 (installed) | 54.1 MB | 4.0 s |
+| windows-11-arm (x64 under emulation) | 34.9 MB | 3.2 s |
+| ubuntu-24.04 | 156.4 MB | 0.9 s |
+
+No runner opened a network socket.
+
+### Gate
+
+| Gate item | Result |
+| --- | --- |
+| UI tests green on Windows and Linux | Pass: 9 of 9 on `windows-2025` and on `ubuntu-24.04` |
+| `--self-test` green on the real macOS bundle | Pass on `macos-15`, `macos-26` and `macos-15-intel`, installed from the universal disk image |
+
+**Not covered by automation:**
+- The system open and save dialogs, and dragging a file onto the window. WebDriver can't drive either, so they get a manual check on each platform before release (Phase 6, RELEASE.md).
 
 ## Changed expectations
 

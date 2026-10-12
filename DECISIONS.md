@@ -413,6 +413,9 @@ Each change shows the rules' result at once; the model's pass follows, and a pas
   - its webview keeps the platform defaults, because:
     - WebKitGTK automation can't attach to the ephemeral context wry makes for incognito webviews;
     - Edge WebDriver sets WebView2's data folder and debugging port through environment variables, and the app's own data folder and lockdown arguments would override them.
+- **Windows:** the test attaches Edge WebDriver to the running app instead of having `tauri-driver` launch it.
+  - **What failed:** when msedgedriver launched the app itself, it never found WebView2's `DevToolsActivePort` file. That happened three times on `windows-2025`, with the driver and runtime both at 153.0.4234.48 and the UI-test build passing its own self-test.
+  - **What works:** with `SPOTTER_CDP_PORT` set, the UI-test build opens a DevTools port on localhost. `ui_tests.py --attach` starts the app with it and attaches msedgedriver through `debuggerAddress`, a route Microsoft supports for WebView2.
 - Shipped builds have none of these changes. Their network lockdown is checked by the self-test's no-socket test.
 
 **2026-10-11 · Diagnostics.** The text is built from structured data with placeholders (Person 1, Site 2, Text 3). Then every spelling the schedule contains, plus the file name, is scrubbed as whole words, as a second guard. It adds the app's own log: what was opened (extension and size only), timings, model status and page errors. The owner sees the full text before saving it.
