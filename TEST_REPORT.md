@@ -243,6 +243,42 @@ No runner opened a network socket.
 **Not covered by automation:**
 - The system open and save dialogs, and dragging a file onto the window. WebDriver can't drive either, so they get a manual check on each platform before release (Phase 6, RELEASE.md).
 
+## Phase 6: packaging, signing, download
+
+### Install tests on every push (model-off build, CI run 38232923185)
+
+Each runner installs the disk image or installer the way a client does (`tools/ci/install-test-*`; DECISIONS.md, Phase 6). All checks pass. Signature and Gatekeeper checks are reported as skipped until signing secrets exist; on Windows, signing is off by Austin's decision.
+
+| Runner | What was checked | Result |
+| --- | --- | --- |
+| `macos-15`, `macos-26`, `macos-15-intel` | Quarantined disk image (16 MB). The app carries the quarantine once copied. Universal binary, Licenses folder, `codesign --verify --deep --strict`, App Sandbox with no listening, hardened runtime. Self-test from Applications, with no socket opened. Nothing in `~/Library` outside the sandbox container. Scratch deleted on exit. | pass |
+| `windows-2025`, `windows-11-arm` | Installer (223 MB) with a Mark of the Web, manifest `asInvoker`. Silent install as a separate standard user, not elevated (about 21 s). Per-user folder, uninstall entry, Start menu shortcut and Licenses folder present. Self-test from the install folder with no socket opened. Scratch removed after exit. Silent uninstall as that user leaves nothing of the app's in the profile or registry. | pass |
+
+Problems the install tests found and fixed:
+1. With the App Sandbox and no network entitlement, the window stayed blank on all three Macs: WebKit needs `network.client`.
+2. The Windows install hung on the "publisher could not be verified" shell prompt for a file with a Mark of the Web.
+3. WebView2 held the session folder past the app's exit.
+4. A silent uninstall left Tauri's registry key behind.
+
+DECISIONS.md, Phase 6 has the fix for each.
+
+### Self-test with the model
+
+`--self-test` now loads the bundled model and asks it 20 tiebreaker questions. Local Linux check, variant C: the model loaded in 0.5 s, all 20 questions were asked, p95 was 0.63 s and peak RSS 1.13 GB, and the self-test passed. With the model file removed, the self-test fails with "model did not load: the model file is missing". The release run's results for each variant on each runner are below.
+
+### Download site
+
+- `site/tests/test_site.py`: 15 unit tests, all passing. They cover links, expiry, tampering, the download limit with resume, refusing other files, rate limits, the hidden field, address retention, the follow-up opt-in and the page on each kind of device.
+- `site/tests/integration.sh`: the real nginx config (nginx 1.22 and 1.27) in front of the service, 13 checks, all passing. It covers the landing page, the emailed link, a whole download with its checksum, an attachment header, resume (206), refusing other files, bad tokens and path tricks, the link used up after 5, and the form rate limit.
+
+Both run in CI's core job.
+
+### Other unit tests added
+
+- `payload.rs`: extracting the model from the installer, finding it before a signature, refusing a damaged model, and an installer with no model. 4 tests, all passing.
+- `scratch.rs`: removing only our own session folders. 2 tests, all passing.
+- `export.rs`: saving when only the picked file is writable, as under the macOS sandbox. Passes.
+
 ## Changed expectations
 
 | Fixture | Was | Now | Reason |
