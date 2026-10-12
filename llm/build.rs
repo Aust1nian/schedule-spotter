@@ -15,7 +15,9 @@ fn main() {
     let dir = String::from_utf8(out.stdout).expect("UTF-8 path");
     let dir = dir.trim();
     assert!(
-        std::path::Path::new(dir).join("libclang_rt.osx.a").is_file(),
+        std::path::Path::new(dir)
+            .join("libclang_rt.osx.a")
+            .is_file(),
         "no libclang_rt.osx.a in {dir}"
     );
     println!("cargo:rustc-link-search=native={dir}");
