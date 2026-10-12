@@ -115,7 +115,7 @@ Before answers, not_booked stays low because each spelling of a person who is as
 
 Phase 4's model tier and the holdout will show whether those need more work.
 
-## Phase 4: model layer and benchmark (in progress)
+## Phase 4: model layer and benchmark (gate passed 2026-10-11)
 
 ### Handmade fixtures
 
@@ -166,7 +166,18 @@ There are 468 labeled questions in `bench/questions`, written by an independent 
 - **Prompt injection:** 21 questions.
 - **No leaks:** `tools/check_prompt_leak.py` keeps prompt examples out of the set.
 
-Results are in MODEL_REPORT.md. On the local machine no variant passes. Accuracy on answered questions is 53–77% against the 95% threshold, and false merges are 17–100% against the 1% limit.
+Results are in MODEL_REPORT.md, from CI benchmark run 38184895853.
+
+**Model-tier fixtures in CI** (`macos-15`, CPU, 2 threads): E2B-QAT 3/4, E2B and E4B-QAT 2/4, E4B 1/4, A and C 0/4. The free-text pastes that pass on the development machine come back with no rows on the runner. This fits T5 calls hitting the spec's 5 s limit; it is logged as a Phase 7 follow-up in DECISIONS.md.
+
+**No variant passes on any runner.** On the gating runner, accuracy on answered questions is 48–79% against the 95% threshold. False merges run from 0.9% to 15.3% against the 1% limit; the 0.9% is C, which leaves over half the questions to the owner. The selection rule gives **model off**; Austin makes the final pick.
+
+### Gate
+
+| Gate item | Result |
+| --- | --- |
+| All three variants run on every runner | Pass. All six builds of A, B and C ran the benchmark on `macos-15`, `macos-15-intel`, `windows-2025`, `macos-26` and `windows-11-arm` (run 38184895853). On the CI Macs' paravirtual GPU, forced Metal can't fit Gemma E4B, but the app doesn't use Metal there. |
+| MODEL_REPORT.md draft has every metric | Pass. Per variant and runner: load time, peak RSS, latency p50/p95, accuracy, false-merge rate and unsure rate. It also has questions per file against model off (1.61), and the recommendation under the selection rule. |
 
 ## Changed expectations
 

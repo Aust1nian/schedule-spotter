@@ -167,24 +167,31 @@ def main():
             out.append(f"**{best}**: passes every threshold; smallest peak RSS among passing variants "
                        f"({', '.join(passing)}).")
         else:
-            ok = [v for v, r in gating.items() if r["overall"]["false_merge_rate"] <= 0.01 and r["peak_rss_mb"] <= 4096]
-            if ok:
-                best = max(ok, key=lambda v: score(gating[v]))
-                out.append(f"No variant passes every threshold. Best scorer with false merges ≤ 1% and RSS ≤ 4.0 GB: "
-                           f"**{best}** ({pct(score(gating[best]))} of questions answered correctly).")
-                # What that pick is worth, so the rule's answer can be judged.
-                o = gating[best]["overall"]
-                notes = [f"it answers {pct(1 - o['unsure_rate'])} of questions (the rest go to the owner)"]
-                t, off = tiers.get(best), tiers.get("off")
-                if t and off:
-                    notes.append(f"end to end it asks {t['questions_per_file']:.2f} questions per file against "
-                                 f"{off['questions_per_file']:.2f} with the model off, with {t['false_merges']} false "
-                                 f"merges against {off['false_merges']}")
-                out.append("")
-                out.append(f"For context on {best}: " + "; ".join(notes) + ".")
+            # The spec: "recommend the best scorer only if false merges ≤ 1% and RSS ≤ 4.0 GB;
+            # otherwise recommend model off". The best scorer is chosen first, then checked.
+            best = max(gating, key=lambda v: score(gating[v]))
+            r = gating[best]
+            if r["overall"]["false_merge_rate"] <= 0.01 and r["peak_rss_mb"] <= 4096:
+                out.append(f"No variant passes every threshold. The best scorer, **{best}** "
+                           f"({pct(score(r))} of questions answered correctly), keeps false merges ≤ 1% and RSS ≤ 4.0 GB.")
             else:
-                out.append("No variant passes every threshold, and none keeps false merges ≤ 1% within 4.0 GB: "
-                           "**model off**.")
+                why = []
+                if r["overall"]["false_merge_rate"] > 0.01:
+                    why.append(f"false merges {pct(r['overall']['false_merge_rate'])} against 1%")
+                if r["peak_rss_mb"] > 4096:
+                    why.append(f"peak RSS {r['peak_rss_mb'] / 1024:.2f} GB against 4.0 GB")
+                out.append(f"No variant passes every threshold. The best scorer, {best} ({pct(score(r))} of questions "
+                           f"answered correctly), fails the fallback: {' and '.join(why)}. Recommendation: **model off**.")
+            # What the best scorer is worth, so the rule's answer can be judged.
+            o = r["overall"]
+            notes = [f"it answers {pct(1 - o['unsure_rate'])} of questions (the rest go to the owner)"]
+            t, off = tiers.get(best), tiers.get("off")
+            if t and off:
+                notes.append(f"end to end it asks {t['questions_per_file']:.2f} questions per file against "
+                             f"{off['questions_per_file']:.2f} with the model off, with {t['false_merges']} false "
+                             f"merges against {off['false_merges']}")
+            out.append("")
+            out.append(f"For context on {best}: " + "; ".join(notes) + ".")
         out.append("")
         out.append("Austin makes the final pick.")
     print("\n".join(out))

@@ -341,3 +341,11 @@ Latency rose about 10%. Without this change, A and B-E2B both break the 4.0 GB c
 - **The fix.** `sha2` 0.11.0 (published 2026-03-25) detects the instructions at run time by default.
 - **Verified locally.** The output hash is unchanged, and a mismatch still turns the model off.
 - **What's left.** If the runner's disk turns out to be the limit, the next step is to run the hash alongside the model load.
+
+**2026-10-11 · Selection rule: the best scorer is chosen first, then checked.**
+- **The spec.** "If none passes all, recommend the best scorer only if false merges ≤ 1% and RSS ≤ 4.0 GB; otherwise recommend model off."
+- **What was wrong.** `tools/model_report.py` first dropped every variant over those limits, then took the best scorer of the rest. On the first full CI run that picked Llama 3.2 1B (C), which answers under half the questions and is right on 22.6% of all of them.
+- **Now.** The report takes the best scorer of all variants that ran (share of all questions answered correctly) and recommends it only if it is within both limits; otherwise model off, with the reason. On run 38184895853 that is B-E2B at 70.5%, with 15.3% false merges, so **model off**.
+- **Unchanged.** The report still gives the best scorer's end-to-end numbers against model off. Austin makes the final pick.
+
+**2026-10-11 · Follow-up for Phase 7: free-text pastes on slow CPUs.** On the CI runners (2 llama threads, CPU) T5's p95 sits at the 5 s call limit, and the model-tier free-text fixtures (M04, M05, M07) come back with no rows, though they pass on the development machine. Options for the final run: a T5-only time limit, or splitting long pastes into smaller calls. The spec's 5 s figure is a threshold, so neither is changed without a measured reason.
