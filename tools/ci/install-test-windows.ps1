@@ -50,7 +50,7 @@ if ($Signed) {
 
 # 3. The installer's manifest asks for no elevation.
 $stream = [System.IO.File]::OpenRead($setup)
-$head = New-Object byte[] ([Math]::Min(4MB, $stream.Length))
+$head = New-Object byte[] ([int][Math]::Min([long]4MB, $stream.Length))  # installers can pass 2 GiB
 [void]$stream.Read($head, 0, $head.Length)
 $stream.Close()
 $manifest = [System.Text.Encoding]::ASCII.GetString($head)
