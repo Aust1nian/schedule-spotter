@@ -62,7 +62,7 @@ if ($manifest -match 'requestedExecutionLevel\s+level="(\w+)"') {
 }
 
 # 4. A standard user, allowed to run a scheduled task (log on as a batch job).
-$user = "spotterstd"
+$user = "ownertest"  # nothing in the name may match the leftover check
 $password = "Sp0t-" + [Guid]::NewGuid().ToString("N")
 Get-LocalUser $user -ErrorAction SilentlyContinue | Remove-LocalUser
 $secure = ConvertTo-SecureString $password -AsPlainText -Force
@@ -219,8 +219,9 @@ if ($sockets.Count -gt 0) {
 } else {
   Check "no-sockets" "pass" "no socket opened during the self-test"
 }
-# WebView2's helper processes can hold the scratch folder a moment longer.
-$deadline = (Get-Date).AddSeconds(15)
+# WebView2's processes can hold the scratch folder past the app's exit; a
+# hidden copy of the app removes it once they let go (scratch.rs).
+$deadline = (Get-Date).AddSeconds(45)
 while ((Get-ChildItem $env:TEMP -Filter "schedule-spotter-session-*" -ErrorAction SilentlyContinue) -and (Get-Date) -lt $deadline) {
   Start-Sleep -Milliseconds 500
 }
@@ -233,7 +234,11 @@ $removed = Run-AsUser "uninstall"
 Check "silent-uninstall" $(if ($removed.uninstaller_found -and $removed.uninstall_exit -eq 0) { "pass" } else { "fail" }) "exit $($removed.uninstall_exit)"
 Check "install-dir-removed" $(if (-not $removed.install_dir_left) { "pass" } else { "fail" }) "left: $($removed.install_dir_left)"
 Check "uninstall-entry-removed" $(if (-not $removed.uninstall_key_left) { "pass" } else { "fail" }) "left: $($removed.uninstall_key_left)"
-$ours = @($removed.new_paths | Where-Object { $_ -match "spotter|tight ?line|EBWebView" })
+# Matched without the profile folder's own path. NSIS runs its uninstaller
+# from a copy in %TEMP% (~nsu*.tmp\Un.exe), which it can't delete while it
+# runs; that one is NSIS's, reported below with the rest.
+$profileRoot = "C:\Users\$user"
+$ours = @($removed.new_paths | Where-Object { $_.Replace($profileRoot, "") -match "spotter|tight ?line|EBWebView" })
 Check "nothing-left" $(if ($ours.Count -eq 0) { "pass" } else { "fail" }) $(if ($ours.Count) { $ours -join "; " } else { "nothing of the app's in the user's profile or registry" })
 Check "other-new-paths" "info" "$(@($removed.new_paths).Count) other new paths (Windows and PowerShell's own): $((@($removed.new_paths) | Select-Object -First 8) -join '; ')"
 

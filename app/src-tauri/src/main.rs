@@ -32,6 +32,16 @@ const WEBVIEW2_ARGS: &str = "--disable-features=msWebOOUI,msPdfOOUI,msSmartScree
 
 fn main() {
     let started = Instant::now();
+    // A hidden copy of the app that removes the last session's folder once
+    // WebView2 lets go of it (scratch::remove).
+    let raw: Vec<String> = std::env::args().collect();
+    if raw.len() == 4 && raw[1] == "--remove-scratch" {
+        let pid = raw[3].parse().unwrap_or(0);
+        std::process::exit(scratch::remove_when_free(
+            std::path::Path::new(&raw[2]),
+            pid,
+        ));
+    }
     let args = selftest::Args::parse(std::env::args().skip(1));
     // Run by the Windows installer only: unpack the model it carries.
     if let Some(setup) = &args.install_model {
