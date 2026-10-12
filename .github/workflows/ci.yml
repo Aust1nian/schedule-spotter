@@ -236,7 +236,6 @@ jobs:
       - run: cargo build --release -p schedule-spotter --features "tauri/custom-protocol ui-test"
       # llama.cpp's DLLs beside the exe, as the installer puts them.
       - run: python tools/ci/collect-llama-libs.py --profile target/release --to target/release
-      - run: cargo install tauri-driver --version 2.0.6 --locked
       - name: UI tests
         shell: pwsh
         env:
@@ -261,13 +260,8 @@ jobs:
           # The UI-test build must start on its own first.
           $p = Start-Process target/release/schedule-spotter.exe -ArgumentList "--self-test","--json-out","$PWD\\uitest-selftest.json" -PassThru -Wait
           "self-test exit $($p.ExitCode)"; Get-Content uitest-selftest.json -ErrorAction SilentlyContinue
-          # msedgedriver's own log, through a wrapper tauri-driver can launch.
-          $log = Join-Path $env:RUNNER_TEMP "msedgedriver.log"
-          Set-Content -Path msedgedriver-verbose.cmd -Value "@`"$driver`" --verbose `"--log-path=$log`" %*"
-          python tools/ui/ui_tests.py --app target/release/schedule-spotter.exe --native-driver "$PWD\msedgedriver-verbose.cmd" --shots ui-shots
-          $code = $LASTEXITCODE
-          if ($code -ne 0 -and (Test-Path $log)) { Get-Content $log -Tail 120 }
-          exit $code
+          # Edge WebDriver attaches to the app's DevTools port (see ui_tests.py --attach).
+          python tools/ui/ui_tests.py --attach --app target/release/schedule-spotter.exe --native-driver $driver --shots ui-shots
       - uses: actions/upload-artifact@v7
         if: always()
         with:

@@ -39,9 +39,15 @@ class WebDriverError(Exception):
 
 
 class Session:
-    def __init__(self, base: str, app: str):
+    def __init__(self, base: str, app: str, debugger: str | None = None):
         self.base = base
-        caps = {"capabilities": {"alwaysMatch": {"tauri:options": {"application": app}}}}
+        if debugger:
+            # Attach to a WebView2 that is already running (Windows).
+            caps = {"capabilities": {"alwaysMatch": {
+                "browserName": "webview2",
+                "ms:edgeOptions": {"debuggerAddress": debugger}}}}
+        else:
+            caps = {"capabilities": {"alwaysMatch": {"tauri:options": {"application": app}}}}
         r = self._req("POST", "/session", caps)
         self.id = r["sessionId"]
 
@@ -371,15 +377,35 @@ def main() -> int:
     ap.add_argument("--native-driver")
     ap.add_argument("--shots")
     ap.add_argument("--only")
+    ap.add_argument("--attach", action="store_true",
+                    help="Windows: start the app with a DevTools port and attach "
+                         "--native-driver (msedgedriver) to it directly")
     args = ap.parse_args()
     shots = Path(args.shots) if args.shots else None
     if shots:
         shots.mkdir(parents=True, exist_ok=True)
 
     port = free_port()
-    cmd = [args.driver, "--port", str(port)]
-    if args.native_driver:
-        cmd += ["--native-driver", args.native_driver]
+    app_proc = None
+    debugger = None
+    if args.attach:
+        cdp = free_port()
+        env = dict(os.environ, SPOTTER_CDP_PORT=str(cdp))
+        app_proc = subprocess.Popen([str(Path(args.app).resolve())], env=env)
+        debugger = f"127.0.0.1:{cdp}"
+        for _ in range(300):
+            try:
+                urllib.request.urlopen(f"http://{debugger}/json/version", timeout=1)
+                break
+            except Exception:
+                time.sleep(0.2)
+        else:
+            print(f"the app never opened DevTools port {cdp}")
+        cmd = [args.native_driver, f"--port={port}"]
+    else:
+        cmd = [args.driver, "--port", str(port)]
+        if args.native_driver:
+            cmd += ["--native-driver", args.native_driver]
     driver = subprocess.Popen(cmd)
     base = f"http://127.0.0.1:{port}"
     for _ in range(100):
@@ -390,7 +416,7 @@ def main() -> int:
             time.sleep(0.2)
     failures = 0
     try:
-        s = Session(base, str(Path(args.app).resolve()))
+        s = Session(base, str(Path(args.app).resolve()), debugger)
         try:
             wait(s, "return document.querySelectorAll('[data-flag]').length > 0", timeout=60,
                  what="the example to show")
@@ -417,11 +443,14 @@ def main() -> int:
         finally:
             s.close()
     finally:
-        driver.terminate()
-        try:
-            driver.wait(10)
-        except subprocess.TimeoutExpired:
-            driver.kill()
+        for proc in [driver, app_proc]:
+            if proc is None:
+                continue
+            proc.terminate()
+            try:
+                proc.wait(10)
+            except subprocess.TimeoutExpired:
+                proc.kill()
     print(f"\n{'all UI tests passed' if not failures else f'{failures} UI test(s) failed'}")
     return 1 if failures else 0
 

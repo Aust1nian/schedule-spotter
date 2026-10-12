@@ -138,6 +138,15 @@ fn main() {
                 .incognito(true)
                 .data_directory(scratch.join("webview"))
                 .additional_browser_args(WEBVIEW2_ARGS);
+            // Windows UI tests attach Edge WebDriver to this port
+            // (`debuggerAddress`) instead of having it launch the app.
+            #[cfg(feature = "ui-test")]
+            let window = match std::env::var("SPOTTER_CDP_PORT") {
+                Ok(port) => window.additional_browser_args(&format!(
+                    "--remote-debugging-port={port} --remote-allow-origins=*"
+                )),
+                Err(_) => window,
+            };
             #[cfg(feature = "ui-test")]
             let _ = &scratch;
             window.build()?;
