@@ -65,8 +65,11 @@ Every key except `category` and `tier` is optional. A missing key means "not che
 | `error` | `"empty_file"`, `"not_a_schedule"`, `"unreadable"` or `"save_failed"`. When set, nothing else is checked except `notes`. |
 | `notes` | Substrings that must appear in the pipeline's notes to the user, case-insensitive |
 | `model_same_person`, `model_same_site` | Model tier only: `[a, b]` pairs the model (T1 / T2) must answer "same". The top-level flags assume those merges. With the model off, each pair must be asked, so each must also appear in `ask`. |
-| `export_check` | `true`: the stage-10 export must write every cell that starts with `=`, `+`, `-` or `@` as a string, never a formula. Checked from Phase 5, when export exists. |
-| `save_test` | `{"target": "read-only", "error": "save_failed"}`: saving the workbook to that target must fail with that error and lose nothing. Checked from Phase 5, when save exists. |
+| `export_check` | `true`: the stage-10 export must write every cell that starts with `=`, `+`, `-` or `@` as a string, never a formula: an inline string in the workbook, and a leading apostrophe in the findings CSV. Checked since Phase 5. |
+| `save_test` | `{"target": "read-only", "error": "save_failed"}`: saving the workbook to that target must fail with that error, with a message for the owner, leave no file behind and change nothing in the check. Checked since Phase 5 (on Unix; Windows ignores read-only on folders). |
+| `steps` | Category N: what the owner does, in order, run through the app's session by `spotter-check` and through the window by the UI tests. Each step is one object: `{"answer": {"question": {...}, "answer": "yes"}}`; `{"undo_merge": {"from": "Mike B", "into": "Michael Baker"}}` (the chip's undo); `{"column_role": {"header": "Notes", "role": "Person"}}` ("What I read"); `{"layout": "<layout name>"}`; `{"workdays": ["mon", …]}`; `{"day_off": "2026-10-14"}`; `{"edit": {"row": 2, "col": 3, "text": "…"}}` or `{"edit": {"row": 2, "delete_row": true}}` (the table in the app); `{"save_reopen": "<relative path>"}` (save the workbook there, reopen it, and the findings must not change). |
+| `after_steps` | Expectations after `steps`: `assignments`, `flags`, `info`, `ask`, `must_not_ask`, as at the top level; `columns` (`[{"header", "role"}]` in "What I read"); `merges` (`[{"from", "into"}]`, the chips, exact). |
+| `ui` | `"keyboard"`: the UI test does the steps with the keyboard alone (Tab, Enter, Space). |
 
 ### Assignment
 

@@ -8,8 +8,13 @@ publish.workspace = true
 rust-version.workspace = true
 default-run = "schedule-spotter"
 
+[features]
+# UI tests only: open and save without system dialogs (never shipped).
+ui-test = []
+
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
+serde_json = "1"
 
 [dependencies]
 spotter-core = { path = "../../core" }
@@ -17,6 +22,9 @@ spotter-llm = { path = "../../llm" }
 tauri = { version = "2", features = [] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+chrono = { version = "0.4", default-features = false, features = ["std", "serde"] }
+# System open/save dialogs. GTK on Linux (development only), no XDG portal.
+rfd = { version = "0.17", default-features = false, features = ["gtk3"] }
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"

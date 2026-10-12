@@ -1,16 +1,19 @@
 // Release builds on Windows have no console window.
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod commands;
 mod metrics;
+mod model;
 mod scratch;
 mod selftest;
+mod ui;
 
-use std::path::PathBuf;
 use std::time::Instant;
 
-use serde::Serialize;
-use spotter_core::{Report, Settings};
-use tauri::{AppHandle, Manager, RunEvent, State, WebviewUrl, WebviewWindowBuilder};
+use commands::AppState;
+use tauri::{
+    DragDropEvent, Emitter, Manager, RunEvent, WebviewUrl, WebviewWindowBuilder, WindowEvent,
+};
 
 /// WebView2 runs Edge's background services unless told not to: component
 /// updates, SmartScreen, phishing checks, sync, pings, crash upload. All
@@ -25,51 +28,6 @@ const WEBVIEW2_ARGS: &str = "--disable-features=msWebOOUI,msPdfOOUI,msSmartScree
 --disable-client-side-phishing-detection --disable-sync --disable-default-apps --no-pings --no-first-run \
 --disable-breakpad --dns-prefetch-disable --host-resolver-rules=\"MAP * ~NOTFOUND\"";
 
-struct AppState {
-    started: Instant,
-    self_test: Option<selftest::SelfTest>,
-    scratch: PathBuf,
-}
-
-#[derive(Serialize)]
-#[serde(rename_all = "camelCase")]
-struct Mode {
-    self_test: bool,
-    version: &'static str,
-    model_status: &'static str,
-}
-
-#[tauri::command]
-fn app_mode(state: State<'_, AppState>) -> Mode {
-    if let Some(test) = &state.self_test {
-        test.mark_page_ready(state.started);
-    }
-    Mode {
-        self_test: state.self_test.is_some(),
-        version: env!("CARGO_PKG_VERSION"),
-        model_status: spotter_llm::status_line(false),
-    }
-}
-
-#[tauri::command]
-fn run_example() -> Report {
-    let settings = Settings::default();
-    spotter_core::analyze(&spotter_core::example::input(settings.today), &settings)
-}
-
-#[tauri::command]
-fn self_test_done(app: AppHandle, state: State<'_, AppState>, rendered_flags: usize) {
-    if let Some(test) = &state.self_test {
-        let code = test.finish(state.started, rendered_flags);
-        let linger = test.linger();
-        // Stay open a while so CI can watch for late network activity.
-        std::thread::spawn(move || {
-            std::thread::sleep(linger);
-            app.exit(code);
-        });
-    }
-}
-
 fn main() {
     let started = Instant::now();
     let args = selftest::Args::parse(std::env::args().skip(1));
@@ -77,28 +35,121 @@ fn main() {
         selftest::attach_parent_console();
         selftest::SelfTest::start(args.json_out.clone(), args.linger)
     });
+    let is_self_test = self_test.is_some();
     let scratch = scratch::create().expect("Schedule Spotter needs its temp folder");
 
-    let app = tauri::Builder::default()
-        .manage(AppState {
-            started,
-            self_test,
-            scratch: scratch.clone(),
+    let builder =
+        tauri::Builder::default().manage(AppState::new(started, self_test, scratch.clone()));
+    #[cfg(not(feature = "ui-test"))]
+    let builder = builder.invoke_handler(tauri::generate_handler![
+        commands::app_mode,
+        commands::start,
+        commands::example,
+        commands::answer,
+        commands::undo_chip,
+        commands::forget_answer,
+        commands::set_role,
+        commands::set_layout,
+        commands::set_sheet,
+        commands::set_workdays,
+        commands::toggle_day_off,
+        commands::table,
+        commands::set_table,
+        commands::paste,
+        commands::open_file,
+        commands::save,
+        commands::diagnostics,
+        commands::save_diagnostics,
+        commands::about,
+        commands::self_test_done,
+        commands::page_error,
+    ]);
+    #[cfg(feature = "ui-test")]
+    let builder = builder.invoke_handler(tauri::generate_handler![
+        commands::app_mode,
+        commands::start,
+        commands::example,
+        commands::answer,
+        commands::undo_chip,
+        commands::forget_answer,
+        commands::set_role,
+        commands::set_layout,
+        commands::set_sheet,
+        commands::set_workdays,
+        commands::toggle_day_off,
+        commands::table,
+        commands::set_table,
+        commands::paste,
+        commands::open_file,
+        commands::save,
+        commands::diagnostics,
+        commands::save_diagnostics,
+        commands::about,
+        commands::self_test_done,
+        commands::page_error,
+        commands::test_open,
+        commands::test_save,
+    ]);
+
+    let app = builder
+        .on_window_event(|window, event| {
+            let WindowEvent::DragDrop(drop) = event else {
+                return;
+            };
+            let app = window.app_handle().clone();
+            match drop {
+                DragDropEvent::Enter { .. } | DragDropEvent::Over { .. } => {
+                    let _ = app.emit("drag", true);
+                }
+                DragDropEvent::Leave => {
+                    let _ = app.emit("drag", false);
+                }
+                DragDropEvent::Drop { paths, .. } => {
+                    let _ = app.emit("drag", false);
+                    let Some(path) = paths.first().cloned() else {
+                        return;
+                    };
+                    std::thread::spawn(move || match commands::open_path(&app, &path) {
+                        Ok(report) => {
+                            let _ = app.emit("report", report);
+                        }
+                        Err(message) => {
+                            let _ = app.emit("problem", message);
+                        }
+                    });
+                }
+                _ => {}
+            }
         })
-        .invoke_handler(tauri::generate_handler![
-            app_mode,
-            run_example,
-            self_test_done
-        ])
         .setup(move |app| {
             WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
                 .title("Schedule Spotter")
                 .inner_size(1280.0, 800.0)
                 .min_inner_size(960.0, 640.0)
-                .incognito(true)
+                // WebKitGTK automation (UI tests) can't attach to an
+                // incognito webview's own ephemeral context.
+                .incognito(!cfg!(feature = "ui-test"))
                 .data_directory(scratch.join("webview"))
                 .additional_browser_args(WEBVIEW2_ARGS)
                 .build()?;
+            // The model loads after the window shows; the self-test checks
+            // the model-off app.
+            let handle = app.handle().clone();
+            let resources = app.path().resource_dir().ok();
+            if is_self_test {
+                model::off("self-test runs with the model off");
+                return Ok(());
+            }
+            model::load(resources, move || {
+                let state = handle.state::<AppState>();
+                state.note(format!("model: {:?}", model::status().state));
+                let _ = handle.emit("model", model::status_line());
+                let has_session = state.session.lock().map(|s| s.is_some()).unwrap_or(false);
+                if has_session {
+                    let report = commands::refresh(&handle);
+                    let _ = handle.emit("report", report);
+                }
+            });
             Ok(())
         })
         .build(tauri::generate_context!())

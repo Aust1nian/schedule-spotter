@@ -9,6 +9,7 @@ use std::time::{Duration, Instant};
 
 use serde_json::{Value, json};
 use spotter_core::Settings;
+use spotter_core::session::Session;
 
 use crate::metrics;
 
@@ -49,6 +50,14 @@ impl Args {
     }
 }
 
+/// What the page drew, counted from the DOM.
+#[derive(Debug, serde::Deserialize)]
+pub struct Rendered {
+    pub flags: usize,
+    pub questions: usize,
+    pub people: usize,
+}
+
 pub struct SelfTest {
     json_out: Option<PathBuf>,
     linger: Duration,
@@ -80,6 +89,17 @@ impl SelfTest {
         }
     }
 
+    /// Fails at once (a script error on the page) instead of waiting for the
+    /// watchdog.
+    pub fn fail_now(&self, why: &str) {
+        if self.done.swap(true, Ordering::SeqCst) {
+            return;
+        }
+        let report = json!({"self_test": "fail", "failures": [why]});
+        emit(&report, self.json_out.as_ref());
+        std::process::exit(1);
+    }
+
     pub fn linger(&self) -> Duration {
         self.linger
     }
@@ -89,15 +109,16 @@ impl SelfTest {
     }
 
     /// Checks thresholds, prints the metrics, and returns the exit code.
-    pub fn finish(&self, started: Instant, rendered_flags: usize) -> i32 {
+    pub fn finish(&self, started: Instant, rendered: &Rendered) -> i32 {
         if self.done.swap(true, Ordering::SeqCst) {
             return 3;
         }
-        let settings = Settings::default();
-        let core_flags =
-            spotter_core::analyze(&spotter_core::example::input(settings.today), &settings)
-                .flags
-                .len();
+        let example = Session::example(Settings::default()).report_model_off();
+        let core = Rendered {
+            flags: example.flags.len(),
+            questions: example.questions.len(),
+            people: example.week.people.len(),
+        };
         let page_ready_ms = self.page_ready_ms.get().copied();
         let peak_rss_mb = metrics::peak_rss_bytes() as f64 / (1024.0 * 1024.0);
 
@@ -112,10 +133,17 @@ impl SelfTest {
             Some(ms) => failures.push(format!("page ready after {ms} ms > {MAX_PAGE_READY_MS} ms")),
             None => failures.push("page never asked for its mode".into()),
         }
-        if rendered_flags != core_flags {
-            failures.push(format!(
-                "page shows {rendered_flags} flags, core found {core_flags}"
-            ));
+        if core.flags == 0 || core.questions == 0 {
+            failures.push("the example shows no findings or no questions".into());
+        }
+        for (what, page, want) in [
+            ("findings", rendered.flags, core.flags),
+            ("questions", rendered.questions, core.questions),
+            ("week-grid rows", rendered.people, core.people),
+        ] {
+            if page != want {
+                failures.push(format!("page shows {page} {what}, core found {want}"));
+            }
         }
 
         let report = json!({
@@ -123,12 +151,16 @@ impl SelfTest {
             "version": env!("CARGO_PKG_VERSION"),
             "os": std::env::consts::OS,
             "arch": std::env::consts::ARCH,
-            "model": "off",
+            "model": crate::model::VARIANT,
             "page_ready_ms": page_ready_ms,
             "total_ms": started.elapsed().as_millis(),
             "peak_rss_mb": (peak_rss_mb * 10.0).round() / 10.0,
-            "flags_core": core_flags,
-            "flags_rendered": rendered_flags,
+            "flags_core": core.flags,
+            "flags_rendered": rendered.flags,
+            "questions_core": core.questions,
+            "questions_rendered": rendered.questions,
+            "people_core": core.people,
+            "people_rendered": rendered.people,
             "failures": failures,
         });
         emit(&report, self.json_out.as_ref());
@@ -139,10 +171,10 @@ impl SelfTest {
 fn emit(report: &Value, json_out: Option<&PathBuf>) {
     let line = report.to_string();
     println!("{line}");
-    if let Some(path) = json_out {
-        if let Err(err) = std::fs::write(path, format!("{line}\n")) {
-            eprintln!("could not write {}: {err}", path.display());
-        }
+    if let Some(path) = json_out
+        && let Err(err) = std::fs::write(path, format!("{line}\n"))
+    {
+        eprintln!("could not write {}: {err}", path.display());
     }
 }
 

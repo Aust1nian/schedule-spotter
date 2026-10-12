@@ -7,6 +7,7 @@ pub mod cells;
 pub mod classify;
 pub mod dates;
 pub mod describe;
+pub mod diagnostics;
 pub mod example;
 pub mod export;
 mod freetext;

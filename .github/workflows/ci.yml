@@ -189,3 +189,66 @@ jobs:
           name: "selftest-ubuntu-24.04"
           path: "selftest-*.json"
           if-no-files-found: warn
+
+  # UI tests (spec: Windows and Linux; WebDriver doesn't cover macOS). They
+  # drive a build with the `ui-test` feature, which adds open and save
+  # commands that take a path, since WebDriver can't drive system dialogs.
+  ui-linux:
+    name: UI tests ubuntu-24.04
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libxdo-dev librsvg2-dev libayatana-appindicator3-dev webkit2gtk-driver xvfb
+      - run: rustup toolchain install stable --profile minimal && rustup default stable
+      - uses: Swatinem/rust-cache@v2.9.2
+        with:
+          key: cfg-${{ hashFiles('.cargo/config.toml') }}
+      - uses: actions/setup-node@v7
+        with: { node-version: 22, cache: npm, cache-dependency-path: app/package-lock.json }
+      - run: npm ci && npm run build
+        working-directory: app
+      - run: cargo build --release -p schedule-spotter --features "tauri/custom-protocol ui-test"
+      - run: cargo install tauri-driver --version 2.0.6 --locked
+      - name: UI tests
+        env:
+          WEBKIT_DISABLE_DMABUF_RENDERER: "1"
+        run: xvfb-run -a python3 tools/ui/ui_tests.py --app target/release/schedule-spotter --shots ui-shots
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: ui-shots-linux
+          path: ui-shots
+          if-no-files-found: warn
+
+  ui-windows:
+    name: UI tests windows-2025
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v7
+      - run: rustup toolchain install stable --profile minimal && rustup default stable
+      - uses: Swatinem/rust-cache@v2.9.2
+        with:
+          key: cfg-${{ hashFiles('.cargo/config.toml') }}
+      - uses: actions/setup-node@v7
+        with: { node-version: 22, cache: npm, cache-dependency-path: app/package-lock.json }
+      - run: npm ci && npm run build
+        working-directory: app
+      - run: cargo build --release -p schedule-spotter --features "tauri/custom-protocol ui-test"
+      # llama.cpp's DLLs beside the exe, as the installer puts them.
+      - run: python tools/ci/collect-llama-libs.py --profile target/release --to target/release
+      - run: cargo install tauri-driver --version 2.0.6 --locked
+      - name: UI tests
+        shell: pwsh
+        env:
+          PYTHONUTF8: "1"
+        run: |
+          # The runner image's Edge WebDriver (EdgeWebDriver) drives WebView2.
+          $driver = Join-Path $env:EdgeWebDriver "msedgedriver.exe"
+          if (-not (Test-Path $driver)) { throw "msedgedriver not found at $driver" }
+          python tools/ui/ui_tests.py --app target/release/schedule-spotter.exe --native-driver $driver --shots ui-shots
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: ui-shots-windows
+          path: ui-shots
+          if-no-files-found: warn

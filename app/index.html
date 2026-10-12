@@ -7,7 +7,99 @@
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <main id="app" aria-live="polite"></main>
+    <header class="toolbar">
+      <div class="brand">
+        <strong>Schedule Spotter</strong>
+        <span id="brand-from"></span>
+      </div>
+      <div class="actions">
+        <button id="open" title="Open a schedule file (Ctrl+O / ⌘O)">Open file…</button>
+        <button id="paste" title="Paste cells copied from a spreadsheet (Ctrl+V / ⌘V)">Paste</button>
+        <button id="save" title="Save the check as a workbook (Ctrl+S / ⌘S)">Save…</button>
+      </div>
+      <div id="workdays" class="workdays" role="group" aria-labelledby="workdays-label"></div>
+      <button id="about" class="quiet">About</button>
+    </header>
+    <div class="statusbar">
+      <span class="source">Checking: <strong id="source-name"></strong></span>
+      <span id="smart-status" class="smart" role="status"></span>
+      <button id="example" class="link">Show the example</button>
+    </div>
+    <div id="problem-banner" class="banner" role="alert" hidden></div>
+
+    <main class="layout">
+      <div class="main-col">
+        <section id="grid-panel" aria-labelledby="grid-h">
+          <div class="panel-head">
+            <h2 id="grid-h" tabindex="-1">Week</h2>
+            <ul class="legend" aria-label="Colors">
+              <li><span class="swatch red"></span>Double-booked or working while off</li>
+              <li><span class="swatch amber"></span>Not booked</li>
+              <li><span class="swatch striped"></span>Job with nobody on it</li>
+            </ul>
+          </div>
+          <div id="grid-body" class="scroll"></div>
+        </section>
+        <section id="jobs-panel" aria-labelledby="jobs-h">
+          <h2 id="jobs-h" tabindex="-1">Jobs</h2>
+          <div id="jobs-body" class="scroll"></div>
+        </section>
+        <section id="table-panel" aria-labelledby="table-h">
+          <div class="panel-head">
+            <h2 id="table-h" tabindex="-1">Your schedule</h2>
+            <button id="table-toggle" aria-controls="table-body">Edit the schedule</button>
+          </div>
+          <div id="table-body"></div>
+        </section>
+      </div>
+      <aside class="side-col">
+        <section id="findings-panel" aria-labelledby="findings-h">
+          <h2 id="findings-h" tabindex="-1">Findings <span id="findings-count"></span></h2>
+          <div id="findings-body" aria-live="polite"></div>
+        </section>
+        <section id="questions-panel" aria-labelledby="questions-h">
+          <h2 id="questions-h" tabindex="-1">Questions <span id="questions-count"></span></h2>
+          <div id="questions-body"></div>
+        </section>
+        <section id="read-panel" aria-labelledby="read-h">
+          <h2 id="read-h" tabindex="-1">What I read</h2>
+          <div id="read-body"></div>
+        </section>
+      </aside>
+    </main>
+
+    <div id="drop-overlay" class="drop" hidden><p>Drop the file to check it</p></div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <dialog id="paste-dialog" aria-labelledby="paste-h">
+      <h2 id="paste-h">Paste a schedule</h2>
+      <p>Copy the cells in Excel, Google Sheets or Numbers, then paste them here. Lines from a text message work too.</p>
+      <textarea id="paste-text" rows="12" aria-labelledby="paste-h"></textarea>
+      <div class="dialog-actions">
+        <button data-close>Cancel</button>
+        <button id="paste-go" class="primary">Check this schedule</button>
+      </div>
+    </dialog>
+
+    <dialog id="about-dialog" aria-labelledby="about-h">
+      <h2 id="about-h">About Schedule Spotter</h2>
+      <div id="about-body"></div>
+      <div class="dialog-actions">
+        <button id="diag-button">Save diagnostics…</button>
+        <button data-close class="primary">Close</button>
+      </div>
+    </dialog>
+
+    <dialog id="diag-dialog" aria-labelledby="diag-h">
+      <h2 id="diag-h">Diagnostics</h2>
+      <p>This is everything the file will contain. Names and jobs are replaced by placeholders (Person 1, Site 2).</p>
+      <pre id="diag-text" tabindex="0"></pre>
+      <div class="dialog-actions">
+        <button data-close>Cancel</button>
+        <button id="diag-save" class="primary">Save…</button>
+      </div>
+    </dialog>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
