@@ -245,7 +245,29 @@ jobs:
           # The runner image's Edge WebDriver (EdgeWebDriver) drives WebView2.
           $driver = Join-Path $env:EdgeWebDriver "msedgedriver.exe"
           if (-not (Test-Path $driver)) { throw "msedgedriver not found at $driver" }
-          python tools/ui/ui_tests.py --app target/release/schedule-spotter.exe --native-driver $driver --shots ui-shots
+          $wv2 = Get-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}" -ErrorAction SilentlyContinue
+          $dv = ((& $driver --version) -replace '^\D*(\d+(\.\d+){3}).*$', '$1')
+          "Edge WebDriver $dv, WebView2 runtime $($wv2.pv)"
+          # The driver must match the WebView2 runtime, not the Edge browser.
+          if ($wv2.pv -and $dv -ne $wv2.pv) {
+            try {
+              $zip = Join-Path $env:RUNNER_TEMP "edgedriver.zip"
+              Invoke-WebRequest "https://msedgedriver.microsoft.com/$($wv2.pv)/edgedriver_win64.zip" -OutFile $zip
+              Expand-Archive $zip -DestinationPath (Join-Path $env:RUNNER_TEMP "edgedriver") -Force
+              $driver = Join-Path $env:RUNNER_TEMP "edgedriver\msedgedriver.exe"
+              "using Edge WebDriver $($wv2.pv)"
+            } catch { "could not fetch Edge WebDriver $($wv2.pv): $_" }
+          }
+          # The UI-test build must start on its own first.
+          $p = Start-Process target/release/schedule-spotter.exe -ArgumentList "--self-test","--json-out","$PWD\\uitest-selftest.json" -PassThru -Wait
+          "self-test exit $($p.ExitCode)"; Get-Content uitest-selftest.json -ErrorAction SilentlyContinue
+          # msedgedriver's own log, through a wrapper tauri-driver can launch.
+          $log = Join-Path $env:RUNNER_TEMP "msedgedriver.log"
+          Set-Content -Path msedgedriver-verbose.cmd -Value "@`"$driver`" --verbose `"--log-path=$log`" %*"
+          python tools/ui/ui_tests.py --app target/release/schedule-spotter.exe --native-driver "$PWD\msedgedriver-verbose.cmd" --shots ui-shots
+          $code = $LASTEXITCODE
+          if ($code -ne 0 -and (Test-Path $log)) { Get-Content $log -Tail 120 }
+          exit $code
       - uses: actions/upload-artifact@v7
         if: always()
         with:
