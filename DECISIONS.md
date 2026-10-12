@@ -410,8 +410,10 @@ Each change shows the rules' result at once; the model's pass follows, and a pas
   - the Paste box.
 - **What differs in the `ui-test` build:**
   - it adds `test_open` and `test_save`, which take a path, because WebDriver can't drive system dialogs;
-  - its window isn't incognito, because WebKitGTK automation can't attach to the ephemeral context wry makes for incognito webviews.
-- Shipped builds have neither change.
+  - its webview keeps the platform defaults, because:
+    - WebKitGTK automation can't attach to the ephemeral context wry makes for incognito webviews;
+    - Edge WebDriver sets WebView2's data folder and debugging port through environment variables, and the app's own data folder and lockdown arguments would override them.
+- Shipped builds have none of these changes. Their network lockdown is checked by the self-test's no-socket test.
 
 **2026-10-11 · Diagnostics.** The text is built from structured data with placeholders (Person 1, Site 2, Text 3). Then every spelling the schedule contains, plus the file name, is scrubbed as whole words, as a second guard. It adds the app's own log: what was opened (extension and size only), timings, model status and page errors. The owner sees the full text before saving it.
 

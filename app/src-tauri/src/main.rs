@@ -23,6 +23,7 @@ use tauri::{
 /// no-socket test checks this.
 /// (wry's own defaults, msWebOOUI, msPdfOOUI and msSmartScreenProtection, are
 /// repeated here because setting arguments replaces them.)
+#[cfg_attr(feature = "ui-test", allow(dead_code))]
 const WEBVIEW2_ARGS: &str = "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection,msExperimentation,msEdgeUpdate,AutofillServerCommunication,OptimizationHints,Translate,MediaRouter \
 --disable-background-networking --disable-component-update --disable-domain-reliability \
 --disable-client-side-phishing-detection --disable-sync --disable-default-apps --no-pings --no-first-run \
@@ -122,16 +123,24 @@ fn main() {
             }
         })
         .setup(move |app| {
-            WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
-                .title("Schedule Spotter")
-                .inner_size(1280.0, 800.0)
-                .min_inner_size(960.0, 640.0)
-                // WebKitGTK automation (UI tests) can't attach to an
-                // incognito webview's own ephemeral context.
-                .incognito(!cfg!(feature = "ui-test"))
+            let window =
+                WebviewWindowBuilder::new(app, "main", WebviewUrl::App("index.html".into()))
+                    .title("Schedule Spotter")
+                    .inner_size(1280.0, 800.0)
+                    .min_inner_size(960.0, 640.0);
+            // UI-test builds leave the webview to WebDriver: WebKitGTK
+            // automation can't attach to an incognito webview's own
+            // ephemeral context, and Edge WebDriver sets WebView2's data
+            // folder and debugging port through environment variables that
+            // these settings would override.
+            #[cfg(not(feature = "ui-test"))]
+            let window = window
+                .incognito(true)
                 .data_directory(scratch.join("webview"))
-                .additional_browser_args(WEBVIEW2_ARGS)
-                .build()?;
+                .additional_browser_args(WEBVIEW2_ARGS);
+            #[cfg(feature = "ui-test")]
+            let _ = &scratch;
+            window.build()?;
             // The model loads after the window shows; the self-test checks
             // the model-off app.
             let handle = app.handle().clone();
