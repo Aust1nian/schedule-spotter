@@ -1,17 +1,365 @@
 name: release
 
-# Signed builds on version tags. Phase 6 fills this in. Signing secrets live
-# only here: Apple certificate and password, App Store Connect API key, Azure
-# Artifact Signing credentials. Without them, builds are marked UNSIGNED.
+# Release candidates: each variant's macOS disk image and Windows installer,
+# model inside, install-tested on every runner (spec: "Packaging, signing,
+# download"). Runs on version tags, and by hand for a release-candidate check.
+#
+# Signing secrets live only here (spec). Each platform signs only when its
+# secrets exist; otherwise its files are named ...-UNSIGNED and are for
+# internal testing only.
+#   macOS, Developer ID and notarization:
+#     APPLE_CERTIFICATE          base64 of the Developer ID Application .p12
+#     APPLE_CERTIFICATE_PASSWORD its password
+#     APPLE_SIGNING_IDENTITY     "Developer ID Application: Austin Burnes (TEAMID)"
+#     APPLE_API_ISSUER           App Store Connect API issuer ID
+#     APPLE_API_KEY              its key ID
+#     APPLE_API_KEY_P8           the .p8 key file's text
+#   Windows, Azure Artifact Signing (off by Austin's decision, 2026-10-11):
+#     AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID,
+#     AZURE_SIGNING_ENDPOINT, AZURE_SIGNING_ACCOUNT, AZURE_SIGNING_PROFILE
+# RELEASE.md says how to publish what this builds.
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      variants:
+        description: Variants to build, as a JSON list
+        default: '["off", "C", "A", "B-E2B"]'
 
 permissions:
   contents: read
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: "0"
+
 jobs:
-  placeholder:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      variants: ${{ steps.plan.outputs.variants }}
+      version: ${{ steps.plan.outputs.version }}
+      mac_signed: ${{ steps.plan.outputs.mac_signed }}
+      win_signed: ${{ steps.plan.outputs.win_signed }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: plan
+        env:
+          VARIANTS: ${{ inputs.variants || '["off", "C", "A", "B-E2B"]' }}
+          HAS_APPLE: ${{ secrets.APPLE_CERTIFICATE != '' && secrets.APPLE_API_KEY_P8 != '' }}
+          HAS_AZURE: ${{ secrets.AZURE_CLIENT_ID != '' && secrets.AZURE_SIGNING_PROFILE != '' }}
+        run: |
+          version="$(python3 -c 'import json; print(json.load(open("app/src-tauri/tauri.conf.json"))["version"])')"
+          if [ "$GITHUB_REF_TYPE" = tag ] && [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::tag $GITHUB_REF_NAME doesn't match the app version $version"
+            exit 1
+          fi
+          {
+            echo "version=$version"
+            echo "variants=$(python3 -c 'import json, os; print(json.dumps(json.loads(os.environ["VARIANTS"])))')"
+            echo "mac_signed=$HAS_APPLE"
+            echo "win_signed=$HAS_AZURE"
+          } >> "$GITHUB_OUTPUT"
+          echo "Version $version; variants $VARIANTS; macOS signed: $HAS_APPLE; Windows signed: $HAS_AZURE" >> "$GITHUB_STEP_SUMMARY"
+
+  build-macos:
+    name: macOS ${{ matrix.variant }}
+    needs: plan
+    runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: ${{ fromJSON(needs.plan.outputs.variants) }}
+    env:
+      SPOTTER_VARIANT: ${{ matrix.variant }}
+      SIGNED: ${{ needs.plan.outputs.mac_signed }}
+      VERSION: ${{ needs.plan.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+      - run: rustup toolchain install stable --profile minimal && rustup default stable && rustup target add aarch64-apple-darwin x86_64-apple-darwin
+      - uses: Swatinem/rust-cache@v2.9.2
+        with:
+          key: release-${{ hashFiles('.cargo/config.toml') }}
+      - uses: actions/setup-node@v7
+        with: { node-version: 22, cache: npm, cache-dependency-path: app/package-lock.json }
+      - run: npm ci
+        working-directory: app
+      - name: Metal compiler (Xcode 26 ships it as a separate component)
+        run: xcrun -f metal >/dev/null 2>&1 || xcodebuild -downloadComponent MetalToolchain
+      - name: model cache
+        if: matrix.variant != 'off'
+        uses: actions/cache@v6
+        with:
+          path: models/*.gguf
+          key: model-${{ matrix.variant }}-${{ hashFiles('models/manifest.json') }}
+      - name: fetch model (pinned revision and SHA-256)
+        if: matrix.variant != 'off'
+        run: python3 models/fetch.py "$SPOTTER_VARIANT"
+      # Unsigned builds get an ad-hoc signature, so the arm64 slice runs. The
+      # notarization variables exist only when signing: Tauri notarizes
+      # whenever they are set.
+      - name: ad-hoc signature
+        if: env.SIGNED != 'true'
+        run: echo "APPLE_SIGNING_IDENTITY=-" >> "$GITHUB_ENV"
+      - name: signing keychain
+        if: env.SIGNED == 'true'
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+          IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+          KEY_ID: ${{ secrets.APPLE_API_KEY }}
+        run: |
+          kc="$RUNNER_TEMP/build.keychain-db"
+          pw="$(uuidgen)"
+          security create-keychain -p "$pw" "$kc"
+          security set-keychain-settings -lut 21600 "$kc"
+          security unlock-keychain -p "$pw" "$kc"
+          printf '%s' "$APPLE_CERTIFICATE" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security import "$RUNNER_TEMP/cert.p12" -k "$kc" -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$pw" "$kc" >/dev/null
+          security list-keychains -d user -s "$kc" login.keychain-db
+          rm "$RUNNER_TEMP/cert.p12"
+          printf '%s' "$APPLE_API_KEY_P8" > "$RUNNER_TEMP/api-key.p8"
+          {
+            echo "APPLE_SIGNING_IDENTITY=$IDENTITY"
+            echo "APPLE_API_ISSUER=$ISSUER"
+            echo "APPLE_API_KEY=$KEY_ID"
+            echo "APPLE_API_KEY_PATH=$RUNNER_TEMP/api-key.p8"
+          } >> "$GITHUB_ENV"
+      - name: Licenses folder and model resource
+        run: |
+          overlay="$(python3 tools/release/prepare.py --variant "$SPOTTER_VARIANT" --platform macos | tail -1)"
+          echo "OVERLAY=$overlay" >> "$GITHUB_ENV"
+      - run: df -h "$GITHUB_WORKSPACE"
+      # The app first, then the disk image: the build's intermediate files go
+      # in between, since a multi-GB app needs room for another copy.
+      - name: build the app (signed and notarized when the secrets exist)
+        working-directory: app
+        run: |
+          start=$(date +%s)
+          npx tauri build --target universal-apple-darwin --bundles app --config "$OVERLAY"
+          echo "app built (and notarized when signed) in $(( $(date +%s) - start )) s"
+      - name: make room, then the disk image
+        run: |
+          rm -rf target/*/release/build target/*/release/deps target/*/release/incremental models/*.gguf
+          df -h "$GITHUB_WORKSPACE"
+          tools/release/make-dmg.sh "target/universal-apple-darwin/release/bundle/macos/Schedule Spotter.app" \
+            "target/universal-apple-darwin/release/bundle/dmg/Schedule Spotter.dmg"
+      - name: sign, notarize and staple the disk image
+        if: env.SIGNED == 'true'
+        run: |
+          dmg="$(ls target/universal-apple-darwin/release/bundle/dmg/*.dmg)"
+          codesign --force --timestamp --sign "$APPLE_SIGNING_IDENTITY" "$dmg"
+          start=$(date +%s)
+          xcrun notarytool submit "$dmg" --key "$APPLE_API_KEY_PATH" --key-id "$APPLE_API_KEY" \
+            --issuer "$APPLE_API_ISSUER" --wait --timeout 3h
+          echo "disk image notarized in $(( $(date +%s) - start )) s"
+          xcrun stapler staple "$dmg"
+      - name: name, size and checksum
+        run: |
+          suffix=$([ "$SIGNED" = true ] && echo "" || echo "-UNSIGNED")
+          mkdir -p out
+          name="Schedule-Spotter-$VERSION-$SPOTTER_VARIANT-mac$suffix.dmg"
+          mv target/universal-apple-darwin/release/bundle/dmg/*.dmg "out/$name"
+          python3 tools/release/describe.py "out/$name" --variant "$SPOTTER_VARIANT" --platform mac \
+            --signed "$SIGNED" > "out/$name.json"
+          cat "out/$name.json" | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-mac-${{ matrix.variant }}
+          path: out/
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: describe-mac-${{ matrix.variant }}
+          path: out/*.json
+      - name: remove the signing keychain and key
+        if: always() && env.SIGNED == 'true'
+        run: |
+          security delete-keychain "$RUNNER_TEMP/build.keychain-db" || true
+          rm -f "$RUNNER_TEMP/api-key.p8"
+
+  build-windows:
+    name: Windows ${{ matrix.variant }}
+    needs: plan
+    runs-on: windows-2025
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: ${{ fromJSON(needs.plan.outputs.variants) }}
+    env:
+      SPOTTER_VARIANT: ${{ matrix.variant }}
+      SIGNED: ${{ needs.plan.outputs.win_signed }}
+      VERSION: ${{ needs.plan.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+      - run: rustup toolchain install stable --profile minimal && rustup default stable
+      - uses: Swatinem/rust-cache@v2.9.2
+        with:
+          key: release-${{ hashFiles('.cargo/config.toml') }}
+      - uses: actions/setup-node@v7
+        with: { node-version: 22, cache: npm, cache-dependency-path: app/package-lock.json }
+      - run: npm ci
+        working-directory: app
+      - name: model cache
+        if: matrix.variant != 'off'
+        uses: actions/cache@v6
+        with:
+          path: models/*.gguf
+          key: model-${{ matrix.variant }}-${{ hashFiles('models/manifest.json') }}
+      - name: fetch model (pinned revision and SHA-256)
+        if: matrix.variant != 'off'
+        shell: bash
+        run: python models/fetch.py "$SPOTTER_VARIANT"
+      - name: signing tool
+        if: env.SIGNED == 'true'
+        shell: bash
+        env:
+          ENDPOINT: ${{ secrets.AZURE_SIGNING_ENDPOINT }}
+          ACCOUNT: ${{ secrets.AZURE_SIGNING_ACCOUNT }}
+          PROFILE: ${{ secrets.AZURE_SIGNING_PROFILE }}
+        run: |
+          cargo install trusted-signing-cli --locked
+          echo "SPOTTER_SIGN_COMMAND=trusted-signing-cli -e $ENDPOINT -a $ACCOUNT -c $PROFILE -d \"Schedule Spotter\" %1" >> "$GITHUB_ENV"
+      - name: Licenses folder
+        shell: bash
+        run: |
+          overlay="$(python tools/release/prepare.py --variant "$SPOTTER_VARIANT" --platform windows \
+            --sign-command "${SPOTTER_SIGN_COMMAND:-}" | tail -1)"
+          echo "OVERLAY=$overlay" >> "$GITHUB_ENV"
+      - name: build the installer
+        working-directory: app
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        run: npx tauri build --bundles nsis --config "$env:OVERLAY"
+      - name: model into the installer, then sign it
+        shell: bash
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        run: |
+          setup="$(ls target/release/bundle/nsis/*-setup.exe)"
+          if [ "$SIGNED" = true ]; then
+            # Tauri signed the installer; the model goes in before the signature.
+            signtool="$(find "/c/Program Files (x86)/Windows Kits/10/bin" -path '*/x64/signtool.exe' | sort -V | tail -1)"
+            "$signtool" remove //s "$setup"
+          fi
+          if [ "$SPOTTER_VARIANT" != off ]; then
+            python tools/release/append-model.py --variant "$SPOTTER_VARIANT" --setup "$setup"
+          fi
+          if [ "$SIGNED" = true ]; then
+            eval "${SPOTTER_SIGN_COMMAND//%1/\"$setup\"}"
+          fi
+      - name: name, size and checksum
+        shell: bash
+        run: |
+          suffix=$([ "$SIGNED" = true ] && echo "" || echo "-UNSIGNED")
+          mkdir -p out
+          name="Schedule-Spotter-$VERSION-$SPOTTER_VARIANT-windows$suffix-setup.exe"
+          mv target/release/bundle/nsis/*-setup.exe "out/$name"
+          python tools/release/describe.py "out/$name" --variant "$SPOTTER_VARIANT" --platform windows \
+            --signed "$SIGNED" > "out/$name.json"
+          cat "out/$name.json" | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-windows-${{ matrix.variant }}
+          path: out/
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: describe-windows-${{ matrix.variant }}
+          path: out/*.json
+
+  install-macos:
+    name: install ${{ matrix.variant }} on ${{ matrix.runner }}
+    needs: [plan, build-macos]
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: ${{ fromJSON(needs.plan.outputs.variants) }}
+        runner: [macos-15, macos-26, macos-15-intel]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with: { name: "release-mac-${{ matrix.variant }}", path: dist }
+      - env:
+          SIGNED: ${{ needs.plan.outputs.mac_signed }}
+        run: |
+          signed=()
+          if [ "$SIGNED" = true ]; then signed=(--signed); fi
+          tools/ci/install-test-macos.sh dist/*.dmg "$PWD/install-${{ matrix.variant }}-${{ matrix.runner }}.json" \
+            --variant "${{ matrix.variant }}" "${signed[@]}"
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: "install-${{ matrix.variant }}-${{ matrix.runner }}"
+          path: "install-*.json"
+          if-no-files-found: warn
+
+  install-windows:
+    name: install ${{ matrix.variant }} on ${{ matrix.runner }}
+    needs: [plan, build-windows]
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: ${{ fromJSON(needs.plan.outputs.variants) }}
+        runner: [windows-2025, windows-11-arm]
+    runs-on: ${{ matrix.runner }}
+    # The x64 build under emulation on Arm; logged, not blocking (spec).
+    continue-on-error: ${{ matrix.runner == 'windows-11-arm' }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with: { name: "release-windows-${{ matrix.variant }}", path: dist }
+      - shell: pwsh
+        env:
+          SIGNED: ${{ needs.plan.outputs.win_signed }}
+        run: |
+          $setup = (Get-ChildItem dist -Filter *-setup.exe | Select-Object -First 1).FullName
+          $out = Join-Path $PWD "install-${{ matrix.variant }}-${{ matrix.runner }}.json"
+          if ($env:SIGNED -eq "true") {
+            tools/ci/install-test-windows.ps1 -Installer $setup -Out $out -Variant "${{ matrix.variant }}" -Signed
+          } else {
+            tools/ci/install-test-windows.ps1 -Installer $setup -Out $out -Variant "${{ matrix.variant }}"
+          }
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: "install-${{ matrix.variant }}-${{ matrix.runner }}"
+          path: "install-*.json"
+          if-no-files-found: warn
+
+  summary:
+    needs: [plan, build-macos, build-windows, install-macos, install-windows]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
-      - run: echo "Release packaging arrives in Phase 6."
+      - uses: actions/checkout@v7
+      # Only the small JSON files; the release files stay in their artifacts.
+      - uses: actions/download-artifact@v8
+        with: { pattern: "describe-*", path: results/describe, merge-multiple: true }
+      - uses: actions/download-artifact@v8
+        with: { pattern: "install-*", path: results/install, merge-multiple: true }
+      - name: summary, releases.json and SHA256SUMS
+        env:
+          VERSION: ${{ needs.plan.outputs.version }}
+        run: |
+          python3 tools/release/summary.py results --version "$VERSION" --out manifest >> "$GITHUB_STEP_SUMMARY"
+          cat manifest/SHA256SUMS
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-manifest
+          path: manifest/

@@ -68,13 +68,19 @@ jobs:
       - name: Metal compiler (Xcode 26 ships it as a separate component)
         run: xcrun -f metal >/dev/null 2>&1 || xcodebuild -downloadComponent MetalToolchain
       # Licenses folder (the model-off build; release.yml builds the variants).
-      - run: echo "OVERLAY=$(python3 tools/release/prepare.py --variant off --platform macos | tail -1)" >> "$GITHUB_ENV"
-      - run: npx tauri build --target universal-apple-darwin --bundles app,dmg --config "$OVERLAY"
+      - run: |
+          overlay="$(python3 tools/release/prepare.py --variant off --platform macos | tail -1)"
+          echo "OVERLAY=$overlay" >> "$GITHUB_ENV"
+      - run: npx tauri build --target universal-apple-darwin --bundles app --config "$OVERLAY"
         working-directory: app
       - name: precompiled Metal shaders are in the bundle
         run: test -s "target/universal-apple-darwin/release/bundle/macos/Schedule Spotter.app/Contents/Resources/default.metallib"
       - run: python3 tools/depcheck.py
       - run: lipo -archs "target/universal-apple-darwin/release/bundle/macos/Schedule Spotter.app/Contents/MacOS/"*
+      # The same disk image release.yml makes.
+      - run: |
+          tools/release/make-dmg.sh "target/universal-apple-darwin/release/bundle/macos/Schedule Spotter.app" \
+            "target/universal-apple-darwin/release/bundle/dmg/Schedule Spotter.dmg"
       - uses: actions/upload-artifact@v7
         with:
           name: macos-dmg
@@ -97,7 +103,9 @@ jobs:
       - run: npm ci
         working-directory: app
       - shell: bash
-        run: echo "OVERLAY=$(python tools/release/prepare.py --variant off --platform windows | tail -1)" >> "$GITHUB_ENV"
+        run: |
+          overlay="$(python tools/release/prepare.py --variant off --platform windows | tail -1)"
+          echo "OVERLAY=$overlay" >> "$GITHUB_ENV"
       - run: npx tauri build --bundles nsis --config "$env:OVERLAY"
         working-directory: app
       - uses: actions/upload-artifact@v7
