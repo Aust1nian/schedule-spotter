@@ -4,6 +4,8 @@
   },
   "bundle": {
     "macOS": {
+      "hardenedRuntime": true,
+      "entitlements": "./macos/Entitlements.plist",
       "files": {
         "Resources/default.metallib": "./macos/default.metallib"
       }

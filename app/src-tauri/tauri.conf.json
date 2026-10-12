@@ -24,6 +24,7 @@
       "nsis",
       "deb"
     ],
+    "publisher": "Tight Line",
     "category": "Productivity",
     "shortDescription": "Finds double-bookings and gaps in a crew schedule, offline.",
     "copyright": "\u00a9 2026 Tight Line",

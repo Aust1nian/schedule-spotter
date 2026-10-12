@@ -6,10 +6,16 @@ from this file, so the working directory doesn't matter.
 
   --profile DIR  the cargo profile folder to read (default target/release)
   --to DIR       where to copy (default app/src-tauri/windows/llama-libs);
-                 the benchmark uses it to put the DLLs beside spotter-bench.exe"""
+                 the benchmark uses it to put the DLLs beside spotter-bench.exe
+
+When SPOTTER_SIGN_COMMAND is set (release.yml, only with signing secrets),
+each copied DLL is signed with it; "%1" stands for the file."""
 import argparse
+import os
 import pathlib
+import shlex
 import shutil
+import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -47,6 +53,12 @@ def main():
         if p.parent.resolve() != out:
             shutil.copy2(p, out / p.name)
     print(f"collect-llama-libs: {len(names)} DLLs -> {out}: {', '.join(names)}")
+    sign = os.environ.get("SPOTTER_SIGN_COMMAND")
+    if sign:
+        for name in names:
+            cmd = [part.replace("%1", str(out / name)) for part in shlex.split(sign, posix=False)]
+            subprocess.run(cmd, check=True)
+        print(f"collect-llama-libs: signed {len(names)} DLLs")
 
 
 if __name__ == "__main__":

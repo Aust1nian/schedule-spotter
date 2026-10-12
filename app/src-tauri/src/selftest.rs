@@ -1,6 +1,8 @@
 //! `--self-test`: opens the real window, renders the built-in example, checks
-//! the page shows what the core found, prints JSON metrics and exits nonzero
-//! if any threshold is missed. CI runs it on every runner.
+//! the page shows what the core found, and, in a build with a model, loads
+//! the bundled model from where it was installed and asks it 20 tiebreaker
+//! questions. Prints JSON metrics and exits nonzero if any threshold is
+//! missed. CI runs it on every runner.
 
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -9,14 +11,49 @@ use std::time::{Duration, Instant};
 
 use serde_json::{Value, json};
 use spotter_core::Settings;
+use spotter_core::matching::Verdict;
 use spotter_core::session::Session;
 
-use crate::metrics;
+use crate::{metrics, model};
 
 /// Give up and fail if the page hasn't reported back by then.
 const WATCHDOG: Duration = Duration::from_secs(90);
+/// How long a build with a model waits for it to load (the benchmark's
+/// slowest runner takes about 21 s; this only catches a hang).
+const MODEL_WAIT: Duration = Duration::from_secs(240);
 /// Whole-app ceiling with the model not loaded (spec: Hard constraints).
 const MAX_RSS_MODEL_OFF_MB: f64 = 300.0;
+/// Whole-app hard ceiling with the model loaded.
+const MAX_RSS_MB: f64 = 4096.0;
+/// The tiebreaker questions: the first of each task from the benchmark set,
+/// 20 in all.
+const QUESTIONS: [(&str, &str, usize); 5] = [
+    (
+        "t1",
+        include_str!("../../../bench/questions/t1_same_person.jsonl"),
+        5,
+    ),
+    (
+        "t2",
+        include_str!("../../../bench/questions/t2_same_site.jsonl"),
+        5,
+    ),
+    (
+        "t3",
+        include_str!("../../../bench/questions/t3_cell_meaning.jsonl"),
+        4,
+    ),
+    (
+        "t4",
+        include_str!("../../../bench/questions/t4_column_role.jsonl"),
+        3,
+    ),
+    (
+        "t5",
+        include_str!("../../../bench/questions/t5_free_text.jsonl"),
+        3,
+    ),
+];
 /// The window must show its first page within this long.
 const MAX_PAGE_READY_MS: u128 = 15_000;
 
@@ -26,6 +63,8 @@ pub struct Args {
     /// Seconds to stay open after reporting, so CI can watch for late
     /// network activity.
     pub linger: Duration,
+    /// `--install-model <setup.exe>` (the Windows installer's hook).
+    pub install_model: Option<PathBuf>,
 }
 
 impl Args {
@@ -34,11 +73,13 @@ impl Args {
             self_test: false,
             json_out: None,
             linger: Duration::ZERO,
+            install_model: None,
         };
         while let Some(arg) = args.next() {
             match arg.as_str() {
                 "--self-test" => parsed.self_test = true,
                 "--json-out" => parsed.json_out = args.next().map(PathBuf::from),
+                "--install-model" => parsed.install_model = args.next().map(PathBuf::from),
                 "--linger" => {
                     let secs = args.next().and_then(|s| s.parse().ok()).unwrap_or(0);
                     parsed.linger = Duration::from_secs(secs);
@@ -70,12 +111,17 @@ impl SelfTest {
         let done = Arc::new(AtomicBool::new(false));
         let watchdog_done = Arc::clone(&done);
         let watchdog_out = json_out.clone();
+        let watchdog = if model::VARIANT == "off" {
+            WATCHDOG
+        } else {
+            WATCHDOG + MODEL_WAIT + Duration::from_secs(20 * 6)
+        };
         std::thread::spawn(move || {
-            std::thread::sleep(WATCHDOG);
+            std::thread::sleep(watchdog);
             if !watchdog_done.swap(true, Ordering::SeqCst) {
                 let report = json!({
                     "self_test": "fail",
-                    "failures": [format!("page did not report back within {} s", WATCHDOG.as_secs())],
+                    "failures": [format!("no result within {} s", watchdog.as_secs())],
                 });
                 emit(&report, watchdog_out.as_ref());
                 std::process::exit(3);
@@ -109,7 +155,13 @@ impl SelfTest {
     }
 
     /// Checks thresholds, prints the metrics, and returns the exit code.
+    /// In a build with a model this waits for the model, so it runs off the
+    /// main thread.
     pub fn finish(&self, started: Instant, rendered: &Rendered) -> i32 {
+        if self.done.load(Ordering::SeqCst) {
+            return 3;
+        }
+        let model_part = (model::VARIANT != "off").then(model_check);
         if self.done.swap(true, Ordering::SeqCst) {
             return 3;
         }
@@ -123,10 +175,17 @@ impl SelfTest {
         let peak_rss_mb = metrics::peak_rss_bytes() as f64 / (1024.0 * 1024.0);
 
         let mut failures = Vec::new();
-        if peak_rss_mb > MAX_RSS_MODEL_OFF_MB {
-            failures.push(format!(
+        match &model_part {
+            None if peak_rss_mb > MAX_RSS_MODEL_OFF_MB => failures.push(format!(
                 "peak RSS {peak_rss_mb:.0} MB > {MAX_RSS_MODEL_OFF_MB} MB with model off"
-            ));
+            )),
+            Some(_) if peak_rss_mb > MAX_RSS_MB => failures.push(format!(
+                "peak RSS {peak_rss_mb:.0} MB > {MAX_RSS_MB} MB with the model loaded"
+            )),
+            _ => {}
+        }
+        if let Some((_, model_failures)) = &model_part {
+            failures.extend(model_failures.iter().cloned());
         }
         match page_ready_ms {
             Some(ms) if ms <= MAX_PAGE_READY_MS => {}
@@ -146,7 +205,7 @@ impl SelfTest {
             }
         }
 
-        let report = json!({
+        let mut report = json!({
             "self_test": if failures.is_empty() { "pass" } else { "fail" },
             "version": env!("CARGO_PKG_VERSION"),
             "os": std::env::consts::OS,
@@ -163,9 +222,108 @@ impl SelfTest {
             "people_rendered": rendered.people,
             "failures": failures,
         });
+        if let Some((metrics, _)) = model_part {
+            report["model_check"] = metrics;
+        }
         emit(&report, self.json_out.as_ref());
         if report["self_test"] == "pass" { 0 } else { 1 }
     }
+}
+
+/// Waits for the model, then asks it the 20 questions. Gated: the model
+/// loads (which includes its SHA-256 check) and no llama.cpp call fails.
+/// Reported, not gated: load time, latency and how many it answered, which
+/// depend on the runner and are the benchmark's job (DECISIONS.md, Phase 6).
+fn model_check() -> (Value, Vec<String>) {
+    let waited = Instant::now();
+    while model::status().state == model::State::Loading && waited.elapsed() < MODEL_WAIT {
+        std::thread::sleep(Duration::from_millis(200));
+    }
+    let status = model::status();
+    let mut out = json!({
+        "file": model::FILE,
+        "state": status.state,
+        "detail": status.detail,
+        "load_s": status.load_secs,
+        "backend": status.backend,
+    });
+    match status.state {
+        model::State::Ready => {}
+        model::State::Loading => {
+            let why = format!("model still loading after {} s", MODEL_WAIT.as_secs());
+            return (out, vec![why]);
+        }
+        model::State::Off => {
+            let why = format!("model did not load: {}", status.detail);
+            return (out, vec![why]);
+        }
+    }
+
+    let tb = model::tiebreak();
+    let (mut asked, mut answered, mut right) = (0, 0, 0);
+    let mut latencies = Vec::new();
+    for (task, lines, n) in QUESTIONS {
+        for q in lines
+            .lines()
+            .filter_map(|l| serde_json::from_str::<Value>(l).ok())
+            .take(n)
+        {
+            let s = |k: &str| q[k].as_str().unwrap_or_default().to_string();
+            let list = |k: &str| -> Vec<String> {
+                q[k].as_array()
+                    .into_iter()
+                    .flatten()
+                    .filter_map(|v| v.as_str().map(str::to_string))
+                    .collect()
+            };
+            let t = Instant::now();
+            let said: Option<String> = match task {
+                "t1" | "t2" => {
+                    let v = if task == "t1" {
+                        tb.same_person(&s("a"), &s("b"), &list("roster"))
+                    } else {
+                        tb.same_site(&s("a"), &s("b"), &list("sites"))
+                    };
+                    match v {
+                        Verdict::Same => Some("same".into()),
+                        Verdict::Different => Some("different".into()),
+                        Verdict::Unsure => None,
+                    }
+                }
+                "t3" => tb.cell_meaning(&s("text"), &s("column_role"), &list("neighbors")),
+                "t4" => tb.column_role(&s("header"), &list("samples")),
+                _ => tb
+                    .free_text(&s("line"), &list("roster"), &list("sites"))
+                    .map(|e| format!("{} entries", e.len())),
+            };
+            latencies.push(t.elapsed().as_secs_f64());
+            asked += 1;
+            if let Some(said) = said {
+                answered += 1;
+                if q["label"].as_str() == Some(said.as_str()) {
+                    right += 1;
+                }
+            }
+        }
+    }
+    latencies.sort_by(f64::total_cmp);
+    let pct = |p: f64| {
+        let i = ((latencies.len().max(1) - 1) as f64 * p) as usize;
+        latencies.get(i).map(|s| (s * 100.0).round() / 100.0)
+    };
+    out["questions"] = json!(asked);
+    out["answered"] = json!(answered);
+    out["right_of_closed"] = json!(right);
+    out["latency_p50_s"] = json!(pct(0.5));
+    out["latency_p95_s"] = json!(pct(0.95));
+    let mut failures = Vec::new();
+    if asked != 20 {
+        failures.push(format!("asked {asked} tiebreaker questions, not 20"));
+    }
+    if model::failures() > 0 {
+        failures.push(format!("{} model calls failed", model::failures()));
+    }
+    (out, failures)
 }
 
 fn emit(report: &Value, json_out: Option<&PathBuf>) {

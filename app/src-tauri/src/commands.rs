@@ -519,15 +519,22 @@ pub fn page_error(state: State<'_, AppState>, message: String) {
 
 #[tauri::command]
 pub fn self_test_done(app: AppHandle, state: State<'_, AppState>, rendered: selftest::Rendered) {
-    if let Some(test) = &state.self_test {
-        let code = test.finish(state.started, &rendered);
-        let linger = test.linger();
-        // Stay open a while so CI can watch for late network activity.
-        std::thread::spawn(move || {
-            std::thread::sleep(linger);
-            app.exit(code);
-        });
+    if state.self_test.is_none() {
+        return;
     }
+    // The model loads only now, so the page check above saw the rules-only
+    // result the core computes; finish() then waits for it.
+    model::load(app.path().resource_dir().ok(), || {});
+    std::thread::spawn(move || {
+        let state = app.state::<AppState>();
+        let Some(test) = &state.self_test else {
+            return;
+        };
+        let code = test.finish(state.started, &rendered);
+        // Stay open a while so CI can watch for late network activity.
+        std::thread::sleep(test.linger());
+        app.exit(code);
+    });
 }
 
 /// UI tests only (built with `--features ui-test`): open and save without

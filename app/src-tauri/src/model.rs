@@ -78,6 +78,11 @@ pub fn ready() -> bool {
     ENGINE.get().is_some()
 }
 
+/// llama.cpp calls that failed since the model loaded.
+pub fn failures() -> usize {
+    ENGINE.get().map_or(0, |e| e.failures())
+}
+
 /// Where the bundled model lives: `<resources>/model/<file>`. Debug builds
 /// also look in the repo's `models/` folder.
 fn find(resources: Option<&Path>) -> Option<PathBuf> {
@@ -93,16 +98,6 @@ fn find(resources: Option<&Path>) -> Option<PathBuf> {
         );
     }
     places.into_iter().find(|p| p.is_file())
-}
-
-/// Smart matching off for this run (the self-test checks the model-off app).
-pub fn off(detail: &str) {
-    set(Status {
-        state: State::Off,
-        detail: detail.into(),
-        load_secs: None,
-        backend: None,
-    });
 }
 
 /// Loads the model, then calls `on_change`. Runs on its own thread.

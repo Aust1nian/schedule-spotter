@@ -602,12 +602,19 @@ pub fn save(path: &Path, bytes: &[u8]) -> Result<(), SaveError> {
         .map(|n| n.to_string_lossy().into_owned())
         .unwrap_or_else(|| "schedule-check".into());
     let tmp = dir.join(format!(".{file_name}.{}.saving", std::process::id()));
-    let written = std::fs::File::create(&tmp).and_then(|mut f| {
-        f.write_all(bytes)?;
-        f.sync_all()
-    });
-    if let Err(e) = written {
+    let write = |p: &Path| {
+        std::fs::File::create(p).and_then(|mut f| {
+            f.write_all(bytes)?;
+            f.sync_all()
+        })
+    };
+    if let Err(e) = write(&tmp) {
         let _ = std::fs::remove_file(&tmp);
+        // The macOS App Sandbox lets the app write only the file the owner
+        // picked in the save dialog, not a temporary one beside it.
+        if e.kind() == std::io::ErrorKind::PermissionDenied {
+            return write(path).map_err(fail);
+        }
         return Err(fail(e));
     }
     std::fs::rename(&tmp, path).map_err(|e| {
@@ -620,6 +627,33 @@ pub fn save(path: &Path, bytes: &[u8]) -> Result<(), SaveError> {
 mod tests {
     use super::*;
     use crate::model::{Answer, Question};
+
+    /// Like the macOS App Sandbox: the picked file is writable, its folder
+    /// is not.
+    #[cfg(unix)]
+    #[test]
+    fn saves_when_only_the_picked_file_is_writable() {
+        use std::os::unix::fs::PermissionsExt;
+        let dir = std::env::temp_dir().join(format!("spotter-save-sandbox-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("check.xlsx");
+        std::fs::write(&path, b"old").unwrap();
+        std::fs::set_permissions(&dir, std::fs::Permissions::from_mode(0o555)).unwrap();
+        // Root ignores folder permissions; nothing to test then.
+        let root = std::fs::File::create(dir.join("probe")).is_ok();
+        let result = save(&path, b"new");
+        std::fs::set_permissions(&dir, std::fs::Permissions::from_mode(0o755)).unwrap();
+        if !root {
+            assert_eq!(result, Ok(()));
+            assert_eq!(std::fs::read(&path).unwrap(), b"new");
+            assert_eq!(
+                std::fs::read_dir(&dir).unwrap().count(),
+                1,
+                "no temporary file left"
+            );
+        }
+        std::fs::remove_dir_all(&dir).unwrap();
+    }
 
     #[test]
     fn letters() {

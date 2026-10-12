@@ -4,6 +4,7 @@
 mod commands;
 mod metrics;
 mod model;
+mod payload;
 mod scratch;
 mod selftest;
 mod ui;
@@ -32,6 +33,10 @@ const WEBVIEW2_ARGS: &str = "--disable-features=msWebOOUI,msPdfOOUI,msSmartScree
 fn main() {
     let started = Instant::now();
     let args = selftest::Args::parse(std::env::args().skip(1));
+    // Run by the Windows installer only: unpack the model it carries.
+    if let Some(setup) = &args.install_model {
+        std::process::exit(payload::install_from_args(setup));
+    }
     let self_test = args.self_test.then(|| {
         selftest::attach_parent_console();
         selftest::SelfTest::start(args.json_out.clone(), args.linger)
@@ -150,12 +155,11 @@ fn main() {
             #[cfg(feature = "ui-test")]
             let _ = &scratch;
             window.build()?;
-            // The model loads after the window shows; the self-test checks
-            // the model-off app.
+            // The model loads after the window shows; the self-test loads
+            // it once the page has reported (commands::self_test_done).
             let handle = app.handle().clone();
             let resources = app.path().resource_dir().ok();
             if is_self_test {
-                model::off("self-test runs with the model off");
                 return Ok(());
             }
             model::load(resources, move || {
