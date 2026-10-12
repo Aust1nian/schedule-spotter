@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  App Sandbox with no network entitlement, so macOS itself blocks the
-  network (spec: "OS-level network block on macOS"). The app reads and
+  App Sandbox (spec: "OS-level network block on macOS"). The app reads and
   writes only the files the owner picks in the open and save dialogs or
   drops on the window.
+
+  network.client: without it, WebKit's page process fails to launch inside
+  the sandbox and the window stays blank (CI install test, 2026-10-12;
+  tauri-apps/tauri-docs#3171). The app has no network code; the install
+  test's no-socket check is the enforcement (DECISIONS.md, Phase 6).
+  No network.server: the app listens on nothing.
 -->
 <plist version="1.0">
 <dict>
   <key>com.apple.security.app-sandbox</key>
   <true/>
   <key>com.apple.security.files.user-selected.read-write</key>
+  <true/>
+  <key>com.apple.security.network.client</key>
   <true/>
 </dict>
 </plist>

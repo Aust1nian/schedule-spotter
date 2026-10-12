@@ -103,8 +103,11 @@ else
 fi
 check signed-by info "$(codesign -dv --verbose=2 "$app" 2>&1 | grep -E '^(Authority|Signature|TeamIdentifier|Runtime Version)' | tr '\n' ';')"
 ents="$(codesign -d --entitlements - --xml "$app" 2>/dev/null || true)"
-if grep -q "com.apple.security.app-sandbox" <<<"$ents" && ! grep -q "network" <<<"$ents"; then
-  check sandbox pass "App Sandbox on, no network entitlement"
+# network.client is there because WebKit's page process needs it inside the
+# sandbox (DECISIONS.md, Phase 6); the no-socket check below enforces that
+# the app never uses it. Nothing may listen (network.server).
+if grep -q "com.apple.security.app-sandbox" <<<"$ents" && ! grep -q "network.server" <<<"$ents"; then
+  check sandbox pass "App Sandbox on; network: $(grep -o 'com.apple.security.network[a-z.]*' <<<"$ents" | tr '\n' ' ')"
 else
   check sandbox fail "entitlements: $ents"
 fi

@@ -428,3 +428,106 @@ Each change shows the rules' result at once; the model's pass follows, and a pas
 - **Linux (development only):** the `gtk3` backend with no XDG portal (the portal would bring D-Bus networking crates). It runs GTK on a thread of its own beside Tauri's. Checked in the dev container: the dialog opens and the app keeps answering.
 
 WebDriver can't drive any of these dialogs, so the UI tests use the `ui-test` hooks, and the real dialogs get a manual check on each platform before release (RELEASE.md, Phase 6).
+
+## Phase 6
+
+**2026-10-12 · Release variants: off, C, A and B-E2B.** The spec's deliverable is a build set for each of A, B and C.
+- **B is Gemma 4 E2B Q4_K_M.** It was the best scorer in the Phase 4 benchmark. E4B needs more than the 4 GB ceiling on Intel Macs, and the spec allows E2B as "the in-family fallback".
+- **"off" is built too,** because model off is the selection rule's current recommendation (MODEL_REPORT.md).
+- `release.yml` takes the list as an input, so any manifest entry can be built.
+
+**2026-10-12 · The Windows installer carries the model after its own data, not inside it.** NSIS can't hold more than about 2 GB (Phase 0 risk). Phi-4-mini (2.49 GB) and Gemma E2B (3.43 GB) don't fit, so neither does a one-download installer built the usual way.
+
+How it works instead:
+- `tools/release/append-model.py` appends the model to the finished `-setup.exe`: the model bytes, their length, and an 8-byte marker.
+- The installer's post-install hook runs `<app> --install-model "$EXEPATH"`.
+- The app (`payload.rs`) copies the bytes into `model\`, checks them against the SHA-256 compiled into it, and only then gives the file its real name.
+- If the check fails, the app still installs and runs with smart matching off ("Never fails because of the model"). The owner sees a message to download again, and a silent install exits 2.
+- The uninstaller removes `model\`.
+
+Why this design:
+- It keeps the spec's "one download" and "no admin rights".
+- Signing still works later: Authenticode adds its certificate table after the appended model, and the app looks for the marker just before that table. The model then counts as part of the signed file.
+- The `.exe` must stay under 4 GiB. Installer vendors report that Windows won't start a larger program, and `append-model.py` refuses to build one. B-E2B comes to about 3.6 GB.
+- Rejected: a zip with the installer and the model side by side (owners would run the installer from inside the zip, without the model); NSISBI, an NSIS fork for large installers (unmaintained; Tauri can't use it).
+
+The release run's install tests are the proof that Windows runs and installs the 3.6 GB file.
+
+**2026-10-12 · The macOS disk image is made with `hdiutil` from the finished app** (`tools/release/make-dmg.sh`), not by `tauri bundle`.
+- `tauri bundle --bundles dmg` rebuilds the app, so it would re-sign it and undo Tauri's notarization and stapling of the app.
+- The image holds the app and a link to Applications, with no background art.
+- The release workflow builds the app, deletes the build's intermediate files to make room on the runner, and then makes the image. A 3.5 GB app needs room for one more copy.
+- CI uses the same script, so its install tests run on the same kind of image.
+
+**2026-10-12 · macOS App Sandbox, with `network.client` (spec: "OS-level network block on macOS").**
+- **Tried without network entitlements:** on all three Mac runners the window stayed blank and the self-test timed out. WebKit's page process won't start inside a sandbox without `com.apple.security.network.client`, even though the app loads nothing over the network (tauri-apps/tauri-docs#3171, where others reproduce it).
+- **Decision, as the spec allows:** keep the sandbox and add `network.client` only.
+  - The sandbox still confines files: the app reads and writes only what the owner picks in a dialog or drops on the window.
+  - Nothing may listen (`network.server` stays off).
+  - The no-socket check during the self-test enforces "never touches the network".
+- **Save under the sandbox:** the sandbox lets the app write only the file picked in the save dialog, not a temporary file beside it. `export::save` now writes the picked file directly when it can't create the temporary one. A core test covers this with a read-only folder.
+- **The container:** macOS creates `~/Library/Containers/com.tightline.schedulespotter` on first launch. The app's session scratch lives inside it and is deleted on exit. The install test checks that nothing appears in `~/Library` outside the container. Throwing the app in the Trash leaves the container behind, as with every sandboxed Mac app (RELEASE.md).
+
+**2026-10-12 · `--self-test` loads the model** (spec: "runs the built-in example plus 20 tiebreaker questions").
+- In a build with a model, once the page has reported back, the self-test loads the bundled model from where it was installed. It then asks the first 5/5/4/3/3 questions of T1–T5 from `bench/questions`.
+- **Gated:**
+  - the model loads, which includes its SHA-256 check;
+  - all 20 questions are asked;
+  - no llama.cpp call fails;
+  - peak RSS is at most 4 GB (300 MB with no model).
+- **Reported, not gated:** load time, latency p50/p95, and how many it answered. These depend on the runner, and the benchmark already gates them (MODEL_REPORT.md).
+- The model loads only after the page check, so that check still compares the page with the core's model-off result.
+
+**2026-10-12 · Install tests (spec: "Install tests, every release candidate").** `tools/ci/install-test-macos.sh` and `install-test-windows.ps1` replace the Phase 0 self-test scripts. They run in CI on every push (model-off build) and in `release.yml` on every variant.
+
+macOS:
+- Marks the disk image with a browser's quarantine attribute, mounts it, and copies the app with `ditto`. The quarantine carries over onto the app.
+- Checks the universal binary, the Licenses folder, the model, `codesign --verify --deep --strict`, the sandbox entitlements and the hardened runtime.
+- Asks for Gatekeeper's verdict.
+- Runs the self-test while polling `lsof` for sockets, then checks for leftovers.
+- **Signed builds** must pass Gatekeeper as "Notarized Developer ID", with stapled tickets on both the app and the image, and they launch still quarantined.
+- **Unsigned builds** (until the secrets exist) report Gatekeeper's rejection as skipped and remove the quarantine before launch, as an owner's "Open Anyway" would.
+- A quarantined app started from a shell skips Gatekeeper's first-launch dialog, which CI can't show anyway (Known limits). The `spctl` verdict is the check.
+
+Windows:
+- Writes a Mark of the Web (zone 3) on the installer and checks its signature (skipped while unsigned by decision). Confirms its manifest asks for `asInvoker`.
+- Creates a separate standard user. It is given only the "log on as a batch job" right, so a scheduled task can run as it.
+- Installs silently as that user, which also proves no admin rights are needed: a standard user can't elevate in a silent task. Checks the per-user location, the uninstall entry, the Start menu shortcut, the Licenses folder and the model.
+- Runs the self-test from the installed location (as the runner's account, since a scheduled task has no desktop for a window), watching the app and its WebView2 processes for sockets.
+- Uninstalls silently as the standard user, then compares that user's profile and registry with a snapshot taken before the install. Anything of the app's left behind fails the test.
+
+**2026-10-12 · Silent uninstall now removes Tauri's registry key.** Tauri's uninstaller keeps `HKCU\Software\Tight Line\Schedule Spotter` (install folder and language) unless the owner ticks "delete app data", and a silent uninstall never does. The app keeps nothing there, so the uninstall hook deletes it, except during an update. `bundle.publisher` is now "Tight Line": it names that key and the uninstall entry's publisher, and it keeps the publisher different from the product name, which the Microsoft Store would require.
+
+**2026-10-12 · Licenses folder** (`tools/release/licenses.py`, run by `prepare.py` for each variant and platform). It holds:
+- every crate compiled into the app for the target, with the license files it ships (identical texts printed once);
+- llama.cpp's license, plus the notice of nlohmann/json, which llama.cpp compiles in;
+- the bundled `@tauri-apps/api` JavaScript;
+- on Windows, a WebView2 note;
+- the model's license and notices (`models/licenses/`, sources and SHA-256 in `SOURCES.md`):
+  - Phi-4-mini: LICENSE and NOTICE.md from Microsoft's repo.
+  - Gemma 4: the Apache-2.0 text, since its repos ship none.
+  - Llama 3.2: the Community License and Use Policy from Meta's GitHub (the Hugging Face repo is gated), plus the `NOTICE.txt` the license requires.
+
+A few crates ship no license file:
+- the `objc2` family, `webview2-com`, `llama-cpp-2`, `selectors` (MPL-2.0) and `alloc-stdlib` (BSD-3-Clause);
+- for these, the standard SPDX text of their declared license is included, with their authors as the copyright holders (`tools/release/license-texts/`, SPDX license-list-data 3.27.0);
+- the file says where every crate's source is, which the MPL asks for.
+
+**2026-10-12 · Download site: Python standard library behind nginx** (`site/`). This implements Austin's Pi-hosted, email-gated delivery.
+- **The service** shows the pages, sends the email over SMTP, and checks links. It needs nothing installed beyond Python 3, which Raspberry Pi OS has.
+- **nginx** serves the files, with resume support. It asks the service (`auth_request`) whether a link is still good before each one.
+- **Links** are HMAC-signed, expire after `LINK_DAYS` (default 7), and allow `MAX_DOWNLOADS` fresh downloads (default 5). Resuming a download doesn't count.
+- **Limits:** 3 links per address per day, 10 requests per network per hour in the service, and 6 a minute at nginx. A hidden field catches bots.
+- **Privacy:** no cookies, no scripts and no nginx access log. An address is deleted a day after its link expires, unless the owner ticks a follow-up box. That box exists only once Austin sets the wording (`CONSENT_TEXT`).
+- **"Business email"** is how the field is labeled, but personal domains such as gmail.com are accepted by default (`COMPANY_DOMAINS_ONLY=0`). Many small contractors run their business from one, and turning them away would lose exactly the owners this gift is for. One setting changes it.
+- **The download page** follows the spec's page: one big button for the visitor's computer, the other platform as a small link, the size, a rough time at `ASSUMED_MBPS`, each file's SHA-256, and "Mac and Windows only" for anything else. The phone's "Share" button is replaced by the email.
+- **`site/upload.sh` replaces the spec's R2 upload script.** It refuses files that failed an install test on a gating runner, or are unsigned, and checks each SHA-256. It copies with rsync, which resumes, and switches the site over by renaming `current.json`.
+- **Tests:** unit tests, plus an end-to-end test of the real nginx config in Docker (nginx 1.22, the version in Debian 12), both in CI.
+- **Still needed from Austin:** the domain, SMTP and SPF/DKIM, the follow-up wording, the link lifetime, the contact line, and the Pi's upload speed (site/README.md, "Bandwidth").
+
+**2026-10-12 · Signing wired, untested until the secrets exist.** `release.yml`:
+- **macOS:** imports the Developer ID certificate into a temporary keychain. Tauri then signs with the hardened runtime and entitlements, notarizes and staples the app. The workflow then signs, notarizes and staples the disk image, and prints how long each notarization took. Notarizing the multi-GB bundles (Phase 0 risk) gets measured on the first signed run.
+- **Windows:** the optional Azure Artifact Signing path:
+  - signs the app and installer through Tauri's `signCommand`, and the llama.cpp DLLs as they are collected;
+  - removes the installer's signature, appends the model, and signs the installer again.
+- Without secrets, file names say `UNSIGNED`.

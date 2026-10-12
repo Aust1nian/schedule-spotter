@@ -1,0 +1,23 @@
+# systemd unit for the download site's Python service.
+# Install: /etc/systemd/system/schedule-spotter-site.service (site/README.md).
+[Unit]
+Description=Schedule Spotter download site
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=spotter-site
+Group=spotter-site
+EnvironmentFile=/etc/schedule-spotter-site/site.env
+ExecStart=/usr/bin/python3 /opt/schedule-spotter-site/server/spotter_site.py
+Restart=on-failure
+StateDirectory=schedule-spotter-site
+# Read-only everywhere except its own state folder.
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+NoNewPrivileges=true
+ReadWritePaths=/var/lib/schedule-spotter-site
+
+[Install]
+WantedBy=multi-user.target
