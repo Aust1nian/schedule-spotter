@@ -179,6 +179,39 @@ Results are in MODEL_REPORT.md, from CI benchmark run 38184895853.
 | All three variants run on every runner | Pass. All six builds of A, B and C ran the benchmark on `macos-15`, `macos-15-intel`, `windows-2025`, `macos-26` and `windows-11-arm` (run 38184895853). On the CI Macs' paravirtual GPU, forced Metal can't fit Gemma E4B, but the app doesn't use Metal there. |
 | MODEL_REPORT.md draft has every metric | Pass. Per variant and runner: load time, peak RSS, latency p50/p95, accuracy, false-merge rate and unsure rate. It also has questions per file against model off (1.61), and the recommendation under the selection rule. |
 
+## Phase 5: app (in progress)
+
+### Handmade fixtures
+
+There are 142 fixtures; N01–N06 are new. Each category N fixture lists the owner's `steps` (fixtures/FORMAT.md). `spotter-check` runs them through the app's session, and the UI tests run them through the window.
+
+| Fixture | What it checks |
+| --- | --- |
+| N01 | Save, then reopen: every answer (a merged job, an undone person chip) comes back, and nothing is asked again |
+| N02 | Undo on a "St" / "Street" chip splits the job; it is then unstaffed on Tuesday |
+| N03 | Helpers written in a Notes column: set to Person in What I read, which shows a double-booking and four empty days |
+| N04 | All seven days: blank Saturdays are "not booked"; Mon–Fri clears them; a day off for everyone clears Wednesday |
+| N05 | Saving to `Mis Documentos/Revisión de horario – José/…` and reopening |
+| N06 | Answering a question and marking a day off with the keyboard only |
+
+**Model off:** 138 of 138 script-tier fixtures pass, including all of category N.
+
+**Now checked as well:**
+- L01 `export_check`: no formula cell in the workbook, and a guard on every risky CSV field. Removing the CSV guard makes L01 fail, so the check works.
+- L08 `save_test`: a read-only folder gives `save_failed` with a message, leaves no file and changes nothing.
+
+### Generator, seeds 0–1,999, model off
+
+Unchanged after this phase's matching fix: 0 false merges in 3,152 merges, assignment recall 99.55%, precision 99.67%.
+
+### Self-test
+
+The page must show the core's findings, questions and week-grid rows for the example. In the Linux dev container: pass, 5 findings, 1 question, 7 rows, peak RSS 89 MB, page ready in 0.7 s.
+
+### UI tests (`tools/ui/ui_tests.py`)
+
+Linux dev container (WebKitGTK through `tauri-driver`): 9 of 9 pass. They cover the example, editing the table, the Paste box, and N01–N06 (N06 by keyboard alone).
+
 ## Changed expectations
 
 | Fixture | Was | Now | Reason |

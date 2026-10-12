@@ -349,3 +349,70 @@ Latency rose about 10%. Without this change, A and B-E2B both break the 4.0 GB c
 - **Unchanged.** The report still gives the best scorer's end-to-end numbers against model off. Austin makes the final pick.
 
 **2026-10-11 · Follow-up for Phase 7: free-text pastes on slow CPUs.** On the CI runners (2 llama threads, CPU) T5's p95 sits at the 5 s call limit, and the model-tier free-text fixtures (M04, M05, M07) come back with no rows, though they pass on the development machine. Options for the final run: a T5-only time limit, or splitting long pastes into smaller calls. The spec's 5 s figure is a threshold, so neither is changed without a measured reason.
+
+## Phase 5
+
+**2026-10-11 · Window layout.** The spec lists the window top to bottom: toolbar, week grid, unstaffed jobs, findings, questions, What I read. At 1280 px and wider, that order becomes two columns so findings are visible without scrolling: the grid, job rows and the editable schedule on the left; findings, questions and What I read on the right. Below 1,100 px it is one column in the spec's order. The toolbar is sticky, so it never scrolls away (the UI test checks this at 1280×800).
+
+**2026-10-11 · Working days in the window** (Austin's Mon–Sun decision above):
+- seven day buttons (M T W Th F Sa Su) and three presets (Mon–Fri, Mon–Sat, All 7) in the toolbar;
+- a "Day off?" button under each date in the week grid for one-off days off for everyone.
+- A newly opened schedule keeps the owner's working days but not the previous file's dates off.
+
+**2026-10-11 · Paste.** The Paste button opens a box to paste into, which needs no clipboard permission. Cmd/Ctrl+V anywhere outside a text field checks the clipboard's text at once.
+
+**2026-10-11 · Editing the table ("Edit the example table directly").**
+- "Your schedule" shows the cells of the sheet being checked; results update as the owner types (400 ms after the last key).
+- It is open for the example and one click away for other files.
+- An edited schedule becomes a plain table of that one sheet: a workbook's other sheets are dropped, and dates are kept as their text.
+- Editing in the app is offered up to 400 rows × 60 columns; bigger files are edited in their own spreadsheet program.
+
+**2026-10-11 · The "Schedule check" workbook is written in-repo** (`core/src/export.rs`, on `zip` already in the tree) rather than with an XLSX-writer crate:
+- **Sheets:** Findings (with still-open questions and notes), Week grid (red, amber and striped fills), Cleaned schedule (matched names beside what was written), and Name and site matches (with the owner's answers).
+- **Text cells:** every one is an inline string, so Excel never evaluates one (stage 10).
+- **Saved state:** a very hidden sheet, `SpotterState`, carries the check as JSON: the original file (base64) or pasted text, every answer, and the working days. It is split into 30,000-character cells to stay under Excel's 32,767 limit.
+- **Reopening:** opening the file restores all of that.
+- **Why a hidden sheet:** a custom XML part could be dropped when Excel re-saves the file; a hidden sheet survives.
+- **Limit:** if the owner edits the visible sheets in Excel, reopening shows the saved check, not those edits. The visible sheets are a report.
+
+**2026-10-11 · Saving never leaves half a file.** The bytes go to a temporary file beside the target (`.<name>.<pid>.saving`), then are renamed over it. That temporary file is inside the place the owner chose, which the "writes nothing except where the user saves" constraint allows. A failure removes it and shows a plain message ("That folder can't be written to. Choose another place, such as Documents.").
+
+**2026-10-11 · Findings CSV.** The save dialog offers "CSV, findings only" as a second format. Excel does run formulas in CSV cells, so cells starting with =, +, -, @, tab or carriage return get a leading apostrophe (OWASP's CSV-injection guard). The file starts with a UTF-8 byte-order mark so Excel shows accents correctly.
+
+**2026-10-11 · Undoing a chip is an answer.** "Undo" answers "no" to that pair, and "Put back" (under Your answers) withdraws the answer.
+- **Bug found by N02:** spellings that share an identity key ("1420 Johnson St" / "1420 Johnson Street") showed a chip that undo couldn't split.
+- **Fix:** an undo now gives that spelling a key of its own.
+- **Regressions:** none. Generator seeds 0–1,999 are unchanged: 0 false merges in 3,152 merges.
+
+**2026-10-11 · "What I read" corrections.**
+- **Lists:** the owner can set any column to Person, Job, Date, Day, Time, Start time, End time, Status, Note or Ignore. Before, only Person or Job could be set.
+- **Grids:** their axes are corrected by picking another layout reading; all candidate readings are offered.
+- A grid's date columns are listed as one run.
+
+**2026-10-11 · Model in the app.** The variant is a build flag:
+- `SPOTTER_VARIANT=A|B-E2B|…|C` makes `build.rs` bake in the model's file name, SHA-256, name and license from `models/manifest.json`;
+- unset means a model-off app;
+- the app looks for the file at `<resources>/model/<file>`, where Phase 6's bundles will put it (debug builds also look in `models/`);
+- it loads on a background thread after the window shows.
+
+Each change shows the rules' result at once; the model's pass follows, and a pass for an older change is dropped. Until Phase 7's pick, CI builds are model-off.
+
+**2026-10-11 · Today's date comes from the page.** The webview knows the owner's local date, so the page sends it; Rust's `chrono` stays without its `clock` feature and the time-zone crates it pulls in. The example shows the current week, or next week on a weekend, when owners lay it out. The self-test pins the date so the page and the core agree.
+
+**2026-10-11 · Self-test, Phase 5.** It now checks that the page shows exactly the core's findings, questions and week-grid rows for the example, and that the example has findings and a question. It still runs with the model off and the 300 MB ceiling.
+
+**2026-10-11 · UI tests: `tools/ui/ui_tests.py`, a standard-library WebDriver client** (no Selenium or WebdriverIO).
+- **Driver:** `tauri-driver` 2.0.6 runs WebKitWebDriver on Linux, and on Windows the runner image's Edge WebDriver, which drives WebView2.
+- **What's tested:**
+  - every category N fixture's steps through the window, with N06 by keyboard alone;
+  - the example (all four kinds of finding, a chip, a question, red, amber and striped cells, a sticky toolbar, no text under 15 px);
+  - editing the table;
+  - the Paste box.
+- **What differs in the `ui-test` build:**
+  - it adds `test_open` and `test_save`, which take a path, because WebDriver can't drive system dialogs;
+  - its window isn't incognito, because WebKitGTK automation can't attach to the ephemeral context wry makes for incognito webviews.
+- Shipped builds have neither change.
+
+**2026-10-11 · Diagnostics.** The text is built from structured data with placeholders (Person 1, Site 2, Text 3). Then every spelling the schedule contains, plus the file name, is scrubbed as whole words, as a second guard. It adds the app's own log: what was opened (extension and size only), timings, model status and page errors. The owner sees the full text before saving it.
+
+**2026-10-11 · About.** It shows the version, Tight Line, the privacy line and how to check it, the model and its license, "Built with Llama" for variant C, and a short license list. The full license texts go into the bundle's Licenses folder in Phase 6. The website and contact line are blank until Austin gives them (`app/src/brand.ts`, `TODO(Austin)`); both are plain text, never links.
