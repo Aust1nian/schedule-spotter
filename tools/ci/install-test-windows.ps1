@@ -88,7 +88,23 @@ $inner = Join-Path $work "as-user.ps1"
 @'
 param([string]$Phase, [string]$Setup, [string]$Work)
 $ErrorActionPreference = "Continue"
+Start-Transcript -Path (Join-Path $Work "$Phase.log") -Force | Out-Null
 $r = [ordered]@{ phase = $Phase; user = [Environment]::UserName }
+# Started directly (CreateProcess), not through the shell: the shell would
+# show the "publisher could not be verified" prompt for a file with a Mark
+# of the Web, and a scheduled task has no desktop to click it on. An owner
+# sees SmartScreen there instead (recovery card).
+function Run([string]$File, [string]$Arguments, [int]$Minutes) {
+  $psi = New-Object Diagnostics.ProcessStartInfo $File, $Arguments
+  $psi.UseShellExecute = $false
+  $p = [Diagnostics.Process]::Start($psi)
+  if (-not $p.WaitForExit($Minutes * 60000)) {
+    Write-Host "$File $Arguments still running after $Minutes min; stopping it"
+    $p.Kill()
+    return "timeout"
+  }
+  return $p.ExitCode
+}
 $r.elevated = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 function Snapshot {
   $roots = @($env:LOCALAPPDATA, $env:APPDATA, [Environment]::GetFolderPath("Desktop"))
@@ -103,8 +119,9 @@ $installDir = Join-Path $env:LOCALAPPDATA "Schedule Spotter"
 if ($Phase -eq "install") {
   Snapshot | Set-Content (Join-Path $Work "before.txt") -Encoding UTF8
   $t = [Diagnostics.Stopwatch]::StartNew()
-  $p = Start-Process -FilePath $Setup -ArgumentList "/S" -Wait -PassThru
-  $r.install_exit = $p.ExitCode
+  Write-Host "installing"
+  $r.install_exit = Run $Setup "/S" 12
+  Write-Host "installer exit $($r.install_exit)"
   $r.install_seconds = [Math]::Round($t.Elapsed.TotalSeconds, 1)
   $r.install_dir = $installDir
   $r.files = @(Get-ChildItem $installDir -Recurse -File -ErrorAction SilentlyContinue | ForEach-Object { "$($_.FullName.Substring($installDir.Length + 1)) $($_.Length)" })
@@ -114,8 +131,8 @@ if ($Phase -eq "install") {
   $uninstaller = Join-Path $installDir "uninstall.exe"
   $r.uninstaller_found = Test-Path $uninstaller
   if ($r.uninstaller_found) {
-    $p = Start-Process -FilePath $uninstaller -ArgumentList "/S" -Wait -PassThru
-    $r.uninstall_exit = $p.ExitCode
+    Write-Host "uninstalling"
+    $r.uninstall_exit = Run $uninstaller "/S" 5
     # The uninstaller hands over to a copy of itself in %TEMP%; wait for it.
     $deadline = (Get-Date).AddSeconds(180)
     while ((Test-Path $installDir) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 500 }
@@ -128,6 +145,7 @@ if ($Phase -eq "install") {
   $r.uninstall_key_left = Test-Path $uninstKey
 }
 $r | ConvertTo-Json -Depth 4 | Set-Content (Join-Path $Work "$Phase.json") -Encoding UTF8
+Stop-Transcript | Out-Null
 '@ | Set-Content $inner -Encoding UTF8
 
 function Run-AsUser([string]$Phase) {
@@ -145,7 +163,13 @@ function Run-AsUser([string]$Phase) {
   $info = Get-ScheduledTaskInfo -TaskName $name
   Unregister-ScheduledTask -TaskName $name -Confirm:$false
   $json = Join-Path $work "$Phase.json"
-  if (-not (Test-Path $json)) { throw "the $Phase phase left no result (task result $($info.LastTaskResult))" }
+  if (-not (Test-Path $json)) {
+    Write-Host "--- $Phase log ---"
+    Get-Content (Join-Path $work "$Phase.log") -ErrorAction SilentlyContinue
+    Get-Process -IncludeUserName -ErrorAction SilentlyContinue | Where-Object { $_.UserName -like "*$user" } |
+      ForEach-Object { Write-Host "still running as ${user}: $($_.Name) ($($_.Id))" }
+    throw "the $Phase phase left no result (task result $($info.LastTaskResult))"
+  }
   Get-Content $json -Raw | ConvertFrom-Json
 }
 
