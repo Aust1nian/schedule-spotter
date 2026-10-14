@@ -549,3 +549,5 @@ A few crates ship no license file:
   - signs the app and installer through Tauri's `signCommand`, and the llama.cpp DLLs as they are collected;
   - removes the installer's signature, appends the model, and signs the installer again.
 - Without secrets, file names say `UNSIGNED`.
+
+**2026-10-14 · Website and contact line.** The domain is `tightline.systems`. About shows it as plain text, never a link. Austin: the free tools get no contact line of their own, so About has none, and the recovery card points salespeople to Austin directly.

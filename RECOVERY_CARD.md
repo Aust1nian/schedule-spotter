@@ -38,8 +38,6 @@ What the result means:
 - **`pass`.** The app is fine. Look at what the owner is doing instead: the file they opened, or what they pasted.
 - **"model did not load"** or **"the model file is missing"**. The download was damaged. The app still works, but asks the owner more questions. Download it again and reinstall.
 - **"page did not report back"** or **"no result"**, or a blank window. On Windows, reinstall: the installer also installs Microsoft's WebView2 runtime if it's missing. On a Mac, check that the macOS version is 11 or later.
-- **Anything else.** Send the result to Austin. It contains no names or schedule data. In the app, **About → Save diagnostics…** writes a log with every name replaced by placeholders, and shows it before saving.
-
-**Austin:** TODO(Austin): the contact line, the same as in the app's About box.
+- **Anything else.** Send the result to Austin at Tight Line. It contains no names or schedule data. In the app, **About → Save diagnostics…** writes a log with every name replaced by placeholders, and shows it before saving.
 
 **Nothing leaves the owner's computer.** If an owner asks, have them turn Wi-Fi off: everything still works.
