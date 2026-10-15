@@ -1,0 +1,182 @@
+[
+  {
+    "category": "H",
+    "id": "H01-roofer-long-list-times-sat-overtime",
+    "ms": 8.053041,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H02-builder-person-grid-crew-sections",
+    "ms": 2.795011,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H03-remodeler-job-grid-twin-addresses",
+    "ms": 2.269457,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H04-flatwork-day-by-job-xls",
+    "ms": 1.789722,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H05-fence-crew-grid-roster-block",
+    "ms": 1.92691,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H06-landscaper-spanish-semicolon-person-grid",
+    "ms": 2.334125,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H07-hvac-two-weeks-stacked-tab-txt",
+    "ms": 3.505173,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H08-plumber-new-year-week-bom-csv-clean",
+    "ms": 1.704724,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H09-interiors-cp1252-long-list-start-end",
+    "ms": 3.1879239999999998,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H10-mason-october-calendar-month",
+    "ms": 5.242417,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H11-homebuilder-materials-sheet-then-job-grid-clean",
+    "ms": 2.827519,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H12-exteriors-two-weeks-side-by-side",
+    "ms": 5.943496000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H13-builder-ods-job-grid-roster-block",
+    "ms": 2.230809,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H14-restoration-word-table-clean",
+    "ms": 1.574467,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H15-paste-excel-person-grid-no-year",
+    "ms": 1.604363,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H16-paste-gsheets-spanish-long-list",
+    "ms": 2.717984,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H17-electrician-day-by-person-tsv-clean",
+    "ms": 1.2890869999999999,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H18-painter-job-grid-crlf-csv",
+    "ms": 2.586556,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H19-mason-job-day-list-multiline-crews",
+    "ms": 2.79481,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H20-hvac-xlsx-list-start-end-roster-block",
+    "ms": 3.466975,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  }
+]

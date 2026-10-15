@@ -366,6 +366,21 @@ Any later run against the holdout is labeled "after fixes, not blind".
 
 **Latency:** this ran on the workstation's faster CPU, so latency (p95 5.5–17.7 s per file, including timed-out calls) isn't comparable with the runners. MODEL_REPORT.md has the runner figures.
 
+### After the Phase 7 fixes (not blind)
+
+The holdout was checked again on 2026-10-15 (06:49–08:10 UTC, commit 4011a73), after seven fixes to rule-based reading. Each fix came from a new development fixture written fresh, not from the holdout files (DECISIONS.md, Phase 7). **This is not a blind result.** The holdout's failures pointed at the problems, and it shows only that the fixes carry over to the original files. Raw outputs are in `bench/results/holdout-2026-10-15-after-fixes/`.
+
+| Configuration | Handmade | Recall | Precision | Questions per file | False merges | Clean files given a red flag |
+| --- | --- | --- | --- | --- | --- | --- |
+| Model off | **20/20** (was 13/20) | 99.667% | 99.869% (was 99.866%) | 1.39 | 0 | 0 |
+| C | **20/20** | 99.667% | 99.869% | 1.37 | 0 | 0 |
+| A | **20/20** | 99.691% | 99.869% | 1.16 | 6 | 2 |
+| B-E2B | **20/20** | 99.667% | 99.869% | 0.29 | 96 | 12 |
+
+**What the fixes added to the development library:** fixtures C20–C26, E15 and E16, nine in all, with 147 development fixtures passing.
+- On the 2,000 development seeds, none got worse and 9 got better (counting assignments and flags), compared one by one with the build before the fixes.
+- The model results are unchanged, since the fixes were all in reading.
+
 ## Changed expectations
 
 | Fixture | Was | Now | Reason |

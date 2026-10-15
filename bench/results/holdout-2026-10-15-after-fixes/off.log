@@ -1,0 +1,40 @@
+== off: fixtures/holdout
+
+category  pass/total  (model-tier skipped)
+  H        20/20      (0)
+  all      20/20 
+exit 0
+== off: generated seeds 1000000-1000999
+  0.0%  1000346 (long_list, input.csv)  missing 47 extra 0
+ 20.0%  1000032 (crew_based, input.tsv)  missing 40 extra 10
+ 33.3%  1000739 (crew_based, input.csv)  missing 24 extra 6
+ 55.0%  1000396 (crew_based, input.csv)  missing 18 extra 6
+ 55.6%  1000722 (crew_based, input.csv)  missing 20 extra 5
+ 62.5%  1000085 (crew_based, input.docx)  missing 18 extra 9
+ 71.4%  1000103 (crew_based, input.csv)  missing 40 extra 20
+ 75.8%  1000146 (crew_based, input.csv)  missing 8 extra 4
+ 80.6%  1000929 (crew_based, input.csv)  missing 24 extra 12
+ 81.1%  1000735 (crew_based, input.xlsx)  missing 36 extra 12
+ 83.0%  1000471 (crew_based, input.csv)  missing 8 extra 4
+ 85.2%  1000707 (job_by_day, input.xls)  missing 4 extra 4
+ 90.5%  1000522 (crew_based, input.csv)  missing 60 extra 15
+ 91.2%  1000257 (person_by_day, input.csv)  missing 6 extra 3
+ 92.3%  1000393 (person_by_day, input.csv)  missing 2 extra 1
+
+flags            expected  matched   actual   recall  precision
+  assigned_while_off     413      383      390   92.74%   98.21%
+  double_booked          796      755      766   94.85%   98.56%
+  not_booked            1822     1480    12306   81.23%   12.03%
+  unstaffed              484      484      599  100.00%   80.80%
+clean schedules 220, with a red flag: 0
+
+after the owner answers every same-person/same-site question correctly:
+  assigned_while_off     413      399      399   96.61%  100.00%
+  double_booked          796      785      786   98.62%   99.87%
+  not_booked            1822     1483     1984   81.39%   74.75%
+  unstaffed              484      484      524  100.00%   92.37%
+questions per file (model off): mean 1.39, files with none 598/1000, same-person/site questions 1389
+merges 1646, false merges 0
+
+cases 1000  assignment recall 99.667%  precision 99.869%  perfect cases 960/1000  p95 33.3 ms
+exit 0
