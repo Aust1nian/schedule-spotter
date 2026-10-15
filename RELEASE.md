@@ -76,6 +76,14 @@ This path hasn't run yet, so its first signed run needs watching.
    It refuses files that failed an install test, and a Mac build that isn't signed and notarized. It checks every SHA-256 and hands the files to the website's `scripts/release.mjs` (`site/README.md`). Then finish the website's own steps, which it prints: `deploy/deploy.sh`, `deploy/check-live.sh`, then commit `site/data/releases.json` in the website repo.
 6. **Tell the salespeople.** The app never checks for updates (spec), so the salesperson tells clients about a new version. About shows the version a client has. Hand out `RECOVERY_CARD.pdf` with any change to the prompts.
 
+## When notarization waits
+
+Apple notarizes in its own time. For a new developer team, the first submissions stayed "In Progress" for hours. The large bundles (2.5–3.4 GB) took more than 9 hours on Oct 15, 2026, and later submissions queued behind them. Each wait gets its own job of up to 5 h 30 min, so the release fails only if Apple takes longer than that.
+
+1. **See what Apple is doing:** run the **notary status** workflow (`gh workflow run notary-status.yml`, or push the `notary-status` branch). Its log lists every submission, with its status ("In Progress", "Accepted" or "Invalid") and its ID.
+2. **When the release's submissions show "Accepted"**, re-run only the failed jobs: `gh run rerun <run id> --failed`. The re-run reads the same submission IDs and the same app files from the original run, so it doesn't upload again. It staples, makes and submits the disk image, or staples it, and carries on.
+3. **"Invalid"** means Apple rejected the build. The failed job's log has Apple's reasons (`notarytool log`).
+
 ## What a build contains
 
 - **macOS:** one universal app (Apple Silicon and Intel). It has a hardened runtime and the App Sandbox. The model is in `Contents/Resources/model/` and the licenses are in `Contents/Resources/Licenses/`. It ships in a disk image with a link to Applications, made by `tools/release/make-dmg.sh`.

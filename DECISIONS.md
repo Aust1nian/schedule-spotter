@@ -626,3 +626,12 @@ Short forms that are also first names stay names.
 - **The fix:** a roster row now takes only the cells next to the crew name in the file, stopping at a blank column. Its members must also be distinct: the same "name" across the row is a job.
 - **Checks:** all development fixtures pass, and the seeds are unchanged.
 
+**2026-10-15 · Apple's notarization queue for a new team, measured** (`notary-status`, Apple's Notary REST API).
+- **Still waiting:** the first signed run's A and B-E2B apps were still "In Progress" at Apple after about 9 hours. The second run's four apps, including the 16 MB build with no model, were still waiting after 3 h 45 min, apparently queued behind them.
+- **Accepted:** the first run's small builds, about 1 hour for each app and 45–100 minutes for each disk image.
+- **Waiting doesn't block a release:**
+  - The waits are in jobs of their own (5 h 30 min each).
+  - `notary-status` shows what Apple is doing.
+  - Re-running the failed jobs once Apple accepts reuses the submission IDs and app files already in the run, without uploading again (RELEASE.md, "When notarization waits").
+- Apple normally speeds up after a team's first submissions. The next release shows by how much.
+
