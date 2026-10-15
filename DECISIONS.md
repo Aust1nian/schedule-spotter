@@ -565,3 +565,16 @@ A few crates ship no license file:
 - **Where they live:** only in GitHub secrets, used by `release.yml`, and in Austin's password manager.
 - Windows signing (Azure Artifact Signing, $9.99/month) is still Austin's open decision. The website hides its "publisher" step while it's pending.
 
+**2026-10-15 · Notarizing the multi-GB bundles: the waiting moved out of the build job** (the Phase 0 risk, now measured). The first signed release run (38658533940) was the team's first-ever notarization.
+- **Model off (16 MB):** Apple accepted the app after about 65 minutes and the disk image after 45.
+- **C (0.82 GB):** the app took about 70 minutes, the disk image about 99.
+- **A and B-E2B (2.5 and 3.4 GB):** after more than 4 hours, still waiting on the app.
+- **Why that matters:** with Tauri notarizing inside the build, a job also has to build the app and then notarize the disk image, and GitHub stops any job at 6 hours.
+- **The workflow now has three macOS jobs** (`tools/release/notary.sh`, `mac-signing.sh`):
+  1. Build and sign the app, then submit it to Apple without waiting.
+  2. Wait for Apple, staple the app, make and sign the disk image, then submit it.
+  3. Wait again, then staple the disk image.
+- **Each wait gets a job of its own,** so each has up to 5 h 30 min. Tauri never sees the notarization variables any more.
+- **Stapling retries:** Apple's ticket server dropped the connection once, after accepting C's disk image (`stapler` error 68). Stapling now retries up to 6 times, a minute apart.
+- Apple usually speeds up after a team's first submissions. The next signed run shows by how much.
+

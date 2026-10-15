@@ -67,6 +67,9 @@ jobs:
           } >> "$GITHUB_OUTPUT"
           echo "Version $version; variants $VARIANTS; macOS signed: $HAS_APPLE; Windows signed: $HAS_AZURE" >> "$GITHUB_STEP_SUMMARY"
 
+  # macOS in three jobs, so waiting on Apple never runs into the 6-hour job
+  # limit: the first notarizations of 2.5-3.4 GB bundles took longer than
+  # that (DECISIONS.md, Phase 6). Unsigned builds finish in the first job.
   build-macos:
     name: macOS ${{ matrix.variant }}
     needs: plan
@@ -100,84 +103,156 @@ jobs:
       - name: fetch model (pinned revision and SHA-256)
         if: matrix.variant != 'off'
         run: python3 models/fetch.py "$SPOTTER_VARIANT"
-      # Unsigned builds get an ad-hoc signature, so the arm64 slice runs. The
-      # notarization variables exist only when signing: Tauri notarizes
-      # whenever they are set.
+      # Unsigned builds get an ad-hoc signature, so the arm64 slice runs.
       - name: ad-hoc signature
         if: env.SIGNED != 'true'
         run: echo "APPLE_SIGNING_IDENTITY=-" >> "$GITHUB_ENV"
-      - name: signing keychain
+      - name: Developer ID certificate and notarization key
         if: env.SIGNED == 'true'
         env:
           APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
           APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
           APPLE_API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
-          IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-          ISSUER: ${{ secrets.APPLE_API_ISSUER }}
-          KEY_ID: ${{ secrets.APPLE_API_KEY }}
-        run: |
-          kc="$RUNNER_TEMP/build.keychain-db"
-          pw="$(uuidgen)"
-          security create-keychain -p "$pw" "$kc"
-          security set-keychain-settings -lut 21600 "$kc"
-          security unlock-keychain -p "$pw" "$kc"
-          printf '%s' "$APPLE_CERTIFICATE" | base64 --decode > "$RUNNER_TEMP/cert.p12"
-          security import "$RUNNER_TEMP/cert.p12" -k "$kc" -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$pw" "$kc" >/dev/null
-          security list-keychains -d user -s "$kc" login.keychain-db
-          rm "$RUNNER_TEMP/cert.p12"
-          printf '%s' "$APPLE_API_KEY_P8" > "$RUNNER_TEMP/api-key.p8"
-          {
-            echo "APPLE_SIGNING_IDENTITY=$IDENTITY"
-            echo "APPLE_API_ISSUER=$ISSUER"
-            echo "APPLE_API_KEY=$KEY_ID"
-            echo "APPLE_API_KEY_PATH=$RUNNER_TEMP/api-key.p8"
-          } >> "$GITHUB_ENV"
+          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+        run: tools/release/mac-signing.sh setup --with-certificate
       - name: Licenses folder and model resource
         run: |
           overlay="$(python3 tools/release/prepare.py --variant "$SPOTTER_VARIANT" --platform macos | tail -1)"
           echo "OVERLAY=$overlay" >> "$GITHUB_ENV"
       - run: df -h "$GITHUB_WORKSPACE"
-      # The app first, then the disk image: the build's intermediate files go
-      # in between, since a multi-GB app needs room for another copy.
-      - name: build the app (signed and notarized when the secrets exist)
+      # Tauri signs (hardened runtime, entitlements); notarization follows.
+      - name: build and sign the app
         working-directory: app
-        run: |
-          start=$(date +%s)
-          npx tauri build --target universal-apple-darwin --bundles app --config "$OVERLAY"
-          echo "app built (and notarized when signed) in $(( $(date +%s) - start )) s"
-      - name: make room, then the disk image
+        run: npx tauri build --target universal-apple-darwin --bundles app --config "$OVERLAY"
+      # The build's intermediate files go before the next copy of a
+      # multi-GB app is made.
+      - name: make room
         run: |
           rm -rf target/*/release/build target/*/release/deps target/*/release/incremental models/*.gguf
           df -h "$GITHUB_WORKSPACE"
-          tools/release/make-dmg.sh "target/universal-apple-darwin/release/bundle/macos/Schedule Spotter.app" \
-            "target/universal-apple-darwin/release/bundle/dmg/Schedule Spotter.dmg"
-      - name: sign, notarize and staple the disk image
+      - name: submit the app for notarization
         if: env.SIGNED == 'true'
         run: |
-          dmg="$(ls target/universal-apple-darwin/release/bundle/dmg/*.dmg)"
-          codesign --force --timestamp --sign "$APPLE_SIGNING_IDENTITY" "$dmg"
-          start=$(date +%s)
-          xcrun notarytool submit "$dmg" --key "$APPLE_API_KEY_PATH" --key-id "$APPLE_API_KEY" \
-            --issuer "$APPLE_API_ISSUER" --wait --timeout 3h
-          echo "disk image notarized in $(( $(date +%s) - start )) s"
-          # Stapling fetches the ticket from Apple's CloudKit, which can drop
-          # the connection (error 68 after an accepted notarization).
-          for attempt in 1 2 3 4 5 6; do
-            xcrun stapler staple "$dmg" && break
-            [ "$attempt" = 6 ] && exit 1
-            echo "stapling failed (attempt $attempt); retrying in 60 s"
-            sleep 60
-          done
+          mkdir -p stage
+          ditto -c -k --keepParent "target/universal-apple-darwin/release/bundle/macos/Schedule Spotter.app" "stage/app.zip"
+          tools/release/notary.sh submit stage/app.zip > stage/notary-id.txt
+      - uses: actions/upload-artifact@v7
+        if: env.SIGNED == 'true'
+        with:
+          name: mac-app-${{ matrix.variant }}
+          path: stage/
+          compression-level: 0
+          if-no-files-found: error
+      - name: disk image, name, size and checksum (unsigned)
+        if: env.SIGNED != 'true'
+        run: |
+          mkdir -p out
+          name="Schedule-Spotter-$VERSION-$SPOTTER_VARIANT-mac-UNSIGNED.dmg"
+          tools/release/make-dmg.sh "target/universal-apple-darwin/release/bundle/macos/Schedule Spotter.app" "out/$name"
+          python3 tools/release/describe.py "out/$name" --variant "$SPOTTER_VARIANT" --platform mac \
+            --signed false > "out/$name.json"
+          tee -a "$GITHUB_STEP_SUMMARY" < "out/$name.json"
+      - uses: actions/upload-artifact@v7
+        if: env.SIGNED != 'true'
+        with:
+          name: release-mac-${{ matrix.variant }}
+          path: out/
+          compression-level: 0
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        if: env.SIGNED != 'true'
+        with:
+          name: describe-mac-${{ matrix.variant }}
+          path: out/*.json
+      - name: remove the signing keychain and key
+        if: always() && env.SIGNED == 'true'
+        run: tools/release/mac-signing.sh cleanup
+
+  notarize-macos:
+    name: notarize macOS ${{ matrix.variant }}
+    needs: [plan, build-macos]
+    if: needs.plan.outputs.mac_signed == 'true'
+    runs-on: macos-15
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: ${{ fromJSON(needs.plan.outputs.variants) }}
+    env:
+      SPOTTER_VARIANT: ${{ matrix.variant }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with: { name: "mac-app-${{ matrix.variant }}", path: stage }
+      - name: Developer ID certificate and notarization key
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+        run: tools/release/mac-signing.sh setup --with-certificate
+      - name: wait for Apple to notarize the app
+        run: tools/release/notary.sh wait "$(cat stage/notary-id.txt)"
+      # The app is unpacked from the same zip Apple checked, so its code
+      # signature (and so its ticket) is the same; it's stapled for offline
+      # Gatekeeper checks, then goes into the disk image.
+      - name: staple the app, make and sign the disk image, submit it
+        run: |
+          ditto -x -k stage/app.zip work
+          tools/release/notary.sh staple "work/Schedule Spotter.app"
+          rm stage/app.zip
+          mkdir -p dmg
+          tools/release/make-dmg.sh "work/Schedule Spotter.app" "dmg/Schedule Spotter.dmg"
+          codesign --force --timestamp --sign "$APPLE_SIGNING_IDENTITY" "dmg/Schedule Spotter.dmg"
+          tools/release/notary.sh submit "dmg/Schedule Spotter.dmg" > dmg/notary-id.txt
+      - uses: actions/upload-artifact@v7
+        with:
+          name: mac-dmg-${{ matrix.variant }}
+          path: dmg/
+          compression-level: 0
+          if-no-files-found: error
+      - name: remove the signing keychain and key
+        if: always()
+        run: tools/release/mac-signing.sh cleanup
+
+  staple-macos:
+    name: staple macOS ${{ matrix.variant }}
+    needs: [plan, notarize-macos]
+    runs-on: macos-15
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: ${{ fromJSON(needs.plan.outputs.variants) }}
+    env:
+      SPOTTER_VARIANT: ${{ matrix.variant }}
+      VERSION: ${{ needs.plan.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with: { name: "mac-dmg-${{ matrix.variant }}", path: dmg }
+      - name: notarization key
+        env:
+          APPLE_API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+        run: tools/release/mac-signing.sh setup
+      - name: wait for Apple to notarize the disk image, then staple it
+        run: |
+          tools/release/notary.sh wait "$(cat dmg/notary-id.txt)"
+          tools/release/notary.sh staple "dmg/Schedule Spotter.dmg"
       - name: name, size and checksum
         run: |
-          suffix=$([ "$SIGNED" = true ] && echo "" || echo "-UNSIGNED")
           mkdir -p out
-          name="Schedule-Spotter-$VERSION-$SPOTTER_VARIANT-mac$suffix.dmg"
-          mv target/universal-apple-darwin/release/bundle/dmg/*.dmg "out/$name"
+          name="Schedule-Spotter-$VERSION-$SPOTTER_VARIANT-mac.dmg"
+          mv "dmg/Schedule Spotter.dmg" "out/$name"
           python3 tools/release/describe.py "out/$name" --variant "$SPOTTER_VARIANT" --platform mac \
-            --signed "$SIGNED" > "out/$name.json"
-          cat "out/$name.json" | tee -a "$GITHUB_STEP_SUMMARY"
+            --signed true > "out/$name.json"
+          tee -a "$GITHUB_STEP_SUMMARY" < "out/$name.json"
       - uses: actions/upload-artifact@v7
         with:
           name: release-mac-${{ matrix.variant }}
@@ -188,11 +263,9 @@ jobs:
         with:
           name: describe-mac-${{ matrix.variant }}
           path: out/*.json
-      - name: remove the signing keychain and key
-        if: always() && env.SIGNED == 'true'
-        run: |
-          security delete-keychain "$RUNNER_TEMP/build.keychain-db" || true
-          rm -f "$RUNNER_TEMP/api-key.p8"
+      - name: remove the key
+        if: always()
+        run: tools/release/mac-signing.sh cleanup
 
   build-windows:
     name: Windows ${{ matrix.variant }}
@@ -291,7 +364,11 @@ jobs:
 
   install-macos:
     name: install ${{ matrix.variant }} on ${{ matrix.runner }}
-    needs: [plan, build-macos]
+    needs: [plan, build-macos, staple-macos]
+    # staple-macos is skipped for unsigned builds, which finish in build-macos.
+    if: >-
+      always() && needs.build-macos.result == 'success' &&
+      (needs.staple-macos.result == 'success' || needs.staple-macos.result == 'skipped')
     strategy:
       fail-fast: false
       matrix:
@@ -350,7 +427,7 @@ jobs:
           if-no-files-found: warn
 
   summary:
-    needs: [plan, build-macos, build-windows, install-macos, install-windows]
+    needs: [plan, build-macos, staple-macos, build-windows, install-macos, install-windows]
     if: always()
     runs-on: ubuntu-24.04
     steps:

@@ -79,6 +79,6 @@ This path hasn't run yet, so its first signed run needs watching.
 ## What a build contains
 
 - **macOS:** one universal app (Apple Silicon and Intel). It has a hardened runtime and the App Sandbox. The model is in `Contents/Resources/model/` and the licenses are in `Contents/Resources/Licenses/`. It ships in a disk image with a link to Applications, made by `tools/release/make-dmg.sh`.
-  - **Signed builds:** Tauri signs and notarizes the app and staples its ticket, so Gatekeeper can check it offline. The workflow then signs, notarizes and staples the disk image.
+  - **Signed builds:** Tauri signs the app. Three jobs then handle notarization, so waiting on Apple never runs into GitHub's 6-hour job limit: the app is notarized and stapled, so Gatekeeper can check it offline, then the disk image is signed, notarized and stapled.
 - **Windows:** Tauri's NSIS installer, per user and needing no administrator password. It carries Microsoft's WebView2 offline installer and the licenses. NSIS can't hold more than about 2 GB, so the model is appended after the installer's own data (`tools/release/append-model.py`). During install, the app copies it into `model\` and checks its SHA-256.
 - **Sizes:** the release summary prints the real numbers. Release candidate 0.1.0, Mac / Windows: no model 16 MB / 223 MB (most of the Windows file is Microsoft's WebView2 offline installer); C 0.82 / 1.03 GB; A 2.51 / 2.71 GB; B-E2B 3.43 / 3.65 GB.
