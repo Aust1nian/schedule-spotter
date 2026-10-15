@@ -1,0 +1,132 @@
+{
+ "category": "C",
+ "tier": "script",
+ "input": "input.xlsx",
+ "paste": false,
+ "settings": {
+  "today": "2026-10-10",
+  "workdays": [
+   "mon",
+   "tue",
+   "wed",
+   "thu",
+   "fri"
+  ],
+  "days_off": []
+ },
+ "layout": "person_by_day",
+ "arrangement": "single",
+ "assignments": [
+  {
+   "person": "Gil Navarro",
+   "date": "2026-10-12",
+   "site": "Pine Hollow deck"
+  },
+  {
+   "person": "Gil Navarro",
+   "date": "2026-10-13",
+   "site": "Pine Hollow deck"
+  },
+  {
+   "person": "Gil Navarro",
+   "date": "2026-10-14",
+   "site": "Pine Hollow deck"
+  },
+  {
+   "person": "Gil Navarro",
+   "date": "2026-10-15",
+   "site": "Pine Hollow deck"
+  },
+  {
+   "person": "Gil Navarro",
+   "date": "2026-10-16",
+   "site": "Pine Hollow deck"
+  },
+  {
+   "person": "Tess Ruiz",
+   "date": "2026-10-12",
+   "site": "Reyes bath"
+  },
+  {
+   "person": "Tess Ruiz",
+   "date": "2026-10-13",
+   "site": "Reyes bath"
+  },
+  {
+   "person": "Tess Ruiz",
+   "date": "2026-10-14",
+   "site": "Reyes bath"
+  },
+  {
+   "person": "Tess Ruiz",
+   "date": "2026-10-15",
+   "site": "Reyes bath"
+  },
+  {
+   "person": "Tess Ruiz",
+   "date": "2026-10-16",
+   "site": "Shop"
+  },
+  {
+   "person": "Abe Lindgren",
+   "date": "2026-10-12",
+   "site": "Lark St duplex"
+  },
+  {
+   "person": "Abe Lindgren",
+   "date": "2026-10-13",
+   "site": "Lark St duplex"
+  },
+  {
+   "person": "Abe Lindgren",
+   "date": "2026-10-14",
+   "site": "Lark St duplex"
+  },
+  {
+   "person": "Abe Lindgren",
+   "date": "2026-10-15",
+   "site": "Lark St duplex"
+  },
+  {
+   "person": "Abe Lindgren",
+   "date": "2026-10-16",
+   "site": "Lark St duplex"
+  },
+  {
+   "person": "Rosa Vega",
+   "date": "2026-10-12",
+   "site": "Reyes bath"
+  },
+  {
+   "person": "Rosa Vega",
+   "date": "2026-10-13",
+   "site": "Lark St duplex"
+  },
+  {
+   "person": "Rosa Vega",
+   "date": "2026-10-14",
+   "site": "Lark St duplex"
+  },
+  {
+   "person": "Rosa Vega",
+   "date": "2026-10-15",
+   "site": "Pine Hollow deck"
+  },
+  {
+   "person": "Rosa Vega",
+   "date": "2026-10-16",
+   "site": "Pine Hollow deck"
+  }
+ ],
+ "assignments_exact": true,
+ "flags": [],
+ "flags_exact": true,
+ "must_not_ask": [
+  {
+   "type": "pick_sheet"
+  },
+  {
+   "type": "pick_layout"
+  }
+ ]
+}

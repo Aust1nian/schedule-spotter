@@ -16,5 +16,6 @@ UV="uv run -q --with openpyxl==3.1.5 --with odfpy==1.4.1 --with python-docx==1.2
 for c in A B C D E F G H I J K L M; do
   $UV "build_$c.py"
 done
+$UV build_C24.py
 python3 check_flags.py
 python3 sanity.py

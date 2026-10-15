@@ -1,0 +1,144 @@
+{
+ "category": "C",
+ "tier": "script",
+ "input": "input.csv",
+ "paste": false,
+ "settings": {
+  "today": "2026-10-10",
+  "workdays": [
+   "mon",
+   "tue",
+   "wed",
+   "thu",
+   "fri"
+  ],
+  "days_off": []
+ },
+ "layout": "job_by_day",
+ "arrangement": "single",
+ "assignments": [
+  {
+   "person": "Bo",
+   "date": "2026-10-12",
+   "site": "Orchard Ln addition"
+  },
+  {
+   "person": "Cy",
+   "date": "2026-10-12",
+   "site": "Orchard Ln addition"
+  },
+  {
+   "person": "Bo",
+   "date": "2026-10-13",
+   "site": "Orchard Ln addition"
+  },
+  {
+   "person": "Cy",
+   "date": "2026-10-13",
+   "site": "Orchard Ln addition"
+  },
+  {
+   "person": "Bo",
+   "date": "2026-10-14",
+   "site": "Orchard Ln addition"
+  },
+  {
+   "person": "Cy",
+   "date": "2026-10-14",
+   "site": "Orchard Ln addition"
+  },
+  {
+   "person": "Bo",
+   "date": "2026-10-15",
+   "site": "Orchard Ln addition"
+  },
+  {
+   "person": "Bo",
+   "date": "2026-10-16",
+   "site": "Orchard Ln addition"
+  },
+  {
+   "person": "Cy",
+   "date": "2026-10-16",
+   "site": "Orchard Ln addition"
+  },
+  {
+   "person": "Dee",
+   "date": "2026-10-12",
+   "site": "Main St storefront"
+  },
+  {
+   "person": "Dee",
+   "date": "2026-10-13",
+   "site": "Main St storefront"
+  },
+  {
+   "person": "Dee",
+   "date": "2026-10-14",
+   "site": "Main St storefront"
+  },
+  {
+   "person": "Cy",
+   "date": "2026-10-14",
+   "site": "Main St storefront"
+  },
+  {
+   "person": "Dee",
+   "date": "2026-10-15",
+   "site": "Main St storefront"
+  },
+  {
+   "person": "Dee",
+   "date": "2026-10-16",
+   "site": "Main St storefront"
+  }
+ ],
+ "assignments_exact": true,
+ "flags": [
+  {
+   "type": "unstaffed",
+   "site": "Garcia garage",
+   "date": "2026-10-12"
+  },
+  {
+   "type": "unstaffed",
+   "site": "Garcia garage",
+   "date": "2026-10-13"
+  },
+  {
+   "type": "unstaffed",
+   "site": "Garcia garage",
+   "date": "2026-10-14"
+  },
+  {
+   "type": "unstaffed",
+   "site": "Garcia garage",
+   "date": "2026-10-15"
+  },
+  {
+   "type": "unstaffed",
+   "site": "Garcia garage",
+   "date": "2026-10-16"
+  },
+  {
+   "type": "not_booked",
+   "person": "Cy",
+   "date": "2026-10-15"
+  },
+  {
+   "type": "double_booked",
+   "person": "Cy",
+   "date": "2026-10-14",
+   "sites": [
+    "Main St storefront",
+    "Orchard Ln addition"
+   ]
+  }
+ ],
+ "flags_exact": true,
+ "must_not_ask": [
+  {
+   "type": "pick_layout"
+  }
+ ]
+}

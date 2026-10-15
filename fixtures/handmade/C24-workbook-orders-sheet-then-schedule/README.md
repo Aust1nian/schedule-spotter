@@ -1,0 +1,1 @@
+Workbook with an 'Orders' sheet first (Item, Qty, For job, Vendor, Need by, Ordered by: job names, dates and first names) and the 'Crew Schedule' second: the schedule must be picked without asking. Written in Phase 7 after the holdout showed the pattern.

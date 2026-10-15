@@ -438,6 +438,16 @@ fn pick_label_col(
     best.map(|(_, c)| c)
 }
 
+/// A label that reads as a sentence: five or more words, ending like one or
+/// giving a time of day ("Thu 4pm").
+fn is_note_sentence(text: &str) -> bool {
+    static TIME_OF_DAY: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(r"(?i)\b\d{1,2}(:\d{2})?\s?(am|pm)\b").expect("valid regex")
+    });
+    let t = text.trim();
+    t.split_whitespace().count() >= 5 && (t.ends_with(['.', '!', '?']) || TIME_OF_DAY.is_match(t))
+}
+
 /// Whether a label marks a row (or the rest of the block) as not schedule.
 fn skip_label(text: &str, today: chrono::NaiveDate) -> Option<bool> {
     let k = key(text);
@@ -660,7 +670,10 @@ fn extract(
                 Kind::Jobs => site_score(&label) >= 0.45 || label_status(&label).is_some(),
                 Kind::People => person_score(&label) >= 0.45,
             };
-            if !has_data && !plausible {
+            // A sentence is a note even when it names a job ("Lot 12
+            // walk-through with the owners Fri 9am."); a job left empty all
+            // week ("Garcia garage") still reads, and is unstaffed.
+            if !has_data && (!plausible || is_note_sentence(&label)) {
                 continue;
             }
             if is_repeated_header(ctx, s, r, &label) || is_title_row(ctx, s, r) {

@@ -306,6 +306,65 @@ impl Candidate {
     }
 }
 
+/// A sheet whose header has two or more order-list words ("Item", "Qty",
+/// "Vendor", "Price"): a materials or purchase list, not a schedule.
+fn looks_like_order_sheet(g: &Grid) -> bool {
+    (0..g.height().min(6)).any(|r| {
+        let words: HashSet<String> = (0..g.width())
+            .map(|c| key(g.text(r, c)))
+            .map(|k| k.trim_end_matches([':', '.', '#', ' ']).trim().to_string())
+            .filter(|k| {
+                matches!(
+                    k.as_str(),
+                    "item"
+                        | "items"
+                        | "qty"
+                        | "quantity"
+                        | "supplier"
+                        | "vendor"
+                        | "price"
+                        | "unit price"
+                        | "cost"
+                        | "sku"
+                        | "part"
+                        | "part no"
+                        | "material"
+                        | "materials"
+                        | "description"
+                        | "amount"
+                        | "po"
+                        | "order no"
+                        | "cantidad"
+                        | "proveedor"
+                        | "precio"
+                )
+            })
+            .collect();
+        words.len() >= 2
+    })
+}
+
+/// A sheet name that says it's the schedule.
+fn schedule_sheet_name(name: &str) -> bool {
+    let k = key(name);
+    [
+        "schedule",
+        "horario",
+        "calendar",
+        "calendario",
+        "crew",
+        "week",
+        "semana",
+        "dispatch",
+        "board",
+    ]
+    .iter()
+    .any(|w| {
+        k.split(|c: char| !c.is_alphanumeric())
+            .any(|part| part == *w)
+    })
+}
+
 /// Reads the workbook: picks the sheet and the reading, and asks when that
 /// choice is a coin flip.
 pub fn read_workbook(
@@ -315,10 +374,14 @@ pub fn read_workbook(
     tiebreak: &dyn crate::matching::Tiebreaker,
 ) -> Reading {
     let mut per_sheet: Vec<(usize, Candidate)> = Vec::new();
+    let mut order_sheets: HashSet<usize> = HashSet::new();
     for (i, sheet) in wb.sheets.iter().enumerate() {
         let g = Grid::new(sheet, i as u16);
         if g.height() == 0 {
             continue;
+        }
+        if looks_like_order_sheet(&g) {
+            order_sheets.insert(i);
         }
         if let Some(best) = read_sheet(&g, settings, answers, tiebreak) {
             per_sheet.push((i, best));
@@ -331,13 +394,42 @@ pub fn read_workbook(
     if per_sheet.is_empty() {
         return reading;
     }
-    per_sheet.sort_by(|a, b| b.1.score().total_cmp(&a.1.score()).then(a.0.cmp(&b.0)));
-    let schedule_like = per_sheet
+    // An order or materials list ("Item | Qty | For job | Vendor | Need by |
+    // Ordered by") can read like a schedule: it has jobs, dates and first
+    // names. It goes after the other sheets and never makes the choice a
+    // coin flip.
+    per_sheet.sort_by(|a, b| {
+        order_sheets
+            .contains(&a.0)
+            .cmp(&order_sheets.contains(&b.0))
+            .then(b.1.score().total_cmp(&a.1.score()))
+            .then(a.0.cmp(&b.0))
+    });
+    let plausible: Vec<usize> = per_sheet
         .iter()
-        .filter(|(_, c)| {
-            c.score() >= 0.5 && c.sink.assignments.len() >= 3 && c.person_likeness() >= 0.6
+        .filter(|(i, c)| {
+            !order_sheets.contains(i)
+                && c.score() >= 0.5
+                && c.sink.assignments.len() >= 3
+                && c.person_likeness() >= 0.6
         })
-        .count();
+        .map(|(i, _)| *i)
+        .collect();
+    // Of several plausible sheets, the one named like a schedule ("Schedule",
+    // "Crew Schedule") is the schedule; two so named ("Week 10-12", "Week
+    // 10-19") are still a question.
+    let named: Vec<usize> = plausible
+        .iter()
+        .copied()
+        .filter(|&i| schedule_sheet_name(&wb.sheets[i].name))
+        .collect();
+    let schedule_like = if named.len() == 1 { 1 } else { plausible.len() };
+    if named.len() == 1
+        && let Some(pos) = per_sheet.iter().position(|(i, _)| *i == named[0])
+    {
+        let item = per_sheet.remove(pos);
+        per_sheet.insert(0, item);
+    }
     // The owner picked a sheet.
     let picked = match answers.get_subject("pick_sheet") {
         Some(Answer::Pick(name)) => per_sheet

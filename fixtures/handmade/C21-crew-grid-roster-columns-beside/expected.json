@@ -188,5 +188,78 @@
   {
    "type": "pick_layout"
   }
- ]
+ ],
+ "flags": [
+  {
+   "type": "double_booked",
+   "person": "Vic Moreno",
+   "date": "2026-10-12",
+   "sites": [
+    "Ridge Rd pool",
+    "Elm Ct patio"
+   ]
+  },
+  {
+   "type": "double_booked",
+   "person": "Vic Moreno",
+   "date": "2026-10-13",
+   "sites": [
+    "Ridge Rd pool",
+    "Elm Ct patio"
+   ]
+  },
+  {
+   "type": "not_booked",
+   "person": "Kurt Ames",
+   "date": "2026-10-14"
+  },
+  {
+   "type": "unstaffed",
+   "site": "Elm Ct patio",
+   "date": "2026-10-14"
+  },
+  {
+   "type": "double_booked",
+   "person": "Vic Moreno",
+   "date": "2026-10-15",
+   "sites": [
+    "Ridge Rd pool",
+    "Harbor Way"
+   ]
+  },
+  {
+   "type": "assigned_while_off",
+   "person": "Jen Shaw",
+   "date": "2026-10-15",
+   "sites": [
+    "Harbor Way"
+   ],
+   "status": "sick"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kurt Ames",
+   "date": "2026-10-15"
+  },
+  {
+   "type": "not_booked",
+   "person": "Paulo Reis",
+   "date": "2026-10-15"
+  },
+  {
+   "type": "unstaffed",
+   "site": "Elm Ct patio",
+   "date": "2026-10-15"
+  },
+  {
+   "type": "double_booked",
+   "person": "Vic Moreno",
+   "date": "2026-10-16",
+   "sites": [
+    "Ridge Rd pool",
+    "Harbor Way"
+   ]
+  }
+ ],
+ "flags_exact": true
 }

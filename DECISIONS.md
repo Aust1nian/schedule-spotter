@@ -611,3 +611,13 @@ Short forms that are also first names stay names.
 - **Short weeks:** a month's first or last week with only one or two days ("29 | 30" under Sun and Mon) wasn't recognized as a week, because a week needed three day numbers. Its entries went to the week above. Such a row now counts when it holds only those numbers and continues the full weeks.
 - **Seed by seed:** the 2,000 development seeds have none worse and 9 calendars better.
 
+**2026-10-15 · Fix 6: an order sheet ahead of the schedule, and a note under a job grid** (holdout H11; new fixtures C24 and C25).
+- **Which sheet:** a materials or purchase list ("Item | Qty | For job | Vendor | Need by | Ordered by") reads like a schedule, with jobs, dates and first names. So the app asked which sheet to read.
+  - A sheet whose header has two or more order-list words ("Item", "Qty", "Vendor", "Price" and the like) now never makes the choice a coin flip, and sorts after the other sheets.
+  - Of several plausible sheets, the one named like a schedule ("Schedule", "Crew Schedule", "Calendar", "Week …") is chosen.
+  - Two so named are still a question (C12: "Week 10-12" and "Week 10-19").
+- **A note in the job column:** "Lot 12 walk-through with the owners Fri 9am." under a job grid became a job with nobody on it, with an unstaffed flag every day. A label with nothing across the week that reads as a sentence (five or more words, ending like one or naming a time of day) is now a note. A job left empty all week ("Garcia garage") still reads, and is flagged unstaffed.
+- **Seed by seed:** none of the 2,000 development seeds got worse, counting flags as well as assignments, and 9 are better.
+
+**2026-10-15 · Checking the Phase 7 fixtures.** The rule checker (`_make/check_flags.py`, which derives flags from FORMAT.md's rules independently of the app) agrees with all eight new fixtures (`_make/hints/` gives it their date windows, rosters and job rows). `_make/build_C24.py` makes C24's workbook byte-identically; the others are hand-written CSVs. While deriving C23's flags, `spotter-check run` turned out to use the default seven-day week, not a fixture's settings. Flags were taken from the fixtures run instead.
+

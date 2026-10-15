@@ -243,5 +243,103 @@
   {
    "type": "pick_layout"
   }
- ]
+ ],
+ "flags": [
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-02"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-03"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-09"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-10"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-11"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-12"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-13"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-16"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-17"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-18"
+  },
+  {
+   "type": "not_booked",
+   "person": "Pete",
+   "date": "2026-11-18"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-19"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-20"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-23"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-24"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-25"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-26"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-27"
+  },
+  {
+   "type": "not_booked",
+   "person": "Kai",
+   "date": "2026-11-30"
+  }
+ ],
+ "flags_exact": true
 }

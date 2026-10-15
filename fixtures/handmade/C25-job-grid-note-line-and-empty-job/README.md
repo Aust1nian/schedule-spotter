@@ -1,0 +1,1 @@
+Job x day grid with a note sentence in the label column below the jobs (not a job, no unstaffed flags) and a real job with nobody all week (unstaffed every day). Written in Phase 7 after the holdout showed the pattern.
