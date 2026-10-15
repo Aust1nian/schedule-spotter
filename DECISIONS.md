@@ -621,3 +621,8 @@ Short forms that are also first names stay names.
 
 **2026-10-15 · Checking the Phase 7 fixtures.** The rule checker (`_make/check_flags.py`, which derives flags from FORMAT.md's rules independently of the app) agrees with all eight new fixtures (`_make/hints/` gives it their date windows, rosters and job rows). `_make/build_C24.py` makes C24's workbook byte-identically; the others are hand-written CSVs. While deriving C23's flags, `spotter-check run` turned out to use the default seven-day week, not a fixture's settings. Flags were taken from the fixtures run instead.
 
+**2026-10-15 · Fix 7: a crew's schedule row taken for a roster row** (found by the post-fix holdout check on H05; new fixture C26).
+- **What happened:** with the roster in columns beside the grid (fix 3), the schedule row "Crew A | Haskell Farm × 5" was read as a roster row ("Crew A: these members"). A farm named after a family scores as a person's name. Because the grid drops the blank column, the real roster's names sat right next to it. So that crew's whole week was set aside.
+- **The fix:** a roster row now takes only the cells next to the crew name in the file, stopping at a blank column. Its members must also be distinct: the same "name" across the row is a job.
+- **Checks:** all development fixtures pass, and the seeds are unchanged.
+

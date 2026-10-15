@@ -603,10 +603,12 @@ fn find_crews(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Crews {
             if !crew_name(&key(t)) {
                 continue;
             }
-            // Members to the right in the same row, and nothing day-like there.
-            let right: Vec<usize> = (c + 1..g.width())
-                .take_while(|&cc| !g.is_empty(r, cc))
-                .collect();
+            // Members to the right in the same row, and nothing day-like
+            // there. Only the cells next to it in the file: a blank column
+            // ends the list (the grid drops blank columns, so a roster block
+            // beside the schedule would otherwise look like more members).
+            let block = header_block(g, r, c);
+            let right: Vec<usize> = block.into_iter().filter(|&cc| cc > c).collect();
             // The crew name leads its row ("Crew 1 | Mike | Jose"); a crew
             // name inside a schedule row is an assignment, not a list.
             let leads_row = g.first_nonempty(r) == Some(c);
@@ -623,7 +625,14 @@ fn find_crews(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Crews {
                 })
                 && (row_title_is_crew_list(g, r)
                     || right.len() >= 2
-                    || g.text(r, c + 1).contains(','));
+                    || g.text(r, c + 1).contains(','))
+                // A crew lists each member once; the same "name" across the
+                // row ("Crew A | Haskell Farm | Haskell Farm …") is a job.
+                && {
+                    let keys: Vec<String> = right.iter().map(|&cc| key(g.text(r, cc))).collect();
+                    let distinct: HashSet<&String> = keys.iter().collect();
+                    distinct.len() == keys.len()
+                };
             if row_is_roster {
                 let mut members = Vec::new();
                 for &cc in &right {

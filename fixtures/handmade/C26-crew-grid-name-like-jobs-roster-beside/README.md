@@ -1,0 +1,1 @@
+Crew-based week whose job names look like people's names (Prescott Farm, Dunmore Hall), with the crew roster as columns beside the grid: a crew's schedule row must not be taken for a roster row. Written in Phase 7 after the post-fix holdout check showed the pattern.

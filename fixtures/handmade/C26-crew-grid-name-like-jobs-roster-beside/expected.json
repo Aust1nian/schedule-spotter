@@ -1,0 +1,154 @@
+{
+ "category": "C",
+ "tier": "script",
+ "input": "input.csv",
+ "paste": false,
+ "settings": {
+  "today": "2026-10-10",
+  "workdays": [
+   "mon",
+   "tue",
+   "wed",
+   "thu",
+   "fri"
+  ],
+  "days_off": []
+ },
+ "layout": "crew_based",
+ "arrangement": "single",
+ "assignments": [
+  {
+   "person": "Ned Albers",
+   "date": "2026-10-12",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Tomas Ivey",
+   "date": "2026-10-12",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Wes Grady",
+   "date": "2026-10-12",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Ned Albers",
+   "date": "2026-10-13",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Tomas Ivey",
+   "date": "2026-10-13",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Wes Grady",
+   "date": "2026-10-13",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Ned Albers",
+   "date": "2026-10-14",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Tomas Ivey",
+   "date": "2026-10-14",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Wes Grady",
+   "date": "2026-10-14",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Ned Albers",
+   "date": "2026-10-15",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Tomas Ivey",
+   "date": "2026-10-15",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Wes Grady",
+   "date": "2026-10-15",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Ned Albers",
+   "date": "2026-10-16",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Tomas Ivey",
+   "date": "2026-10-16",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Wes Grady",
+   "date": "2026-10-16",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Lyle Pratt",
+   "date": "2026-10-12",
+   "site": "Dunmore Hall"
+  },
+  {
+   "person": "Ruben Ochs",
+   "date": "2026-10-12",
+   "site": "Dunmore Hall"
+  },
+  {
+   "person": "Lyle Pratt",
+   "date": "2026-10-13",
+   "site": "Dunmore Hall"
+  },
+  {
+   "person": "Ruben Ochs",
+   "date": "2026-10-13",
+   "site": "Dunmore Hall"
+  },
+  {
+   "person": "Lyle Pratt",
+   "date": "2026-10-14",
+   "site": "Shop"
+  },
+  {
+   "person": "Ruben Ochs",
+   "date": "2026-10-14",
+   "site": "Shop"
+  },
+  {
+   "person": "Lyle Pratt",
+   "date": "2026-10-15",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Ruben Ochs",
+   "date": "2026-10-15",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Lyle Pratt",
+   "date": "2026-10-16",
+   "site": "Prescott Farm"
+  },
+  {
+   "person": "Ruben Ochs",
+   "date": "2026-10-16",
+   "site": "Prescott Farm"
+  }
+ ],
+ "assignments_exact": true,
+ "flags": [],
+ "flags_exact": true,
+ "must_not_ask": [
+  {
+   "type": "pick_layout"
+  }
+ ]
+}
