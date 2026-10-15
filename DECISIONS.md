@@ -575,6 +575,7 @@ A few crates ship no license file:
   2. Wait for Apple, staple the app, make and sign the disk image, then submit it.
   3. Wait again, then staple the disk image.
 - **Each wait gets a job of its own,** so each has up to 5 h 30 min. Tauri never sees the notarization variables any more.
+- **Riding out network blips:** B-E2B's app had waited 4 h 49 min when the runner briefly lost its network, and Tauri's status check gave up on that one error. `notary.sh` now checks the status once a minute until the deadline and ignores failed checks, and it retries a failed upload up to 3 times.
 - **Stapling retries:** Apple's ticket server dropped the connection once, after accepting C's disk image (`stapler` error 68). Stapling now retries up to 6 times, a minute apart.
 - Apple usually speeds up after a team's first submissions. The next signed run shows by how much.
 
