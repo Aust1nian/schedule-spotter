@@ -1,0 +1,192 @@
+{
+ "category": "C",
+ "tier": "script",
+ "input": "input.csv",
+ "paste": false,
+ "settings": {
+  "today": "2026-10-10",
+  "workdays": [
+   "mon",
+   "tue",
+   "wed",
+   "thu",
+   "fri"
+  ],
+  "days_off": []
+ },
+ "layout": "crew_based",
+ "arrangement": "single",
+ "assignments": [
+  {
+   "person": "Vic Moreno",
+   "date": "2026-10-12",
+   "site": "Ridge Rd pool"
+  },
+  {
+   "person": "Dale Price",
+   "date": "2026-10-12",
+   "site": "Ridge Rd pool"
+  },
+  {
+   "person": "Vic Moreno",
+   "date": "2026-10-13",
+   "site": "Ridge Rd pool"
+  },
+  {
+   "person": "Dale Price",
+   "date": "2026-10-13",
+   "site": "Ridge Rd pool"
+  },
+  {
+   "person": "Vic Moreno",
+   "date": "2026-10-14",
+   "site": "Ridge Rd pool"
+  },
+  {
+   "person": "Dale Price",
+   "date": "2026-10-14",
+   "site": "Ridge Rd pool"
+  },
+  {
+   "person": "Vic Moreno",
+   "date": "2026-10-15",
+   "site": "Ridge Rd pool"
+  },
+  {
+   "person": "Dale Price",
+   "date": "2026-10-15",
+   "site": "Ridge Rd pool"
+  },
+  {
+   "person": "Vic Moreno",
+   "date": "2026-10-16",
+   "site": "Ridge Rd pool"
+  },
+  {
+   "person": "Dale Price",
+   "date": "2026-10-16",
+   "site": "Ridge Rd pool"
+  },
+  {
+   "person": "Omar Haddad",
+   "date": "2026-10-12",
+   "site": "Elm Ct patio"
+  },
+  {
+   "person": "Vic Moreno",
+   "date": "2026-10-12",
+   "site": "Elm Ct patio"
+  },
+  {
+   "person": "Jen Shaw",
+   "date": "2026-10-12",
+   "site": "Elm Ct patio"
+  },
+  {
+   "person": "Omar Haddad",
+   "date": "2026-10-13",
+   "site": "Elm Ct patio"
+  },
+  {
+   "person": "Vic Moreno",
+   "date": "2026-10-13",
+   "site": "Elm Ct patio"
+  },
+  {
+   "person": "Jen Shaw",
+   "date": "2026-10-13",
+   "site": "Elm Ct patio"
+  },
+  {
+   "person": "Omar Haddad",
+   "date": "2026-10-14",
+   "site": "Shop"
+  },
+  {
+   "person": "Vic Moreno",
+   "date": "2026-10-14",
+   "site": "Shop"
+  },
+  {
+   "person": "Jen Shaw",
+   "date": "2026-10-14",
+   "site": "Shop"
+  },
+  {
+   "person": "Omar Haddad",
+   "date": "2026-10-15",
+   "site": "Harbor Way"
+  },
+  {
+   "person": "Vic Moreno",
+   "date": "2026-10-15",
+   "site": "Harbor Way"
+  },
+  {
+   "person": "Jen Shaw",
+   "date": "2026-10-15",
+   "site": "Harbor Way"
+  },
+  {
+   "person": "Omar Haddad",
+   "date": "2026-10-16",
+   "site": "Harbor Way"
+  },
+  {
+   "person": "Vic Moreno",
+   "date": "2026-10-16",
+   "site": "Harbor Way"
+  },
+  {
+   "person": "Jen Shaw",
+   "date": "2026-10-16",
+   "site": "Harbor Way"
+  },
+  {
+   "person": "Paulo Reis",
+   "date": "2026-10-12",
+   "site": "Harbor Way"
+  },
+  {
+   "person": "Paulo Reis",
+   "date": "2026-10-13",
+   "site": "Harbor Way"
+  },
+  {
+   "person": "Paulo Reis",
+   "date": "2026-10-14",
+   "site": "Harbor Way"
+  },
+  {
+   "person": "Paulo Reis",
+   "date": "2026-10-16",
+   "site": "Harbor Way"
+  },
+  {
+   "person": "Kurt Ames",
+   "date": "2026-10-12",
+   "site": "Shop"
+  },
+  {
+   "person": "Kurt Ames",
+   "date": "2026-10-13",
+   "site": "Shop"
+  },
+  {
+   "person": "Kurt Ames",
+   "date": "2026-10-16",
+   "site": "Elm Ct patio"
+  },
+  {
+   "person": "Jen Shaw",
+   "date": "2026-10-15",
+   "status": "sick"
+  }
+ ],
+ "assignments_exact": true,
+ "must_not_ask": [
+  {
+   "type": "pick_layout"
+  }
+ ]
+}

@@ -1,0 +1,1 @@
+Crew-based week with the crew roster as columns beside the schedule, on the schedule's own header row after a blank column, plus an 'Other' column that isn't a crew and individual rows below. Written in Phase 7 after the holdout showed the pattern.

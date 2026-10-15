@@ -548,12 +548,20 @@ fn find_crews(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Crews {
                 continue;
             }
             // Columns headed by crew names ("Crew A | Crew B") with members
-            // listed below. The header row holds nothing but crew names.
-            let peers = (0..g.width())
-                .filter(|&cc| cc != c && crew_name(&key(g.text(r, cc))))
+            // listed below. The block of headers holds nothing but crew
+            // names (and an "Other" column). The block can share its row with
+            // the schedule's own header when a blank column separates them
+            // ("Crew | Mon … Fri | | Crew A | Crew B"); the grid drops blank
+            // columns, so the gap shows in the file's own column numbers.
+            let block = header_block(g, r, c);
+            let peers = block
+                .iter()
+                .filter(|&&cc| cc != c && crew_name(&key(g.text(r, cc))))
                 .count();
-            let header_only_crews =
-                (0..g.width()).all(|cc| g.is_empty(r, cc) || crew_name(&key(g.text(r, cc))));
+            let header_only_crews = block.iter().all(|&cc| {
+                let k = key(g.text(r, cc));
+                crew_name(&k) || matches!(k.as_str(), "other" | "others" | "misc" | "extra" | "extras" | "floaters" | "helpers")
+            });
             if peers >= 1 && header_only_crews {
                 let mut members = Vec::new();
                 let mut rr = r + 1;
@@ -575,6 +583,28 @@ fn find_crews(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Crews {
         }
     }
     crews
+}
+
+/// The cells of row `r` around column `c` that sit next to each other in the
+/// file, with no blank column between them.
+fn header_block(g: &Grid, r: usize, c: usize) -> Vec<usize> {
+    // Next to each other in the file, whichever way the grid is turned.
+    let joined = |a: usize, b: usize| {
+        let (sa, sb) = (g.source(r, a), g.source(r, b));
+        !g.is_empty(r, a)
+            && !g.is_empty(r, b)
+            && ((sb.col == sa.col + 1 && sb.row == sa.row)
+                || (sb.row == sa.row + 1 && sb.col == sa.col))
+    };
+    let mut lo = c;
+    while lo > 0 && joined(lo - 1, lo) {
+        lo -= 1;
+    }
+    let mut hi = c;
+    while hi + 1 < g.width() && joined(hi, hi + 1) {
+        hi += 1;
+    }
+    (lo..=hi).collect()
 }
 
 fn row_title_is_crew_list(g: &Grid, r: usize) -> bool {
