@@ -205,6 +205,17 @@ pub fn parse(text: &str) -> Option<DayTok> {
                 return Some(with_weekday(tok, w));
             }
         }
+        // A day letter before a date: "M 10/12", "Th 10/15". The date
+        // decides; a letter that doesn't fit it (T could be Tue or Thu) is
+        // simply not checked.
+        if letter(words[0]).is_some() {
+            let rest = k[k.find(words[0]).unwrap_or(0) + words[0].len()..].trim_start_matches(
+                |c: char| c == ',' || c == '-' || c == '.' || c.is_whitespace(),
+            );
+            if let Some(tok) = parse_date_part(rest) {
+                return Some(tok);
+            }
+        }
         if let Some(w) = weekday_word(words[words.len() - 1]) {
             let last = words[words.len() - 1];
             let rest = k[..k.rfind(last).unwrap_or(k.len())]
@@ -565,6 +576,33 @@ mod tests {
         NaiveDate::from_ymd_opt(y, m, day).unwrap()
     }
     const TODAY: fn() -> NaiveDate = || d(2026, 10, 10);
+
+    #[test]
+    fn day_letter_before_a_date() {
+        for (text, m, d) in [
+            ("M 10/12", 10, 12),
+            ("Th 10/15", 10, 15),
+            ("T 10/13", 10, 13),
+            ("Sa 10/17", 10, 17),
+        ] {
+            match parse(text) {
+                Some(DayTok::Numeric { first, second, .. }) => {
+                    assert_eq!((first, second), (m, d), "{text}")
+                }
+                other => panic!("{text}: {other:?}"),
+            }
+        }
+    }
+
+    #[test]
+    fn short_day_words_can_be_names() {
+        for name in ["Mo", "Dom", "Lu", "Mar", "Sa"] {
+            assert!(!is_day_not_name(name), "{name}");
+        }
+        for day in ["Mon", "Monday", "lunes", "10/12", "M"] {
+            assert!(is_day_not_name(day), "{day}");
+        }
+    }
 
     #[test]
     fn formats() {

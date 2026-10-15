@@ -721,7 +721,7 @@ fn extract(
         (Kind::Jobs, false) => Layout::JobByDay,
         (Kind::Jobs, true) => Layout::DayByJob,
     };
-    let arrangement = arrangement_of(runs);
+    let arrangement = arrangement_of(g, runs);
     if let Some(first) = sections.first() {
         if let Some(c) = first.label_col {
             let src = g.source(first.header_row, c);
@@ -898,9 +898,19 @@ fn cell_meaning(ctx: &SheetCtx, parsed: &mut cells::Parsed, text: &str, r: usize
     }
 }
 
-fn arrangement_of(runs: &[Run]) -> Arrangement {
+fn arrangement_of(g: &crate::grid::Grid, runs: &[Run]) -> Arrangement {
+    use chrono::Datelike;
     let rows: std::collections::BTreeSet<usize> = runs.iter().map(|r| r.row).collect();
-    if runs.len() > rows.len() {
+    // One run of dated headers can hold two weeks with a blank spacer
+    // column between them ("M 10/12 … F 10/16 | | M 10/19 …"). The grid
+    // drops empty columns, so the gap shows in the file's own columns.
+    let spaced_weeks = runs.iter().any(|r| {
+        r.cols.windows(2).zip(r.dates.windows(2)).any(|(c, d)| {
+            let (a, b) = (g.source(r.row, c[0]).col, g.source(r.row, c[1]).col);
+            b > a + 1 && d[0].iso_week() != d[1].iso_week()
+        })
+    });
+    if runs.len() > rows.len() || spaced_weeks {
         Arrangement::SideBySide
     } else if rows.len() > 1 {
         Arrangement::Stacked

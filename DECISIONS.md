@@ -594,3 +594,7 @@ Any later holdout check is reported as "after fixes, not blind".
 
 Short forms that are also first names stay names.
 
+**2026-10-15 · Fix 2: day headers written as a letter plus a date, and spaced weeks** (holdout H12; new fixture C20).
+- **The headers:** the date reader accepted a day **word** before a date ("Mon 10/12") but not a day **letter** ("M 10/12", "Th 10/15"). A two-week board headed that way was rejected as "not a schedule". A letter before a date now reads as that date. The letter itself isn't checked, since T can mean Tue or Thu.
+- **The arrangement:** two weeks in one header row separated by a blank spacer column now count as side by side. The grid drops empty columns, so the gap is found in the file's own column numbers.
+

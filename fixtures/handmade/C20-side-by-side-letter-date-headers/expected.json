@@ -1,0 +1,235 @@
+{
+ "category": "C",
+ "tier": "script",
+ "input": "input.csv",
+ "paste": false,
+ "settings": {
+  "today": "2026-10-10",
+  "workdays": [
+   "mon",
+   "tue",
+   "wed",
+   "thu",
+   "fri"
+  ],
+  "days_off": []
+ },
+ "layout": "person_by_day",
+ "arrangement": "side_by_side",
+ "assignments": [
+  {
+   "person": "Ana Ruiz",
+   "date": "2026-10-12",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Ana Ruiz",
+   "date": "2026-10-13",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Ana Ruiz",
+   "date": "2026-10-14",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Ana Ruiz",
+   "date": "2026-10-15",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Ana Ruiz",
+   "date": "2026-10-16",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Ana Ruiz",
+   "date": "2026-10-19",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Ana Ruiz",
+   "date": "2026-10-20",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Ana Ruiz",
+   "date": "2026-10-21",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Ana Ruiz",
+   "date": "2026-10-22",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Ana Ruiz",
+   "date": "2026-10-23",
+   "status": "off"
+  },
+  {
+   "person": "Cole Ferris",
+   "date": "2026-10-12",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Cole Ferris",
+   "date": "2026-10-13",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Cole Ferris",
+   "date": "2026-10-14",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Cole Ferris",
+   "date": "2026-10-15",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Cole Ferris",
+   "date": "2026-10-16",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Cole Ferris",
+   "date": "2026-10-19",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Cole Ferris",
+   "date": "2026-10-20",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Cole Ferris",
+   "date": "2026-10-21",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Cole Ferris",
+   "date": "2026-10-22",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Cole Ferris",
+   "date": "2026-10-23",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Lena Moss",
+   "date": "2026-10-12",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Lena Moss",
+   "date": "2026-10-13",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Lena Moss",
+   "date": "2026-10-14",
+   "status": "sick"
+  },
+  {
+   "person": "Lena Moss",
+   "date": "2026-10-15",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Lena Moss",
+   "date": "2026-10-19",
+   "site": "Shop"
+  },
+  {
+   "person": "Lena Moss",
+   "date": "2026-10-20",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Lena Moss",
+   "date": "2026-10-21",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Lena Moss",
+   "date": "2026-10-22",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Lena Moss",
+   "date": "2026-10-23",
+   "site": "Birch Ln roof"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-12",
+   "site": "Shop"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-12",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-13",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-14",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-15",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-16",
+   "site": "Dock St gutters"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-19",
+   "status": "pto"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-20",
+   "status": "pto"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-21",
+   "status": "pto"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-22",
+   "status": "pto"
+  },
+  {
+   "person": "Hal Pruitt",
+   "date": "2026-10-23",
+   "status": "pto"
+  }
+ ],
+ "assignments_exact": true,
+ "flags": [
+  {
+   "type": "not_booked",
+   "person": "Lena Moss",
+   "date": "2026-10-16"
+  }
+ ],
+ "flags_exact": true,
+ "must_not_ask": [
+  {
+   "type": "pick_layout"
+  }
+ ]
+}
