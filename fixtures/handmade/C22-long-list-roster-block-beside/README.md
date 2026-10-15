@@ -1,0 +1,1 @@
+Long list with a 'Technicians | Truck' roster block beside it after blank columns, on the list's own header row: a roster, not a second person column (Lee Barr is on the roster with nothing booked). Written in Phase 7 after the holdout showed the pattern.

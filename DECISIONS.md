@@ -600,3 +600,8 @@ Short forms that are also first names stay names.
 
 **2026-10-15 · Fix 3: a crew roster in columns beside the schedule** (holdout H05; new fixture C21). The reader already handled crew names heading columns of members, but only when the **whole row** held nothing else. In practice the roster often shares the schedule's header row after a blank column ("Crew | Mon … Fri | | Crew A | Crew B | Other"). That roster was missed, so crews weren't expanded into their members. The check now looks at the roster's own block of cells: the cells next to each other in the file, found in the file's own coordinates because the grid drops blank columns. The block may include an "Other" (or "Misc", "Extras" and so on) column, which isn't a crew.
 
+**2026-10-15 · Fix 4: a roster block beside a list, on the list's header row** (holdout H20; new fixture C22). The "Technicians | Truck" names next to a long list, after blank columns, were read as a second person column. Each of the list's first rows then gained an extra worker who wasn't on that job.
+- **The rule:** a block in the header row that is separated from the list by a blank column, has no days in it, and is headed by a roster title or a people header ("Techs", "Technicians") is a roster. Its whole block of cells is set aside, Truck column included.
+- **The exclusion:** a block with days in its header is another week's schedule, as in two weeks side by side, each with its own Name column (C08).
+- "Technicians" and "Installers" joined the people headers.
+

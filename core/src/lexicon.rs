@@ -569,12 +569,13 @@ pub fn header_role(key: &str) -> Option<HeaderRole> {
     let key = key.trim_end_matches([':', '.', '#', ' ']).trim();
     Some(match key {
         "name" | "names" | "employee" | "employees" | "emp" | "employee name" | "tech"
-        | "techs" | "technician" | "crew member" | "worker" | "workers" | "man" | "guy" | "who"
-        | "staff" | "person" | "lead" | "helper" | "installer" | "assigned to" | "assigned"
-        | "empleado" | "trabajador" | "nombre" | "tecnico" | "quien" | "foreman" | "laborer"
-        | "carpenter" | "crew 1" | "crew 2" | "crew 3" | "crew 4" | "worker 1" | "worker 2"
-        | "worker 3" | "man 1" | "man 2" | "man 3" | "tech 1" | "tech 2" | "helper 1"
-        | "helper 2" | "employee 1" | "employee 2" | "personal" | "people" => Person,
+        | "techs" | "technician" | "technicians" | "installers" | "crew member" | "worker"
+        | "workers" | "man" | "guy" | "who" | "staff" | "person" | "lead" | "helper"
+        | "installer" | "assigned to" | "assigned" | "empleado" | "trabajador" | "nombre"
+        | "tecnico" | "quien" | "foreman" | "laborer" | "carpenter" | "crew 1" | "crew 2"
+        | "crew 3" | "crew 4" | "worker 1" | "worker 2" | "worker 3" | "man 1" | "man 2"
+        | "man 3" | "tech 1" | "tech 2" | "helper 1" | "helper 2" | "employee 1" | "employee 2"
+        | "personal" | "people" => Person,
         "job" | "jobs" | "site" | "jobsite" | "job site" | "project" | "address" | "customer"
         | "client" | "location" | "where" | "job name" | "job/site" | "site/job" | "job / site"
         | "project name" | "obra" | "proyecto" | "trabajo" | "direccion" | "cliente" | "sitio"

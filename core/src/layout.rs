@@ -661,7 +661,25 @@ fn find_roster(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Option<Vec<S
     // equals everyone seen. Anywhere else it's a separate block.
     for r in 0..g.height() {
         for c in 0..g.width() {
-            if g.row_nonempty(r) < 2 || !is_roster_title(&key(g.text(r, c))) {
+            if g.row_nonempty(r) < 2 {
+                continue;
+            }
+            // A block of its own: a blank column between it and the cells to
+            // its left ("Date | Tech | Job | | Technicians | Truck"). There a
+            // people header ("Technicians") marks a roster too, never a
+            // second name column for the list.
+            let block = header_block(g, r, c);
+            // A block with days in its header is another week's schedule
+            // ("Name | Mon … | | Name | Mon …"), not a roster.
+            let separate = block[0] > 0
+                && (0..block[0]).any(|cc| !g.is_empty(r, cc))
+                && block.iter().all(|&cc| g.day(r, cc).is_none());
+            let k = key(g.text(r, c));
+            let people_header = matches!(
+                crate::lexicon::header_role(&k),
+                Some(crate::lexicon::HeaderRole::Person)
+            );
+            if !is_roster_title(&k) && !(separate && people_header) {
                 continue;
             }
             let rows: Vec<usize> = (r + 1..g.height())
@@ -678,7 +696,15 @@ fn find_roster(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Option<Vec<S
                     .filter(|&cc| crate::lexicon::header_role(&key(g.text(r, cc))).is_some())
                     .count()
                     >= 2;
-                if !header_row {
+                if separate {
+                    // The whole block goes ("Technicians | Truck").
+                    for &cc in &block {
+                        consumed.insert((r, cc));
+                        for &rr in &rows {
+                            consumed.insert((rr, cc));
+                        }
+                    }
+                } else if !header_row {
                     consumed.insert((r, c));
                     for &rr in &rows {
                         consumed.insert((rr, c));

@@ -1,0 +1,133 @@
+{
+ "category": "C",
+ "tier": "script",
+ "input": "input.csv",
+ "paste": false,
+ "settings": {
+  "today": "2026-10-17",
+  "workdays": [
+   "mon",
+   "tue",
+   "wed",
+   "thu",
+   "fri"
+  ],
+  "days_off": []
+ },
+ "layout": "long_list",
+ "arrangement": "single",
+ "assignments": [
+  {
+   "person": "Nina Ford",
+   "date": "2026-10-19",
+   "site": "Lakeside Clinic"
+  },
+  {
+   "person": "Raj Mehta",
+   "date": "2026-10-19",
+   "site": "Lakeside Clinic"
+  },
+  {
+   "person": "Owen Tull",
+   "date": "2026-10-19",
+   "site": "Shop"
+  },
+  {
+   "person": "Nina Ford",
+   "date": "2026-10-20",
+   "site": "Lakeside Clinic"
+  },
+  {
+   "person": "Raj Mehta",
+   "date": "2026-10-20",
+   "site": "Brook St duplex"
+  },
+  {
+   "person": "Owen Tull",
+   "date": "2026-10-20",
+   "site": "Brook St duplex"
+  },
+  {
+   "person": "Nina Ford",
+   "date": "2026-10-21",
+   "site": "Lakeside Clinic"
+  },
+  {
+   "person": "Raj Mehta",
+   "date": "2026-10-21",
+   "site": "Brook St duplex"
+  },
+  {
+   "person": "Owen Tull",
+   "date": "2026-10-21",
+   "status": "pto"
+  },
+  {
+   "person": "Nina Ford",
+   "date": "2026-10-22",
+   "site": "Lakeside Clinic"
+  },
+  {
+   "person": "Owen Tull",
+   "date": "2026-10-22",
+   "site": "Brook St duplex"
+  },
+  {
+   "person": "Nina Ford",
+   "date": "2026-10-23",
+   "site": "Lakeside Clinic"
+  },
+  {
+   "person": "Raj Mehta",
+   "date": "2026-10-23",
+   "site": "Brook St duplex"
+  },
+  {
+   "person": "Owen Tull",
+   "date": "2026-10-23",
+   "site": "Brook St duplex"
+  }
+ ],
+ "assignments_exact": true,
+ "flags": [
+  {
+   "type": "not_booked",
+   "person": "Raj Mehta",
+   "date": "2026-10-22"
+  },
+  {
+   "type": "not_booked",
+   "person": "Lee Barr",
+   "date": "2026-10-19"
+  },
+  {
+   "type": "not_booked",
+   "person": "Lee Barr",
+   "date": "2026-10-20"
+  },
+  {
+   "type": "not_booked",
+   "person": "Lee Barr",
+   "date": "2026-10-21"
+  },
+  {
+   "type": "not_booked",
+   "person": "Lee Barr",
+   "date": "2026-10-22"
+  },
+  {
+   "type": "not_booked",
+   "person": "Lee Barr",
+   "date": "2026-10-23"
+  }
+ ],
+ "flags_exact": true,
+ "must_not_ask": [
+  {
+   "type": "pick_layout"
+  },
+  {
+   "type": "column_role"
+  }
+ ]
+}
