@@ -3,7 +3,7 @@
 Usage: describe.py <file> --variant V --platform <mac|windows> --signed <true|false>
 
 release.yml stores this beside each file; summary.py gathers them into
-releases.json, which the download site reads (site/upload.sh).
+releases.json, which site/publish.sh checks before publishing.
 """
 import argparse
 import hashlib

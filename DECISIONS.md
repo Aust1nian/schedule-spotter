@@ -120,7 +120,7 @@ The spec's external facts were checked against primary sources: Hugging Face API
 - macOS signing and notarization go ahead with Austin's Apple Developer account.
 - Phase 6 install tests run against the unsigned Windows installer, and the `signtool verify` check is reported as "skipped: unsigned by decision" rather than as a failure.
 
-**2026-10-11 · Download delivery: a Pi-hosted site with an email-gated link (deviation from the spec's static page with "no tracking, cookies or forms" and its Cloudflare R2 hosting).** Austin: "Pi is the website host, and the method of delivery is via qr code, where they scan, it asks for their business email, and sends them a link from the company email to download what would ordinarily be viewed as a paid tool." The flow:
+**Superseded 2026-10-14: no email gate, downloads from tightline.systems (Phase 6).** **2026-10-11 · Download delivery: a Pi-hosted site with an email-gated link (deviation from the spec's static page with "no tracking, cookies or forms" and its Cloudflare R2 hosting).** Austin: "Pi is the website host, and the method of delivery is via qr code, where they scan, it asks for their business email, and sends them a link from the company email to download what would ordinarily be viewed as a paid tool." The flow:
 1. The owner scans the QR code on the business card with a phone.
 2. The page explains the tool and asks for a business email.
 3. Tight Line's company email sends a download link.
@@ -531,7 +531,7 @@ A few crates ship no license file:
 - for these, the standard SPDX text of their declared license is included, with their authors as the copyright holders (`tools/release/license-texts/`, SPDX license-list-data 3.27.0);
 - the file says where every crate's source is, which the MPL asks for.
 
-**2026-10-12 · Download site: Python standard library behind nginx** (`site/`). This implements Austin's Pi-hosted, email-gated delivery.
+**Superseded 2026-10-14 and removed (below).** **2026-10-12 · Download site: Python standard library behind nginx** (`site/`). This implements Austin's Pi-hosted, email-gated delivery.
 - **The service** shows the pages, sends the email over SMTP, and checks links. It needs nothing installed beyond Python 3, which Raspberry Pi OS has.
 - **nginx** serves the files, with resume support. It asks the service (`auth_request`) whether a link is still good before each one.
 - **Links** are HMAC-signed, expire after `LINK_DAYS` (default 7), and allow `MAX_DOWNLOADS` fresh downloads (default 5). Resuming a download doesn't count.
@@ -551,3 +551,17 @@ A few crates ship no license file:
 - Without secrets, file names say `UNSIGNED`.
 
 **2026-10-14 · Website and contact line.** The domain is `tightline.systems`. About shows it as plain text, never a link. Austin: the free tools get no contact line of their own, so About has none, and the recovery card points salespeople to Austin directly.
+
+**2026-10-14 · No email gate: downloads come from tightline.systems/schedule (Austin; supersedes the Pi-hosted, email-gated delivery of 2026-10-11).**
+- The Tight Line website, a separate project served by Caddy on the workstation, already has the `/schedule` page and `get.tightline.systems` for the files. Its `/privacy` page promises that no email is needed to download.
+- This repo's email service (`site/server`), its nginx and systemd files, its tests and `upload.sh` were removed before ever going live.
+- `site/publish.sh` replaces them. It refuses a file that failed an install test on a gating runner, and a Mac build that isn't signed and notarized (the website says it is). It checks each SHA-256 and gives the files their client-facing names, with no variant letter and no UNSIGNED. Then it runs the website's `scripts/release.mjs --tool schedule`.
+- **Kept, and still in use:** the website's own release script decides where files go and how many old versions stay. This repo only calls it, never imports from it, so the two projects stay separate.
+- **Gone with the email gate:** no SMTP, Zoho, link expiry, follow-up wording or Pi. The spec's original download page (no forms, no cookies, no tracking) is back, now built by the website.
+
+**2026-10-14 · Apple signing secrets added.**
+- **Developer ID Application:** AUSTIN TYLER BURNES (J85MUL5KVY), valid until 2027-11-13. Mac signatures show Austin's legal name.
+- **The App Store Connect API key** has the Developer role.
+- **Where they live:** only in GitHub secrets, used by `release.yml`, and in Austin's password manager.
+- Windows signing (Azure Artifact Signing, $9.99/month) is still Austin's open decision. The website hides its "publisher" step while it's pending.
+

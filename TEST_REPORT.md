@@ -307,10 +307,7 @@ Latency p95 sits near 5 s because each call stops at the 5 s limit and becomes a
 
 ### Download site
 
-- `site/tests/test_site.py`: 15 unit tests, all passing. They cover links, expiry, tampering, the download limit with resume, refusing other files, rate limits, the hidden field, address retention, the follow-up opt-in and the page on each kind of device.
-- `site/tests/integration.sh`: the real nginx config (nginx 1.22 and 1.27) in front of the service, 13 checks, all passing. It covers the landing page, the emailed link, a whole download with its checksum, an attachment header, resume (206), refusing other files, bad tokens and path tricks, the link used up after 5, and the form rate limit.
-
-Both run in CI's core job.
+The email-gated download service and its tests were removed on 2026-10-14, when Austin dropped the email gate (DECISIONS.md, Phase 6). Before removal, its 15 unit tests and the 13-check nginx end-to-end test all passed. Downloads now come from the Tight Line website. `site/publish.sh` refuses a Mac build that isn't signed: in a dry run against the unsigned release run 38236036646, it stopped before downloading anything.
 
 ### Other unit tests added
 

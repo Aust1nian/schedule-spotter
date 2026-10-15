@@ -10,7 +10,7 @@ Apps installed from the Store never show the SmartScreen "Windows protected your
 
 | | Route 1: list the existing installer (EXE/MSI) | Route 2: MSIX package |
 | --- | --- | --- |
-| What Microsoft gets | A Store page that links to our installer, hosted at a stable, versioned HTTPS address (the Pi would do) | The app itself, which Microsoft hosts and delivers |
+| What Microsoft gets | A Store page that links to our installer, hosted at a stable, versioned HTTPS address (`get.tightline.systems` would do) | The app itself, which Microsoft hosts and delivers |
 | Signing | We sign the installer and every .exe and .dll with a certificate from the Microsoft Trusted Root Program; self-signed doesn't count ([Microsoft: code signing options](https://learn.microsoft.com/windows/apps/package-and-deploy/code-signing-options)) | Microsoft re-signs the package after certification, so no certificate is needed |
 | Tauri support | Built in: Tauri documents this route ([Tauri: Microsoft Store](https://v2.tauri.app/distribute/microsoft-store/)) | Not built in: Tauri produces NSIS and MSI, so MSIX would need Microsoft's packaging tools and its own install tests |
 | Our 2 GB problem | Unchanged: it's our installer, model appended after the NSIS data | Gone: an MSIX holds the model as an ordinary file |

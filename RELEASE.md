@@ -5,7 +5,7 @@ How to build, check and publish a new version. One release run builds every vari
 | What | Where |
 | --- | --- |
 | Build, sign, install-test every variant | `.github/workflows/release.yml` (on a `v*` tag, or by hand) |
-| Download site and upload script | `site/` (`site/README.md`) |
+| Publishing to tightline.systems/schedule | `site/publish.sh` (`site/README.md`) |
 | What the salesperson hands an owner who gets stuck | `RECOVERY_CARD.md`, `RECOVERY_CARD.pdf` |
 
 ## Once: signing secrets
@@ -66,13 +66,14 @@ This path hasn't run yet, so its first signed run needs watching.
      - Windows: Settings → Apps → Schedule Spotter → Uninstall. The folder is gone afterwards.
      - Mac: drag the app to the Trash. macOS keeps the sandbox container in `~/Library/Containers/com.tightline.schedulespotter`; it holds no schedule data.
 4. **Tag.** `git tag v<version> && git push origin v<version>`. This runs the same workflow, so its files are the ones that get published.
-5. **Publish** the variant Austin picked to the Pi:
+5. **Publish** the variant Austin picked on tightline.systems/schedule:
 
    ```sh
-   site/upload.sh --run <run id> --variant <C|A|B-E2B|off> --host pi@<pi address> --prune
+   site/publish.sh --run <run id> --variant <C|A|B-E2B|off> --dry-run   # check first
+   site/publish.sh --run <run id> --variant <C|A|B-E2B|off>
    ```
 
-   It refuses files that failed an install test or aren't signed (`--allow-unsigned` for an internal test site). It checks every SHA-256, then switches the site over in one step.
+   It refuses files that failed an install test, and a Mac build that isn't signed and notarized. It checks every SHA-256 and hands the files to the website's `scripts/release.mjs` (`site/README.md`). Then finish the website's own steps, which it prints: `deploy/deploy.sh`, `deploy/check-live.sh`, then commit `site/data/releases.json` in the website repo.
 6. **Tell the salespeople.** The app never checks for updates (spec), so the salesperson tells clients about a new version. About shows the version a client has. Hand out `RECOVERY_CARD.pdf` with any change to the prompts.
 
 ## What a build contains
