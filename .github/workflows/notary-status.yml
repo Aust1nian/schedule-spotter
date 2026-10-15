@@ -1,0 +1,24 @@
+name: notary status
+
+# Lists the team's notarization submissions and their status (RELEASE.md,
+# "When notarization waits"). On demand, or by pushing the notary-status
+# branch.
+on:
+  workflow_dispatch:
+  push:
+    branches: [notary-status]
+
+permissions:
+  contents: read
+
+jobs:
+  status:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.0
+      - env:
+          APPLE_API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+        run: uv run --with 'pyjwt[crypto]==2.10.1' python3 tools/release/notary_status.py
