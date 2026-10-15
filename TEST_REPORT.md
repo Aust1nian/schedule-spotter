@@ -58,7 +58,7 @@ Weakest spots, to revisit as Phase 2 needs them:
 
 ### Holdout
 
-Written by an independent author and sealed (`fixtures/holdout/SEALED.sha256`, 104 files). CI verifies the seal on every push. It has not been run.
+Written by an independent author and sealed (`fixtures/holdout/SEALED.sha256`, 104 files). CI verifies the seal on every push. It was run once, in Phase 7; the results are under "Phase 7: holdout".
 
 ## Phase 2 — analysis (gate passed 2026-10-11, K07 deferred to Phase 3)
 
@@ -314,6 +314,57 @@ The email-gated download service and its tests were removed on 2026-10-14, when 
 - `payload.rs`: extracting the model from the installer, finding it before a signature, refusing a damaged model, and an installer with no model. 4 tests, all passing.
 - `scratch.rs`: removing only our own session folders. 2 tests, all passing.
 - `export.rs`: saving when only the picked file is writable, as under the macOS sandbox. Passes.
+
+## Phase 7: holdout (run once, 2026-10-15)
+
+**This is the blind result and is not to be changed.** The holdout was sealed in Phase 1 (commit af6014f). Its seal was verified, and it was run exactly once:
+- **Code:** commit 934878c.
+- **Run:** 04:56–05:56 UTC on Tight Line's workstation, in the Linux dev container.
+- **Configurations:** model off, C, A and B-E2B, each with 2 llama threads and the 5 s call limit, as on the CI runners.
+- **Raw outputs, script and commit:** `bench/results/holdout-2026-10-15/`.
+
+Any later run against the holdout is labeled "after fixes, not blind".
+
+### 20 handmade holdout fixtures
+
+**13 of 20 pass, identically in all four configurations.** So the failures are in the rule-based reading, not the models.
+
+| Fixture | Result | What went wrong |
+| --- | --- | --- |
+| H01, H02, H04, H06–H09, H13–H16, H18, H19 | pass | |
+| H03 remodeler, job grid, twin addresses | fail | Four of one worker's days are missing ("Dom"), so a not-booked flag is missed |
+| H05 fence, crew grid with a roster block | fail | A crew-based layout was read as person-by-day; most assignments are lost (95 missing) |
+| H10 mason, calendar month | fail | A free-text note line became a person, adding a false assignment and 22 false not-booked flags |
+| H11 homebuilder, materials sheet then job grid | fail | A note line became a job, with 5 false unstaffed flags; the app also asked which sheet to read when it shouldn't |
+| H12 exteriors, two weeks side by side | fail | Rejected as "not a schedule" |
+| H17 electrician, day by person | fail | One worker's days are missing ("Mo"), so a not-booked flag and an unstaffed flag are missed |
+| H20 HVAC, list with start and end, roster block | fail | The roster block's assignments were copied onto an extra day (10 false assignments) |
+
+### Generated holdout seeds 1,000,000–1,000,999
+
+| Configuration | Assignment recall | Precision | Perfect schedules | Questions per file | Files with no question | Merges | False merges | Clean files given a red flag |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Model off | 99.667% | 99.866% | 960 | 1.39 | 598 | 1,646 | **0** | 0 |
+| C (Llama 3.2 1B) | 99.667% | 99.866% | 960 | 1.37 | 600 | 1,649 | **0** | 0 |
+| A (Phi-4-mini) | 99.691% | 99.866% | 961 | 1.16 | 669 | 1,704 | **6** | 2 |
+| B-E2B (Gemma 4 E2B) | 99.667% | 99.866% | 960 | 0.29 | 845 | 2,465 | **96** | 12 |
+
+**Reading:** the generated holdout matches the development seeds (99.55% recall at the Phase 5 gate), so reading isn't tuned to its own generator seeds.
+
+**The handmade holdout shows layouts the development fixtures never covered.** They're failures of the "never wrong silently" bar:
+- A crew roster laid out beside the grid.
+- Two weeks side by side.
+- A month calendar.
+- Free-text notes inside a grid.
+- A one- or two-letter first name that is also a day abbreviation.
+
+**Models on the holdout:** the same picture as the benchmark (MODEL_REPORT.md).
+- **B-E2B** cuts owner questions by 79%, but makes 96 false merges, such as "Alfredo" with "Wilfredo" and "Jeff W." with "Jeffrey R.". It also puts 12 false red flags on schedules that had no problems.
+- **A** asks 17% fewer questions, with 6 false merges.
+- **C** changes almost nothing.
+- **Model off** makes no false merges.
+
+**Latency:** this ran on the workstation's faster CPU, so latency (p95 5.5–17.7 s per file, including timed-out calls) isn't comparable with the runners. MODEL_REPORT.md has the runner figures.
 
 ## Changed expectations
 

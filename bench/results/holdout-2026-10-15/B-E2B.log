@@ -1,0 +1,106 @@
+== B-E2B: fixtures/holdout
+FAIL H03-remodeler-job-grid-twin-addresses (1.8 ms)
+    missing: 2026-10-26 | person=dom | site=88 larchmont ave | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-27 | person=dom | site=88 larchmont ave | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-28 | person=dom | site=shop | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-29 | person=dom | site=88 larchmont ave | status= | unstaffed=false | part= | time=- | note=
+    flag missing: not_booked 2026-10-30 | person=dom | site= | sites= | status=
+    after answers, flag missing: not_booked 2026-10-30 | person=dom | site= | sites= | status=
+FAIL H05-fence-crew-grid-roster-block (1.2 ms)
+    layout: expected crew_based, got "person_by_day"
+    missing: 2026-10-12 | person=andre lucas | site=haskell farm | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-12 | person=bill wexler | site=oakes | status= | unstaffed=false | part= | time=- | note=gate repair
+    missing: 2026-10-12 | person=dwayne cole | site=319 quarry rd | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-12 | person=gus pappas | site=brennan deck | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-12 | person=hugo saldana | site=haskell farm | status= | unstaffed=false | part= | time=- | note=
+    … 90 more
+FAIL H10-mason-october-calendar-month (3.9 ms)
+    extra:   2026-10-25 | person=pinehurst after that. | site=bell tower punch list wraps up 10 | status= | unstaffed=false | part= | time=- | note=
+    flag extra:   not_booked 2026-10-01 | person=pinehurst after that. | site= | sites= | status=
+    flag extra:   not_booked 2026-10-02 | person=pinehurst after that. | site= | sites= | status=
+    flag extra:   not_booked 2026-10-05 | person=pinehurst after that. | site= | sites= | status=
+    flag extra:   not_booked 2026-10-06 | person=pinehurst after that. | site= | sites= | status=
+    flag extra:   not_booked 2026-10-07 | person=pinehurst after that. | site= | sites= | status=
+    … 17 more
+FAIL H11-homebuilder-materials-sheet-then-job-grid-clean (2.1 ms)
+    flag extra:   unstaffed 2026-10-12 | person= | site=lot 3 walk-through with the buyers thu 4pm. | sites= | status=
+    flag extra:   unstaffed 2026-10-13 | person= | site=lot 3 walk-through with the buyers thu 4pm. | sites= | status=
+    flag extra:   unstaffed 2026-10-14 | person= | site=lot 3 walk-through with the buyers thu 4pm. | sites= | status=
+    flag extra:   unstaffed 2026-10-15 | person= | site=lot 3 walk-through with the buyers thu 4pm. | sites= | status=
+    flag extra:   unstaffed 2026-10-16 | person= | site=lot 3 walk-through with the buyers thu 4pm. | sites= | status=
+    asked but must not: {"chosen":"Schedule","options":["Materials","Schedule"],"type":"pick_sheet"}
+FAIL H12-exteriors-two-weeks-side-by-side (1.5 ms)
+    unexpected error NotASchedule
+FAIL H17-electrician-day-by-person-tsv-clean (0.9 ms)
+    missing: 2026-10-12 | person=mo | site=oak st duplex | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-13 | person=mo | site=riverbend plaza | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-15 | person=mo | site=oak st duplex | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-16 | person=mo | site=riverbend plaza | status= | unstaffed=false | part= | time=- | note=
+    flag missing: not_booked 2026-10-14 | person=mo | site= | sites= | status=
+    flag missing: unstaffed 2026-10-13 | person= | site=oak st duplex | sites= | status=
+    … 1 more
+FAIL H20-hvac-xlsx-list-start-end-roster-block (2.3 ms)
+    extra:   2026-10-26 | person=amir nasser | site=ames family dental | status= | unstaffed=false | part= | time=13:00-16:30 | note=
+    extra:   2026-10-26 | person=greta olson | site=shop | status= | unstaffed=false | part= | time=07:00-15:30 | note=
+    extra:   2026-10-26 | person=hugo brandt | site=pinewood sr. living | status= | unstaffed=false | part= | time=07:00-15:30 | note=
+    extra:   2026-10-26 | person=kelly marsh | site=northfield middle school rtu | status= | unstaffed=false | part= | time=06:00-14:30 | note=
+    extra:   2026-10-26 | person=paul lindqvist | site=pinewood sr. living | status= | unstaffed=false | part= | time=07:00-15:30 | note=
+    extra:   2026-10-26 | person=robert dunn | site=northfield middle school rtu | status= | unstaffed=false | part= | time=06:00-14:30 | note=
+    … 4 more
+
+category  pass/total  (model-tier skipped)
+  H        13/20      (0)
+  all      13/20 
+exit 1
+== B-E2B: generated seeds 1000000-1000999
+  0.0%  1000346 (long_list, input.csv)  missing 47 extra 0
+ 20.0%  1000032 (crew_based, input.tsv)  missing 40 extra 10
+ 33.3%  1000739 (crew_based, input.csv)  missing 24 extra 6
+ 55.0%  1000396 (crew_based, input.csv)  missing 18 extra 6
+ 55.6%  1000722 (crew_based, input.csv)  missing 20 extra 5
+ 62.5%  1000085 (crew_based, input.docx)  missing 18 extra 9
+ 71.4%  1000103 (crew_based, input.csv)  missing 40 extra 20
+ 75.8%  1000146 (crew_based, input.csv)  missing 8 extra 4
+ 80.6%  1000929 (crew_based, input.csv)  missing 24 extra 12
+ 81.1%  1000735 (crew_based, input.xlsx)  missing 36 extra 12
+ 83.0%  1000471 (crew_based, input.csv)  missing 8 extra 4
+ 85.2%  1000707 (job_by_day, input.xls)  missing 4 extra 4
+ 90.5%  1000522 (crew_based, input.csv)  missing 60 extra 15
+ 91.2%  1000257 (person_by_day, input.csv)  missing 6 extra 3
+ 92.3%  1000393 (person_by_day, input.csv)  missing 2 extra 1
+
+flags            expected  matched   actual   recall  precision
+  assigned_while_off     413      390      501   94.43%   77.84%
+  double_booked          796      774     1464   97.24%   52.87%
+  not_booked            1822     1461     4833   80.19%   30.23%
+  unstaffed              484      480      636   99.17%   75.47%
+clean schedules 220, with a red flag: 12
+    1000025 (person_by_day): double_booked 2026-10-05 | person=chuy | site= | sites=322 lincoln pkwy; 71 valley parkway | status=
+    1000108 (job_by_day): double_booked 2026-08-31 | person=chuy | site= | sites=kim patio; okada deck | status=
+    1000162 (long_list): double_booked 2026-09-28 | person=raymond | site= | sites=24 cherry parkway; henderson remodel | status=
+    1000172 (crew_based): double_booked 2026-09-28 | person=gregory | site= | sites=brookside car wash; hill basement | status=
+    1000320 (long_list): double_booked 2026-09-01 | person=wilfredo | site= | sites=#1626 deer park; fire station 4321 | status=
+    1000332 (job_by_day): double_booked 2026-10-12 | person=francisco | site= | sites=29125 e olive avenue; spring valley community church | status=
+    1000522 (crew_based): double_booked 2026-09-21 | person=josé | site= | sites=19495 vista place; lindgren fence | status=
+    1000575 (person_by_day): double_booked 2026-09-14 | person=fernando galvan | site= | sites=#1478 riverside; mill pond medical ph 2 | status=
+
+after the owner answers every same-person/same-site question correctly:
+  assigned_while_off     413      395      506   95.64%   78.06%
+  double_booked          796      780     1463   97.99%   53.32%
+  not_booked            1822     1462     2499   80.24%   58.50%
+  unstaffed              484      480      630   99.17%   76.19%
+questions per file (model on): mean 0.29, files with none 845/1000, same-person/site questions 286
+merges 2465, false merges 96
+    1000005: Person "Mario" -> "María"
+    1000007: Site "24687 Kings Canyon Ln" -> "Stone Canyon Car Wash"
+    1000015: Person "Andy" -> "Andrew"
+    1000025: Person "Huy" -> "Chuy"
+    1000035: Person "Jesús" -> "Jessica"
+    1000059: Person "Greg" -> "Gregory"
+    1000061: Person "Dan" -> "Daniel"
+    1000066: Person "Jeff" -> "Jeffrey R."
+    1000066: Person "Jeff W." -> "Jeffrey R."
+    1000097: Person "Alfredo" -> "Wilfredo"
+
+cases 1000  assignment recall 99.667%  precision 99.866%  perfect cases 960/1000  p95 10595.7 ms
+exit 0

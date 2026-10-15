@@ -1,0 +1,10 @@
+{
+  "clean_with_red_flag": 12,
+  "false_merges": 96,
+  "files": 1000,
+  "files_without_questions": 845,
+  "match_questions": 286,
+  "merges": 2465,
+  "model": true,
+  "questions_per_file": 0.288
+}
