@@ -161,7 +161,14 @@ jobs:
           xcrun notarytool submit "$dmg" --key "$APPLE_API_KEY_PATH" --key-id "$APPLE_API_KEY" \
             --issuer "$APPLE_API_ISSUER" --wait --timeout 3h
           echo "disk image notarized in $(( $(date +%s) - start )) s"
-          xcrun stapler staple "$dmg"
+          # Stapling fetches the ticket from Apple's CloudKit, which can drop
+          # the connection (error 68 after an accepted notarization).
+          for attempt in 1 2 3 4 5 6; do
+            xcrun stapler staple "$dmg" && break
+            [ "$attempt" = 6 ] && exit 1
+            echo "stapling failed (attempt $attempt); retrying in 60 s"
+            sleep 60
+          done
       - name: name, size and checksum
         run: |
           suffix=$([ "$SIGNED" = true ] && echo "" || echo "-UNSIGNED")
