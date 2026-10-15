@@ -182,9 +182,10 @@ impl Sink {
             }
             None => vec![clean(person)],
         };
-        // A date or a bare number is never a person or a site.
+        // A date, a day or a bare number is never a person or a site; a
+        // short day abbreviation that's also a first name ("Mo") is a name.
         let not_a_name =
-            |t: &str| crate::dates::parse(t).is_some() || t.trim().parse::<f64>().is_ok();
+            |t: &str| crate::dates::is_day_not_name(t) || t.trim().parse::<f64>().is_ok();
         if not_a_name(person) || not_a_name(site) {
             self.junk += 1;
             return;

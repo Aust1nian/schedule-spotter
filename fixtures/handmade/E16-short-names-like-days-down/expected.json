@@ -1,0 +1,130 @@
+{
+ "category": "E",
+ "tier": "script",
+ "paste": false,
+ "settings": {
+  "today": "2026-10-10",
+  "workdays": [
+   "mon",
+   "tue",
+   "wed",
+   "thu",
+   "fri"
+  ],
+  "days_off": []
+ },
+ "arrangement": "single",
+ "assignments_exact": true,
+ "flags": [
+  {
+   "type": "not_booked",
+   "person": "Mo",
+   "date": "2026-10-14"
+  }
+ ],
+ "flags_exact": true,
+ "input": "input.csv",
+ "layout": "person_by_day",
+ "assignments": [
+  {
+   "person": "Rick Tran",
+   "date": "2026-10-12",
+   "site": "Pine St"
+  },
+  {
+   "person": "Rick Tran",
+   "date": "2026-10-13",
+   "site": "Pine St"
+  },
+  {
+   "person": "Rick Tran",
+   "date": "2026-10-14",
+   "site": "Pine St"
+  },
+  {
+   "person": "Rick Tran",
+   "date": "2026-10-15",
+   "site": "Pine St"
+  },
+  {
+   "person": "Rick Tran",
+   "date": "2026-10-16",
+   "site": "Pine St"
+  },
+  {
+   "person": "Mo",
+   "date": "2026-10-12",
+   "site": "Pine St"
+  },
+  {
+   "person": "Mo",
+   "date": "2026-10-13",
+   "site": "Lake Rd"
+  },
+  {
+   "person": "Mo",
+   "date": "2026-10-15",
+   "site": "Lake Rd"
+  },
+  {
+   "person": "Mo",
+   "date": "2026-10-16",
+   "site": "Lake Rd"
+  },
+  {
+   "person": "Dom",
+   "date": "2026-10-12",
+   "site": "Lake Rd"
+  },
+  {
+   "person": "Dom",
+   "date": "2026-10-13",
+   "site": "Lake Rd"
+  },
+  {
+   "person": "Dom",
+   "date": "2026-10-14",
+   "site": "Lake Rd"
+  },
+  {
+   "person": "Dom",
+   "date": "2026-10-15",
+   "status": "sick"
+  },
+  {
+   "person": "Dom",
+   "date": "2026-10-16",
+   "site": "Lake Rd"
+  },
+  {
+   "person": "Lu",
+   "date": "2026-10-12",
+   "site": "Shop"
+  },
+  {
+   "person": "Lu",
+   "date": "2026-10-13",
+   "site": "Shop"
+  },
+  {
+   "person": "Lu",
+   "date": "2026-10-14",
+   "site": "Pine St"
+  },
+  {
+   "person": "Lu",
+   "date": "2026-10-15",
+   "site": "Pine St"
+  },
+  {
+   "person": "Lu",
+   "date": "2026-10-16",
+   "site": "Pine St"
+  }
+ ],
+ "must_not_ask": [
+  {
+   "type": "pick_layout"
+  }
+ ]
+}

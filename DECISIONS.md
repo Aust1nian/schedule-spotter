@@ -579,3 +579,18 @@ A few crates ship no license file:
 - **Stapling retries:** Apple's ticket server dropped the connection once, after accepting C's disk image (`stapler` error 68). Stapling now retries up to 6 times, a minute apart.
 - Apple usually speeds up after a team's first submissions. The next signed run shows by how much.
 
+## Phase 7
+
+**2026-10-15 · The holdout was run once, then its failure patterns were fixed through new development fixtures.** The blind result is recorded in TEST_REPORT.md, Phase 7, and stays unchanged. Fixes follow two rules:
+- Each failure pattern first gets a **new** handmade fixture, written fresh rather than copied from the holdout. That fixture must fail before the fix and pass after it.
+- All development fixtures and generator seeds 0–1,999 must still pass.
+
+Any later holdout check is reported as "after fixes, not blind".
+
+**2026-10-15 · Fix 1: first names that are also day abbreviations** (holdout H03 "Dom", H17 "Mo"; new fixtures E15 and E16, with Mo, Dom and Lu across and down). `Sink::work` dropped every job cell of a person or site whose name `dates::parse` accepts as a day. The date reader accepts two-letter and Spanish short forms ("mo", "lu", "dom", "mar"), so a worker called Mo lost the whole week, silently. `dates::is_day_not_name` now rejects:
+- real dates, Excel serials and single letters;
+- English day words of three letters or more ("Mon", "Monday");
+- full Spanish day names ("lunes", "domingo").
+
+Short forms that are also first names stay names.
+

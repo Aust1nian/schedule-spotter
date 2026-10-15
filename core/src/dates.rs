@@ -79,6 +79,53 @@ pub fn weekday_word(word: &str) -> Option<Weekday> {
     })
 }
 
+/// Whether a person or site name is really a date or day that leaked into a
+/// name position. Real dates, Excel serials, single letters and full or
+/// standard day words ("Mon", "Monday", "lunes") are. The short and Spanish
+/// abbreviations the date reader also accepts ("Mo", "Lu", "Dom", "Mar",
+/// "Sal" isn't one) are common first names too, so as a name they stay names
+/// (the Phase 7 holdout lost every assignment of a worker called Mo).
+pub fn is_day_not_name(text: &str) -> bool {
+    let Some(tok) = parse(text) else {
+        return false;
+    };
+    match tok {
+        DayTok::Weekday(_) => {
+            let k = key(text);
+            let k = k.trim_matches(|c: char| c == ':' || c == '*' || c == '.' || c.is_whitespace());
+            matches!(
+                k,
+                "mon"
+                    | "monday"
+                    | "tue"
+                    | "tues"
+                    | "tuesday"
+                    | "wed"
+                    | "weds"
+                    | "wednesday"
+                    | "thu"
+                    | "thur"
+                    | "thurs"
+                    | "thursday"
+                    | "fri"
+                    | "friday"
+                    | "sat"
+                    | "saturday"
+                    | "sun"
+                    | "sunday"
+                    | "lunes"
+                    | "martes"
+                    | "miercoles"
+                    | "jueves"
+                    | "viernes"
+                    | "sabado"
+                    | "domingo"
+            )
+        }
+        _ => true,
+    }
+}
+
 fn letter(word: &str) -> Option<Letter> {
     Some(match word.trim_end_matches('.') {
         "m" => Letter::M,

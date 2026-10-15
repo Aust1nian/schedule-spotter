@@ -1,0 +1,1 @@
+First names that are also day abbreviations (Mo, Dom for domingo, Lu for lunes) across the top of a day x person grid; they are people, not days. Written in Phase 7 after the holdout showed the pattern.
