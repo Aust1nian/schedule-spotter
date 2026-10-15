@@ -1,0 +1,247 @@
+{
+ "category": "C",
+ "tier": "script",
+ "input": "input.csv",
+ "paste": false,
+ "settings": {
+  "today": "2026-10-28",
+  "workdays": [
+   "mon",
+   "tue",
+   "wed",
+   "thu",
+   "fri"
+  ],
+  "days_off": []
+ },
+ "layout": "calendar_month",
+ "arrangement": "single",
+ "assignments": [
+  {
+   "person": "Dana",
+   "date": "2026-11-02",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-02",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-03",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-03",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-04",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-04",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Kai",
+   "date": "2026-11-04",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-05",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-05",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Kai",
+   "date": "2026-11-05",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-06",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-06",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Kai",
+   "date": "2026-11-06",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-09",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-09",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-10",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-10",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-11",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-11",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-12",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-12",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-13",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-13",
+   "site": "Ivy Ct reroof"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-16",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-16",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-17",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-17",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-18",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-19",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-19",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-20",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-20",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-23",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-23",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-24",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-24",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-25",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-25",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-26",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-26",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-27",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-27",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Dana",
+   "date": "2026-11-30",
+   "site": "Lowell barn"
+  },
+  {
+   "person": "Pete",
+   "date": "2026-11-30",
+   "site": "Lowell barn"
+  }
+ ],
+ "assignments_exact": true,
+ "must_not_ask": [
+  {
+   "type": "pick_layout"
+  }
+ ]
+}

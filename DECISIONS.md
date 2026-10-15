@@ -606,3 +606,8 @@ Short forms that are also first names stay names.
 - "Technicians" and "Installers" joined the people headers.
 - **Kept narrow by the generator:** a first version also caught a "Laborer" placeholder that opened the second week of a side-by-side board, and the third week's repeated "Worker" header. That lost a week's names on 3 of the 2,000 development seeds. The rule now also needs the header row to have at least two header words to the block's left, at least one of them not a people header ("Date | Tech | Job"). Compared seed by seed with the build before the fix: none worse, one better (1713).
 
+**2026-10-15 · Fix 5: month calendars, footer notes and short weeks** (holdout H10; new fixture C23, which also exposed the second bug).
+- **Footer notes:** a note below the calendar ("Roof tear-off at Lowell moved to 11/30 - Dana knows.") was read as an entry for the last Sunday, with "Lowell moved to 11" as a person. The last week's entries now end at a blank row, whether the grid kept it as an empty row or dropped it (a gap in the file's own row numbers). They also end at a line alone in its row that reads like a sentence and whose "people" side doesn't look like names (score under 0.4). The score keeps long crew entries ("Alejandro A + Lázaro R + Salvador H - Job 2612 Hillcrest") that are alone in their row.
+- **Short weeks:** a month's first or last week with only one or two days ("29 | 30" under Sun and Mon) wasn't recognized as a week, because a week needed three day numbers. Its entries went to the week above. Such a row now counts when it holds only those numbers and continues the full weeks.
+- **Seed by seed:** the 2,000 development seeds have none worse and 9 calendars better.
+

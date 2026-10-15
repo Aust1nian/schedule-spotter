@@ -1,0 +1,1 @@
+November calendar month ('Name - Job' entries under day numbers) with footer notes below a blank row; one note has a dash and must not become an entry for the last Sunday. Written in Phase 7 after the holdout showed the pattern.

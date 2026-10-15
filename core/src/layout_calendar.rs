@@ -73,8 +73,31 @@ pub fn read(ctx: &SheetCtx) -> Vec<Candidate> {
             if let Some((_, rest)) = own.split_once('\n') {
                 texts.push((rest.to_string(), *r));
             }
+            // Below the last week, a blank row ends the calendar: what follows
+            // is notes ("Roof tear-off moved to 11/30 - Dana knows."), not
+            // entries for the month's last days. A blank row is either kept
+            // as an empty row or dropped by the grid, which shows as a gap
+            // in the file's own row numbers.
+            let last_week = k + 1 == rows_at.len();
             for rr in r + 1..end {
+                if last_week
+                    && (g.row_nonempty(rr) == 0
+                        || g.source(rr, *c).row > g.source(rr - 1, *c).row + 1)
+                {
+                    break;
+                }
                 let t = g.text(rr, *c);
+                // A sentence alone in its row under the last week, whose
+                // "people" aren't names, is a note even where the file kept
+                // no blank row before it. A long crew entry ("Alejandro A +
+                // Lázaro R + Salvador H - Job 2612") still reads.
+                if last_week
+                    && g.row_nonempty(rr) == 1
+                    && crate::layout::is_footer_text(t)
+                    && entry_people_score(t) < 0.4
+                {
+                    break;
+                }
                 if !t.is_empty() && !ctx.consumed.contains(&(rr, *c)) {
                     texts.push((t.to_string(), rr));
                 }
@@ -134,6 +157,51 @@ fn number_row_dates(
     }
     if number_rows.len() < 2 {
         return None;
+    }
+    // A month's first or last week can hold just one or two days ("29 | 30"
+    // under Sun and Mon). Such a row counts when it holds nothing but those
+    // numbers and continues the full weeks: the last week starts the next
+    // day in the first column; the first week ends the day before in the
+    // last column.
+    let only_numbers = |r: usize, nums: &[Option<u32>]| {
+        cols.iter()
+            .zip(nums)
+            .all(|((c, _), n)| n.is_some() == !g.is_empty(r, *c))
+            && (0..g.width()).all(|c| g.is_empty(r, c) || cols.iter().any(|(cc, _)| *cc == c))
+    };
+    let short_nums = |r: usize| -> Option<Vec<Option<u32>>> {
+        let nums: Vec<Option<u32>> = cols
+            .iter()
+            .map(|(c, _)| leading_day_number(g, r, *c))
+            .collect();
+        let n = nums.iter().flatten().count();
+        let increasing = nums
+            .iter()
+            .flatten()
+            .collect::<Vec<_>>()
+            .windows(2)
+            .all(|w| *w[1] == *w[0] + 1);
+        ((1..3).contains(&n) && increasing && only_numbers(r, &nums)).then_some(nums)
+    };
+    let last_of = |nums: &[Option<u32>]| nums.iter().rev().flatten().next().copied();
+    let first_of = |nums: &[Option<u32>]| nums.iter().flatten().next().copied();
+    if let Some((last_r, last_nums)) = number_rows.last().cloned()
+        && let Some(r) = (last_r + 1..g.height()).find(|&r| short_nums(r).is_some())
+        && let Some(nums) = short_nums(r)
+        && nums[0].is_some()
+        && first_of(&nums) == last_of(&last_nums).map(|n| n + 1)
+    {
+        number_rows.push((r, nums));
+    }
+    if let Some((first_r, first_nums)) = number_rows.first().cloned()
+        && let Some(r) = (header_row + 1..first_r)
+            .rev()
+            .find(|&r| short_nums(r).is_some())
+        && let Some(nums) = short_nums(r)
+        && nums[nums.len() - 1].is_some()
+        && first_of(&first_nums) == last_of(&nums).map(|n| n + 1)
+    {
+        number_rows.insert(0, (r, nums));
     }
     let (year, month) = match month_title(ctx, header_row) {
         Some(ym) => ym,
@@ -274,6 +342,29 @@ const SEPARATORS: [&str; 9] = [
 ];
 
 /// One calendar line: "Mike - Johnson", "Johnson: Mike, Jose", "Luis OFF".
+/// How much the people side of an entry line looks like names, split and
+/// chosen the way `read_entry` does it (0 when there's no "people - job").
+fn entry_people_score(line: &str) -> f32 {
+    let line = clean(line);
+    let Some((left, right)) = SEPARATORS.iter().find_map(|sep| line.split_once(sep)) else {
+        return 0.0;
+    };
+    let people_score = |t: &str| {
+        let items = cells::parse_cell(t, Expect::People).items;
+        if items.is_empty() {
+            0.0
+        } else {
+            items.iter().map(|i| person_score(&i.text)).sum::<f32>() / items.len() as f32
+        }
+    };
+    let (left, right) = (left.trim(), right.trim());
+    if people_score(left) + site_score(right) >= people_score(right) + site_score(left) {
+        people_score(left)
+    } else {
+        people_score(right)
+    }
+}
+
 fn read_entry(
     ctx: &SheetCtx,
     sink: &mut Sink,
