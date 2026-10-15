@@ -1,0 +1,45 @@
+ 88.2%  251 (person_by_day, input.xlsx)  missing 2 extra 1
+ 93.5%  90 (person_by_day, input.ods)  missing 2 extra 1
+ 95.7%  218 (person_by_day, input.xls)  missing 4 extra 2
+
+flags            expected  matched   actual   recall  precision
+  assigned_while_off     146      134      136   91.78%   98.53%
+  double_booked          240      223      246   92.92%   90.65%
+  not_booked             544      466     2670   85.66%   17.45%
+  unstaffed              150      150      157  100.00%   95.54%
+clean schedules 53, with a red flag: 1
+    299 (person_by_day): double_booked 2026-11-17 | person=joseph | site= | sites=18711 dogwood st; hill bath | status=
+
+after the owner answers every same-person/same-site question correctly:
+  assigned_while_off     146      138      139   94.52%   99.28%
+  double_booked          240      230      250   95.83%   92.00%
+  not_booked             544      471      717   86.58%   65.69%
+  unstaffed              150      150      155  100.00%   96.77%
+questions per file (model on): mean 1.28, files with none 203/300, same-person/site questions 382
+merges 544, false merges 4
+    242: Person "François" -> "Francisco"
+    299: Person "José" -> "Joseph"
+    75: Person "Mario" -> "María C."
+    75: Person "María V." -> "María C."
+
+cases 300  assignment recall 99.508%  precision 99.817%  perfect cases 283/300  p95 33751.5 ms
+    missing: 2026-10-13 | person=luis | site=oak ridge | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-13 | person=pedro | site=oak ridge | status= | unstaffed=false | part= | time=- | note=
+    … 5 more
+
+category  pass/total  (model-tier skipped)
+  A        10/10      (0)
+  B        10/10      (0)
+  C        26/26      (0)
+  D        14/14      (0)
+  E        16/16      (0)
+  F        10/10      (0)
+  G         8/8       (0)
+  H         8/8       (0)
+  I         9/9       (0)
+  J         5/5       (0)
+  K        12/12      (0)
+  L         8/9       (0)
+  M         5/8       (0)
+  N         6/6       (0)
+  all     147/151

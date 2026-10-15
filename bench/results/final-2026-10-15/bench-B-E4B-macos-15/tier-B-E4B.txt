@@ -1,0 +1,45 @@
+  unstaffed              150      150      157  100.00%   95.54%
+clean schedules 53, with a red flag: 3
+    126 (long_list): double_booked 2026-11-02 | person=roberto | site= | sites=90 s peach blvd; myers basement | status=
+    299 (person_by_day): double_booked 2026-11-17 | person=joseph | site= | sites=18711 dogwood st; hill bath | status=
+    76 (long_list): double_booked 2026-10-12 | person=roberto | site= | sites=3511 laurel blvd; eagle crest middle school | status=
+
+after the owner answers every same-person/same-site question correctly:
+  assigned_while_off     146      138      147   94.52%   93.88%
+  double_booked          240      228      362   95.00%   62.98%
+  not_booked             544      470      718   86.40%   65.46%
+  unstaffed              150      150      154  100.00%   97.40%
+questions per file (model on): mean 1.16, files with none 195/300, same-person/site questions 348
+merges 636, false merges 20
+    121: Person "Marvin" -> "Martín"
+    126: Person "Robert" -> "Roberto"
+    15: Person "Juan" -> "Julián"
+    166: Person "Mario" -> "Martín"
+    173: Person "Clnt" -> "Clint T"
+    198: Person "François" -> "Francisco"
+    26: Person "Mario" -> "María"
+    26: Person "Tom" -> "Tomás"
+    26: Person "Ignacio" -> "Ignatius"
+    272: Person "James" -> "Jaime"
+
+cases 300  assignment recall 99.508%  precision 99.817%  perfect cases 283/300  p95 53077.8 ms
+    missing: 2026-10-13 | person=luis | site=oak ridge | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-13 | person=pedro | site=oak ridge | status= | unstaffed=false | part= | time=- | note=
+    … 5 more
+
+category  pass/total  (model-tier skipped)
+  A        10/10      (0)
+  B        10/10      (0)
+  C        26/26      (0)
+  D        14/14      (0)
+  E        16/16      (0)
+  F        10/10      (0)
+  G         8/8       (0)
+  H         8/8       (0)
+  I         9/9       (0)
+  J         5/5       (0)
+  K        12/12      (0)
+  L         9/9       (0)
+  M         5/8       (0)
+  N         6/6       (0)
+  all     148/151

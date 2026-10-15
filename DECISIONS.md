@@ -635,3 +635,5 @@ Short forms that are also first names stay names.
   - Re-running the failed jobs once Apple accepts reuses the submission IDs and app files already in the run, without uploading again (RELEASE.md, "When notarization waits").
 - Apple normally speeds up after a team's first submissions. The next release shows by how much.
 
+**2026-10-15 · Final benchmark and recommendation (Phase 7).** CI run 38703867149 (commit 29b9363): all 30 benchmark jobs and the report passed. No variant passes the selection rule on any runner, so the rule's answer is **model off**. The best scorer, B-E2B, has 16.2% false merges against the 1% limit. The holdout agrees: 96 wrong merges per 1,000 unseen schedules for B-E2B, 6 for A, 0 for C and for model off. MODEL_REPORT.md sets out the choice for Austin: model off is recommended, with C, A and B-E2B as the alternatives and their costs. The Phase 7 gate ("reports complete; Austin picks the variant") waits only on his pick.
+

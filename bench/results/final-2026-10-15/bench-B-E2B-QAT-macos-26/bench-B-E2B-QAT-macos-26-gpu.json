@@ -1,0 +1,330 @@
+{
+  "arch": "aarch64",
+  "backend": "gpu",
+  "decode_failures": 0,
+  "hash_s": 4.980575917,
+  "load_s": 9.378731375,
+  "model": "gemma-4-E2B_q4_0-it.gguf",
+  "os": "macos",
+  "overall": {
+    "accuracy_on_answered": 0.6153846153846154,
+    "false_merge_rate": 0.0,
+    "items": 30,
+    "latency_p50_s": 2.384187916,
+    "latency_p95_s": 5.171866542,
+    "unsure_rate": 0.13333333333333333
+  },
+  "peak_rss_mb": 2899.734375,
+  "records": [
+    {
+      "confidence": 0.9819999933242798,
+      "id": "t1-001",
+      "kind": "typo",
+      "latency_s": 2.768153375,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9850000143051147,
+      "id": "t1-002",
+      "kind": "typo",
+      "latency_s": 2.526391209,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9860000014305115,
+      "id": "t1-003",
+      "kind": "typo",
+      "latency_s": 3.422298375,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9909999966621399,
+      "id": "t1-004",
+      "kind": "typo",
+      "latency_s": 3.425816542,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9810000061988831,
+      "id": "t1-005",
+      "kind": "typo",
+      "latency_s": 2.584114,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9919999837875366,
+      "id": "t1-006",
+      "kind": "typo",
+      "latency_s": 2.262908,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9520000219345093,
+      "id": "t2-001",
+      "kind": "typo",
+      "latency_s": 2.234901083,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.5830000042915344,
+      "id": "t2-002",
+      "kind": "typo",
+      "latency_s": 1.768978709,
+      "outcome": "unsure",
+      "raw": "same",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.7149999737739563,
+      "id": "t2-003",
+      "kind": "street_no_number",
+      "latency_s": 2.805444291,
+      "outcome": "wrong",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.8050000071525574,
+      "id": "t2-004",
+      "kind": "customer_vs_address",
+      "latency_s": 2.382682958,
+      "outcome": "unsure",
+      "raw": "same",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.5849999785423279,
+      "id": "t2-005",
+      "kind": "customer_job",
+      "latency_s": 2.641412375,
+      "outcome": "unsure",
+      "raw": "same",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.7300000190734863,
+      "id": "t2-006",
+      "kind": "store_no_number",
+      "latency_s": 2.348971625,
+      "outcome": "unsure",
+      "raw": "same",
+      "said": "unsure"
+    },
+    {
+      "id": "t3-001",
+      "kind": "surname",
+      "latency_s": 1.7535692090000001,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t3-002",
+      "kind": "surname",
+      "latency_s": 2.009276667,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-003",
+      "kind": "surname",
+      "latency_s": 1.961908958,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-004",
+      "kind": "surname",
+      "latency_s": 2.3562932500000002,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t3-005",
+      "kind": "surname",
+      "latency_s": 2.217236416,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t3-006",
+      "kind": "surname",
+      "latency_s": 1.879267375,
+      "outcome": "wrong",
+      "said": "person"
+    },
+    {
+      "id": "t4-001",
+      "kind": "surname_vs_customer",
+      "latency_s": 2.971858959,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t4-002",
+      "kind": "surname_vs_customer",
+      "latency_s": 2.477563959,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t4-003",
+      "kind": "surname_vs_customer",
+      "latency_s": 2.384187916,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t4-004",
+      "kind": "surname_vs_customer",
+      "latency_s": 2.027035458,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t4-005",
+      "kind": "surname_vs_customer",
+      "latency_s": 1.99460225,
+      "outcome": "wrong",
+      "said": "person"
+    },
+    {
+      "id": "t4-006",
+      "kind": "surname_vs_customer",
+      "latency_s": 2.107934,
+      "outcome": "wrong",
+      "said": "person"
+    },
+    {
+      "id": "t5-001",
+      "kind": "spanish",
+      "latency_s": 5.054566709,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-002",
+      "kind": "text",
+      "latency_s": 5.1910595,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-003",
+      "kind": "text",
+      "latency_s": 5.224939583,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-004",
+      "kind": "bullet",
+      "latency_s": 5.103517625,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-005",
+      "kind": "text",
+      "latency_s": 5.171866542,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-006",
+      "kind": "text",
+      "latency_s": 5.137530958,
+      "outcome": "wrong",
+      "said": "cannot read"
+    }
+  ],
+  "rss_before_load_mb": 9.0,
+  "same_min": 0.8999999761581421,
+  "tasks": {
+    "t1_same_person": {
+      "accuracy_on_answered": 1.0,
+      "answered": 6,
+      "false_merge_rate": 0.0,
+      "false_merges": 0,
+      "items": 6,
+      "latency_p50_s": 2.584114,
+      "latency_p95_s": 3.422298375,
+      "unsure_rate": 0.0,
+      "wrong_examples": []
+    },
+    "t2_same_site": {
+      "accuracy_on_answered": 0.5,
+      "answered": 2,
+      "false_merge_rate": 0.0,
+      "false_merges": 0,
+      "items": 6,
+      "latency_p50_s": 2.348971625,
+      "latency_p95_s": 2.641412375,
+      "unsure_rate": 0.6666666666666666,
+      "wrong_examples": [
+        "t2-003: Johnson St / 1420 Johnson St -> different"
+      ]
+    },
+    "t3_cell_meaning": {
+      "accuracy_on_answered": 0.8333333333333334,
+      "answered": 6,
+      "false_merge_rate": 0.0,
+      "false_merges": 0,
+      "items": 6,
+      "latency_p50_s": 1.961908958,
+      "latency_p95_s": 2.217236416,
+      "unsure_rate": 0.0,
+      "wrong_examples": [
+        "t3-006: \"site\" -> person"
+      ]
+    },
+    "t4_column_role": {
+      "accuracy_on_answered": 0.6666666666666666,
+      "answered": 6,
+      "false_merge_rate": 0.0,
+      "false_merges": 0,
+      "items": 6,
+      "latency_p50_s": 2.107934,
+      "latency_p95_s": 2.477563959,
+      "unsure_rate": 0.0,
+      "wrong_examples": [
+        "t4-005: \"site\" -> person",
+        "t4-006: \"site\" -> person"
+      ]
+    },
+    "t5_free_text": {
+      "accuracy_on_answered": 0.0,
+      "answered": 6,
+      "false_merge_rate": 0.0,
+      "false_merges": 0,
+      "items": 6,
+      "latency_p50_s": 5.137530958,
+      "latency_p95_s": 5.1910595,
+      "unsure_rate": 0.0,
+      "wrong_examples": [
+        "t5-001: lunes: Chuy y Memo en la obra Smith",
+        "t5-002: Mon - Dave & Mike B at 1420 Johnson 7-3:30",
+        "t5-003: Tue/Wed: Ana at Hale Elem",
+        "t5-004: - Thurs: Rosa @ Garcia deck",
+        "t5-005: Fri: Chuy off, Memo at Smith",
+        "t5-006: Mon-Wed Dave and Luis at Garcia deck"
+      ]
+    }
+  },
+  "threads": 2,
+  "variant": "B-E2B-QAT",
+  "warm_s": 81.842862083
+}

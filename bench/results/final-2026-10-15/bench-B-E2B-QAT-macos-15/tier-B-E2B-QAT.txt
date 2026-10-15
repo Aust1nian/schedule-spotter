@@ -1,0 +1,45 @@
+clean schedules 53, with a red flag: 4
+    126 (long_list): double_booked 2026-11-02 | person=roberto | site= | sites=90 s peach blvd; myers basement | status=
+    222 (long_list): double_booked 2026-09-21 | person=tomás | site= | sites=88 ridgeview blvd; j-2714 shadow hills | status=
+    299 (person_by_day): double_booked 2026-11-17 | person=joseph | site= | sites=18711 dogwood st; hill bath | status=
+    76 (long_list): double_booked 2026-10-12 | person=roberto | site= | sites=3511 laurel blvd; eagle crest middle school | status=
+
+after the owner answers every same-person/same-site question correctly:
+  assigned_while_off     146      138      153   94.52%   90.20%
+  double_booked          240      229      399   95.42%   57.39%
+  not_booked             544      470      783   86.40%   60.03%
+  unstaffed              150      150      154  100.00%   97.40%
+questions per file (model on): mean 0.84, files with none 223/300, same-person/site questions 251
+merges 629, false merges 26
+    126: Person "Robert" -> "Roberto"
+    133: Person "Fabián A." -> "Fabián P."
+    133: Person "Luíca" -> "Lucia Alvarado"
+    133: Person "Lucía M." -> "Lucia Alvarado"
+    136: Person "Josh" -> "José"
+    15: Person "Juan" -> "Julián"
+    156: Person "Mario" -> "Macario"
+    173: Person "Celetsino" -> "Celestino M"
+    198: Person "François" -> "Francisco"
+    222: Person "Tom" -> "Tomás"
+
+cases 300  assignment recall 99.508%  precision 99.817%  perfect cases 283/300  p95 18844.7 ms
+    missing: 2026-10-15 | person=luis | site=smith remodel | status= | unstaffed=false | part= | time=- | note=
+    missing: 2026-10-16 | person=luis | site=smith remodel | status= | unstaffed=false | part= | time=- | note=
+    … 1 more
+
+category  pass/total  (model-tier skipped)
+  A        10/10      (0)
+  B        10/10      (0)
+  C        26/26      (0)
+  D        14/14      (0)
+  E        16/16      (0)
+  F        10/10      (0)
+  G         8/8       (0)
+  H         8/8       (0)
+  I         9/9       (0)
+  J         5/5       (0)
+  K        12/12      (0)
+  L         8/9       (0)
+  M         7/8       (0)
+  N         6/6       (0)
+  all     149/151

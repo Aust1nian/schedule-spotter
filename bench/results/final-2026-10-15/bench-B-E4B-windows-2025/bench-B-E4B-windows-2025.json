@@ -1,0 +1,3903 @@
+{
+  "arch": "x86_64",
+  "backend": "cpu",
+  "decode_failures": 0,
+  "hash_s": 4.4761399,
+  "load_s": 5.8565026,
+  "model": "gemma-4-E4B-it-Q4_K_M.gguf",
+  "os": "windows",
+  "overall": {
+    "accuracy_on_answered": 0.6615969581749049,
+    "false_merge_rate": 0.018018018018018018,
+    "items": 468,
+    "latency_p50_s": 4.9729453,
+    "latency_p95_s": 6.2236907,
+    "unsure_rate": 0.43803418803418803
+  },
+  "peak_rss_mb": 3271.3046875,
+  "records": [
+    {
+      "confidence": 0.0,
+      "id": "t1-001",
+      "kind": "typo",
+      "latency_s": 5.1058823,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-002",
+      "kind": "typo",
+      "latency_s": 4.3848752,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-003",
+      "kind": "typo",
+      "latency_s": 5.3616385,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-004",
+      "kind": "typo",
+      "latency_s": 5.8131974,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-005",
+      "kind": "typo",
+      "latency_s": 5.0040911,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-006",
+      "kind": "typo",
+      "latency_s": 5.0733262,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-007",
+      "kind": "typo",
+      "latency_s": 4.9669201,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-008",
+      "kind": "typo",
+      "latency_s": 4.7583263,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-009",
+      "kind": "typo",
+      "latency_s": 5.1264228,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9950000047683716,
+      "id": "t1-010",
+      "kind": "typo",
+      "latency_s": 4.9023003,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-011",
+      "kind": "typo",
+      "latency_s": 4.9724865000000005,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-012",
+      "kind": "accent_typo",
+      "latency_s": 5.0622337,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-013",
+      "kind": "typo",
+      "latency_s": 5.1623155,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9990000128746033,
+      "id": "t1-014",
+      "kind": "typo",
+      "latency_s": 4.710436,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-015",
+      "kind": "typo",
+      "latency_s": 5.0339011,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-016",
+      "kind": "accent_typo",
+      "latency_s": 5.5044096,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-017",
+      "kind": "typo",
+      "latency_s": 5.2435015,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-018",
+      "kind": "accent_typo",
+      "latency_s": 5.1411396,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-019",
+      "kind": "typo",
+      "latency_s": 5.0279402,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-020",
+      "kind": "typo",
+      "latency_s": 5.049405,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-021",
+      "kind": "dropped_surname",
+      "latency_s": 5.5694427,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-022",
+      "kind": "dropped_surname",
+      "latency_s": 6.5013018,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-023",
+      "kind": "dropped_surname",
+      "latency_s": 5.0762786,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9980000257492065,
+      "id": "t1-024",
+      "kind": "dropped_surname",
+      "latency_s": 4.8024297,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.8730000257492065,
+      "id": "t1-025",
+      "kind": "dropped_surname",
+      "latency_s": 4.4069052,
+      "outcome": "unsure",
+      "raw": "same",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9940000176429749,
+      "id": "t1-026",
+      "kind": "dropped_surname",
+      "latency_s": 4.6380242,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-027",
+      "kind": "dropped_surname",
+      "latency_s": 5.0484626,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9919999837875366,
+      "id": "t1-028",
+      "kind": "dropped_surname",
+      "latency_s": 4.5720034,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9990000128746033,
+      "id": "t1-029",
+      "kind": "dropped_surname",
+      "latency_s": 4.5841581,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.8489999771118164,
+      "id": "t1-030",
+      "kind": "lone_first",
+      "latency_s": 4.6924831000000005,
+      "outcome": "unsure",
+      "raw": "same",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-031",
+      "kind": "lone_first",
+      "latency_s": 5.033213,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-032",
+      "kind": "lone_first",
+      "latency_s": 5.0521088,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-033",
+      "kind": "lone_first",
+      "latency_s": 5.0392766,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-034",
+      "kind": "lone_first",
+      "latency_s": 5.071092,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9769999980926514,
+      "id": "t1-035",
+      "kind": "lone_first",
+      "latency_s": 4.825728,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9959999918937683,
+      "id": "t1-036",
+      "kind": "lone_first",
+      "latency_s": 4.6967463,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9919999837875366,
+      "id": "t1-037",
+      "kind": "lone_first",
+      "latency_s": 4.794972,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9909999966621399,
+      "id": "t1-038",
+      "kind": "lone_first",
+      "latency_s": 4.2948443,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-039",
+      "kind": "lone_first",
+      "latency_s": 5.0743282,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-040",
+      "kind": "cross_abbrev",
+      "latency_s": 5.0420238,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-041",
+      "kind": "cross_abbrev",
+      "latency_s": 5.275965,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-042",
+      "kind": "cross_abbrev",
+      "latency_s": 5.0580736,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-043",
+      "kind": "cross_abbrev",
+      "latency_s": 5.0672012,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9549999833106995,
+      "id": "t1-044",
+      "kind": "cross_abbrev",
+      "latency_s": 4.415403,
+      "outcome": "unsure",
+      "raw": "unsure",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-045",
+      "kind": "cross_abbrev",
+      "latency_s": 5.0760922,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.8159999847412109,
+      "id": "t1-046",
+      "kind": "cross_abbrev",
+      "latency_s": 4.5687235,
+      "outcome": "unsure",
+      "raw": "unsure",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-047",
+      "kind": "cross_abbrev",
+      "latency_s": 5.1285153,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-048",
+      "kind": "nickname",
+      "latency_s": 5.1414157,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9990000128746033,
+      "id": "t1-049",
+      "kind": "nickname",
+      "latency_s": 3.9409748000000002,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-050",
+      "kind": "nickname",
+      "latency_s": 5.0508959,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-051",
+      "kind": "nickname",
+      "latency_s": 4.2358153,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9909999966621399,
+      "id": "t1-052",
+      "kind": "nickname",
+      "latency_s": 4.2768162,
+      "outcome": "wrong",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-053",
+      "kind": "nickname",
+      "latency_s": 5.0796537,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-054",
+      "kind": "nickname",
+      "latency_s": 5.0295778,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-055",
+      "kind": "nickname",
+      "latency_s": 5.3127407,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.6430000066757202,
+      "id": "t1-056",
+      "kind": "nickname",
+      "latency_s": 4.276478,
+      "outcome": "wrong",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-057",
+      "kind": "nickname",
+      "latency_s": 5.1031464,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-058",
+      "kind": "nickname",
+      "latency_s": 4.6323163,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.996999979019165,
+      "id": "t1-059",
+      "kind": "nickname",
+      "latency_s": 4.6647487,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-060",
+      "kind": "nickname",
+      "latency_s": 5.4973366,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9950000047683716,
+      "id": "t1-061",
+      "kind": "nickname",
+      "latency_s": 4.65506,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-062",
+      "kind": "nickname",
+      "latency_s": 5.5138876,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-063",
+      "kind": "nickname",
+      "latency_s": 5.5294713,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-064",
+      "kind": "nickname",
+      "latency_s": 5.061167,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-065",
+      "kind": "nickname",
+      "latency_s": 5.0040673,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-066",
+      "kind": "nickname",
+      "latency_s": 5.0438204,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.4339999854564667,
+      "id": "t1-067",
+      "kind": "nickname",
+      "latency_s": 4.971541,
+      "outcome": "unsure",
+      "raw": "unsure",
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-068",
+      "kind": "accent_typo",
+      "latency_s": 4.7950487,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-069",
+      "kind": "accent_typo",
+      "latency_s": 5.7463213,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-070",
+      "kind": "accent_typo",
+      "latency_s": 4.7074853,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-071",
+      "kind": "accent_typo",
+      "latency_s": 4.7797243,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-072",
+      "kind": "accent_typo",
+      "latency_s": 4.7421243,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-073",
+      "kind": "accent_typo",
+      "latency_s": 5.4366167,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-074",
+      "kind": "accent_typo",
+      "latency_s": 4.5290512,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-075",
+      "kind": "es_en_variant",
+      "latency_s": 5.0008107,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9810000061988831,
+      "id": "t1-076",
+      "kind": "es_en_variant",
+      "latency_s": 3.7426873,
+      "outcome": "wrong",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.9990000128746033,
+      "id": "t1-077",
+      "kind": "es_en_variant",
+      "latency_s": 4.767018,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-078",
+      "kind": "es_en_variant",
+      "latency_s": 5.0326809,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.8519999980926514,
+      "id": "t1-079",
+      "kind": "es_en_variant",
+      "latency_s": 4.654401,
+      "outcome": "unsure",
+      "raw": "same",
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-080",
+      "kind": "es_en_variant",
+      "latency_s": 4.8469964,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.9990000128746033,
+      "id": "t1-081",
+      "kind": "es_en_variant",
+      "latency_s": 4.2383524,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.953000009059906,
+      "id": "t1-082",
+      "kind": "es_en_variant",
+      "latency_s": 4.7896073999999995,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-083",
+      "kind": "es_en_variant",
+      "latency_s": 6.0588742,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-084",
+      "kind": "es_en_variant",
+      "latency_s": 5.6573458,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-085",
+      "kind": "lookalike_first",
+      "latency_s": 5.2381281,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-086",
+      "kind": "lookalike_first",
+      "latency_s": 5.0734556,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-087",
+      "kind": "lookalike_first",
+      "latency_s": 5.0489397,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-088",
+      "kind": "lookalike_first",
+      "latency_s": 5.2981128,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-089",
+      "kind": "lookalike_first",
+      "latency_s": 5.069703,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-090",
+      "kind": "lookalike_first",
+      "latency_s": 5.4088618,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-091",
+      "kind": "lookalike_first",
+      "latency_s": 5.0039065,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-092",
+      "kind": "lookalike_first",
+      "latency_s": 5.6819549,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-093",
+      "kind": "lookalike_first",
+      "latency_s": 5.0182036,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-094",
+      "kind": "lookalike_first",
+      "latency_s": 5.0364277,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-095",
+      "kind": "lookalike_first",
+      "latency_s": 5.1916867,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-096",
+      "kind": "lookalike_first",
+      "latency_s": 5.4969498,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-097",
+      "kind": "lookalike_first",
+      "latency_s": 5.0579982,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-098",
+      "kind": "lookalike_first",
+      "latency_s": 5.4027424,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-099",
+      "kind": "lookalike_first",
+      "latency_s": 6.0750897,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-100",
+      "kind": "lookalike_first",
+      "latency_s": 5.0628683,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-101",
+      "kind": "lookalike_first",
+      "latency_s": 5.455148,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-102",
+      "kind": "lookalike_first",
+      "latency_s": 5.0576683,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.972000002861023,
+      "id": "t1-103",
+      "kind": "lookalike_first",
+      "latency_s": 4.1757025,
+      "outcome": "wrong",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.8859999775886536,
+      "id": "t1-104",
+      "kind": "lookalike_first",
+      "latency_s": 4.666416,
+      "outcome": "unsure",
+      "raw": "same",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-105",
+      "kind": "lookalike_first",
+      "latency_s": 5.0216381,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-106",
+      "kind": "lookalike_first",
+      "latency_s": 5.1273224,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-107",
+      "kind": "lookalike_first",
+      "latency_s": 5.1740376,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-108",
+      "kind": "lookalike_first",
+      "latency_s": 5.1508541,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-109",
+      "kind": "lookalike_first",
+      "latency_s": 5.1962301,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-110",
+      "kind": "lookalike_first",
+      "latency_s": 5.1030874,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-111",
+      "kind": "lookalike_first",
+      "latency_s": 5.0130585,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-112",
+      "kind": "lookalike_surname",
+      "latency_s": 5.0504209,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9950000047683716,
+      "id": "t1-113",
+      "kind": "lookalike_surname",
+      "latency_s": 3.9505192,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-114",
+      "kind": "lookalike_surname",
+      "latency_s": 5.1592991,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-115",
+      "kind": "lookalike_surname",
+      "latency_s": 5.0390722,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-116",
+      "kind": "lookalike_surname",
+      "latency_s": 6.026943,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-117",
+      "kind": "lookalike_surname",
+      "latency_s": 6.2928446000000005,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-118",
+      "kind": "lookalike_surname",
+      "latency_s": 5.0703873,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-119",
+      "kind": "lookalike_surname",
+      "latency_s": 4.796154,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-120",
+      "kind": "lookalike_surname",
+      "latency_s": 5.1016107,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-121",
+      "kind": "lookalike_surname",
+      "latency_s": 5.0069787,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-122",
+      "kind": "lone_first_other",
+      "latency_s": 5.1201709,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-123",
+      "kind": "lone_first_other",
+      "latency_s": 5.893454,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-124",
+      "kind": "lone_first_other",
+      "latency_s": 5.0567824,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-125",
+      "kind": "lone_first_other",
+      "latency_s": 5.1195307,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-126",
+      "kind": "lone_first_other",
+      "latency_s": 5.1597962,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-127",
+      "kind": "lone_first_other",
+      "latency_s": 5.7934566,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-128",
+      "kind": "gender_variant",
+      "latency_s": 5.1295501,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9940000176429749,
+      "id": "t1-129",
+      "kind": "gender_variant",
+      "latency_s": 4.7766579,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.9990000128746033,
+      "id": "t1-130",
+      "kind": "gender_variant",
+      "latency_s": 4.5566963000000005,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t1-131",
+      "kind": "gender_variant",
+      "latency_s": 4.7987148,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-132",
+      "kind": "compound_conflict",
+      "latency_s": 5.6910426,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-133",
+      "kind": "compound_conflict",
+      "latency_s": 6.0131148,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-134",
+      "kind": "compound_conflict",
+      "latency_s": 6.4772381,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-135",
+      "kind": "compound_conflict",
+      "latency_s": 5.0586328,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-136",
+      "kind": "cross_abbrev_other",
+      "latency_s": 5.2370881,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-137",
+      "kind": "cross_abbrev_other",
+      "latency_s": 5.8131085,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-138",
+      "kind": "control_never_asked",
+      "latency_s": 5.0638079,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-139",
+      "kind": "control_never_asked",
+      "latency_s": 6.071917,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-140",
+      "kind": "control_never_asked",
+      "latency_s": 5.7701003,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-141",
+      "kind": "control_never_asked",
+      "latency_s": 6.2236907,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-142",
+      "kind": "control_never_asked",
+      "latency_s": 6.9120428,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-143",
+      "kind": "control_never_asked",
+      "latency_s": 5.9012176,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-144",
+      "kind": "control_never_asked",
+      "latency_s": 5.1500149,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-145",
+      "kind": "control_never_asked",
+      "latency_s": 5.0804674,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-146",
+      "kind": "control_never_asked",
+      "latency_s": 5.8842774,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-147",
+      "kind": "control_never_asked",
+      "latency_s": 5.1436985,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-148",
+      "kind": "injection",
+      "latency_s": 5.8735779,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-149",
+      "kind": "injection",
+      "latency_s": 5.9738449,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-150",
+      "kind": "injection",
+      "latency_s": 6.4374766,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t1-151",
+      "kind": "injection",
+      "latency_s": 6.1899062,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-001",
+      "kind": "typo",
+      "latency_s": 5.3811044,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9990000128746033,
+      "id": "t2-002",
+      "kind": "typo",
+      "latency_s": 3.953871,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-003",
+      "kind": "street_no_number",
+      "latency_s": 6.8741236,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-004",
+      "kind": "customer_vs_address",
+      "latency_s": 5.7706665,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-005",
+      "kind": "customer_job",
+      "latency_s": 5.3241136000000004,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-006",
+      "kind": "store_no_number",
+      "latency_s": 5.0458403,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-007",
+      "kind": "abbreviation",
+      "latency_s": 6.9108897,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-008",
+      "kind": "abbreviation",
+      "latency_s": 5.135844,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-009",
+      "kind": "abbreviation",
+      "latency_s": 6.3889814,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-010",
+      "kind": "abbreviation",
+      "latency_s": 6.9852083,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-011",
+      "kind": "abbreviation",
+      "latency_s": 5.020887,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-012",
+      "kind": "abbreviation",
+      "latency_s": 5.188794,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-013",
+      "kind": "abbreviation",
+      "latency_s": 5.9723897,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-014",
+      "kind": "abbreviation",
+      "latency_s": 5.0899985,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-015",
+      "kind": "abbreviation",
+      "latency_s": 5.7573884,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-016",
+      "kind": "abbreviation",
+      "latency_s": 6.0787474,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-017",
+      "kind": "typo",
+      "latency_s": 6.1116763,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-018",
+      "kind": "street_no_number",
+      "latency_s": 5.3385815,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-019",
+      "kind": "customer_vs_address",
+      "latency_s": 6.4801241,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-020",
+      "kind": "customer_job",
+      "latency_s": 5.4800424,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9990000128746033,
+      "id": "t2-021",
+      "kind": "abbreviation",
+      "latency_s": 4.7137075,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.8669999837875366,
+      "id": "t2-022",
+      "kind": "store_no_number",
+      "latency_s": 4.8577527,
+      "outcome": "wrong",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-023",
+      "kind": "abbreviation",
+      "latency_s": 5.0162367,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9700000286102295,
+      "id": "t2-024",
+      "kind": "partial_name",
+      "latency_s": 4.1703508,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t2-025",
+      "kind": "abbreviation",
+      "latency_s": 4.6155381,
+      "outcome": "right",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-026",
+      "kind": "partial_name",
+      "latency_s": 5.2703332,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-027",
+      "kind": "typo",
+      "latency_s": 5.6493107,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-028",
+      "kind": "customer_job",
+      "latency_s": 5.0657325,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-029",
+      "kind": "customer_job",
+      "latency_s": 5.1264127,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-030",
+      "kind": "customer_job",
+      "latency_s": 5.0642108,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-031",
+      "kind": "partial_name",
+      "latency_s": 13.6128816,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-032",
+      "kind": "abbreviation",
+      "latency_s": 6.2374944,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-033",
+      "kind": "typo",
+      "latency_s": 5.291948,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-034",
+      "kind": "abbreviation",
+      "latency_s": 6.528021,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-035",
+      "kind": "street_no_number",
+      "latency_s": 6.1053342,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-036",
+      "kind": "customer_job",
+      "latency_s": 5.0438215,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-037",
+      "kind": "abbreviation",
+      "latency_s": 5.7700108,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-038",
+      "kind": "partial_name",
+      "latency_s": 5.9014566,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-039",
+      "kind": "partial_name",
+      "latency_s": 6.9736536000000005,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-040",
+      "kind": "customer_job",
+      "latency_s": 6.8498418,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-041",
+      "kind": "abbreviation",
+      "latency_s": 5.001262,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-042",
+      "kind": "abbreviation",
+      "latency_s": 5.6979763,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-043",
+      "kind": "partial_name",
+      "latency_s": 5.8804241,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-044",
+      "kind": "customer_vs_address",
+      "latency_s": 5.191655,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-045",
+      "kind": "typo",
+      "latency_s": 5.0208428,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-046",
+      "kind": "partial_name",
+      "latency_s": 5.0157108,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.8730000257492065,
+      "id": "t2-047",
+      "kind": "es_en_variant",
+      "latency_s": 4.9383134,
+      "outcome": "unsure",
+      "raw": "same",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-048",
+      "kind": "es_en_variant",
+      "latency_s": 5.1359193,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-049",
+      "kind": "abbreviation",
+      "latency_s": 5.0309861,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-050",
+      "kind": "typo",
+      "latency_s": 5.8381395000000005,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-051",
+      "kind": "abbreviation",
+      "latency_s": 5.1735328,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-052",
+      "kind": "abbreviation",
+      "latency_s": 6.6002482,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-053",
+      "kind": "lookalike_number",
+      "latency_s": 6.3491568,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-054",
+      "kind": "lookalike_number",
+      "latency_s": 5.0226098,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-055",
+      "kind": "lookalike_direction",
+      "latency_s": 7.5070761,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-056",
+      "kind": "lookalike_suffix",
+      "latency_s": 5.8319029,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-057",
+      "kind": "lookalike_number",
+      "latency_s": 5.0119424,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-058",
+      "kind": "lookalike_city",
+      "latency_s": 7.6748856,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9879999756813049,
+      "id": "t2-059",
+      "kind": "shared_word",
+      "latency_s": 4.8728418,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-060",
+      "kind": "shared_word",
+      "latency_s": 5.1408214,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-061",
+      "kind": "lookalike_number",
+      "latency_s": 6.1317153,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-062",
+      "kind": "customer_vs_address",
+      "latency_s": 5.2217552,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-063",
+      "kind": "customer_job",
+      "latency_s": 5.5486856,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-064",
+      "kind": "lookalike_suffix",
+      "latency_s": 5.5785621,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-065",
+      "kind": "lookalike_number",
+      "latency_s": 5.9698087,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-066",
+      "kind": "shared_word",
+      "latency_s": 6.0058739,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.902999997138977,
+      "id": "t2-067",
+      "kind": "shared_word",
+      "latency_s": 4.7967257,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-068",
+      "kind": "lookalike_name",
+      "latency_s": 7.8713765,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-069",
+      "kind": "lookalike_name",
+      "latency_s": 5.0050555,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-070",
+      "kind": "lookalike_name",
+      "latency_s": 5.0362995,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9769999980926514,
+      "id": "t2-071",
+      "kind": "lookalike_suffix",
+      "latency_s": 4.6796091,
+      "outcome": "wrong",
+      "raw": "same",
+      "said": "same"
+    },
+    {
+      "confidence": 0.8450000286102295,
+      "id": "t2-072",
+      "kind": "lookalike_name",
+      "latency_s": 3.7959829000000003,
+      "outcome": "unsure",
+      "raw": "unsure",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9670000076293945,
+      "id": "t2-073",
+      "kind": "lookalike_name",
+      "latency_s": 3.8429052,
+      "outcome": "unsure",
+      "raw": "unsure",
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t2-074",
+      "kind": "lookalike_number",
+      "latency_s": 4.1525701,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-075",
+      "kind": "lookalike_direction",
+      "latency_s": 5.0361727,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t2-076",
+      "kind": "lookalike_number",
+      "latency_s": 4.8294287,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-077",
+      "kind": "lookalike_name",
+      "latency_s": 5.1118341,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t2-078",
+      "kind": "shared_word",
+      "latency_s": 4.1507391,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.9319999814033508,
+      "id": "t2-079",
+      "kind": "lookalike_name",
+      "latency_s": 4.9839264,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.8460000157356262,
+      "id": "t2-080",
+      "kind": "lookalike_name",
+      "latency_s": 4.8507295,
+      "outcome": "unsure",
+      "raw": "unsure",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-081",
+      "kind": "lookalike_number",
+      "latency_s": 5.0968357,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-082",
+      "kind": "lookalike_number",
+      "latency_s": 5.0266099,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-083",
+      "kind": "shared_word",
+      "latency_s": 5.1457502999999996,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9980000257492065,
+      "id": "t2-084",
+      "kind": "shared_word",
+      "latency_s": 4.9809381,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-085",
+      "kind": "customer_job",
+      "latency_s": 5.8256628,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-086",
+      "kind": "lookalike_name",
+      "latency_s": 5.0884718,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-087",
+      "kind": "lookalike_number",
+      "latency_s": 5.0934664,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-088",
+      "kind": "lookalike_suffix",
+      "latency_s": 5.0572186,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.7369999885559082,
+      "id": "t2-089",
+      "kind": "lookalike_name",
+      "latency_s": 4.8652894,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-090",
+      "kind": "lookalike_name",
+      "latency_s": 5.2103822,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.6859999895095825,
+      "id": "t2-091",
+      "kind": "lookalike_name",
+      "latency_s": 4.1006013,
+      "outcome": "unsure",
+      "raw": "unsure",
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.9900000095367432,
+      "id": "t2-092",
+      "kind": "lookalike_suffix",
+      "latency_s": 4.4703800000000005,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-093",
+      "kind": "lookalike_name",
+      "latency_s": 5.0323654,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-094",
+      "kind": "control_never_asked",
+      "latency_s": 5.0662473,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t2-095",
+      "kind": "control_never_asked",
+      "latency_s": 4.7566658,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-096",
+      "kind": "control_never_asked",
+      "latency_s": 5.1306448,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 1.0,
+      "id": "t2-097",
+      "kind": "control_never_asked",
+      "latency_s": 4.1301042,
+      "outcome": "right",
+      "raw": "different",
+      "said": "different"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-098",
+      "kind": "injection",
+      "latency_s": 5.13838,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.0,
+      "id": "t2-099",
+      "kind": "injection",
+      "latency_s": 5.0635523,
+      "outcome": "unsure",
+      "raw": null,
+      "said": "unsure"
+    },
+    {
+      "confidence": 0.7070000171661377,
+      "id": "t2-100",
+      "kind": "injection",
+      "latency_s": 4.8534928,
+      "outcome": "unsure",
+      "raw": "same",
+      "said": "unsure"
+    },
+    {
+      "id": "t3-001",
+      "kind": "surname",
+      "latency_s": 2.8814951,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t3-002",
+      "kind": "surname",
+      "latency_s": 3.1082645,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-003",
+      "kind": "surname",
+      "latency_s": 2.5351576,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-004",
+      "kind": "surname",
+      "latency_s": 2.2396876,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t3-005",
+      "kind": "surname",
+      "latency_s": 2.3918247,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t3-006",
+      "kind": "surname",
+      "latency_s": 1.8198824999999998,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-007",
+      "kind": "surname",
+      "latency_s": 2.4002053,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t3-008",
+      "kind": "surname",
+      "latency_s": 2.4726797,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-009",
+      "kind": "crew",
+      "latency_s": 2.6250322,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t3-010",
+      "kind": "subcontractor",
+      "latency_s": 2.5147878,
+      "outcome": "wrong",
+      "said": "site"
+    },
+    {
+      "id": "t3-011",
+      "kind": "tentative",
+      "latency_s": 2.6278558,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t3-012",
+      "kind": "tentative",
+      "latency_s": 2.5173654,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-013",
+      "kind": "misplaced",
+      "latency_s": 2.7137488,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-014",
+      "kind": "misplaced",
+      "latency_s": 2.800088,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-015",
+      "kind": "misplaced",
+      "latency_s": 3.3103431,
+      "outcome": "right",
+      "said": "time"
+    },
+    {
+      "id": "t3-016",
+      "kind": "misplaced",
+      "latency_s": 2.5308549,
+      "outcome": "right",
+      "said": "time"
+    },
+    {
+      "id": "t3-017",
+      "kind": "partial",
+      "latency_s": 2.8923347,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-018",
+      "kind": "partial",
+      "latency_s": 3.0285481,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-019",
+      "kind": "partial",
+      "latency_s": 2.7980967,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-020",
+      "kind": "shift",
+      "latency_s": 2.3942863,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-021",
+      "kind": "shift",
+      "latency_s": 2.3829912,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-022",
+      "kind": "partial",
+      "latency_s": 2.7892795,
+      "outcome": "right",
+      "said": "time"
+    },
+    {
+      "id": "t3-023",
+      "kind": "partial",
+      "latency_s": 2.5117215,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-024",
+      "kind": "approx",
+      "latency_s": 3.2681965,
+      "outcome": "right",
+      "said": "time"
+    },
+    {
+      "id": "t3-025",
+      "kind": "number",
+      "latency_s": 2.4576922,
+      "outcome": "right",
+      "said": "time"
+    },
+    {
+      "id": "t3-026",
+      "kind": "number",
+      "latency_s": 2.5105474,
+      "outcome": "wrong",
+      "said": "time"
+    },
+    {
+      "id": "t3-027",
+      "kind": "number",
+      "latency_s": 2.4615923,
+      "outcome": "wrong",
+      "said": "time"
+    },
+    {
+      "id": "t3-028",
+      "kind": "spanish",
+      "latency_s": 3.2386639,
+      "outcome": "right",
+      "said": "time"
+    },
+    {
+      "id": "t3-029",
+      "kind": "spanish",
+      "latency_s": 2.5705413,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-030",
+      "kind": "out_contrast",
+      "latency_s": 2.6116453,
+      "outcome": "wrong",
+      "said": "status"
+    },
+    {
+      "id": "t3-031",
+      "kind": "out_contrast",
+      "latency_s": 2.7493431,
+      "outcome": "wrong",
+      "said": "status"
+    },
+    {
+      "id": "t3-032",
+      "kind": "out_contrast",
+      "latency_s": 2.7322126,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-033",
+      "kind": "status",
+      "latency_s": 2.9481469000000002,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-034",
+      "kind": "status",
+      "latency_s": 2.5560574000000003,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-035",
+      "kind": "status",
+      "latency_s": 2.5609574,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-036",
+      "kind": "place_contrast",
+      "latency_s": 2.4845821,
+      "outcome": "wrong",
+      "said": "site"
+    },
+    {
+      "id": "t3-037",
+      "kind": "place_contrast",
+      "latency_s": 2.9996879,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-038",
+      "kind": "place_contrast",
+      "latency_s": 2.5850419000000002,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-039",
+      "kind": "place_contrast",
+      "latency_s": 2.4008729,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-040",
+      "kind": "place_contrast",
+      "latency_s": 3.0860248,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-041",
+      "kind": "place_contrast",
+      "latency_s": 2.3926039,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-042",
+      "kind": "place_contrast",
+      "latency_s": 2.6122285,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-043",
+      "kind": "place_contrast",
+      "latency_s": 2.3015064,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-044",
+      "kind": "place_contrast",
+      "latency_s": 2.8467577,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-045",
+      "kind": "holiday",
+      "latency_s": 2.3888502,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-046",
+      "kind": "holiday",
+      "latency_s": 2.9286859,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-047",
+      "kind": "weather",
+      "latency_s": 2.3222826,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-048",
+      "kind": "weather",
+      "latency_s": 2.8393329,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-049",
+      "kind": "status",
+      "latency_s": 2.8617131000000002,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-050",
+      "kind": "status",
+      "latency_s": 2.7429446,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-051",
+      "kind": "status",
+      "latency_s": 2.7966432,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-052",
+      "kind": "status",
+      "latency_s": 2.2992788,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-053",
+      "kind": "status",
+      "latency_s": 2.3312897,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-054",
+      "kind": "place_contrast",
+      "latency_s": 3.1017691,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-055",
+      "kind": "status",
+      "latency_s": 2.4174068,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-056",
+      "kind": "status",
+      "latency_s": 2.7515475,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-057",
+      "kind": "tentative",
+      "latency_s": 2.5359441,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-058",
+      "kind": "tentative",
+      "latency_s": 2.7965184,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-059",
+      "kind": "tentative",
+      "latency_s": 2.8895241,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-060",
+      "kind": "spanish",
+      "latency_s": 2.75988,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-061",
+      "kind": "spanish",
+      "latency_s": 2.8069821,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-062",
+      "kind": "spanish",
+      "latency_s": 2.7006924,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t3-063",
+      "kind": "spanish",
+      "latency_s": 2.6634287,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-064",
+      "kind": "unstaffed",
+      "latency_s": 2.7811814999999998,
+      "outcome": "right",
+      "said": "unstaffed"
+    },
+    {
+      "id": "t3-065",
+      "kind": "unstaffed",
+      "latency_s": 2.9075296,
+      "outcome": "right",
+      "said": "unstaffed"
+    },
+    {
+      "id": "t3-066",
+      "kind": "unstaffed",
+      "latency_s": 2.9111912,
+      "outcome": "right",
+      "said": "unstaffed"
+    },
+    {
+      "id": "t3-067",
+      "kind": "unstaffed",
+      "latency_s": 2.8440095,
+      "outcome": "right",
+      "said": "unstaffed"
+    },
+    {
+      "id": "t3-068",
+      "kind": "unstaffed",
+      "latency_s": 2.6251059,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-069",
+      "kind": "spanish",
+      "latency_s": 2.9024588,
+      "outcome": "right",
+      "said": "unstaffed"
+    },
+    {
+      "id": "t3-070",
+      "kind": "spanish",
+      "latency_s": 3.1939617,
+      "outcome": "right",
+      "said": "unstaffed"
+    },
+    {
+      "id": "t3-071",
+      "kind": "unstaffed",
+      "latency_s": 3.0303313,
+      "outcome": "right",
+      "said": "unstaffed"
+    },
+    {
+      "id": "t3-072",
+      "kind": "note",
+      "latency_s": 2.9563423,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-073",
+      "kind": "note",
+      "latency_s": 2.5811047,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-074",
+      "kind": "note",
+      "latency_s": 2.882604,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-075",
+      "kind": "spanish",
+      "latency_s": 2.6394737,
+      "outcome": "wrong",
+      "said": "site"
+    },
+    {
+      "id": "t3-076",
+      "kind": "note",
+      "latency_s": 2.7462908,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-077",
+      "kind": "note",
+      "latency_s": 2.5621404,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-078",
+      "kind": "note",
+      "latency_s": 2.7692931,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-079",
+      "kind": "note",
+      "latency_s": 3.0738866,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-080",
+      "kind": "note",
+      "latency_s": 2.9262023,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-081",
+      "kind": "note",
+      "latency_s": 2.8290898,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-082",
+      "kind": "note",
+      "latency_s": 2.8900277,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-083",
+      "kind": "tentative",
+      "latency_s": 2.5473557,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-084",
+      "kind": "ditto",
+      "latency_s": 2.7524023,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-085",
+      "kind": "ditto",
+      "latency_s": 2.4500966,
+      "outcome": "wrong",
+      "said": "empty"
+    },
+    {
+      "id": "t3-086",
+      "kind": "store",
+      "latency_s": 3.2524439,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-087",
+      "kind": "internal",
+      "latency_s": 2.409867,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t3-088",
+      "kind": "internal",
+      "latency_s": 2.4675046,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-089",
+      "kind": "internal",
+      "latency_s": 2.4273093,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-090",
+      "kind": "empty",
+      "latency_s": 2.4700957,
+      "outcome": "right",
+      "said": "empty"
+    },
+    {
+      "id": "t3-091",
+      "kind": "empty",
+      "latency_s": 2.3644904,
+      "outcome": "right",
+      "said": "empty"
+    },
+    {
+      "id": "t3-092",
+      "kind": "empty",
+      "latency_s": 2.4894506,
+      "outcome": "right",
+      "said": "empty"
+    },
+    {
+      "id": "t3-093",
+      "kind": "empty",
+      "latency_s": 2.5488253,
+      "outcome": "right",
+      "said": "empty"
+    },
+    {
+      "id": "t3-094",
+      "kind": "empty",
+      "latency_s": 3.2647906,
+      "outcome": "right",
+      "said": "empty"
+    },
+    {
+      "id": "t3-095",
+      "kind": "empty",
+      "latency_s": 2.7696954,
+      "outcome": "right",
+      "said": "empty"
+    },
+    {
+      "id": "t3-096",
+      "kind": "empty",
+      "latency_s": 2.5976744,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-097",
+      "kind": "empty",
+      "latency_s": 2.6836482,
+      "outcome": "right",
+      "said": "empty"
+    },
+    {
+      "id": "t3-098",
+      "kind": "injection",
+      "latency_s": 3.1474569,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-099",
+      "kind": "injection",
+      "latency_s": 3.2732225,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t3-100",
+      "kind": "injection",
+      "latency_s": 2.9922154,
+      "outcome": "wrong",
+      "said": "note"
+    },
+    {
+      "id": "t3-101",
+      "kind": "injection",
+      "latency_s": 3.1425389,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t4-001",
+      "kind": "surname_vs_customer",
+      "latency_s": 3.1317138,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t4-002",
+      "kind": "surname_vs_customer",
+      "latency_s": 1.9451855,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t4-003",
+      "kind": "surname_vs_customer",
+      "latency_s": 3.3654515,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t4-004",
+      "kind": "surname_vs_customer",
+      "latency_s": 3.1667769,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t4-005",
+      "kind": "surname_vs_customer",
+      "latency_s": 3.2537707,
+      "outcome": "wrong",
+      "said": "person"
+    },
+    {
+      "id": "t4-006",
+      "kind": "surname_vs_customer",
+      "latency_s": 3.6666307,
+      "outcome": "wrong",
+      "said": "person"
+    },
+    {
+      "id": "t4-007",
+      "kind": "surname_vs_customer",
+      "latency_s": 2.6486166,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t4-008",
+      "kind": "surname_vs_customer",
+      "latency_s": 2.7681054,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t4-009",
+      "kind": "spanish",
+      "latency_s": 3.0348509,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t4-010",
+      "kind": "spanish",
+      "latency_s": 3.5693243,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t4-011",
+      "kind": "first_names",
+      "latency_s": 2.567711,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t4-012",
+      "kind": "initials_vs_day",
+      "latency_s": 2.5080293,
+      "outcome": "right",
+      "said": "person"
+    },
+    {
+      "id": "t4-013",
+      "kind": "initials_vs_day",
+      "latency_s": 2.5094823,
+      "outcome": "wrong",
+      "said": "ignore"
+    },
+    {
+      "id": "t4-014",
+      "kind": "initials_vs_day",
+      "latency_s": 2.3533916,
+      "outcome": "right",
+      "said": "day"
+    },
+    {
+      "id": "t4-015",
+      "kind": "initials_vs_day",
+      "latency_s": 2.0008833,
+      "outcome": "right",
+      "said": "day"
+    },
+    {
+      "id": "t4-016",
+      "kind": "day_vs_date",
+      "latency_s": 2.468549,
+      "outcome": "right",
+      "said": "day"
+    },
+    {
+      "id": "t4-017",
+      "kind": "day_vs_date",
+      "latency_s": 2.8263723,
+      "outcome": "right",
+      "said": "day"
+    },
+    {
+      "id": "t4-018",
+      "kind": "spanish",
+      "latency_s": 3.2715626,
+      "outcome": "right",
+      "said": "day"
+    },
+    {
+      "id": "t4-019",
+      "kind": "day_vs_date",
+      "latency_s": 5.6624811,
+      "outcome": "unsure",
+      "said": "unsure"
+    },
+    {
+      "id": "t4-020",
+      "kind": "spanish",
+      "latency_s": 6.3289926,
+      "outcome": "unsure",
+      "said": "unsure"
+    },
+    {
+      "id": "t4-021",
+      "kind": "date_vs_number",
+      "latency_s": 5.0870095,
+      "outcome": "unsure",
+      "said": "unsure"
+    },
+    {
+      "id": "t4-022",
+      "kind": "date_vs_number",
+      "latency_s": 4.5626701,
+      "outcome": "right",
+      "said": "date"
+    },
+    {
+      "id": "t4-023",
+      "kind": "date_vs_number",
+      "latency_s": 4.4661927,
+      "outcome": "right",
+      "said": "date"
+    },
+    {
+      "id": "t4-024",
+      "kind": "date_vs_number",
+      "latency_s": 5.0621509,
+      "outcome": "unsure",
+      "said": "unsure"
+    },
+    {
+      "id": "t4-025",
+      "kind": "date_vs_number",
+      "latency_s": 8.7039934,
+      "outcome": "unsure",
+      "said": "unsure"
+    },
+    {
+      "id": "t4-026",
+      "kind": "jobno_vs_hours",
+      "latency_s": 4.5766704,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t4-027",
+      "kind": "jobno_vs_hours",
+      "latency_s": 5.0905042,
+      "outcome": "unsure",
+      "said": "unsure"
+    },
+    {
+      "id": "t4-028",
+      "kind": "jobno_vs_hours",
+      "latency_s": 4.5282142,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t4-029",
+      "kind": "lot",
+      "latency_s": 4.0188219,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t4-030",
+      "kind": "address",
+      "latency_s": 4.0905303,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t4-031",
+      "kind": "store",
+      "latency_s": 3.6409309,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t4-032",
+      "kind": "codes",
+      "latency_s": 3.8368311,
+      "outcome": "right",
+      "said": "site"
+    },
+    {
+      "id": "t4-033",
+      "kind": "site_vs_status",
+      "latency_s": 2.6150878,
+      "outcome": "wrong",
+      "said": "person"
+    },
+    {
+      "id": "t4-034",
+      "kind": "site_vs_status",
+      "latency_s": 2.5464847,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t4-035",
+      "kind": "status_vs_note",
+      "latency_s": 1.9666269,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t4-036",
+      "kind": "spanish",
+      "latency_s": 2.5549605,
+      "outcome": "right",
+      "said": "status"
+    },
+    {
+      "id": "t4-037",
+      "kind": "status_vs_note",
+      "latency_s": 2.511943,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t4-038",
+      "kind": "status_vs_note",
+      "latency_s": 3.2896396,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t4-039",
+      "kind": "status_vs_note",
+      "latency_s": 2.69498,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t4-040",
+      "kind": "status_vs_note",
+      "latency_s": 2.3117995000000002,
+      "outcome": "right",
+      "said": "note"
+    },
+    {
+      "id": "t4-041",
+      "kind": "jobno_vs_hours",
+      "latency_s": 2.6766353,
+      "outcome": "wrong",
+      "said": "ignore"
+    },
+    {
+      "id": "t4-042",
+      "kind": "time",
+      "latency_s": 4.4175332,
+      "outcome": "right",
+      "said": "time"
+    },
+    {
+      "id": "t4-043",
+      "kind": "jobno_vs_hours",
+      "latency_s": 2.8768746,
+      "outcome": "right",
+      "said": "time"
+    },
+    {
+      "id": "t4-044",
+      "kind": "time",
+      "latency_s": 5.8568923,
+      "outcome": "unsure",
+      "said": "unsure"
+    },
+    {
+      "id": "t4-045",
+      "kind": "time",
+      "latency_s": 2.6167808,
+      "outcome": "right",
+      "said": "time"
+    },
+    {
+      "id": "t4-046",
+      "kind": "spanish",
+      "latency_s": 3.1279013,
+      "outcome": "wrong",
+      "said": "ignore"
+    },
+    {
+      "id": "t4-047",
+      "kind": "time",
+      "latency_s": 3.0976365,
+      "outcome": "right",
+      "said": "time"
+    },
+    {
+      "id": "t4-048",
+      "kind": "crew_vs_truck",
+      "latency_s": 3.792439,
+      "outcome": "wrong",
+      "said": "ignore"
+    },
+    {
+      "id": "t4-049",
+      "kind": "crew_vs_truck",
+      "latency_s": 3.7478467,
+      "outcome": "right",
+      "said": "ignore"
+    },
+    {
+      "id": "t4-050",
+      "kind": "row_numbers",
+      "latency_s": 2.4539672,
+      "outcome": "right",
+      "said": "ignore"
+    },
+    {
+      "id": "t4-051",
+      "kind": "money",
+      "latency_s": 4.1401839,
+      "outcome": "right",
+      "said": "ignore"
+    },
+    {
+      "id": "t4-052",
+      "kind": "phones",
+      "latency_s": 6.6004382,
+      "outcome": "unsure",
+      "said": "unsure"
+    },
+    {
+      "id": "t4-053",
+      "kind": "jobno_vs_hours",
+      "latency_s": 3.4191647,
+      "outcome": "right",
+      "said": "ignore"
+    },
+    {
+      "id": "t4-054",
+      "kind": "mileage",
+      "latency_s": 3.6107042,
+      "outcome": "right",
+      "said": "ignore"
+    },
+    {
+      "id": "t5-001",
+      "kind": "spanish",
+      "latency_s": 8.7556071,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-002",
+      "kind": "text",
+      "latency_s": 5.1198679,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-003",
+      "kind": "text",
+      "latency_s": 5.0047403,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-004",
+      "kind": "bullet",
+      "latency_s": 4.5729349,
+      "outcome": "right",
+      "said": "rosa|thu|garcia deck|-"
+    },
+    {
+      "id": "t5-005",
+      "kind": "text",
+      "latency_s": 4.6346071,
+      "outcome": "right",
+      "said": "memo|fri|smith|-"
+    },
+    {
+      "id": "t5-006",
+      "kind": "text",
+      "latency_s": 5.0472125,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-007",
+      "kind": "spanish",
+      "latency_s": 5.0173063,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-008",
+      "kind": "text",
+      "latency_s": 4.7439291,
+      "outcome": "wrong",
+      "said": "dave|tue|smith kitchen|-"
+    },
+    {
+      "id": "t5-009",
+      "kind": "text",
+      "latency_s": 5.0186887,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-010",
+      "kind": "text",
+      "latency_s": 5.0135126,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-011",
+      "kind": "spanish",
+      "latency_s": 5.0740165,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-012",
+      "kind": "text",
+      "latency_s": 5.1175705,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-013",
+      "kind": "text",
+      "latency_s": 5.0525628,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-014",
+      "kind": "text",
+      "latency_s": 5.0850822,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-015",
+      "kind": "text",
+      "latency_s": 5.0692055,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-016",
+      "kind": "text",
+      "latency_s": 5.0458279,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-017",
+      "kind": "spanish",
+      "latency_s": 5.0775595,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-018",
+      "kind": "text",
+      "latency_s": 5.0507802,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-019",
+      "kind": "date",
+      "latency_s": 4.8543588,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-020",
+      "kind": "date",
+      "latency_s": 5.09884,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-021",
+      "kind": "date",
+      "latency_s": 1.9632497,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-022",
+      "kind": "text",
+      "latency_s": 5.0736537,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-023",
+      "kind": "spanish",
+      "latency_s": 5.118472,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-024",
+      "kind": "spanish",
+      "latency_s": 5.0501658,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-025",
+      "kind": "spanish",
+      "latency_s": 5.0277888,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-026",
+      "kind": "text",
+      "latency_s": 5.125984,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-027",
+      "kind": "text",
+      "latency_s": 5.1436973,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-028",
+      "kind": "text",
+      "latency_s": 4.9246052,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-029",
+      "kind": "bullet",
+      "latency_s": 5.0893069,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-030",
+      "kind": "text",
+      "latency_s": 5.0544893,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-031",
+      "kind": "spanish",
+      "latency_s": 5.0775967,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-032",
+      "kind": "spanish",
+      "latency_s": 5.1535436,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-033",
+      "kind": "text",
+      "latency_s": 4.7481831,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-034",
+      "kind": "text",
+      "latency_s": 5.1176233,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-035",
+      "kind": "text",
+      "latency_s": 5.0703203,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-036",
+      "kind": "text",
+      "latency_s": 5.061521,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-037",
+      "kind": "spanish",
+      "latency_s": 5.0243796,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-038",
+      "kind": "text",
+      "latency_s": 5.1121675,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-039",
+      "kind": "text",
+      "latency_s": 5.0804499,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-040",
+      "kind": "text",
+      "latency_s": 4.4430214,
+      "outcome": "right",
+      "said": "rosa|sun|shop|-"
+    },
+    {
+      "id": "t5-041",
+      "kind": "text",
+      "latency_s": 5.0680537,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-042",
+      "kind": "text",
+      "latency_s": 5.1108453,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-043",
+      "kind": "cannot_read",
+      "latency_s": 1.3437204999999999,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-044",
+      "kind": "cannot_read",
+      "latency_s": 1.4419091,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-045",
+      "kind": "cannot_read",
+      "latency_s": 1.4978852,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-046",
+      "kind": "cannot_read",
+      "latency_s": 5.1054827,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-047",
+      "kind": "cannot_read",
+      "latency_s": 4.1847398,
+      "outcome": "wrong",
+      "said": "dave|thu|smith|-"
+    },
+    {
+      "id": "t5-048",
+      "kind": "cannot_read",
+      "latency_s": 1.5301704,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-049",
+      "kind": "cannot_read",
+      "latency_s": 4.9729453,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-050",
+      "kind": "cannot_read",
+      "latency_s": 1.4251666,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-051",
+      "kind": "cannot_read",
+      "latency_s": 1.5208138,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-052",
+      "kind": "cannot_read",
+      "latency_s": 5.0747964,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-053",
+      "kind": "injection",
+      "latency_s": 2.3228041,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-054",
+      "kind": "injection",
+      "latency_s": 1.7723623,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-055",
+      "kind": "injection",
+      "latency_s": 5.0060642,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-056",
+      "kind": "injection",
+      "latency_s": 2.23499,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-057",
+      "kind": "injection",
+      "latency_s": 2.0269993,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-058",
+      "kind": "injection",
+      "latency_s": 5.1276693,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-059",
+      "kind": "injection",
+      "latency_s": 5.0055473,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-060",
+      "kind": "injection",
+      "latency_s": 5.0792474,
+      "outcome": "wrong",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-061",
+      "kind": "injection",
+      "latency_s": 1.7385414,
+      "outcome": "right",
+      "said": "cannot read"
+    },
+    {
+      "id": "t5-062",
+      "kind": "injection",
+      "latency_s": 1.9766527,
+      "outcome": "wrong",
+      "said": "cannot read"
+    }
+  ],
+  "rss_before_load_mb": 9.421875,
+  "same_min": 0.8999999761581421,
+  "tasks": {
+    "t1_same_person": {
+      "accuracy_on_answered": 0.8918918918918919,
+      "answered": 37,
+      "false_merge_rate": 0.015384615384615385,
+      "false_merges": 1,
+      "items": 151,
+      "latency_p50_s": 5.0628683,
+      "latency_p95_s": 6.071917,
+      "unsure_rate": 0.7549668874172185,
+      "wrong_examples": [
+        "t1-052: Ted Brandt / Edward Brandt -> different",
+        "t1-056: Drew Patton / Andrew Patton -> different",
+        "t1-076: Jorge Salinas / George Salinas -> different",
+        "t1-103: Marco Treviño / Mario Treviño -> same"
+      ]
+    },
+    "t2_same_site": {
+      "accuracy_on_answered": 0.8823529411764706,
+      "answered": 17,
+      "false_merge_rate": 0.021739130434782608,
+      "false_merges": 1,
+      "items": 100,
+      "latency_p50_s": 5.1306448,
+      "latency_p95_s": 6.9736536000000005,
+      "unsure_rate": 0.83,
+      "wrong_examples": [
+        "t2-022: Costco Lehi / Costco #1159 Lehi -> different",
+        "t2-071: 300 Mt Vernon Pl / 300 Mt Vernon Ave -> same"
+      ]
+    },
+    "t3_cell_meaning": {
+      "accuracy_on_answered": 0.7128712871287128,
+      "answered": 101,
+      "false_merge_rate": 0.0,
+      "false_merges": 0,
+      "items": 101,
+      "latency_p50_s": 2.7137488,
+      "latency_p95_s": 3.2386639,
+      "unsure_rate": 0.0,
+      "wrong_examples": [
+        "t3-010: \"person\" -> site",
+        "t3-012: \"person\" -> note",
+        "t3-017: \"time\" -> note",
+        "t3-018: \"time\" -> note",
+        "t3-019: \"time\" -> note",
+        "t3-020: \"time\" -> note",
+        "t3-021: \"time\" -> note",
+        "t3-023: \"time\" -> note",
+        "t3-026: \"site\" -> time",
+        "t3-027: \"person\" -> time",
+        "t3-029: \"time\" -> note",
+        "t3-030: \"time\" -> status"
+      ]
+    },
+    "t4_column_role": {
+      "accuracy_on_answered": 0.8478260869565217,
+      "answered": 46,
+      "false_merge_rate": 0.0,
+      "false_merges": 0,
+      "items": 54,
+      "latency_p50_s": 3.2537707,
+      "latency_p95_s": 5.8568923,
+      "unsure_rate": 0.14814814814814814,
+      "wrong_examples": [
+        "t4-005: \"site\" -> person",
+        "t4-006: \"site\" -> person",
+        "t4-013: \"person\" -> ignore",
+        "t4-033: \"site\" -> person",
+        "t4-041: \"time\" -> ignore",
+        "t4-046: \"time\" -> ignore",
+        "t4-048: \"person\" -> ignore"
+      ]
+    },
+    "t5_free_text": {
+      "accuracy_on_answered": 0.24193548387096775,
+      "answered": 62,
+      "false_merge_rate": 0.0,
+      "false_merges": 0,
+      "items": 62,
+      "latency_p50_s": 5.0458279,
+      "latency_p95_s": 5.125984,
+      "unsure_rate": 0.0,
+      "wrong_examples": [
+        "t5-001: lunes: Chuy y Memo en la obra Smith",
+        "t5-002: Mon - Dave & Mike B at 1420 Johnson 7-3:30",
+        "t5-003: Tue/Wed: Ana at Hale Elem",
+        "t5-006: Mon-Wed Dave and Luis at Garcia deck",
+        "t5-007: Martes y miércoles: Beto en Casa López 6:30 a 3",
+        "t5-008: dave kim tues smith kitchen",
+        "t5-009: Thursday — Ruiz crew at Westgate Dental, 8 to 4:30",
+        "t5-010: Sat: Mike at shop 7-12",
+        "t5-011: jueves Lalo con Nacho en Hale",
+        "t5-012: Wed: Memo + Chuy, Garcia deck, 7a-3:30p",
+        "t5-013: M/W/F: Ana at 88 Elm St",
+        "t5-014: Mon Tues Wed Thurs Fri — Dave at Hale Elementary"
+      ]
+    }
+  },
+  "threads": 2,
+  "variant": "B-E4B",
+  "warm_s": 205.1211414
+}
+

@@ -1,0 +1,45 @@
+ 72.4%  241 (crew_based, input.csv)  missing 24 extra 12
+ 75.9%  224 (crew_based, input.csv)  missing 20 extra 5
+ 81.7%  272 (calendar_month, paste.txt)  missing 88 extra 21
+ 81.8%  281 (person_by_day, input.csv)  missing 6 extra 3
+ 83.3%  139 (day_by_person, input.xls)  missing 4 extra 2
+ 88.2%  251 (person_by_day, input.xlsx)  missing 2 extra 1
+ 93.5%  90 (person_by_day, input.ods)  missing 2 extra 1
+
+flags            expected  matched   actual   recall  precision
+  assigned_while_off     146      132      134   90.41%   98.51%
+  double_booked          240      221      225   92.08%   98.22%
+  not_booked             544      466     2763   85.66%   16.87%
+  unstaffed              150      150      157  100.00%   95.54%
+clean schedules 53, with a red flag: 0
+
+after the owner answers every same-person/same-site question correctly:
+  assigned_while_off     146      136      137   93.15%   99.27%
+  double_booked          240      229      229   95.42%  100.00%
+  not_booked             544      471      723   86.58%   65.15%
+  unstaffed              150      150      154  100.00%   97.40%
+questions per file (model on): mean 1.54, files with none 182/300, same-person/site questions 462
+merges 528, false merges 1
+    110: Site "22873 Depot Blvd" -> "28273 Depot Blvd"
+
+cases 300  assignment recall 99.472%  precision 99.817%  perfect cases 282/300  p95 12346.1 ms
+    extra:   2026-10-12 | person=pedro | site=oak ridge | status= | unstaffed=false | part= | time=- | note=
+    extra:   2026-10-13 | person=josé | site=oak ridge | status= | unstaffed=false | part= | time=- | note=
+    … 25 more
+
+category  pass/total  (model-tier skipped)
+  A        10/10      (0)
+  B        10/10      (0)
+  C        26/26      (0)
+  D        14/14      (0)
+  E        16/16      (0)
+  F        10/10      (0)
+  G         8/8       (0)
+  H         8/8       (0)
+  I         9/9       (0)
+  J         5/5       (0)
+  K        12/12      (0)
+  L         8/9       (0)
+  M         5/8       (0)
+  N         6/6       (0)
+  all     147/151

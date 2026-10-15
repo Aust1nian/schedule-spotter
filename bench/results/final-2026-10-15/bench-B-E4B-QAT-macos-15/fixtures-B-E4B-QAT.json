@@ -1,0 +1,1406 @@
+[
+  {
+    "category": "A",
+    "id": "A01-comma-delimited-lf",
+    "ms": 27.527833,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "A",
+    "id": "A02-semicolon-delimited-crlf",
+    "ms": 1.746416,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "A",
+    "id": "A03-tab-delimited-tsv",
+    "ms": 1.3321660000000002,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "A",
+    "id": "A04-pipe-delimited",
+    "ms": 2.446167,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "A",
+    "id": "A05-quoted-fields-commas-newlines",
+    "ms": 2.6029999999999998,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "A",
+    "id": "A06-utf8-bom",
+    "ms": 1.539958,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "A",
+    "id": "A07-utf16-le-unicode-text",
+    "ms": 1.3803750000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "A",
+    "id": "A08-windows-1252-jose-smart-quotes",
+    "ms": 1.698958,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "A",
+    "id": "A09-cr-only-line-endings",
+    "ms": 1.4464160000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "A",
+    "id": "A10-ragged-rows-trailing-delimiters",
+    "ms": 1.353167,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "B",
+    "id": "B01-no-header",
+    "ms": 1.363584,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "B",
+    "id": "B02-title-rows-above-header",
+    "ms": 1.621417,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "B",
+    "id": "B03-two-row-header-merged-am-pm",
+    "ms": 3.536125,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "B",
+    "id": "B04-duplicate-column-names",
+    "ms": 1.527291,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "B",
+    "id": "B05-header-repeated-mid-file",
+    "ms": 1.335917,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "B",
+    "id": "B06-synonyms-tech-customer",
+    "ms": 0.9470000000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "B",
+    "id": "B07-synonyms-worker-project",
+    "ms": 1.341292,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "B",
+    "id": "B08-synonyms-crew-address",
+    "ms": 1.213584,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "B",
+    "id": "B09-spanish-headers-long-list",
+    "ms": 1.344084,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "B",
+    "id": "B10-spanish-headers-person-by-day",
+    "ms": 1.0467499999999998,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C01-long-list",
+    "ms": 1.6412499999999999,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C02-person-by-day",
+    "ms": 1.763375,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C03-job-by-day-multi-names",
+    "ms": 1.363208,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C04-day-by-job",
+    "ms": 2.2034160000000003,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C05-day-by-person",
+    "ms": 1.7308340000000002,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C06-crew-based-roster-block",
+    "ms": 1.39875,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C07-two-weeks-stacked",
+    "ms": 2.3857090000000003,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C08-two-weeks-side-by-side",
+    "ms": 2.255833,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C09-calendar-month-grid",
+    "ms": 2.2185,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C10-schedule-and-roster-one-sheet",
+    "ms": 1.40975,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C11-workbook-one-schedule-sheet",
+    "ms": 4.2760419999999995,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C12-workbook-two-candidate-sheets",
+    "ms": 3.337167,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C13-ods-job-by-day",
+    "ms": 1.7585000000000002,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C14-docx-word-table",
+    "ms": 1.262875,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C15-numbers-person-by-day",
+    "ms": 1.488959,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C16-numbers-job-by-day",
+    "ms": 0.8875829999999999,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C17-xls-long-list",
+    "ms": 0.8392090000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C18-xlsm-person-by-day",
+    "ms": 2.110875,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C19-xlsb-person-by-day",
+    "ms": 2.5374999999999996,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C20-side-by-side-letter-date-headers",
+    "ms": 3.390625,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C21-crew-grid-roster-columns-beside",
+    "ms": 1.942792,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C22-long-list-roster-block-beside",
+    "ms": 1.3047499999999999,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C23-calendar-month-footer-notes",
+    "ms": 3.4511659999999997,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C24-workbook-orders-sheet-then-schedule",
+    "ms": 1.9945420000000003,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C25-job-grid-note-line-and-empty-job",
+    "ms": 0.854958,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "C",
+    "id": "C26-crew-grid-name-like-jobs-roster-beside",
+    "ms": 1.044417,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D01-iso-dates",
+    "ms": 1.2649169999999998,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D02-mdyyyy-all-ambiguous-month-first",
+    "ms": 1.30875,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D03-mdyy-two-digit-year",
+    "ms": 1.169916,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D04-md-no-year-closest-to-today",
+    "ms": 0.9864170000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D05-month-name-day",
+    "ms": 1.17375,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D06-day-month-name-excel",
+    "ms": 1.669084,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D07-weekday-plus-date",
+    "ms": 1.8327499999999999,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D08-week-of-weekday-names",
+    "ms": 1.183,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D09-single-letter-days",
+    "ms": 1.4293330000000002,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D10-excel-serial-xlsx",
+    "ms": 1.229375,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D11-excel-serial-csv",
+    "ms": 1.1788750000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D12-day-first-over-12",
+    "ms": 1.330875,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D13-year-boundary-week",
+    "ms": 1.190291,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "D",
+    "id": "D14-weekday-mismatch-ask",
+    "ms": 1.56375,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E01-mike-michael-mikey",
+    "ms": 1.4362089999999998,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E02-mike-b-vs-michael-baker",
+    "ms": 1.721625,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E03-m-baker-initial",
+    "ms": 1.855709,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E04-last-name-only",
+    "ms": 1.646167,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E05-typo-micheal-ask",
+    "ms": 1.408833,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E06-case-and-spacing",
+    "ms": 1.395625,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E07-jose-vs-jose-accent",
+    "ms": 1.764,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E08-garcia-lopez-second-surname-ask",
+    "ms": 1.260958,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E09-mike-b-vs-mike-r-never-merge",
+    "ms": 1.44925,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E10-bob-smith-sr-vs-jr",
+    "ms": 1.410791,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E11-two-different-chrises",
+    "ms": 1.368,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E12-placeholders-helper-foreman",
+    "ms": 2.0928750000000003,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E13-subcontractors-never-merged",
+    "ms": 1.404417,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E14-spanish-nicknames",
+    "ms": 1.515916,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E15-short-names-like-days-across",
+    "ms": 0.956417,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "E",
+    "id": "E16-short-names-like-days-down",
+    "ms": 0.9562499999999999,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "F",
+    "id": "F01-johnson-st-vs-johnson-job-asks",
+    "ms": 1.7026249999999998,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "F",
+    "id": "F02-st-vs-street-silent-merge",
+    "ms": 1.524,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "F",
+    "id": "F03-job-number-column-list",
+    "ms": 1.871042,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "F",
+    "id": "F04-job-number-prefix-grid-merge",
+    "ms": 1.533542,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "F",
+    "id": "F05-1420-vs-1240-johnson-never-merge",
+    "ms": 1.3117079999999999,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "F",
+    "id": "F06-customer-name-vs-address-ask",
+    "ms": 1.3521670000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "F",
+    "id": "F07-shop-yard-office-internal",
+    "ms": 1.743041,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "F",
+    "id": "F08-travel-drive-to-fresno",
+    "ms": 1.57775,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "F",
+    "id": "F09-direction-and-suffix-spellings",
+    "ms": 1.751417,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "F",
+    "id": "F10-johnson-addresses-mixed",
+    "ms": 1.72675,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "G",
+    "id": "G01-status-words-person-grid",
+    "ms": 1.4455,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "G",
+    "id": "G02-status-symbols-x-dash-na",
+    "ms": 1.539334,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "G",
+    "id": "G03-status-column-list",
+    "ms": 1.847292,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "G",
+    "id": "G04-unstaffed-markers-job-grid",
+    "ms": 1.444458,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "G",
+    "id": "G05-unstaffed-markers-list",
+    "ms": 2.00775,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "G",
+    "id": "G06-parts-half-day-am-only",
+    "ms": 1.753667,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "G",
+    "id": "G07-notes-inside-cells",
+    "ms": 2.126,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "G",
+    "id": "G08-status-with-note",
+    "ms": 1.80675,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H01-time-range-formats",
+    "ms": 1.579375,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H02-am-pm-sub-columns",
+    "ms": 2.284625,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H03-split-day-no-overlap",
+    "ms": 1.665792,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H04-overlapping-times-flag",
+    "ms": 1.669459,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H05-overnight-shift",
+    "ms": 1.713125,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H06-times-on-some-rows",
+    "ms": 1.558625,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H07-excel-time-cells-start-end",
+    "ms": 1.95625,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "H",
+    "id": "H08-times-inside-grid-cells",
+    "ms": 1.546917,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "I",
+    "id": "I01-totals-rows",
+    "ms": 1.780291,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "I",
+    "id": "I02-footer-notes-signature",
+    "ms": 1.511125,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "I",
+    "id": "I03-empty-rows-and-columns",
+    "ms": 2.144541,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "I",
+    "id": "I04-merged-cell-blanks-xlsx",
+    "ms": 1.858542,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "I",
+    "id": "I05-merged-cell-pattern-csv",
+    "ms": 1.327083,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "I",
+    "id": "I06-error-values-and-formulas",
+    "ms": 1.8534160000000002,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "I",
+    "id": "I07-fifty-columns-wide",
+    "ms": 8.150958999999999,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "I",
+    "id": "I08-very-long-cell",
+    "ms": 2.4589999999999996,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "I",
+    "id": "I09-emoji-in-names-and-notes",
+    "ms": 1.393958,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "J",
+    "id": "J01-one-person-one-job",
+    "ms": 0.402375,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "J",
+    "id": "J02-ten-people-five-jobs-one-week",
+    "ms": 2.381083,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "J",
+    "id": "J03-sixty-people-25-jobs-4-weeks",
+    "ms": 70.560208,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "J",
+    "id": "J04-two-thousand-row-list",
+    "ms": 543.906917,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "J",
+    "id": "J05-fifty-thousand-row-list",
+    "ms": 108723.306083,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K01-double-booked-only",
+    "ms": 2.6467919999999996,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K02-assigned-while-on-pto",
+    "ms": 5.379208,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K03-not-booked-only",
+    "ms": 2.0278750000000003,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K04-unstaffed-only-one-assignment-job-grid",
+    "ms": 3.997458,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K05-all-four-flags",
+    "ms": 3.61075,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K06-clean-schedule",
+    "ms": 4.563083,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K07-double-booked-after-name-merge",
+    "ms": 3.209583,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K08-false-double-booking-site-merge",
+    "ms": 1.606708,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K09-same-person-twice-one-site",
+    "ms": 4.223916,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K10-one-assignment-job-list",
+    "ms": 3.28775,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K11-saturday-under-mon-fri",
+    "ms": 2.2582090000000004,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "K",
+    "id": "K12-subcontractor-two-sites",
+    "ms": 2.7205839999999997,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "L",
+    "id": "L01-formula-leading-cells",
+    "ms": 1.983959,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "L",
+    "id": "L02-prompt-injection-script",
+    "ms": 2.318333,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "L",
+    "id": "L03-prompt-injection-model",
+    "ms": 5705.059917,
+    "passed": false,
+    "problems": [
+      "flag missing: double_booked 2026-10-14 | person=christopher lee | site= | sites=1420 johnson st; smith remodel | status=",
+      "flag extra:   not_booked 2026-10-12 | person=christoper lee | site= | sites= | status=",
+      "flag extra:   not_booked 2026-10-13 | person=christoper lee | site= | sites= | status=",
+      "flag extra:   not_booked 2026-10-15 | person=christoper lee | site= | sites= | status=",
+      "flag extra:   not_booked 2026-10-16 | person=christoper lee | site= | sites= | status="
+    ],
+    "skipped": false,
+    "tier": "model"
+  },
+  {
+    "category": "L",
+    "id": "L04-binary-png-renamed-csv",
+    "ms": 0.004583,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "L",
+    "id": "L05-zero-byte-file",
+    "ms": 0.00033299999999999996,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "L",
+    "id": "L06-invalid-utf8-bytes",
+    "ms": 1.8937089999999999,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "L",
+    "id": "L07-five-mb-single-line",
+    "ms": 919.6820409999999,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "L",
+    "id": "L08-save-read-only",
+    "ms": 1.7072910000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "L",
+    "id": "L09-whitespace-only-file",
+    "ms": 0.003375,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "M",
+    "id": "M01-paste-from-excel",
+    "ms": 2.373208,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "M",
+    "id": "M02-paste-from-google-sheets",
+    "ms": 1.44825,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "M",
+    "id": "M03-paste-from-numbers",
+    "ms": 4.203625,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "M",
+    "id": "M04-paste-text-message",
+    "ms": 9692.509875000002,
+    "passed": false,
+    "problems": [
+      "missing: 2026-10-12 | person=jose | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-12 | person=mike | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "flag missing: not_booked 2026-10-13 | person=jose | site= | sites= | status="
+    ],
+    "skipped": false,
+    "tier": "model"
+  },
+  {
+    "category": "M",
+    "id": "M05-paste-bullet-list",
+    "ms": 20240.578042,
+    "passed": false,
+    "problems": [
+      "missing: 2026-10-12 | person=dave | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-12 | person=jose | site=smith remodel | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-12 | person=luis | site=oak ridge | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-12 | person=mike | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-13 | person=dave | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-13 | person=jose | site=smith remodel | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-13 | person=luis | site=oak ridge | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-13 | person=mike | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-14 | person=dave | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-14 | person=jose | site=smith remodel | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-14 | person=luis | site=oak ridge | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-14 | person=mike | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-15 | person=dave | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-15 | person=jose | site=smith remodel | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-15 | person=luis | site=oak ridge | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-15 | person=luis | site=smith remodel | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-15 | person=mike | site=smith remodel | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-16 | person=dave | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-16 | person=jose | site=smith remodel | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-16 | person=luis | site=smith remodel | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-16 | person=mike | site=smith remodel | status= | unstaffed=false | part= | time=- | note=",
+      "flag missing: double_booked 2026-10-15 | person=luis | site= | sites=oak ridge; smith remodel | status="
+    ],
+    "skipped": false,
+    "tier": "model"
+  },
+  {
+    "category": "M",
+    "id": "M06-paste-partial-week",
+    "ms": 1.3617080000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "M",
+    "id": "M07-paste-spanish-free-text",
+    "ms": 15185.090291,
+    "passed": false,
+    "problems": [
+      "missing: 2026-10-12 | person=josé | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-12 | person=luis | site=johnson | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-12 | person=pedro | site=smith | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-13 | person=josé | site=smith | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-13 | person=luis | site=oak ridge | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-13 | person=pedro | site=oak ridge | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-14 | person=josé | site=smith | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-14 | person=luis | site=oak ridge | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-14 | person=luis | site=smith | status= | unstaffed=false | part= | time=- | note=",
+      "missing: 2026-10-14 | person=pedro | site=oak ridge | status= | unstaffed=false | part= | time=- | note=",
+      "flag missing: double_booked 2026-10-14 | person=luis | site= | sites=oak ridge; smith | status="
+    ],
+    "skipped": false,
+    "tier": "model"
+  },
+  {
+    "category": "M",
+    "id": "M08-paste-free-text-model-off",
+    "ms": 0.355292,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "N",
+    "id": "N01-save-reopen-restores-answers",
+    "ms": 1.149667,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "N",
+    "id": "N02-undo-site-merge-chip",
+    "ms": 0.893417,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "N",
+    "id": "N03-correct-column-role",
+    "ms": 0.6985830000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "N",
+    "id": "N04-workweek-toggle-and-day-off",
+    "ms": 1.0085840000000001,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "N",
+    "id": "N05-save-path-spaces-accents",
+    "ms": 0.505042,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  },
+  {
+    "category": "N",
+    "id": "N06-keyboard-only-run-through",
+    "ms": 0.661083,
+    "passed": true,
+    "problems": [],
+    "skipped": false,
+    "tier": "script"
+  }
+]
