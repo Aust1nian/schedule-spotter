@@ -2,6 +2,50 @@
 
 Pass/fail by fixture category, generator stats across seeds, holdout results (reported separately, Phase 7 only), every changed expectation with its reason, and known failures.
 
+## Summary at the end of Phase 7 (2026-10-15)
+
+### Handmade fixtures (`fixtures/handmade`, 151)
+
+Results with the model off; the model-tier fixtures are reported in MODEL_REPORT.md.
+
+| Category | What it covers | Pass |
+| --- | --- | --- |
+| A | Encoding and delimiters | 10/10 |
+| B | Headers | 10/10 |
+| C | Layouts (C20–C26 added in Phase 7) | 26/26 |
+| D | Dates and days | 14/14 |
+| E | People and names (E15–E16 added in Phase 7) | 16/16 |
+| F | Jobs and sites | 10/10 |
+| G | Status and unstaffed | 8/8 |
+| H | Times | 8/8 |
+| I | Junk and noise | 9/9 |
+| J | Scale | 5/5 |
+| K | Flag logic | 12/12 |
+| L | Adversarial and safety | 8/8, plus 1 model-tier |
+| M | Paste input | 5/5, plus 3 model-tier |
+| N | Save, reopen, UI | 6/6 (also through the window: UI tests on Windows and Linux) |
+| **All** | | **147/147 with the model off**, plus 4 model-tier |
+
+### Generator, seeds 0–1,999 (model off)
+
+| Measure | Result |
+| --- | --- |
+| Assignment recall | 99.555% (gate: at least 99%) |
+| Precision | 99.681% |
+| Schedules exactly right | 1,921 of 2,000 |
+| Merges | 3,152, **none false** |
+| Questions per file | 1.21 on average; 1,276 of 2,000 files ask nothing |
+| Clean schedules given a red flag | 0 |
+
+### Holdout (reported separately, below)
+
+- **Blind, run once:** 13 of 20 handmade fixtures pass. The generated seeds reach 99.667% recall with 0 false merges, model off.
+- **After the Phase 7 fixes (not blind):** 20 of 20 in every configuration.
+
+### Known failures
+
+None in the fixture library (`fixtures/KNOWN_FAILING.txt` is empty). The known limits are listed under "Known failures" at the end of this report.
+
 ## Phase 0
 
 | Check | Result |
@@ -390,8 +434,13 @@ The holdout was checked again on 2026-10-15 (06:49–08:10 UTC, commit 4011a73),
 
 ## Known failures
 
-Listed in `fixtures/KNOWN_FAILING.txt`. They still run on every push.
+`fixtures/KNOWN_FAILING.txt` lists the fixtures that fail and still run on every push. It is empty at the end of Phase 7.
 
-| Fixture | Why | Fixed by |
+| Fixture | Why | Fixed |
 |---|---|---|
 | K07-double-booked-after-name-merge | The double-booking appears only once "Mike B" and "Michael Baker" are one person, which needs stage 7 matching (nickname + initial). | Phase 3 |
+
+Known limits:
+- **Windows on Arm:** the shipped x64 app runs under emulation and passes its self-test with no model and with C. With A or B-E2B, the model is still loading at the self-test's 240 s limit. The app works there with smart matching off. That runner is logged, not blocking.
+- **Model-tier fixtures:** the free-text pastes (M04, M05, M07) depend on one model call finishing within the 5 s limit. On 2-thread runners that call sits near the limit, so these fixtures pass in some runs and not others (MODEL_REPORT.md).
+- **Not tested by automation:** first-launch security prompts, the system open and save dialogs, drag-and-drop, and a real download over office internet. These are manual checks before each release (RELEASE.md).
