@@ -604,4 +604,5 @@ Short forms that are also first names stay names.
 - **The rule:** a block in the header row that is separated from the list by a blank column, has no days in it, and is headed by a roster title or a people header ("Techs", "Technicians") is a roster. Its whole block of cells is set aside, Truck column included.
 - **The exclusion:** a block with days in its header is another week's schedule, as in two weeks side by side, each with its own Name column (C08).
 - "Technicians" and "Installers" joined the people headers.
+- **Kept narrow by the generator:** a first version also caught a "Laborer" placeholder that opened the second week of a side-by-side board, and the third week's repeated "Worker" header. That lost a week's names on 3 of the 2,000 development seeds. The rule now also needs the header row to have at least two header words to the block's left, at least one of them not a people header ("Date | Tech | Job"). Compared seed by seed with the build before the fix: none worse, one better (1713).
 

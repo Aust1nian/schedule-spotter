@@ -671,9 +671,22 @@ fn find_roster(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Option<Vec<S
             let block = header_block(g, r, c);
             // A block with days in its header is another week's schedule
             // ("Name | Mon … | | Name | Mon …"), not a roster.
-            let separate = block[0] > 0
-                && (0..block[0]).any(|cc| !g.is_empty(r, cc))
-                && block.iter().all(|&cc| g.day(r, cc).is_none());
+            // And the row is a list's header row: header words to the block's
+            // left, at least one of them not a people header ("Date | Tech |
+            // Job"). Not a data row whose next week starts with a "Laborer"
+            // placeholder, nor side-by-side weeks that each repeat "Worker".
+            let roles_left: Vec<crate::lexicon::HeaderRole> = (0..block[0])
+                .filter_map(|cc| crate::lexicon::header_role(&key(g.text(r, cc))))
+                .collect();
+            let list_header = roles_left.len() >= 2
+                && roles_left.iter().any(|h| {
+                    !matches!(
+                        h,
+                        crate::lexicon::HeaderRole::Person | crate::lexicon::HeaderRole::Crew
+                    )
+                });
+            let separate =
+                block[0] > 0 && list_header && block.iter().all(|&cc| g.day(r, cc).is_none());
             let k = key(g.text(r, c));
             let people_header = matches!(
                 crate::lexicon::header_role(&k),
