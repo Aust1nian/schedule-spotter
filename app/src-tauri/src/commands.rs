@@ -496,6 +496,9 @@ pub fn about() -> About {
         model_name: model::NAME,
         model_license: model::LICENSE,
         model_status: match m.state {
+            _ if model::VARIANT == "off" => {
+                "Names and sites I'm unsure of come to you as quick Yes or No questions. Sure matches show as a chip you can undo.".into()
+            }
             model::State::Ready => format!(
                 "Smart matching ready (loaded in {:.1} s)",
                 m.load_secs.unwrap_or(0.0)

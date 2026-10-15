@@ -55,8 +55,13 @@ fn set(status: Status) {
     }
 }
 
-/// The status line under the toolbar.
+/// The status line under the toolbar. A build without a model (the shipped
+/// choice, MODEL_REPORT.md) says how it works rather than that something is
+/// off.
 pub fn status_line() -> &'static str {
+    if VARIANT == "off" {
+        return "I'll ask you about any name or site I'm unsure of";
+    }
     match status().state {
         State::Loading => {
             "Smart matching is starting\u{2026} I'll ask you about anything unsure meanwhile"

@@ -24,8 +24,8 @@ on:
   workflow_dispatch:
     inputs:
       variants:
-        description: Variants to build, as a JSON list
-        default: '["off", "C", "A", "B-E2B"]'
+        description: Variants to build, as a JSON list (Austin picked "off"; the others stay buildable)
+        default: '["off"]'
 
 permissions:
   contents: read
@@ -50,7 +50,7 @@ jobs:
       - uses: actions/checkout@v7
       - id: plan
         env:
-          VARIANTS: ${{ inputs.variants || '["off", "C", "A", "B-E2B"]' }}
+          VARIANTS: ${{ inputs.variants || '["off"]' }}
           HAS_APPLE: ${{ secrets.APPLE_CERTIFICATE != '' && secrets.APPLE_API_KEY_P8 != '' }}
           HAS_AZURE: ${{ secrets.AZURE_CLIENT_ID != '' && secrets.AZURE_SIGNING_PROFILE != '' }}
         run: |

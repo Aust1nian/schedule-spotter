@@ -615,9 +615,9 @@ async function openAbout(): Promise<void> {
       { class: "privacy" },
       "Nothing leaves this computer. The app has no internet code at all. To check, turn Wi-Fi off: everything still works.",
     ),
-    h("h3", {}, "Smart matching"),
+    h("h3", {}, a.model_name ? "Smart matching" : "Unsure names and sites"),
     h("p", {}, a.model_status),
-    a.model_name ? h("p", {}, `Model: ${a.model_name} (license: ${a.model_license})`) : h("p", {}, "This copy has no model; it asks you instead."),
+    a.model_name ? h("p", {}, `Model: ${a.model_name} (license: ${a.model_license})`) : null,
     a.built_with_llama ? h("p", {}, "Built with Llama.") : null,
     h("h3", {}, "Licenses"),
     h(

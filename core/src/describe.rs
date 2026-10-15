@@ -94,7 +94,7 @@ pub fn question(q: &Question) -> QuestionView {
             None,
         ),
         Question::PasteAsTable => (
-            "I can't read free-form text with smart matching off. Copy the cells from your spreadsheet and paste them instead."
+            "I can't read free-form text like a text message. Copy the cells from your spreadsheet and paste them instead."
                 .to_string(),
             Vec::new(),
             None,

@@ -40,8 +40,8 @@ This path hasn't run yet, so its first signed run needs watching.
 2. **Release candidate.** From the main branch:
 
    ```sh
-   gh workflow run release.yml --ref main            # all variants: off, C, A, B-E2B
-   gh workflow run release.yml --ref main -f variants='["C"]'   # or just some
+   gh workflow run release.yml --ref main            # the shipped variant: off (Austin, 2026-10-15)
+   gh workflow run release.yml --ref main -f variants='["off", "C", "A", "B-E2B"]'   # any others
    ```
 
    The run page's summary has a table with each file's size, whether it's signed, and the install test result on every runner. `windows-11-arm` is logged but doesn't block. Signed macOS builds also report how long notarization took.

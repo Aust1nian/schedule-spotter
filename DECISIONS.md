@@ -637,3 +637,14 @@ Short forms that are also first names stay names.
 
 **2026-10-15 · Final benchmark and recommendation (Phase 7).** CI run 38703867149 (commit 29b9363): all 30 benchmark jobs and the report passed. No variant passes the selection rule on any runner, so the rule's answer is **model off**. The best scorer, B-E2B, has 16.2% false merges against the 1% limit. The holdout agrees: 96 wrong merges per 1,000 unseen schedules for B-E2B, 6 for A, 0 for C and for model off. MODEL_REPORT.md sets out the choice for Austin: model off is recommended, with C, A and B-E2B as the alternatives and their costs. The Phase 7 gate ("reports complete; Austin picks the variant") waits only on his pick.
 
+**2026-10-15 · Austin picked the variant: model off. The Phase 7 gate passed.**
+- **What ships:** the app with no model: a 16 MB Mac disk image and a 223 MB Windows installer, most of it Microsoft's WebView2.
+- **The model layer stays in the code** (`llm/`, `SPOTTER_VARIANT`), so a model that later passes the selection rule can ship as a variant without changing the app.
+- **Builds:** `release.yml` builds `["off"]` by default; the other variants are one input away.
+- **The words a build without a model shows** describe how it works, not that something is switched off:
+  - The status line says "I'll ask you about any name or site I'm unsure of".
+  - About explains that unsure names and sites come as Yes/No questions and sure matches show as a chip you can undo.
+  - The free-text paste message no longer mentions smart matching.
+  - Builds with a model keep their "Smart matching" wording.
+- **For the website project (not changed from here):** `site/data/tools/schedule.json` needs its size (16 MB Mac, 223 MB Windows). Its `support.slow` text says smart matching loads in the background, which a build without a model never does.
+

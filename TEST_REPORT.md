@@ -42,6 +42,10 @@ Results with the model off; the model-tier fixtures are reported in MODEL_REPORT
 - **Blind, run once:** 13 of 20 handmade fixtures pass. The generated seeds reach 99.667% recall with 0 false merges, model off.
 - **After the Phase 7 fixes (not blind):** 20 of 20 in every configuration.
 
+### Gate
+
+Phase 7: "reports complete; Austin picks the variant". **Passed 2026-10-15.** The reports are complete, and Austin picked model off (MODEL_REPORT.md).
+
 ### Known failures
 
 None in the fixture library (`fixtures/KNOWN_FAILING.txt` is empty). The known limits are listed under "Known failures" at the end of this report.
