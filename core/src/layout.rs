@@ -560,7 +560,11 @@ fn find_crews(g: &Grid, consumed: &mut HashSet<(usize, usize)>) -> Crews {
                 .count();
             let header_only_crews = block.iter().all(|&cc| {
                 let k = key(g.text(r, cc));
-                crew_name(&k) || matches!(k.as_str(), "other" | "others" | "misc" | "extra" | "extras" | "floaters" | "helpers")
+                crew_name(&k)
+                    || matches!(
+                        k.as_str(),
+                        "other" | "others" | "misc" | "extra" | "extras" | "floaters" | "helpers"
+                    )
             });
             if peers >= 1 && header_only_crews {
                 let mut members = Vec::new();
