@@ -33,6 +33,16 @@ checks="$work/checks.tsv"
 : >"$checks"
 failed=0
 
+# stapler validate asks Apple's ticket server, which sometimes drops the
+# connection (error -1005); retry before calling it a failure.
+validate() {
+  for _ in 1 2 3 4; do
+    xcrun stapler validate "$1" >"$2" 2>&1 && return 0
+    sleep 30
+  done
+  return 1
+}
+
 # check <name> <pass|fail|skip|info> <detail>
 check() {
   printf '%s\t%s\t%s\n' "$1" "$2" "$3" >>"$checks"
@@ -51,7 +61,7 @@ if [ $signed = 1 ]; then
   else
     check dmg-signature fail "$(tr '\n' ' ' <"$work/dmg-sig")"
   fi
-  if xcrun stapler validate "$dmg" >"$work/dmg-staple" 2>&1; then
+  if validate "$dmg" "$work/dmg-staple"; then
     check dmg-stapled pass "$(tail -1 "$work/dmg-staple")"
   else
     check dmg-stapled fail "$(tr '\n' ' ' <"$work/dmg-staple")"
@@ -123,7 +133,7 @@ if [ $signed = 1 ]; then
   else
     check gatekeeper fail "$(tr '\n' ' ' <<<"$verdict")"
   fi
-  if xcrun stapler validate "$app" >"$work/staple" 2>&1; then
+  if validate "$app" "$work/staple"; then
     check app-stapled pass "$(tail -1 "$work/staple")"
   else
     check app-stapled fail "$(tr '\n' ' ' <"$work/staple")"
