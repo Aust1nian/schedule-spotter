@@ -42,6 +42,29 @@ Results with the model off; the model-tier fixtures are reported in MODEL_REPORT
 - **Blind, run once:** 13 of 20 handmade fixtures pass. The generated seeds reach 99.667% recall with 0 false merges, model off.
 - **After the Phase 7 fixes (not blind):** 20 of 20 in every configuration.
 
+### The shipped build, signed (release run 38819369474, `main` at 1a128c8)
+
+The no-model build, built by `release.yml` from `main`.
+- **Mac:** signed with Developer ID "AUSTIN TYLER BURNES (J85MUL5KVY)", notarized, and stapled (app and disk image).
+- **Windows:** unsigned, pending Azure.
+
+| Runner | Install test |
+| --- | --- |
+| `macos-15` | pass (on a re-run: `stapler validate` lost its connection to Apple once) |
+| `macos-26` | pass |
+| `macos-15-intel` | pass |
+| `windows-2025` | pass |
+| `windows-11-arm` | pass |
+
+Every Mac also passed these checks:
+- Gatekeeper, with the disk image quarantined as a browser would leave it: "accepted source=Notarized Developer ID".
+- Stapled tickets on the app and the disk image.
+- The sandbox and hardened runtime.
+- A self-test with no socket opened.
+- Nothing left outside the sandbox container.
+
+Apple accepted the app about 40 minutes after submission, and the disk image within about the next half hour. A dry run of `site/publish.sh` against this run passes its checks and hands both files to the website's `release.mjs`.
+
 ### Gate
 
 Phase 7: "reports complete; Austin picks the variant". **Passed 2026-10-15.** The reports are complete, and Austin picked model off (MODEL_REPORT.md).

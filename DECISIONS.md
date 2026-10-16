@@ -648,3 +648,5 @@ Short forms that are also first names stay names.
   - Builds with a model keep their "Smart matching" wording.
 - **For the website project (not changed from here):** `site/data/tools/schedule.json` needs its size (16 MB Mac, 223 MB Windows). Its `support.slow` text says smart matching loads in the background, which a build without a model never does.
 
+**2026-10-15 · Re-runs and artifacts: the newest of each name wins** (`tools/release/fetch_artifacts.py`). Re-running a failed install test adds a second artifact with the same name, and a merged download kept the original "fail". Artifact ids aren't in time order, but creation times are. The release summary and `site/publish.sh` now take the newest artifact of each name. `publish.sh` also rebuilds `releases.json` from those results, so it never trusts a summary written before a re-run. The install test also retries `stapler validate`, which loses its connection to Apple's ticket server now and then.
+

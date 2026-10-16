@@ -32,10 +32,19 @@ done
 [ -n "$run" ] && [ -n "$variant" ] || { sed -n '9,10p' "$0"; exit 2; }
 [ -f "$website/scripts/release.mjs" ] || { echo "publish: no scripts/release.mjs under $website" >&2; exit 2; }
 
+here="$(cd "$(dirname "$0")" && pwd)"
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 repo="${SPOTTER_REPO:-Aust1nian/schedule-spotter}"
-gh run download "$run" -R "$repo" -n release-manifest -D "$work/manifest"
+# The run's results, newest of each name (a re-run's result replaces the
+# original's), rebuilt into releases.json here rather than trusting a summary
+# written before a re-run.
+fetch=(python3 "$here/../tools/release/fetch_artifacts.py" --run "$run" --repo "$repo")
+"${fetch[@]}" --out "$work/results/describe" describe- >/dev/null
+"${fetch[@]}" --out "$work/results/install" install- >/dev/null
+"${fetch[@]}" --out "$work/prev" release-manifest >/dev/null
+version="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["version"])' "$work/prev/release-manifest/releases.json")"
+python3 "$here/../tools/release/summary.py" "$work/results" --version "$version" --out "$work/manifest" >/dev/null
 # The checks first, so a refusal doesn't download gigabytes.
 python3 - "$work/manifest/releases.json" "$variant" <<'PY'
 import json, sys
@@ -54,7 +63,7 @@ if "mac" in chosen and not chosen["mac"]["signed"]:
 if problems:
     sys.exit("publish: not publishing:\n  " + "\n  ".join(problems))
 PY
-gh run download "$run" -R "$repo" -n "release-mac-$variant" -n "release-windows-$variant" -D "$work/files"
+"${fetch[@]}" --out "$work/files" "release-mac-$variant" "release-windows-$variant" >/dev/null
 python3 - "$work/manifest/releases.json" "$variant" "$work/files" "$work/out" >"$work/args" <<'PY'
 import hashlib, json, pathlib, shutil, sys
 releases, variant, folder, out = sys.argv[1], sys.argv[2], pathlib.Path(sys.argv[3]), pathlib.Path(sys.argv[4])

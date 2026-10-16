@@ -29,9 +29,9 @@ def main():
     a = ap.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
 
-    files = [d for p in sorted((a.results / "describe").glob("*.json")) if (d := load(p))]
+    files = [d for p in sorted((a.results / "describe").rglob("*.json")) if (d := load(p))]
     installs = {}
-    for p in (a.results / "install").glob("install-*.json"):
+    for p in (a.results / "install").rglob("install-*.json"):
         m = re.match(r"install-(.+)-((?:macos|windows)-[\w.-]+)\.json$", p.name)
         if m:
             installs[(m.group(1), m.group(2))] = load(p)

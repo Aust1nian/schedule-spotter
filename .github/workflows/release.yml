@@ -29,6 +29,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: release-${{ github.ref }}
@@ -433,10 +434,13 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       # Only the small JSON files; the release files stay in their artifacts.
-      - uses: actions/download-artifact@v8
-        with: { pattern: "describe-*", path: results/describe, merge-multiple: true }
-      - uses: actions/download-artifact@v8
-        with: { pattern: "install-*", path: results/install, merge-multiple: true }
+      # The newest of each name, so a re-run's result replaces the original's.
+      - name: results
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 tools/release/fetch_artifacts.py --run "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --out results/describe describe-
+          python3 tools/release/fetch_artifacts.py --run "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --out results/install install-
       - name: summary, releases.json and SHA256SUMS
         env:
           VERSION: ${{ needs.plan.outputs.version }}
